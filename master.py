@@ -24,6 +24,7 @@ def make_folder_structure(tag):
 # TODO
 # need lut from new to old segmentation ids
 # to auto translate custom attributes
+# also support extraction from paintera commit
 def export_segmentation(input_path, input_key, output_path):
     resolution = [.025, .02, .02]
     to_bdv(input_path, input_key, output_path, resolution)
