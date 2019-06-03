@@ -17,8 +17,10 @@ def get_tags():
 
 # TODO do we need more sub-folders ?
 def make_folder_structure(tag):
-    new_tables_folder = os.path.join('data', tag, 'tables')
+    new_folder = os.makedirs('data', tag)
+    new_tables_folder = os.path.join(new_folder, 'tables')
     os.makedirs(new_tables_folder)
+    return new_folder
 
 
 # TODO
@@ -40,13 +42,15 @@ def make_attributes(input_path, input_key, output_path):
 
 # TODO check for errors
 def make_release(tag):
-    call(['git', 'commit', '-m', 'Automatice platybrowser data update'])
+    call(['git', 'commit', '-m', 'Automatic platybrowser update'])
     call(['git', 'tag', tag])
     # TODO autopush ???
-    # call(['git', 'push', 'origin', '--tags'])
+    # call(['git', 'push', 'origin', 'master', '--tags'])
 
 
+# TODO catch all exceptions and re-roll if exception was caught
 # TODO what arguments do we expose
+# TODO need to deal with different kinds of segmentations
 def master():
     """ Generate new version of platy-browser derived data.
 
@@ -59,7 +63,8 @@ def master():
     tag, new_tag = get_tags()
 
     # make new folder structure
-    make_folder_structure(new_tag)
+    folder = os.path.join('data', tag)
+    new_folder = make_folder_structure(new_tag)
 
     # TODO
     # Need to check if we actually need to export the new segmentation
