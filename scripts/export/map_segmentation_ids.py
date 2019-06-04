@@ -4,12 +4,13 @@ import luigi
 import z5py
 
 from cluster_tools.node_labels import NodeLabelWorkflow
+from ..files import get_h5_path_from_xml
 
 
 def get_seg_path(folder, name):
     # check if we have a data sub folder, if we have it load
     # the segmentation from there
-    data_folder = os.path.join(folder, 'data')
+    data_folder = os.path.join(folder, 'segmentations')
     data_folder = data_folder if os.path.exists(data_folder) else folder
 
     # check if we have a h5
@@ -21,12 +22,12 @@ def get_seg_path(folder, name):
     path = os.path.join(data_folder, '%s.xml' % name)
     # read h5 path from the xml
     if os.path.exists(path):
-        # TODO
-        raise NotImplementedError("File path from xml not implemented")
-        # path = get_h5_path_from_xml(path)
-        # return path
+        path = get_h5_path_from_xml(path)
+        if not os.path.exists(path):
+            raise RuntimeError("Invalid path in xml")
+        return path
     else:
-        raise RuntimeError("The specified folder does not contain a segmentation")
+        raise RuntimeError("The specified folder does not contain segmentation")
 
 
 def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
@@ -43,6 +44,11 @@ def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
     with open(os.path.join(config_folder, 'global.config'), 'w') as f:
         json.dump(global_conf, f)
 
+    conf = configs['merge_node_labels']
+    conf.update({'threads_per_job': 8, 'mem_limit': 16})
+    with open(os.path.join(config_folder, 'merge_node_labels.config'), 'w') as f:
+        json.dump(conf, f)
+
     key = 't00000/s00/0/cells'
     tmp_path = os.path.join(tmp_folder, 'data.n5')
     tmp_key = prefix
@@ -58,13 +64,14 @@ def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
 
     ds = z5py.File(tmp_path)[tmp_key]
     lut = ds[:]
-    lut = dict(zip(lut[:, 0], lut[:, 1]))
+    assert lut.ndim == 1
+    lut = dict(zip(range(len(lut)), lut.tolist()))
 
     with open(out_path, 'w') as f:
         json.dump(lut, f)
 
 
-def map_segmentation_ids(src_folder, dest_folder, out_path, name, tmp_folder, max_jobs, target):
+def map_segmentation_ids(src_folder, dest_folder, name, tmp_folder, max_jobs, target):
     src_path = get_seg_path(src_folder, name)
     dest_path = get_seg_path(dest_folder, name)
 

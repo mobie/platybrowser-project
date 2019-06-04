@@ -2,8 +2,8 @@ import os
 import json
 import luigi
 
+import h5py
 import z5py
-from shutil import rmtree
 from cluster_tools.downscaling import PainteraToBdvWorkflow
 
 
@@ -16,11 +16,11 @@ def check_max_id(path, key):
         raise RuntimeError("Uint16 overflow")
     else:
         print("Max-id:", max_id, "fits int16")
+    return max_id
 
 
-def to_bdv(in_path, in_key, out_path, resolution, target='slurm'):
-    check_max_id(in_path, in_key)
-    tmp_folder = 'tmp_export_bdv'
+def to_bdv(in_path, in_key, out_path, resolution, tmp_folder, target='slurm'):
+    max_id = check_max_id(in_path, in_key)
 
     config_folder = os.path.join(tmp_folder, 'configs')
     os.makedirs(config_folder, exist_ok=True)
@@ -48,4 +48,8 @@ def to_bdv(in_path, in_key, out_path, resolution, target='slurm'):
     ret = luigi.build([task], local_scheduler=True)
     if not ret:
         raise RuntimeError("Segmentation export failed")
-    rmtree(tmp_folder)
+
+    # write the max-id
+    with h5py.File(out_path) as f:
+        ds = f['t00000/s00/0/cells']
+        ds.attrs['maxId'] = max_id

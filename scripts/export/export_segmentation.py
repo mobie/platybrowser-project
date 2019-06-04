@@ -2,6 +2,7 @@ import os
 import json
 import luigi
 import z5py
+from shutil import rmtree
 
 from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit
@@ -46,6 +47,7 @@ def downscale(path, in_key, out_key,
     t = task(tmp_folder=tmp_folder, config_dir=config_folder,
              target=target, max_jobs=max_jobs,
              input_path=path, input_key=in_key,
+             output_key_prefix=out_key,
              scale_factors=scales, halos=halos)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
@@ -82,12 +84,11 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     downscale(tmp_path, tmp_key0, tmp_key, n_scales, tmp_folder, max_jobs, target)
 
     # convert to bdv
-    out_path = os.path.join(new_folder, 'data', '%s.h5' % name)
-    to_bdv(tmp_path, tmp_key, out_path, resolution)
+    out_path = os.path.join(new_folder, 'segmentations', '%s.h5' % name)
+    to_bdv(tmp_path, tmp_key, out_path, resolution, tmp_folder, target)
 
     # compute mapping to old segmentation
     map_segmentation_ids(folder, new_folder, name, tmp_folder, max_jobs, target)
 
-    # TODO
     # clean up tmp
     # rmtree(tmp_folder)

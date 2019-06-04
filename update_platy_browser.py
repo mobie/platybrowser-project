@@ -84,7 +84,8 @@ def make_attributes(folder, new_folder,
 
 
 # TODO check for errors
-def make_release(tag, description=''):
+def make_release(tag, folder, description=''):
+    call(['git', 'add', folder])
     call(['git', 'commit', '-m', 'Automatic platybrowser update'])
     if description == '':
         call(['git', 'tag', tag])
@@ -144,7 +145,7 @@ def update_platy_browser(update_cell_segmentation=False,
     copy_static_files(folder, new_folder)
 
     # make new release
-    make_release(new_tag, description)
+    make_release(new_tag, new_folder, description)
 
 
 def str2bool(v):

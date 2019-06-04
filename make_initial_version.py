@@ -3,18 +3,17 @@
 import os
 
 from scripts.files import make_folder_structure
-from script.export import export_segmentation
+from scripts.export import export_segmentation
 
 
 def make_segmentations(old_folder, folder):
     path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
 
     # export nucleus segemntation
-    key_nuclei = 'volumes/paintera/nuclei'
-    nuclei_name = 'em-segmented-nuclei-labels'
-    res_nuclei = [.1, .08, .08]
-    export_segmentation(path, key_nuclei, old_folder, folder, nuclei_name, res_nuclei)
-    return
+    # key_nuclei = 'volumes/paintera/nuclei'
+    # nuclei_name = 'em-segmented-nuclei-labels'
+    # res_nuclei = [.1, .08, .08]
+    # export_segmentation(path, key_nuclei, old_folder, folder, nuclei_name, res_nuclei)
 
     # export cell segemntation
     key_cells = 'volumes/paintera/proofread_cells'
@@ -29,7 +28,7 @@ def make_initial_version():
     tag = '0.0.0'
     folder = os.path.join('data', tag)
 
-    make_folder_structure(folder)
+    # make_folder_structure(folder)
 
     make_segmentations(old_folder, folder)
 
