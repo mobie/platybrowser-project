@@ -25,7 +25,7 @@ def make_segmentations(old_folder, folder):
 
 def make_initial_version():
 
-    old_folder = '/g/arendt/EM...'
+    old_folder = '/g/arendt/EM_6dpf_segmentation/EM-Prospr'
     tag = '0.0.0'
     folder = os.path.join('data', tag)
 
