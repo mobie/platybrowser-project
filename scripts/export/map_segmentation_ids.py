@@ -1,0 +1,80 @@
+import os
+import json
+import luigi
+import z5py
+
+from cluster_tools.node_labels import NodeLabelWorkflow
+
+
+def get_seg_path(folder, name):
+    # check if we have a data sub folder, if we have it load
+    # the segmentation from there
+    data_folder = os.path.join(folder, 'data')
+    data_folder = data_folder if os.path.exists(data_folder) else folder
+
+    # check if we have a h5
+    path = os.path.join(data_folder, '%s.h5' % name)
+    if os.path.exists(path):
+        return path
+
+    # check if we have an xml
+    path = os.path.join(data_folder, '%s.xml' % name)
+    # read h5 path from the xml
+    if os.path.exists(path):
+        # TODO
+        raise NotImplementedError("File path from xml not implemented")
+        # path = get_h5_path_from_xml(path)
+        # return path
+    else:
+        raise RuntimeError("The specified folder does not contain a segmentation")
+
+
+def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
+    task = NodeLabelWorkflow
+
+    config_folder = os.path.join(tmp_folder, 'configs')
+    os.makedirs(config_folder, exist_ok=True)
+    configs = task.get_config()
+
+    global_conf = configs['global']
+    global_conf.update({'shebang':
+                        "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python",
+                        'block_shape': [64, 512, 512]})
+    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
+        json.dump(global_conf, f)
+
+    key = 't00000/s00/0/cells'
+    tmp_path = os.path.join(tmp_folder, 'data.n5')
+    tmp_key = prefix
+    t = task(tmp_folder=tmp_folder, config_dir=config_folder,
+             target=target, max_jobs=max_jobs,
+             ws_path=path1, ws_key=key,
+             input_path=path2, input_key=key,
+             output_path=tmp_path, output_key=tmp_key,
+             prefix=prefix, max_overlap=True)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Id-mapping failed")
+
+    ds = z5py.File(tmp_path)[tmp_key]
+    lut = ds[:]
+    lut = dict(zip(lut[:, 0], lut[:, 1]))
+
+    with open(out_path, 'w') as f:
+        json.dump(lut, f)
+
+
+def map_segmentation_ids(src_folder, dest_folder, out_path, name, tmp_folder, max_jobs, target):
+    src_path = get_seg_path(src_folder, name)
+    dest_path = get_seg_path(dest_folder, name)
+
+    # map ids from src to dest via maximal overlap
+    out_path = os.path.join(dest_folder, 'misc', 'new_id_lut_%s.json' % name)
+    map_ids(src_path, dest_path, out_path, tmp_folder, max_jobs, target,
+            prefix='to_dest')
+
+    # TODO do we need to do this?
+    # map ids from dest to src via maximal overlap
+    # out_path = os.path.join(dest_folder, 'misc', 'old_id_lut_%s.json' % name)
+    # map_ids(dest_path, src_path, out_path, tmp_folder, max_jobs, target,
+    #         prefix='to_src')

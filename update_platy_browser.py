@@ -1,10 +1,12 @@
+#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python
+
 import os
 import argparse
 from subprocess import check_output, call
 
 from scripts.attributes import make_cell_tables, make_nucleus_tables
 from scripts.export import export_segmentation
-from scripts.files import copy_tables, copy_segmentation, copy_static_files
+from scripts.files import copy_tables, copy_segmentation, copy_static_files, make_folder_structure
 
 
 # paths for paintera projects
@@ -12,8 +14,8 @@ from scripts.files import copy_tables, copy_segmentation, copy_static_files
 # s.t. they are stored in these files!
 PAINTERA_ROOT = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
 # TODO do we need the data postfix ???
-PROJECT_CELLS = 'volumes/paintera/proofread_cells/data'
-PROJECT_NUCLEI = 'volumes/paintera/nuclei/data'
+PROJECT_CELLS = 'volumes/paintera/proofread_cells'
+PROJECT_NUCLEI = 'volumes/paintera/nuclei'
 
 # name for cell and nucleus segmentations
 NAME_CELLS = 'em-segmented-cells-labels'
@@ -40,16 +42,6 @@ def get_tags():
     new_tag[-1] = str(int(new_tag[-1]) + 1)
     new_tag = '.'.join(new_tag)
     return tag, new_tag
-
-
-def make_folder_structure(tag):
-    new_folder = os.makedirs('data', tag)
-    # make all sub-folders
-    os.makedirs(os.path.join(new_folder, 'tables'))
-    os.makedirs(os.path.join(new_folder, 'images'))
-    os.makedirs(os.path.join(new_folder, 'segmentations'))
-    os.makedirs(os.path.join(new_folder, 'misc'))
-    return new_folder
 
 
 # TODO
@@ -135,7 +127,8 @@ def update_platy_browser(update_cell_segmentation=False,
 
     # make new folder structure
     folder = os.path.join('data', tag)
-    new_folder = make_folder_structure(new_tag)
+    new_folder = os.makedirs('data', new_tag)
+    make_folder_structure(new_folder)
 
     # export new segmentation(s)
     export_segmentations(folder, new_folder,

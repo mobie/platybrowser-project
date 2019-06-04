@@ -1,8 +1,8 @@
-#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python
-
 import os
 import json
 import luigi
+
+import z5py
 from shutil import rmtree
 from cluster_tools.downscaling import PainteraToBdvWorkflow
 
@@ -20,10 +20,10 @@ def check_max_id(path, key):
 
 def to_bdv(in_path, in_key, out_path, resolution, target='slurm'):
     check_max_id(in_path, in_key)
-    tmp_folder = 'tmp_export'
+    tmp_folder = 'tmp_export_bdv'
 
     config_folder = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_folder)
+    os.makedirs(config_folder, exist_ok=True)
     configs = PainteraToBdvWorkflow.get_config()
 
     global_conf = configs['global']
