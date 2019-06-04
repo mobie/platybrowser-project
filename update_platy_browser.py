@@ -92,9 +92,12 @@ def make_attributes(folder, new_folder,
 
 
 # TODO check for errors
-def make_release(tag):
+def make_release(tag, description=''):
     call(['git', 'commit', '-m', 'Automatic platybrowser update'])
-    call(['git', 'tag', tag])
+    if description == '':
+        call(['git', 'tag', tag])
+    else:
+        call(['git', '-m', description, 'tag', tag])
     # TODO autopush ???
     # call(['git', 'push', 'origin', 'master', '--tags'])
 
@@ -103,7 +106,8 @@ def make_release(tag):
 def update_platy_browser(update_cell_segmentation=False,
                          update_nucleus_segmentation=False,
                          update_cell_tables=False,
-                         update_nucleus_tables=False):
+                         update_nucleus_tables=False,
+                         description=''):
     """ Generate new version of platy-browser derived data.
 
     Arguments:
@@ -113,6 +117,7 @@ def update_platy_browser(update_cell_segmentation=False,
             segmentation is not update, but the tables should be updated.
         update_nucleus_tables: Update the nucleus tables. This needs to be specified if the nucleus
             segmentation is not updated, but the tables should be updated.
+        description: Optional descrption for release message.
     """
 
     # check inputs
@@ -146,7 +151,7 @@ def update_platy_browser(update_cell_segmentation=False,
     copy_static_files(folder, new_folder)
 
     # make new release
-    make_release(new_tag)
+    make_release(new_tag, description)
 
 
 def str2bool(v):
@@ -178,9 +183,12 @@ if __name__ == '__main__':
                         default=False, help=table_help_str("cell"))
     parser.add_argument('--update_nucleus_tables', type=str2bool,
                         default=False, help=table_help_str("nucleus"))
+    parser.add_argument('--description', type=str, default='',
+                        help="Optional description for release message")
 
     args = parser.parse_args()
     update_platy_browser(args.update_cell_segmentation,
                          args.update_nucleus_segmentation,
                          args.update_cell_tables,
-                         args.update_nucleus_tables)
+                         args.update_nucleus_tables,
+                         args.description)
