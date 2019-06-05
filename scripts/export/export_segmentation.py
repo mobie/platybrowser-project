@@ -2,7 +2,6 @@ import os
 import json
 import luigi
 import z5py
-from shutil import rmtree
 
 from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit
@@ -54,7 +53,7 @@ def downscale(path, in_key, out_key,
         raise RuntimeError("Downscaling the segmentation failed")
 
 
-def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, resolution):
+def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, resolution, tmp_folder):
     """ Export a segmentation from paintera project to bdv file and
     compute segment lut for previous segmentation.
 
@@ -65,19 +64,21 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
         new_folder: folder for new segmentation
         name: name of segmentation
         resolution: resolution [z, y, x] in micrometer
+        tmp_folder: folder for temporary files
     """
     # TODO should make this a param
     max_jobs = 250
     target = 'slurm'
 
-    tmp_folder = 'tmp_export_seg'
     tmp_path = os.path.join(tmp_folder, 'data.n5')
     tmp_key = 'seg'
     tmp_key0 = os.path.join(tmp_key, 's0')
 
     # export segmentation from paintera commit for all scales
     serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
-                          max_jobs, target)
+                          max_jobs, target, relabel_output=True)
+
+    # TODO run small size filter postprocessing ?
 
     # downscale the segemntation
     n_scales = get_n_scales(paintera_path, paintera_key)
@@ -85,10 +86,8 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
 
     # convert to bdv
     out_path = os.path.join(new_folder, 'segmentations', '%s.h5' % name)
-    to_bdv(tmp_path, tmp_key, out_path, resolution, tmp_folder, target)
+    tmp_bdv = os.path.join(tmp_folder, 'tmp_bdv')
+    to_bdv(tmp_path, tmp_key, out_path, resolution, tmp_bdv, target)
 
     # compute mapping to old segmentation
     map_segmentation_ids(folder, new_folder, name, tmp_folder, max_jobs, target)
-
-    # clean up tmp
-    # rmtree(tmp_folder)

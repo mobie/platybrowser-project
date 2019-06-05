@@ -3,6 +3,7 @@
 import os
 import argparse
 from subprocess import check_output, call
+from shutil import rmtree
 
 from scripts.attributes import make_cell_tables, make_nucleus_tables
 from scripts.export import export_segmentation
@@ -13,13 +14,16 @@ from scripts.files import copy_tables, copy_segmentation, copy_static_files, mak
 # in order to get the new segmentation, changes need to be committed,
 # s.t. they are stored in these files!
 PAINTERA_ROOT = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
-# TODO do we need the data postfix ???
 PROJECT_CELLS = 'volumes/paintera/proofread_cells'
 PROJECT_NUCLEI = 'volumes/paintera/nuclei'
 
 # name for cell and nucleus segmentations
 NAME_CELLS = 'em-segmented-cells-labels'
 NAME_NUCLEI = 'em-segmented-nuclei-labels'
+
+# resolutions of cell and nucleus segmentation
+RES_CELLS = [.025, .02, .02]
+RES_NUCLEI = [.1, .08, .08]
 
 
 def check_inputs(update_cell_segmentation,
@@ -44,26 +48,26 @@ def get_tags():
     return tag, new_tag
 
 
-# TODO
-# need lut from new to old segmentation ids
-# to auto translate custom attributes
-# also support extraction from paintera commit
 def export_segmentations(folder, new_folder,
                          update_cell_segmentation,
                          update_nucleus_segmentation):
     # update or copy cell segmentation
     if update_cell_segmentation:
+        tmp_cells_seg = 'tmp_export_cells'
         export_segmentation(PAINTERA_ROOT, PROJECT_CELLS,
                             folder, new_folder, NAME_CELLS,
-                            resolution=[.025, .02, .02])
+                            resolution=RES_CELLS,
+                            tmp_folder=tmp_cells_seg)
     else:
         copy_segmentation(folder, new_folder, NAME_CELLS)
 
     # update or copy nucleus segmentation
     if update_nucleus_segmentation:
+        tmp_nuc_seg = 'tmp_export_nuclei'
         export_segmentation(PAINTERA_ROOT, PROJECT_NUCLEI,
                             folder, new_folder, NAME_NUCLEI,
-                            resolution=[.1, .08, .08])
+                            resolution=RES_NUCLEI,
+                            tmp_folder=tmp_nuc_seg)
     else:
         copy_segmentation(folder, new_folder, NAME_NUCLEI)
 
@@ -72,13 +76,13 @@ def make_attributes(folder, new_folder,
                     update_cell_tables, update_nucleus_tables):
     # update or copy cell tables
     if update_cell_tables:
-        make_cell_tables(new_folder, NAME_CELLS)
+        make_cell_tables(new_folder, NAME_CELLS, 'tmp_tables_cells', RES_CELLS)
     else:
         copy_tables(folder, new_folder, NAME_CELLS)
 
     # update or copy nucleus tables
     if update_nucleus_tables:
-        make_nucleus_tables(new_folder, NAME_NUCLEI)
+        make_nucleus_tables(new_folder, NAME_NUCLEI, 'tmp_tables_nuclei', RES_NUCLEI)
     else:
         copy_tables(folder, new_folder, NAME_NUCLEI)
 
@@ -95,7 +99,22 @@ def make_release(tag, folder, description=''):
     # call(['git', 'push', 'origin', 'master', '--tags'])
 
 
-# TODO catch all exceptions and re-roll if exception was caught
+def clean_up():
+
+    def remove_dir(dir_name):
+        try:
+            rmtree(dir_name)
+        except OSError:
+            pass
+
+    # remove all tmp folders
+    remove_dir('tmp_export_cells')
+    remove_dir('tmp_export_nuclei')
+    remove_dir('tmp_tables_cells')
+    remove_dir('tmp_tables_nuclei')
+
+
+# TODO catch all exceptions and handle them properly
 def update_platy_browser(update_cell_segmentation=False,
                          update_nucleus_segmentation=False,
                          update_cell_tables=False,
@@ -131,12 +150,12 @@ def update_platy_browser(update_cell_segmentation=False,
     new_folder = os.makedirs('data', new_tag)
     make_folder_structure(new_folder)
 
-    # export new segmentation(s)
+    # export new segmentations
     export_segmentations(folder, new_folder,
                          update_cell_segmentation,
                          update_nucleus_segmentation)
 
-    # generate new attribute tables (if necessary)
+    # generate new attribute tables
     make_attributes(folder, new_folder,
                     update_cell_tables,
                     update_nucleus_tables)
@@ -146,6 +165,13 @@ def update_platy_browser(update_cell_segmentation=False,
 
     # make new release
     make_release(new_tag, new_folder, description)
+    print("Updated platybrowser to new release", new_tag)
+    print("All changes were successfully made. Starting clean up now.")
+    print("This can take a few hours, you can already use the new data; clean up will only remove temp files.")
+
+    # TODO would be better to start this as a job on a different machine, not the login node!
+    # TODO clean up tmp folders
+    # clean_up()
 
 
 def str2bool(v):
