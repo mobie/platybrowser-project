@@ -21,6 +21,16 @@ For a given version `X.Y.Z`, the data is stored in the directory `/data/X.Y.Z/` 
 - `tables`: CSV tables with attributes derived from image data and segmentations.
 
 
+### Table storage
+
+Derived attributes are stored in csv tables. Tables must be associated with a segmentation file `segmentations/segmentation-name.xml`
+All tables associated with a given segmentation must be stored in the sub-directory `tables/segmentation-name`.
+If this directory exists, it must at least contain the file `default.csv` with spatial attributes of the segmentation objects , which are necessary for the platybrowser table functionality.
+
+TODO think about linking to previous table version. Simplest option would be to replace the directory `tables/segmentation-name` with a
+text file that contains the absolute path to the previous table version.
+
+
 ## Data generation
 
 In addition to the data, the scripts for generating the derived data are also collected here.
