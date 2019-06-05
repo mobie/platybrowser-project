@@ -53,7 +53,8 @@ def downscale(path, in_key, out_key,
         raise RuntimeError("Downscaling the segmentation failed")
 
 
-def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, resolution, tmp_folder):
+def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, resolution,
+                        tmp_folder, target='slurm', max_jobs=200):
     """ Export a segmentation from paintera project to bdv file and
     compute segment lut for previous segmentation.
 
@@ -66,9 +67,6 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
         resolution: resolution [z, y, x] in micrometer
         tmp_folder: folder for temporary files
     """
-    # TODO should make this a param
-    max_jobs = 250
-    target = 'slurm'
 
     tmp_path = os.path.join(tmp_folder, 'data.n5')
     tmp_key = 'seg'

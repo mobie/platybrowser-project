@@ -2,7 +2,6 @@
 # TODO new platy-browser env
 
 import os
-import csv
 import json
 import z5py
 import numpy as np
@@ -10,6 +9,7 @@ import numpy as np
 import luigi
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.morphology import CorrectAnchorsWorkflow
+from .util import write_csv
 
 
 def make_config(tmp_folder):
@@ -71,7 +71,7 @@ def to_csv(input_path, input_key, output_path, resolution):
     label_ids = attributes[:, 0:1]
 
     # the colomn names
-    col_names = ['label_ids',
+    col_names = ['label_id',
                  'anchor_x', 'anchor_y', 'anchor_z',
                  'bb_min_x', 'bb_min_y', 'bb_min_z',
                  'bb_max_x', 'bb_max_y', 'bb_max_z',
@@ -98,13 +98,7 @@ def to_csv(input_path, input_key, output_path, resolution):
     # NOTE: attributes[1] = size in pixel
     # make the output attributes
     data = np.concatenate([label_ids, com, minc, maxc, attributes[:, 1:2]], axis=1)
-    assert data.shape[1] == len(col_names)
-
-    # write to csv
-    with open(output_path, 'w', newline='') as f:
-        writer = csv.writer(f, delimiter='\t')
-        writer.writerow(col_names)
-        writer.writerows(data)
+    write_csv(output_path, data, col_names)
 
 
 def base_attributes(input_path, input_key, output_path, resolution,
@@ -126,3 +120,8 @@ def base_attributes(input_path, input_key, output_path, resolution,
 
     # write output to csv
     to_csv(tmp_path, tmp_key, output_path, resolution)
+
+    # load and return label_ids
+    with z5py.File(tmp_path, 'r') as f:
+        label_ids = f[tmp_key][:, 0]
+    return label_ids

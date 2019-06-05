@@ -2,6 +2,7 @@ import os
 import h5py
 
 from .base_attributes import base_attributes
+from .map_objects import map_objects
 from ..files import get_h5_path_from_xml
 
 
@@ -10,7 +11,6 @@ def get_seg_path(folder, name, key):
     path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
     assert os.path.exists(path), path
     with h5py.File(path, 'r') as f:
-        print(path)
         assert key in f, "%s not in %s" % (key, str(list(f.keys())))
     return path
 
@@ -26,17 +26,23 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
 
     # make the basic attributes table
     base_out = os.path.join(table_folder, 'default.csv')
-    base_attributes(seg_path, seg_key, base_out, resolution,
-                    tmp_folder, target=target, max_jobs=max_jobs,
-                    correct_anchors=True)
+    label_ids = base_attributes(seg_path, seg_key, base_out, resolution,
+                                tmp_folder, target=target, max_jobs=max_jobs,
+                                correct_anchors=True)
 
-    # TODO
     # make table with mapping to other objects
-    # nuclei
-    # cellular models
+    # nuclei, cellular models (TODO), ...
+    map_out = os.path.join(table_folder, 'objects.csv')
+    map_paths = [get_seg_path(folder, 'em-segmented-nuclei-labels')]
+    map_keys = [seg_key]
+    map_names = ['nucleus_id']
+    map_objects(label_ids, seg_path, seg_key, map_out,
+                map_paths, map_keys, map_names,
+                tmp_folder, target, max_jobs)
 
     # TODO additional tables:
-    # gene mapping
+    # regions / semantics
+    # gene expression
     # ???
 
 
@@ -55,9 +61,10 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO
+    # TODO do we need this for nuclei as well ?
     # make table with mapping to other objects
-    # cells
+    # cells, ...
 
     # TODO additional tables:
     # kimberly's nucleus attributes
+    # ???
