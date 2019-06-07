@@ -56,3 +56,23 @@ def copy_xml_with_abspath(xml_in, xml_out):
     indent_xml(et_root)
     tree = ET.ElementTree(et_root)
     tree.write(xml_out)
+
+
+def write_simple_xml(xml_path, h5_path, path_type='absolute'):
+    # write top-level data
+    root = ET.Element('SpimData')
+    root.set('version', '0.2')
+    bp = ET.SubElement(root, 'BasePath')
+    bp.set('type', 'relative')
+    bp.text = '.'
+
+    seqdesc = ET.SubElement(root, 'SequenceDescription')
+    imgload = ET.SubElement(seqdesc, 'ImageLoader')
+    imgload.set('format', 'bdv.hdf5')
+    el = ET.SubElement(imgload, 'hdf5')
+    el.set('type', path_type)
+    el.text = h5_path
+
+    indent_xml(root)
+    tree = ET.ElementTree(root)
+    tree.write(xml_path)
