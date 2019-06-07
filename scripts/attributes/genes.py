@@ -52,10 +52,7 @@ def get_cell_expression(segm_data, all_genes):
         genes_in_cell = all_genes[tuple([slice(0,None),] +  list(bb))]
         for gene in range(num_genes):
             gene_expr = genes_in_cell[gene]
-            try:
-                gene_expr_sum = np.sum(gene_expr[cell_masked]>0)
-            except:
-                print(gene_expr.shape, cell_masked.shape)
+            gene_expr_sum = np.sum(gene_expr[cell_masked]>0)
             cells_expression[cell_idx, gene] = gene_expr_sum / cell_size
     return labels, cells_expression
 
