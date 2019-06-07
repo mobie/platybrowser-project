@@ -1,9 +1,14 @@
-import os
 import csv
 import h5py
 import numpy as np
 from vigra.analysis import extractRegionFeatures
 from vigra.sampling import resize
+
+
+# TODO
+# wrap this in a cluster_tools task in order to run remotely
+# fix blatant inefficiencis (size loop)
+# make test to check against original table
 
 
 def get_bbs(data):
@@ -23,6 +28,8 @@ def get_bbs(data):
     return cells_bbs
 
 
+# TODO very inefficient, can use "Count" feature of vigra features instead
+# and then just do this in `get_bbs` as well
 def get_cell_sizes(data):
     max_label = (np.max(data)).astype('uint32')
     cell_sizes = [0] * (max_label + 1)
@@ -58,25 +65,24 @@ def get_cell_expression(segm_data, all_genes):
 
 
 def write_genes_table(segm_file, genes_file, table_file, labels):
-    DSET = 't00000/s00/4/cells'
-    NEW_SHAPE = (570, 518, 550)
-    GENES_DSET = 'genes'
-    NAMES_DSET = 'gene_names'
-
-    genes_table_file = os.path.splitext(table_file)[0] + "_genes2" + os.path.splitext(table_file)[1]
+    dset = 't00000/s00/4/cells'
+    new_shape = (570, 518, 550)
+    genes_dset = 'genes'
+    names_dset = 'gene_names'
 
     with h5py.File(segm_file, 'r') as f:
-        segment_data = f[DSET][:]
+        segment_data = f[dset][:]
 
+    # TODO loading the whole thing into ram takes a lot of memory
     with h5py.File(genes_file, 'r') as f:
-        all_genes = f[GENES_DSET][:]
-        gene_names = [i.decode('utf-8') for i in f[NAMES_DSET]]
+        all_genes = f[genes_dset][:]
+        gene_names = [i.decode('utf-8') for i in f[names_dset]]
 
     num_genes = len(gene_names)
-    downsampled_data = resize(segment_data.astype("float32"), shape=NEW_SHAPE, order=0).astype('uint16')
+    downsampled_data = resize(segment_data.astype("float32"), shape=new_shape, order=0).astype('uint16')
     avail_labels, expression = get_cell_expression(downsampled_data, all_genes)
 
-    with open(genes_table_file, 'w') as genes_table:
+    with open(table_file, 'w') as genes_table:
         csv_writer = csv.writer(genes_table, delimiter='\t')
         _ = csv_writer.writerow(['label_id'] + gene_names)
         for label in labels:
