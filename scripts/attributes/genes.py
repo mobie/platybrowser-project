@@ -7,11 +7,10 @@ from vigra.sampling import resize
 
 
 def get_bbs(data):
-    shape = data.shape
     num_cells = (np.max(data)).astype('int') + 1
     cells_bbs = [[] for i in range(num_cells)]
     mins_and_maxs = extractRegionFeatures(data.astype('float32'), data.astype('uint32'),
-            features = ['Coord<Maximum >', 'Coord<Minimum >'])
+                                          features=['Coord<Maximum >', 'Coord<Minimum >'])
     mins = mins_and_maxs['Coord<Minimum >'].astype('uint32')
     maxs = mins_and_maxs['Coord<Maximum >'].astype('uint32') + 1
     for cell in range(num_cells):
@@ -31,7 +30,7 @@ def get_cell_sizes(data):
     for z in range(Z):
         for x in range(X):
             for y in range(Y):
-                label = data[z,x,y]
+                label = data[z, x, y]
                 cell_sizes[label] += 1
     cell_sizes = np.array(cell_sizes)
     return cell_sizes
@@ -45,21 +44,22 @@ def get_cell_expression(segm_data, all_genes):
     cell_bbs = get_bbs(segm_data)
     for cell_idx in range(len(labels)):
         cell_label = labels[cell_idx]
-        if cell_label == 0: continue
+        if cell_label == 0:
+            continue
         cell_size = cell_sizes[cell_label]
         bb = cell_bbs[cell_label]
-        cell_masked = (segm_data[bb]==cell_label)
-        genes_in_cell = all_genes[tuple([slice(0,None),] +  list(bb))]
+        cell_masked = (segm_data[bb] == cell_label)
+        genes_in_cell = all_genes[tuple([slice(0, None)] + list(bb))]
         for gene in range(num_genes):
             gene_expr = genes_in_cell[gene]
-            gene_expr_sum = np.sum(gene_expr[cell_masked]>0)
+            gene_expr_sum = np.sum(gene_expr[cell_masked] > 0)
             cells_expression[cell_idx, gene] = gene_expr_sum / cell_size
     return labels, cells_expression
 
 
 def write_genes_table(segm_file, genes_file, table_file, labels):
     DSET = 't00000/s00/4/cells'
-    NEW_SHAPE = (570,518,550)
+    NEW_SHAPE = (570, 518, 550)
     GENES_DSET = 'genes'
     NAMES_DSET = 'gene_names'
 
@@ -73,17 +73,15 @@ def write_genes_table(segm_file, genes_file, table_file, labels):
         gene_names = [i.decode('utf-8') for i in f[NAMES_DSET]]
 
     num_genes = len(gene_names)
-    downsampled_data = resize(segment_data.astype("float32"), shape = NEW_SHAPE, order=0).astype('uint16')
+    downsampled_data = resize(segment_data.astype("float32"), shape=NEW_SHAPE, order=0).astype('uint16')
     avail_labels, expression = get_cell_expression(downsampled_data, all_genes)
 
     with open(genes_table_file, 'w') as genes_table:
         csv_writer = csv.writer(genes_table, delimiter='\t')
-        _ = csv_writer.writerow(['label_id',] + gene_names)
+        _ = csv_writer.writerow(['label_id'] + gene_names)
         for label in labels:
             if label in avail_labels:
                 idx = avail_labels.index(label)
-                _ = csv_writer.writerow([label, ] + list(expression[idx]))
+                _ = csv_writer.writerow([label] + list(expression[idx]))
             else:
-                _ = csv_writer.writerow([label, ] + [0] * num_genes)
-
-
+                _ = csv_writer.writerow([label] + [0] * num_genes)
