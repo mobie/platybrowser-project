@@ -50,7 +50,7 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     if not os.path.exists(aux_gene_path):
         raise RuntimeError("Can't find auxiliary gene file")
     gene_out = os.path.join(table_folder, 'genes.csv')
-    # write_genes_table(seg_path, aux_gene_path, gene_out, label_ids)
+    write_genes_table(seg_path, aux_gene_path, gene_out, label_ids)
 
     # make table with morphology
     morpho_out = os.path.join(table_folder, 'morphology.csv')
