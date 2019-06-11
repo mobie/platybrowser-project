@@ -1,6 +1,3 @@
-#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python
-# TODO new platy-browser env
-
 import os
 import json
 import z5py
@@ -83,7 +80,7 @@ def to_csv(input_path, input_key, output_path, resolution):
     # reshuffle the attributes to fit the output colomns
 
     def translate_coordinate_tuple(coords):
-        coords = coords[::-1]
+        coords = coords[:, ::-1]
         for d in range(3):
             coords[:, d] *= res_in_micron[d]
         return coords
