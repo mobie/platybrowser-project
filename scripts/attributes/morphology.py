@@ -8,7 +8,7 @@ from skimage.transform import resize
 from skimage.util import pad
 
 
-def calculate_slice(scale, minmax):
+def calculate_slice(scale, mins, maxs):
     """
     Takes a scale (get this from xml file of object), and list of min and
     max coordinates in microns [min_coord_x_microns, min_coord_y_microns,
@@ -17,13 +17,6 @@ def calculate_slice(scale, minmax):
     Return a slice to use to extract
     that bounding box from the original image.
     """
-    # Get mins and flip order - so now z, y, x
-    mins = minmax[0:3][::-1]
-    # Get maxes and flip order - so now z, y, x
-    maxs = minmax[3:][::-1]
-
-    # flip order of the scale
-    scale = scale[::-1]
 
     # convert min and max in microns to pixel ranges
     mins = [int(mi / sca) for mi, sca in zip(mins, scale)]
@@ -104,20 +97,19 @@ def calculate_row_stats(row, seg_path, input_type, morphology, intensity):
     result = (row.label_id,)
 
     if input_type == 'nucleus':
-        full_seg_scale = [0.08, 0.08, 0.1]
+        full_seg_scale = [0.1, 0.08, 0.08]
         # use full res of segmentation - 0.08, 0.08, 0.1
         seg_level = 0
         # Use the /t00000/s00/3/cells for raw data - gives pixel size similar to the nuclear segmentation
         raw_level = 3
 
     elif input_type == 'cell':
-        full_seg_scale = [0.02, 0.02, 0.025]
+        full_seg_scale = [0.025, 0.02, 0.02]
         # look at 4x downsampled segmentation - close to 0.08, 0.08, 0.1
         seg_level = 2
 
-    # min max bounding box in microns for segmentation
-    minmax_seg = [row.bb_min_x, row.bb_min_y, row.bb_min_z, row.bb_max_x, row.bb_max_y, row.bb_max_z]
-
+    bb_min = [row.bb_min_z, row.bb_min_y, row.bb_min_x]
+    bb_max = [row.bb_max_z, row.bb_max_y, row.bb_max_x]
     with h5py.File(seg_path, 'r') as f:
 
         # get shape of full data & downsampled
@@ -125,12 +117,12 @@ def calculate_row_stats(row, seg_path, input_type, morphology, intensity):
         down_data_shape = f['t00000/s00/' + str(seg_level) + '/cells'].shape
 
         # scale for downsampled
-        down_scale = [full_seg_scale[0]*(full_data_shape[2]/down_data_shape[2]),
-                      full_seg_scale[1]*(full_data_shape[1]/down_data_shape[1]),
-                      full_seg_scale[2]*(full_data_shape[0]/down_data_shape[0])]
-
+        down_scale = [full_scale * (full_shape / down_shape)
+                      for full_scale, full_shape, down_shape in zip(full_seg_scale,
+                                                                    full_data_shape,
+                                                                    down_data_shape)]
         # slice for seg file
-        seg_slice = calculate_slice(down_scale, minmax_seg)
+        seg_slice = calculate_slice(down_scale, bb_min, bb_max)
 
         # get specified layer in bdv file
         data = f['t00000/s00/' + str(seg_level) + '/cells']
@@ -139,6 +131,19 @@ def calculate_row_stats(row, seg_path, input_type, morphology, intensity):
     # make into a binary mask
     binary = img_array == int(row.label_id)
     binary = binary.astype('uint8')
+
+    # we need to skip for empty labels
+    n_fg = binary.sum()
+    if n_fg == 0:
+        print("Skipping label", row.label_id, "due to empty segmentation mask")
+        n_stats = 0
+        if morphology:
+            n_stats += 4
+        if intensity:
+            n_stats += 2
+        dummy_result = (0.,) * n_stats
+        result = result + dummy_result
+        return result
 
     img_array = None
 
@@ -150,21 +155,23 @@ def calculate_row_stats(row, seg_path, input_type, morphology, intensity):
     if intensity:
 
         # scale for full resolution raw data
-        full_raw_scale = [0.01, 0.01, 0.025]
+        full_raw_scale = [0.025, 0.01, 0.01]
 
+        # FIXME don't hardcode this path here
         with h5py.File('/g/arendt/EM_6dpf_segmentation/EM-Prospr/em-raw-full-res.h5', 'r') as f:
 
             # get shape of full data & downsampled
             full_data_shape = f['t00000/s00/0/cells'].shape
             down_data_shape = f['t00000/s00/' + str(raw_level) + '/cells'].shape
 
-            # scale for donwampled
-            down_scale = [full_raw_scale[0]*(full_data_shape[2]/down_data_shape[2]),
-                          full_raw_scale[1]*(full_data_shape[1]/down_data_shape[1]),
-                          full_raw_scale[2]*(full_data_shape[0]/down_data_shape[0])]
+            # scale for downsampled
+            down_scale = [full_scale * (full_shape / down_shape)
+                          for full_scale, full_shape, down_shape in zip(full_raw_scale,
+                                                                        full_data_shape,
+                                                                        down_data_shape)]
 
             # slice for raw file
-            raw_slice = calculate_slice(down_scale, minmax_seg)
+            raw_slice = calculate_slice(down_scale, bb_min, bb_max)
 
             # get specified layer in bdv file
             data = f['t00000/s00/' + str(raw_level) + '/cells']
@@ -195,10 +202,10 @@ def calculate_morphology_stats(table, seg_path, input_type, morphology=True, int
     # size cutoffs (at the moment just browsed through segmentation and chose sensible values)
     # not very stringent, still some rather large / small things included
     if input_type == 'nucleus':
-        table = table.loc[table['shape_pixelsize'] >= 18313.0, :]
+        table = table.loc[table['n_pixels'] >= 18313.0, :]
 
     elif input_type == 'cell':
-        criteria = np.logical_and(table['shape_pixelsize'] > 88741.0, table['shape_pixelsize'] < 600000000.0)
+        criteria = np.logical_and(table['n_pixels'] > 88741.0, table['n_pixels'] < 600000000.0)
         table = table.loc[criteria, :]
 
     stats = [calculate_row_stats(row, seg_path, input_type, morphology, intensity)
@@ -222,42 +229,61 @@ def calculate_morphology_stats(table, seg_path, input_type, morphology=True, int
     return stats
 
 
-def write_morphology_table(cell_seg_path, nucleus_seg_path, cell_table_path, nucleus_table_path,
-                           cell_nuc_mapping_path, nucleus_out_path, cell_out_path):
-    """
-    Write csv files of morphology stats for both the nucleus and cell segmentation
-
-    cell_seg_path - string, file path to cell segmentation
-    nucleus_seg_path - string, file path to nucleus segmentation
-    cell_table_path - string, file path to cell table
-    nucleus_table_path - string, file path to nucleus table
-    cell_nuc_mapping_path - string, file path to numpy array mapping cells to nuclei
-        (first column cell id, second nucleus id)
-    nucleus_out_path - string, file path to save new nucleus table
-    cell_out_path - string, file path to save new cell table
-    """
-
-    cell_table = pd.read_csv(cell_table_path, sep='\t')
-
-    nuclei_table = pd.read_csv(nucleus_table_path, sep='\t')
-
-    # remove zero label form both tables if it exists
-    nuclei_table = nuclei_table.loc[nuclei_table['label_id'] != 0, :]
-    cell_table = cell_table.loc[cell_table['label_id'] != 0, :]
-
+def load_cell_nucleus_mapping(cell_nuc_mapping_path):
     # read in numpy array of mapping of cells to nuclei - first column cell id, second nucleus id
-    cell_nucleus_mapping = np.load(cell_nuc_mapping_path)
+    cell_nucleus_mapping = np.genfromtxt(cell_nuc_mapping_path, skip_header=1, delimiter='\t')[:, :2]
+    cell_nucleus_mapping = cell_nucleus_mapping.astype('uint64')
     # remove zero labels from this table too, if exist
     cell_nucleus_mapping = cell_nucleus_mapping[np.logical_and(cell_nucleus_mapping[:, 0] != 0,
                                                                cell_nucleus_mapping[:, 1] != 0)]
+    return cell_nucleus_mapping
+
+
+# TODO wrap this in a luigi task / cluster tools task, so we have caching and can move computation
+# to the cluster
+def write_morphology_nuclei(seg_path, table_in_path, table_out_path):
+    """
+    Write csv files of morphology stats for both the nucleus and cell segmentation
+
+    seg_path - string, file path to nucleus segmentation
+    cell_table_path - string, file path to cell table
+    table_in_path - string, file path to nucleus table
+    table_out_path - string, file path to save new nucleus table
+    """
+
+    nuclei_table = pd.read_csv(table_in_path, sep='\t')
+
+    # remove zero label if it exists
+    nuclei_table = nuclei_table.loc[nuclei_table['label_id'] != 0, :]
+
+    # calculate stats for both tables and save results to csv
+    result_nuclei = calculate_morphology_stats(nuclei_table, seg_path, 'nucleus',
+                                               morphology=True, intensity=True)
+    result_nuclei.to_csv(table_out_path, index=False, sep='\t')
+
+
+# TODO wrap this in a luigi task / cluster tools task, so we have caching and can move computation
+# to the cluster
+def write_morphology_cells(seg_path, table_in_path,
+                           cell_nuc_mapping_path, table_out_path):
+    """
+    Write csv files of morphology stats for both the nucleus and cell segmentation
+
+    seg_path - string, file path to cell segmentation
+    table_in_path - string, file path to cell table
+    cell_nuc_mapping_path - string, file path to numpy array mapping cells to nuclei
+        (first column cell id, second nucleus id)
+    table_out_path - string, file path to save new cell table
+    """
+
+    cell_table = pd.read_csv(table_in_path, sep='\t')
+
+    # remove zero label if it exists
+    cell_table = cell_table.loc[cell_table['label_id'] != 0, :]
+    cell_nucleus_mapping = load_cell_nucleus_mapping(cell_nuc_mapping_path)
 
     # only keep cells in the cell_nuc_mapping (i.e those that have assigned nuclei)
     cell_table = cell_table.loc[np.isin(cell_table['label_id'], cell_nucleus_mapping[:, 0]), :]
 
-    # calculate stats for both tables and save results to csv
-    result_nuclei = calculate_morphology_stats(nuclei_table, nucleus_seg_path, 'nucleus',
-                                               morphology=True, intensity=True)
-    result_nuclei.to_csv(nucleus_out_path, index=False, sep='\t')
-
-    result_cells = calculate_morphology_stats(cell_table, cell_seg_path, 'cell', morphology=True, intensity=False)
-    result_cells.to_csv(cell_out_path, index=False, sep='\t')
+    result_cells = calculate_morphology_stats(cell_table, seg_path, 'cell', morphology=True, intensity=False)
+    result_cells.to_csv(table_out_path, index=False, sep='\t')
