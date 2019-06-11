@@ -4,6 +4,7 @@ import h5py
 from .base_attributes import base_attributes
 from .map_objects import map_objects
 from .genes import write_genes_table
+from .morphology import write_morphology_cells, write_morphology_nuclei
 from ..files import get_h5_path_from_xml
 
 
@@ -49,7 +50,11 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     if not os.path.exists(aux_gene_path):
         raise RuntimeError("Can't find auxiliary gene file")
     gene_out = os.path.join(table_folder, 'genes.csv')
-    write_genes_table(seg_path, aux_gene_path, gene_out, label_ids)
+    # write_genes_table(seg_path, aux_gene_path, gene_out, label_ids)
+
+    # make table with morphology
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    write_morphology_cells(seg_path, base_out, map_out, morpho_out)
 
     # TODO additional tables:
     # regions / semantics
@@ -71,10 +76,9 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO do we need this for nuclei as well ?
-    # make table with mapping to other objects
-    # cells, ...
+    # make the morphology attribute table
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    write_morphology_nuclei(seg_path, base_out, morpho_out)
 
     # TODO additional tables:
-    # kimberly's nucleus attributes
     # ???
