@@ -1,17 +1,20 @@
 import unittest
-import sys
 import os
+import json
+import sys
 import numpy as np
+from shutil import rmtree
 sys.path.append('../..')
 
 
 # check new version of gene mapping against original
 class TestGeneAttributes(unittest.TestCase):
-    test_file = 'test_table.csv'
+    tmp_folder = 'tmp_genes'
+    test_file = 'tmp_genes/test_table.csv'
 
-    def tearDown(self):
+    def _tearDown(self):
         try:
-            os.remove(self.test_file)
+            rmtree(self.tmp_folder)
         except OSError:
             pass
 
@@ -22,6 +25,7 @@ class TestGeneAttributes(unittest.TestCase):
 
     def test_genes(self):
         from scripts.attributes.genes import write_genes_table
+        from scripts.extension.attributes import GenesLocal
         from scripts.files import get_h5_path_from_xml
 
         # load original genes table
@@ -35,8 +39,19 @@ class TestGeneAttributes(unittest.TestCase):
         genes_file = '../../data/0.0.0/misc/meds_all_genes.xml'
         genes_file = get_h5_path_from_xml(genes_file)
         table_file = self.test_file
+
+        # write the global config
+        config_folder = os.path.join(self.tmp_folder, 'configs')
+        os.makedirs(config_folder, exist_ok=True)
+        conf = GenesLocal.default_global_config()
+        shebang = '#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python'
+        conf.update({'shebang': shebang})
+        with open(os.path.join(config_folder, 'global.config'), 'w') as f:
+            json.dump(conf, f)
+
         print("Start computation ...")
-        write_genes_table(segm_file, genes_file, table_file, labels)
+        write_genes_table(segm_file, genes_file, table_file, labels,
+                          self.tmp_folder, 'local', 8)
         table = self.load_table(table_file)
 
         # make sure new and old table agree
