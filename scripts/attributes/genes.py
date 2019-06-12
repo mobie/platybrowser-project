@@ -11,44 +11,27 @@ from vigra.sampling import resize
 # make test to check against original table
 
 
-def get_bbs(data):
-    num_cells = (np.max(data)).astype('int') + 1
-    cells_bbs = [[] for i in range(num_cells)]
-    mins_and_maxs = extractRegionFeatures(data.astype('float32'), data.astype('uint32'),
-                                          features=['Coord<Maximum >', 'Coord<Minimum >'])
-    mins = mins_and_maxs['Coord<Minimum >'].astype('uint32')
-    maxs = mins_and_maxs['Coord<Maximum >'].astype('uint32') + 1
-    for cell in range(num_cells):
-        cell_bb = []
-        cell_min = mins[cell]
-        cell_max = maxs[cell]
-        for axis in range(3):
-            cell_bb.append(slice(cell_min[axis], cell_max[axis]))
-        cells_bbs[cell] = tuple(cell_bb)
-    return cells_bbs
+def get_sizes_and_bbs(data):
+    # compute the relevant vigra region features
+    features = extractRegionFeatures(data.astype('float32'), data.astype('uint32'),
+                                     features=['Coord<Maximum >', 'Coord<Minimum >', 'Count'])
 
+    # extract sizes from features
+    cell_sizes = features['Count'].squeeze().astype('uint64')
 
-# TODO very inefficient, can use "Count" feature of vigra features instead
-# and then just do this in `get_bbs` as well
-def get_cell_sizes(data):
-    max_label = (np.max(data)).astype('uint32')
-    cell_sizes = [0] * (max_label + 1)
-    Z, X, Y = data.shape
-    for z in range(Z):
-        for x in range(X):
-            for y in range(Y):
-                label = data[z, x, y]
-                cell_sizes[label] += 1
-    cell_sizes = np.array(cell_sizes)
-    return cell_sizes
+    # compute bounding boxes from features
+    mins = features['Coord<Minimum >'].astype('uint32')
+    maxs = features['Coord<Maximum >'].astype('uint32') + 1
+    cell_bbs = [tuple(slice(mi, ma) for mi, ma in zip(min_, max_))
+                for min_, max_ in zip(mins, maxs)]
+    return cell_sizes, cell_bbs
 
 
 def get_cell_expression(segm_data, all_genes):
     num_genes = all_genes.shape[0]
     labels = list(np.unique(segm_data))
     cells_expression = np.zeros((len(labels), num_genes), dtype='float32')
-    cell_sizes = get_cell_sizes(segm_data)
-    cell_bbs = get_bbs(segm_data)
+    cell_sizes, cell_bbs = get_sizes_and_bbs(segm_data)
     for cell_idx in range(len(labels)):
         cell_label = labels[cell_idx]
         if cell_label == 0:
