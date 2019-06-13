@@ -55,7 +55,10 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
 
     # make table with morphology
     morpho_out = os.path.join(table_folder, 'morphology.csv')
-    write_morphology_cells(seg_path, base_out, map_out, morpho_out)
+    n_labels = len(label_ids)
+    write_morphology_cells(seg_path, base_out, map_out, morpho_out,
+                           n_labels, resolution, tmp_folder,
+                           target, max_jobs)
 
     # TODO additional tables:
     # regions / semantics
@@ -73,13 +76,18 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
 
     # make the basic attributes table
     base_out = os.path.join(table_folder, 'default.csv')
-    base_attributes(seg_path, seg_key, base_out, resolution,
-                    tmp_folder, target=target, max_jobs=max_jobs,
-                    correct_anchors=True)
+    label_ids = base_attributes(seg_path, seg_key, base_out, resolution,
+                                tmp_folder, target=target, max_jobs=max_jobs,
+                                correct_anchors=True)
 
+    xml_raw = os.path.join(folder, 'images', 'em-raw-full-res.xml')
+    raw_path = get_h5_path_from_xml(xml_raw, return_absolute_path=True)
     # make the morphology attribute table
     morpho_out = os.path.join(table_folder, 'morphology.csv')
-    write_morphology_nuclei(seg_path, base_out, morpho_out)
+    n_labels = len(label_ids)
+    write_morphology_nuclei(seg_path, raw_path, base_out, morpho_out,
+                            n_labels, resolution, tmp_folder,
+                            target, max_jobs)
 
     # TODO additional tables:
     # ???
