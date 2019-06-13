@@ -4,8 +4,8 @@ import os
 
 from scripts.files import make_folder_structure
 from scripts.export import export_segmentation
-from scripts.files import copy_xml_with_abspath
-from scripts.attributes import make_nucleus_tables
+from scripts.files import copy_xml_with_abspath, write_simple_xml
+from scripts.attributes import make_nucleus_tables, make_cell_tables
 
 
 def make_segmentations(old_folder, folder):
@@ -23,7 +23,15 @@ def make_segmentations(old_folder, folder):
     key_cells = 'volumes/paintera/proofread_cells'
     cells_name = 'em-segmented-cells-labels'
     res_cells = [.025, .02, .02]
-    export_segmentation(path, key_cells, old_folder, folder, cells_name, res_cells, tmp_cells)
+    export_segmentation(path, key_cells, old_folder, folder, cells_name, res_cells, tmp_cells,
+                        target='local', max_jobs=8)
+
+
+def copy_aux_gene_file(out_folder):
+    # TODO we need some central h5 data storage and put this there
+    input_path = '/g/kreshuk/zinchenk/cell_match/data/meds_all_genes_500nm.h5'
+    xml_path = os.path.join(out_folder, 'meds_all_genes.xml')
+    write_simple_xml(xml_path, input_path)
 
 
 def make_image_data(old_folder, folder):
@@ -35,6 +43,10 @@ def make_image_data(old_folder, folder):
     raw_out = os.path.join(data_folder, raw_name)
     copy_xml_with_abspath(raw_in, raw_out)
 
+    # copy valentyna's aux gene file
+    misc_folder = os.path.join(folder, 'misc')
+    copy_aux_gene_file(misc_folder)
+
     # TODO
     # copy MEDs and SPMs
     # copy cellular models
@@ -43,16 +55,17 @@ def make_image_data(old_folder, folder):
 
 
 def make_tables(folder):
-    # TODO make cell segmentation tables
-    # name_cells = 'em-segmented-cells-labels'
-    # res_cells = [.025, .02, .02]
-    # make_cell_tables(folder, name_cells, 'tmp_tables_cells', res_cells)
+    # make cell segmentation tables
+    name_cells = 'em-segmented-cells-labels'
+    res_cells = [.025, .02, .02]
+    make_cell_tables(folder, name_cells, 'tmp_tables_cells',
+                     res_cells, target='local', max_jobs=32)
 
     # make nucleus segmentation tables
     name_nuclei = 'em-segmented-nuclei-labels'
     res_nuclei = [.1, .08, .08]
     make_nucleus_tables(folder, name_nuclei, 'tmp_tables_nuclei',
-                        res_nuclei, target='local', max_jobs=8)
+                        res_nuclei, target='local', max_jobs=32)
 
 
 def make_initial_version():
