@@ -198,7 +198,6 @@ def intensity_row_features(raw, mask):
 def morphology_features_for_label_range(table, ds, ds_raw,
                                         scale_factor_seg, scale_factor_raw,
                                         label_begin, label_end):
-    n_features = 4 if ds_raw is None else 6
     label_range = np.logical_and(table['label_id'] >= label_begin, table['label_id'] < label_end)
     sub_table = table.loc[label_range, :]
     stats = []
@@ -213,8 +212,7 @@ def morphology_features_for_label_range(table, ds, ds_raw,
         # foreground in the mask
         seg_mask = seg == label_id
         if seg_mask.sum() == 0:
-            result = [float(label_id)] + [0.] * n_features
-            stats.append(result)
+            # if the seg mask is empty, we simply skip this label-id
             continue
 
         # compute the morphology features from the segmentation mask
