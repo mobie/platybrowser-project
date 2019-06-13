@@ -12,7 +12,7 @@ class TestGeneAttributes(unittest.TestCase):
     tmp_folder = 'tmp_genes'
     test_file = 'tmp_genes/test_table.csv'
 
-    def _tearDown(self):
+    def tearDown(self):
         try:
             rmtree(self.tmp_folder)
         except OSError:
