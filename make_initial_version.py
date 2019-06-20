@@ -1,6 +1,7 @@
 #! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python
 
 import os
+from shutil import copyfile
 
 from scripts.files import make_folder_structure
 from scripts.export import export_segmentation
@@ -50,8 +51,27 @@ def make_image_data(old_folder, folder):
     # TODO
     # copy MEDs and SPMs
     # copy cellular models
-    # copy additional segmentations from tischi and ariadne
-    # (neuropil, muscle, ...)
+
+    # copy additional segmentations
+    # (muscle, tissue (includes neuropil), TODO more?)
+    seg_folder = os.path.join(folder, 'segmentations')
+    seg_in_names = ['em-segmented-muscles-ariadne.xml',
+                    # 'em-segmented-neuropil-ariadne.xml',
+                    'em-segmented-tissue-labels.xml']
+    seg_out_names = ['em-segmented-muscles.xml',
+                     # 'em-segmented-muscles.xml',
+                     'em-segmented-tissue-labels.xml']
+    for in_name, out_name in zip(seg_in_names, seg_out_names):
+        seg_in = os.path.join(old_folder, in_name)
+        seg_out = os.path.join(seg_folder, out_name)
+        copy_xml_with_abspath(seg_in, seg_out)
+
+    # also copy the table for the tissue segmentaiton
+    table_folder = os.path.join(folder, 'tables', 'em-segmented-tissue-labels')
+    os.makedirs(table_folder, exist_ok=True)
+    tissue_table_in = os.path.join(old_folder, 'tables', 'em-segmented-tissue-labels.csv')
+    tissue_table_out = os.path.join(table_folder, 'base.csv')
+    copyfile(tissue_table_in, tissue_table_out)
 
 
 def make_tables(folder):
@@ -74,11 +94,11 @@ def make_initial_version():
     tag = '0.0.0'
     folder = os.path.join('data', tag)
 
-    # make_folder_structure(folder)
+    make_folder_structure(folder)
     # make_segmentations(old_folder, folder)
 
     # make xmls for all necessary image data
-    # make_image_data(old_folder, folder)
+    make_image_data(old_folder, folder)
 
     make_tables(folder)
 
