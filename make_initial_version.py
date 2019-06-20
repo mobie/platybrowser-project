@@ -6,6 +6,7 @@ from shutil import copyfile
 from scripts.files import make_folder_structure
 from scripts.export import export_segmentation
 from scripts.files import copy_xml_with_abspath, write_simple_xml
+from scripts.files import copy_files_with_pattern
 from scripts.attributes import make_nucleus_tables, make_cell_tables
 
 
@@ -44,13 +45,18 @@ def make_image_data(old_folder, folder):
     raw_out = os.path.join(data_folder, raw_name)
     copy_xml_with_abspath(raw_in, raw_out)
 
+    # TODO sub-folder ?
+    # copy MEDs and SPMs
+    copy_files_with_pattern(old_folder, data_folder, "*-MED*")
+    # TODO do we need the SPMs here?
+    # copy_files_with_pattern(old_folder, data_folder, "*-SPM*")
+
     # copy valentyna's aux gene file
     misc_folder = os.path.join(folder, 'misc')
     copy_aux_gene_file(misc_folder)
 
-    # TODO
-    # copy MEDs and SPMs
     # copy cellular models
+    # TODO
 
     # copy additional segmentations
     # (muscle, tissue (includes neuropil), TODO more?)
