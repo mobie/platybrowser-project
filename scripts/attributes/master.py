@@ -5,6 +5,7 @@ from .base_attributes import base_attributes
 from .map_objects import map_objects
 from .genes import write_genes_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
+from .region_attributes import region_attributes
 from ..files import get_h5_path_from_xml
 
 
@@ -60,9 +61,13 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
                            n_labels, resolution, tmp_folder,
                            target, max_jobs)
 
-    # TODO additional tables:
-    # regions / semantics
-    # ???
+    # region and semantic mapping
+    region_out = os.path.join(table_folder, 'regions.csv')
+    # need to make sure the inputs are copied / updated in
+    # the segmentation folder beforehand
+    segmentation_folder = os.path.join(folder, 'segmentations')
+    region_attributes(seg_path, region_out, segmentation_folder,
+                      label_ids, tmp_folder, target, max_jobs)
 
 
 def make_nucleus_tables(folder, name, tmp_folder, resolution,
