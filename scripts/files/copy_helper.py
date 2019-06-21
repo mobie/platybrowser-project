@@ -1,5 +1,6 @@
 import os
 import glob
+import shutil
 from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
 
 
@@ -47,8 +48,9 @@ def copy_misc_data(src_folder, dst_folder):
     copy_file(os.path.join(src_folder, aux_name),
               os.path.join(dst_folder, aux_name))
 
-    # TODO
     # copy the bookmarks
+    shutil.copyfile(os.path.join(src_folder, 'bookmarks.json'),
+                    os.path.join(dst_folder, 'bookmarks.json'))
 
 
 # TODO
