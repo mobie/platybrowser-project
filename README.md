@@ -1,4 +1,4 @@
-# platy-browser-tables
+# platy-browser-data
 
 Data and data-generation for the [platybrowser](https://github.com/embl-cba/fiji-plugin-platyBrowser).
 
@@ -20,6 +20,19 @@ For a given version `X.Y.Z`, the data is stored in the directory `/data/X.Y.Z/` 
 - `segmentations`: Segmentation volumes derived from the image data. Only xml files.
 - `tables`: CSV tables with attributes derived from image data and segmentations.
 
+### File naming
+
+Xml / hdf5 filenames must adhere to the following naming scheme, in order to clearly identify the origin of the data:
+the names must be prefixed by the header `MODALITY-STAGE-ID-REGION`, where
+- `MODALITY` is a shorthand for the imaging modality used to obtain the data, e.g. `sbem` for serial blockface electron microscopy.
+- `STAGE` is a shorthand for the develpmental stage, e.g. `6dpf` for six day post ferilisation.
+- `ID` is a number that distinguishes individual animals of a given modality and stage or distinguishes different set-ups for averaging based modalities like prospr.
+- `REGION` is a shorthand for the region of the animal covered by the data, e.g. `parapod` for the parapodium or `whole` for the whole animal.
+
+Currently, the data contains the three modalities
+- `sbem-6dpf-1-whole`
+- `prospr-6dpf-1-whole`
+- `fibsem-6dpf-1-parapod`
 
 ### Table storage
 
@@ -27,8 +40,7 @@ Derived attributes are stored in csv tables. Tables must be associated with a se
 All tables associated with a given segmentation must be stored in the sub-directory `tables/segmentation-name`.
 If this directory exists, it must at least contain the file `default.csv` with spatial attributes of the segmentation objects , which are necessary for the platybrowser table functionality.
 
-TODO think about linking to previous table version. Simplest option would be to replace the directory `tables/segmentation-name` with a
-text file that contains the absolute path to the previous table version.
+If tables do not change between versions, they can be represented as soft-links to the old version.
 
 
 ## Data generation
@@ -40,5 +52,10 @@ The other derived data can be generated for new segmentation versions with the s
 
 
 ## Installation
+
+TODO
+
+
+## BigDataServer
 
 TODO
