@@ -58,6 +58,20 @@ def copy_xml_with_abspath(xml_in, xml_out):
     tree.write(xml_out)
 
 
+def copy_xml_with_newpath(xml_in, xml_out, h5path):
+    # get the h5 path from the xml
+    et_root = ET.parse(xml_in).getroot()
+    et = et_root[1]
+    et = et[0]
+    et = et[0]
+    # write new xml with the new path
+    et.text = h5path
+    et.set('type', 'absolute')
+    indent_xml(et_root)
+    tree = ET.ElementTree(et_root)
+    tree.write(xml_out)
+
+
 def write_simple_xml(xml_path, h5_path, path_type='absolute'):
     # write top-level data
     root = ET.Element('SpimData')
