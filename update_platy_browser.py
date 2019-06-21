@@ -18,8 +18,8 @@ PROJECT_CELLS = 'volumes/paintera/proofread_cells'
 PROJECT_NUCLEI = 'volumes/paintera/nuclei'
 
 # name for cell and nucleus segmentations
-NAME_CELLS = 'em-segmented-cells-labels'
-NAME_NUCLEI = 'em-segmented-nuclei-labels'
+NAME_CELLS = 'sbem-6dpf-1-whole-segmented-cells-labels'
+NAME_NUCLEI = 'sbem-6dpf-1-whole-segmented-nuclei-labels'
 
 # resolutions of cell and nucleus segmentation
 RES_CELLS = [.025, .02, .02]
