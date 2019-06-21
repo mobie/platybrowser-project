@@ -36,7 +36,7 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     # make table with mapping to other objects
     # nuclei, cellular models (TODO), ...
     map_out = os.path.join(table_folder, 'objects.csv')
-    map_paths = [get_seg_path(folder, 'em-segmented-nuclei-labels', seg_key)]
+    map_paths = [get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-nuclei-labels', seg_key)]
     map_keys = [seg_key]
     map_names = ['nucleus_id']
     map_objects(label_ids, seg_path, seg_key, map_out,
@@ -85,7 +85,7 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
                                 tmp_folder, target=target, max_jobs=max_jobs,
                                 correct_anchors=True)
 
-    xml_raw = os.path.join(folder, 'images', 'em-raw-full-res.xml')
+    xml_raw = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-raw.xml')
     raw_path = get_h5_path_from_xml(xml_raw, return_absolute_path=True)
     # make the morphology attribute table
     morpho_out = os.path.join(table_folder, 'morphology.csv')

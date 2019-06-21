@@ -42,8 +42,9 @@ def region_attributes(seg_path, region_out, segmentation_folder,
 
     # 1.) compute the mapping to carved regions
     #
-    carved_path = os.path.join(segmentation_folder, 'em-segmented-tissue-labels.xml')
-    carved_path = get_h5_path_from_xml(carved_path)
+    carved_path = os.path.join(segmentation_folder,
+                               'sbem-6dpf-1-whole-segmented-tissue-labels.xml')
+    carved_path = get_h5_path_from_xml(carved_path, return_absolute_path=True)
     carved_labels = node_labels(seg_path, key0,
                                 carved_path, key0,
                                 'carved-regions', tmp_folder,
@@ -56,8 +57,8 @@ def region_attributes(seg_path, region_out, segmentation_folder,
                                for name, idx in zip(names, ids)}
 
     # 2.) compute the mapping to muscles
-    muscle_path = os.path.join(segmentation_folder, 'em-segmented-muscles.xml')
-    muscle_path = get_h5_path_from_xml(muscle_path)
+    muscle_path = os.path.join(segmentation_folder, 'sbem-6dpf-1-whole-segmented-muscles.xml')
+    muscle_path = get_h5_path_from_xml(muscle_path, return_absolute_path=True)
     muscle_labels = node_labels(seg_path, key0,
                                 muscle_path, key0,
                                 'muscle', tmp_folder,
