@@ -6,7 +6,7 @@ from shutil import copyfile
 from scripts.files import make_folder_structure
 from scripts.export import export_segmentation
 from scripts.files import copy_xml_with_abspath, write_simple_xml
-from scripts.files import copy_files_with_pattern
+from scripts.files import copy_files_with_pattern, make_bdv_server_file
 from scripts.attributes import make_nucleus_tables, make_cell_tables
 
 
@@ -107,6 +107,11 @@ def make_initial_version():
     make_image_data(old_folder, folder)
 
     make_tables(folder)
+
+    # make the bdv server file
+    make_bdv_server_file([os.path.join(folder, 'images'),
+                          os.path.join(folder, 'segmentations')],
+                         os.path.join(folder, 'misc', 'bdvserver.txt'))
 
 
 if __name__ == '__main__':
