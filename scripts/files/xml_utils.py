@@ -58,7 +58,8 @@ def copy_xml_with_abspath(xml_in, xml_out):
     tree.write(xml_out)
 
 
-def copy_xml_with_newpath(xml_in, xml_out, h5path):
+def copy_xml_with_newpath(xml_in, xml_out, h5path, path_type='relative'):
+    assert path_type in ('absolute', 'relative')
     # get the h5 path from the xml
     et_root = ET.parse(xml_in).getroot()
     et = et_root[1]
@@ -66,7 +67,7 @@ def copy_xml_with_newpath(xml_in, xml_out, h5path):
     et = et[0]
     # write new xml with the new path
     et.text = h5path
-    et.set('type', 'absolute')
+    et.set('type', path_type)
     indent_xml(et_root)
     tree = ET.ElementTree(et_root)
     tree.write(xml_out)

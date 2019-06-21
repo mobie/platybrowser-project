@@ -10,7 +10,7 @@ def make_bdv_server_file(folders, out_path):
     """
     file_list = {}
     for folder in folders:
-        files = os.listdir(folders)
+        files = os.listdir(folder)
         for ff in files:
             path = os.path.join(folder, ff)
 
