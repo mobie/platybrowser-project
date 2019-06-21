@@ -29,14 +29,14 @@ class TestGeneAttributes(unittest.TestCase):
         from scripts.files import get_h5_path_from_xml
 
         # load original genes table
-        original_table_file = '../../data/0.0.0/tables/em-segmented-cells-labels/genes.csv'
+        original_table_file = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-cells-labels/genes.csv'
         original_table = self.load_table(original_table_file)
         self.assertEqual(original_table.dtype, np.dtype('float32'))
         labels = original_table[:, 0].astype('uint64')
 
         # compute and load the genes table
-        segm_file = '../../data/0.0.0/segmentations/em-segmented-cells-labels.h5'
-        genes_file = '../../data/0.0.0/misc/meds_all_genes.xml'
+        segm_file = '../../data/0.0.0/segmentations/sbem-6dpf-1-whole-segmented-cells-labels.h5'
+        genes_file = '../../data/0.0.0/misc/prospr-6dpf-1-whole_meds_all_genes.xml'
         genes_file = get_h5_path_from_xml(genes_file)
         table_file = self.test_file
 

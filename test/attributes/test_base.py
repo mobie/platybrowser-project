@@ -17,10 +17,10 @@ class TestGeneAttributes(unittest.TestCase):
         except OSError:
             pass
 
-    def test_genes(self):
+    def test_base_attributes(self):
         from scripts.attributes.base_attributes import base_attributes
 
-        input_path = '../../data/0.0.0/segmentations/em-segmented-nuclei-labels.h5'
+        input_path = '../../data/0.0.0/segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.h5'
         input_key = 't00000/s00/0/cells'
         output_path = os.path.join(self.tmp_folder, 'table-test.csv')
         target = 'local'

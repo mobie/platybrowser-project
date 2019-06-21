@@ -37,12 +37,12 @@ class TestMorphologyAttributes(unittest.TestCase):
 
         self.write_global_config(MorphologyWorkflow.get_config()['global'])
 
-        raw_path = '../../data/0.0.0/images/em-raw-full-res.xml'
+        raw_path = '../../data/0.0.0/images/sbem-6dpf-1-whole-raw.xml'
         raw_path = get_h5_path_from_xml(raw_path)
 
         # compute and load the morpho table
-        seg_path = '../../data/0.0.0/segmentations/em-segmented-nuclei-labels.h5'
-        table_in_path = '../../data/0.0.0/tables/em-segmented-nuclei-labels/default.csv'
+        seg_path = '../../data/0.0.0/segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.h5'
+        table_in_path = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-nuclei-labels/default.csv'
         table_out_path = os.path.join(self.tmp_folder, 'table_nuclei.csv')
         res = [.1, .08, .08]
         n_labels = np.genfromtxt(table_in_path, delimiter='\t', skip_header=1).shape[0]
@@ -53,7 +53,7 @@ class TestMorphologyAttributes(unittest.TestCase):
         table = self.load_table(table_out_path)
 
         # load original table, make sure new and old table agree
-        original_table_file = '../../data/0.0.0/tables/em-segmented-nuclei-labels/morphology.csv'
+        original_table_file = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-nuclei-labels/morphology.csv'
         original_table = self.load_table(original_table_file)
         self.assertEqual(table.shape, original_table.shape)
         self.assertTrue(np.allclose(table, original_table))
@@ -65,9 +65,9 @@ class TestMorphologyAttributes(unittest.TestCase):
         self.write_global_config(MorphologyWorkflow.get_config()['global'])
 
         # compute and load the morpho table
-        seg_path = '../../data/0.0.0/segmentations/em-segmented-cells-labels.h5'
-        mapping_path = '../../data/0.0.0/tables/em-segmented-cells-labels/objects.csv'
-        table_in_path = '../../data/0.0.0/tables/em-segmented-cells-labels/default.csv'
+        seg_path = '../../data/0.0.0/segmentations/sbem-6dpf-1-whole-segmented-cells-labels.h5'
+        mapping_path = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-cells-labels/objects.csv'
+        table_in_path = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-cells-labels/default.csv'
         table_out_path = os.path.join(self.tmp_folder, 'table_cells.csv')
         res = [.025, .02, .02]
         n_labels = np.genfromtxt(table_in_path, delimiter='\t', skip_header=1).shape[0]
@@ -78,7 +78,7 @@ class TestMorphologyAttributes(unittest.TestCase):
         table = self.load_table(table_out_path)
 
         # make sure new and old table agree
-        original_table_file = '../../data/0.0.0/tables/em-segmented-cells-labels/morphology.csv'
+        original_table_file = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-cells-labels/morphology.csv'
         original_table = self.load_table(original_table_file)
         self.assertEqual(table.shape, original_table.shape)
         self.assertTrue(np.allclose(table, original_table))
