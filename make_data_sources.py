@@ -22,7 +22,8 @@ def copy_xmls_and_symlink_h5(name_dict, src_folder, trgt_folder):
 
 def make_initial_data_sources(copy_sbem,
                               copy_prospr,
-                              copy_fib):
+                              copy_fib,
+                              copy_regions):
     old_folder = '/g/arendt/EM_6dpf_segmentation/EM-Prospr'
     raw_folder = './data/rawdata'
     os.makedirs(raw_folder, exist_ok=True)
@@ -68,9 +69,21 @@ def make_initial_data_sources(copy_sbem,
                      for k, v in name_dict.items()}
         copy_xmls_and_symlink_h5(name_dict, old_folder, raw_folder)
 
+    if copy_regions:
+
+        print("Copy regions")
+        prospr_prefix = 'prospr-6dpf-1-whole-segmented'
+        prospr_names = glob.glob(os.path.join(old_folder, "BodyPart_*"))
+        prospr_names = [os.path.split(f)[1] for f in prospr_names]
+        prospr_names = [name for name in prospr_names if os.path.splitext(name)[1] == '.xml']
+        name_dict = {n: '%s-%s' % (prospr_prefix, n.split('_')[-1]) for n in prospr_names}
+        copy_xmls_and_symlink_h5(name_dict, old_folder, raw_folder)
+
 
 if __name__ == '__main__':
     copy_sbem = False
     copy_prospr = False
     copy_fib = False
-    make_initial_data_sources(copy_sbem, copy_prospr, copy_fib)
+    copy_regions = True
+    make_initial_data_sources(copy_sbem, copy_prospr, copy_fib,
+                              copy_regions)
