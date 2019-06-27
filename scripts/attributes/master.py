@@ -65,8 +65,10 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     region_out = os.path.join(table_folder, 'regions.csv')
     # need to make sure the inputs are copied / updated in
     # the segmentation folder beforehand
+    image_folder = os.path.join(folder, 'images')
     segmentation_folder = os.path.join(folder, 'segmentations')
-    region_attributes(seg_path, region_out, segmentation_folder,
+    region_attributes(seg_path, region_out,
+                      image_folder, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs)
 
 

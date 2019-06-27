@@ -49,7 +49,9 @@ def to_bdv(in_path, in_key, out_path, resolution, tmp_folder, target='slurm'):
     if not ret:
         raise RuntimeError("Segmentation export failed")
 
-    # write the max-id
+    # write the max-id for all datasets
     with h5py.File(out_path) as f:
-        ds = f['t00000/s00/0/cells']
-        ds.attrs['maxId'] = max_id
+        g = f['t00000/s00']
+        for scale_group in g.items():
+            ds = scale_group['cells']
+            ds.attrs['maxId'] = max_id

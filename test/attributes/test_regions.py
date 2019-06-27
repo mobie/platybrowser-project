@@ -15,7 +15,7 @@ sys.path.append('../..')
 class TestRegions(unittest.TestCase):
     tmp_folder = 'tmp'
 
-    def tearDown(self):
+    def _tearDown(self):
         try:
             rmtree(self.tmp_folder)
         except OSError:
@@ -61,6 +61,7 @@ class TestRegions(unittest.TestCase):
     def test_regions(self):
         from scripts.attributes.region_attributes import region_attributes
 
+        image_folder = '../../data/0.0.0/images'
         segmentation_folder = '../../data/0.0.0/segmentations'
         seg_path = os.path.join(segmentation_folder,
                                 'sbem-6dpf-1-whole-segmented-cells-labels.h5')
@@ -81,8 +82,9 @@ class TestRegions(unittest.TestCase):
             json.dump(conf, f)
 
         target = 'local'
-        max_jobs = 32
-        region_attributes(seg_path, output_path, segmentation_folder,
+        max_jobs = 8
+        region_attributes(seg_path, output_path,
+                          image_folder, segmentation_folder,
                           label_ids, self.tmp_folder, target, max_jobs)
 
         table = pandas.read_csv(output_path, sep='\t')
