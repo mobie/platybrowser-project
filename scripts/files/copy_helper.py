@@ -40,6 +40,9 @@ def copy_image_data(src_folder, dst_folder):
     # copy the prospr med image data
     copy_files_with_pattern(src_folder, dst_folder, '*-MED*')
 
+    # copy the segmented prospr regions
+    copy_files_with_pattern(src_folder, dst_folder, 'prospr-6dpf-1-whole-segmented-*')
+
 
 def copy_misc_data(src_folder, dst_folder):
     # copy the aux gene data
@@ -49,8 +52,10 @@ def copy_misc_data(src_folder, dst_folder):
               os.path.join(dst_folder, aux_name))
 
     # copy the bookmarks
-    shutil.copyfile(os.path.join(src_folder, 'bookmarks.json'),
-                    os.path.join(dst_folder, 'bookmarks.json'))
+    bkmrk_in = os.path.join(src_folder, 'bookmarks.json')
+    if os.path.exists(bkmrk_in):
+        shutil.copyfile(bkmrk_in,
+                        os.path.join(dst_folder, 'bookmarks.json'))
 
 
 # TODO
