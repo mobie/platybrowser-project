@@ -4,8 +4,13 @@ import os
 import sys
 import json
 
-import luigi
+# this is a task called by multiple processes,
+# so we need to restrict the number of threads used by numpy
+from cluster_tools.utils.numpy_utils import set_numpy_threads
+set_numpy_threads(1)
 import numpy as np
+
+import luigi
 import pandas as pd
 import nifty.tools as nt
 from skimage.measure import regionprops, marching_cubes_lewiner, mesh_surface_area
@@ -22,7 +27,6 @@ from cluster_tools.cluster_tasks import SlurmTask, LocalTask
 #
 
 
-# FIXME something in here uses a lot of threads
 class MorphologyBase(luigi.Task):
     """ Morphology base class
     """
