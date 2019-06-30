@@ -7,11 +7,11 @@ from shutil import rmtree
 sys.path.append('../..')
 
 
-# check new version of gene mapping against original
-class TestGeneAttributes(unittest.TestCase):
+# check the basic / default attributes
+class TestBaseAttributes(unittest.TestCase):
     tmp_folder = 'tmp'
 
-    def tearDown(self):
+    def _tearDown(self):
         try:
             rmtree(self.tmp_folder)
         except OSError:
@@ -27,7 +27,7 @@ class TestGeneAttributes(unittest.TestCase):
         max_jobs = 32
         resolution = [0.1, 0.08, 0.08]
         base_attributes(input_path, input_key, output_path, resolution,
-                        self.tmp_folder, target, max_jobs, correct_anchors=False)
+                        self.tmp_folder, target, max_jobs, correct_anchors=True)
 
         table = pandas.read_csv(output_path, sep='\t')
         print("Checking attributes ...")
@@ -45,10 +45,19 @@ class TestGeneAttributes(unittest.TestCase):
                 bb = tuple(slice(int(min_ / res) - 1, int(max_ / res) + 2)
                            for min_, max_, res in zip(bb_min, bb_max, resolution))
                 seg = ds[bb]
+                shape = seg.shape
 
-                # TODO check anchor once we have anchor correction
-                # anchor = [row.anchor_z, row.anchor_y, row.anchor_x]
-                # anchor = tuple(anch // res - b.start for anch, res, b in zip(anchor, resolution, bb))
+                anchor = [row.anchor_z, row.anchor_y, row.anchor_x]
+                anchor = tuple(int(anch // res - b.start)
+                               for anch, res, b in zip(anchor, resolution, bb))
+
+                # TODO this check still fails for a few ids. I am not sure if this is a systematic problem
+                # or just some rounding inaccuracies
+                # we need to give some tolerance here
+                anchor_bb = tuple(slice(max(0, an - 2), min(an + 2, sh)) for an, sh in zip(anchor, shape))
+                sub = seg[anchor_bb]
+                print(label_id)
+                self.assertTrue(label_id in sub)
                 # anchor_id = seg[anchor]
                 # self.assertEqual(anchor_id, label_id)
 
