@@ -44,12 +44,10 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
                 tmp_folder, target, max_jobs)
 
     # make table with gene mapping
-    # TODO we need to make sure that this file is always copied / updated
-    # before this is called !
-    aux_gene_xml = os.path.join(folder, 'misc', 'meds_all_genes.xml')
-    aux_gene_path = get_h5_path_from_xml(aux_gene_xml)
+    aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
+    aux_gene_path = get_h5_path_from_xml(aux_gene_xml, return_absolute_path=True)
     if not os.path.exists(aux_gene_path):
-        raise RuntimeError("Can't find auxiliary gene file")
+        raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
     gene_out = os.path.join(table_folder, 'genes.csv')
     write_genes_table(seg_path, aux_gene_path, gene_out, label_ids,
                       tmp_folder, target)

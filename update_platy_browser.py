@@ -7,7 +7,8 @@ from shutil import rmtree
 
 from scripts.attributes import make_cell_tables, make_nucleus_tables
 from scripts.export import export_segmentation
-from scripts.files import copy_tables, copy_segmentation, copy_static_files, make_folder_structure
+from scripts.files import copy_image_data, copy_misc_data
+from scripts.files import copy_tables, copy_segmentation, make_folder_structure
 
 
 # paths for paintera projects
@@ -41,7 +42,7 @@ def check_inputs(update_cell_segmentation,
 
 
 def get_tags():
-    tag = check_output(['git', 'describe', '--tags']).decode('utf-8').rstrip('\n')
+    tag = check_output(['git', 'tag']).decode('utf-8').rstrip('\n')
     new_tag = tag.split('.')
     new_tag[-1] = str(int(new_tag[-1]) + 1)
     new_tag = '.'.join(new_tag)
@@ -50,14 +51,16 @@ def get_tags():
 
 def export_segmentations(folder, new_folder,
                          update_cell_segmentation,
-                         update_nucleus_segmentation):
+                         update_nucleus_segmentation,
+                         target, max_jobs):
     # update or copy cell segmentation
     if update_cell_segmentation:
         tmp_cells_seg = 'tmp_export_cells'
         export_segmentation(PAINTERA_ROOT, PROJECT_CELLS,
                             folder, new_folder, NAME_CELLS,
                             resolution=RES_CELLS,
-                            tmp_folder=tmp_cells_seg)
+                            tmp_folder=tmp_cells_seg,
+                            target=target, max_jobs=max_jobs)
     else:
         copy_segmentation(folder, new_folder, NAME_CELLS)
 
@@ -67,24 +70,40 @@ def export_segmentations(folder, new_folder,
         export_segmentation(PAINTERA_ROOT, PROJECT_NUCLEI,
                             folder, new_folder, NAME_NUCLEI,
                             resolution=RES_NUCLEI,
-                            tmp_folder=tmp_nuc_seg)
+                            tmp_folder=tmp_nuc_seg,
+                            target=target, max_jobs=max_jobs)
     else:
         copy_segmentation(folder, new_folder, NAME_NUCLEI)
 
+    # copy static segmentations
+    static_seg_names = ('sbem-6dpf-1-whole-segmented-muscles',
+                        'sbem-6dpf-1-whole-segmented-tissue-labels')
+    for seg_name in static_seg_names:
+        copy_segmentation(folder, new_folder, seg_name)
+
 
 def make_attributes(folder, new_folder,
-                    update_cell_tables, update_nucleus_tables):
+                    update_cell_tables, update_nucleus_tables,
+                    target, max_jobs):
     # update or copy cell tables
     if update_cell_tables:
-        make_cell_tables(new_folder, NAME_CELLS, 'tmp_tables_cells', RES_CELLS)
+        make_cell_tables(new_folder, NAME_CELLS, 'tmp_tables_cells', RES_CELLS,
+                         target=target, max_jobs=max_jobs)
     else:
         copy_tables(folder, new_folder, NAME_CELLS)
 
     # update or copy nucleus tables
     if update_nucleus_tables:
-        make_nucleus_tables(new_folder, NAME_NUCLEI, 'tmp_tables_nuclei', RES_NUCLEI)
+        make_nucleus_tables(new_folder, NAME_NUCLEI, 'tmp_tables_nuclei', RES_NUCLEI,
+                         target=target, max_jobs=max_jobs)
     else:
         copy_tables(folder, new_folder, NAME_NUCLEI)
+
+    # TODO
+    # copy tables associated with static segmentations
+    static_seg_names = ('sbem-6dpf-1-whole-segmented-tissue-labels',)
+    for seg_name in static_seg_names:
+        copy_tables(folder, new_folder, seg_name)
 
 
 # TODO check for errors
@@ -138,30 +157,39 @@ def update_platy_browser(update_cell_segmentation=False,
                                                                            update_cell_tables,
                                                                            update_nucleus_tables)
     if not have_changes:
-        print("Nothing needs to be update, skipping ")
+        print("Nothing needs to be update, skipping")
         return
 
     # we always increase the release tag (in the last digit)
     # when making a new version of segmentation or attributes
     tag, new_tag = get_tags()
+    print("Updating platy browser from", tag, "to", new_tag)
 
     # make new folder structure
     folder = os.path.join('data', tag)
-    new_folder = os.makedirs('data', new_tag)
+    new_folder = os.path.join('data', new_tag)
     make_folder_structure(new_folder)
+
+    target = 'slurm'
+    max_jobs = 250
+
+    # copy static image and misc data
+    copy_image_data(os.path.join(folder, 'images'),
+                    os.path.join(new_folder, 'images'))
+    copy_misc_data(os.path.join(folder, 'misc'),
+                   os.path.join(new_folder, 'misc'))
 
     # export new segmentations
     export_segmentations(folder, new_folder,
                          update_cell_segmentation,
-                         update_nucleus_segmentation)
+                         update_nucleus_segmentation,
+                         target=target, max_jobs=max_jobs)
 
     # generate new attribute tables
     make_attributes(folder, new_folder,
                     update_cell_tables,
-                    update_nucleus_tables)
-
-    # copy files that were not touched
-    copy_static_files(folder, new_folder)
+                    update_nucleus_tables,
+                    target=target, max_jobs=max_jobs)
 
     # make new release
     make_release(new_tag, new_folder, description)

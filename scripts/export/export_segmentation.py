@@ -76,7 +76,7 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
                           max_jobs, target, relabel_output=True)
 
-    # TODO run small size filter postprocessing ?
+    # TODO postprocessing (size filter / conected components) ?
 
     # downscale the segemntation
     n_scales = get_n_scales(paintera_path, paintera_key)

@@ -27,7 +27,10 @@ def copy_tables(src_folder, dst_folder, name):
 
 
 def copy_segmentation(src_folder, dst_folder, name):
-    pass
+    name_with_ext = '%s.xml' % name
+    xml_in = os.path.join(src_folder, 'segmentations', name_with_ext)
+    xml_out = os.path.join(dst_folder, 'segmentations', name_with_ext)
+    copy_file(xml_in, xml_out)
 
 
 def copy_image_data(src_folder, dst_folder):

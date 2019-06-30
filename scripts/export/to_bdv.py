@@ -52,6 +52,6 @@ def to_bdv(in_path, in_key, out_path, resolution, tmp_folder, target='slurm'):
     # write the max-id for all datasets
     with h5py.File(out_path) as f:
         g = f['t00000/s00']
-        for scale_group in g.items():
+        for scale, scale_group in g.items():
             ds = scale_group['cells']
             ds.attrs['maxId'] = max_id

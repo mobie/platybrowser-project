@@ -2,6 +2,7 @@ import numpy as np
 from .util import write_csv, node_labels
 
 
+# TODO think about this for nuclei to cell mapping
 def map_objects(label_ids, seg_path, seg_key, map_out,
                 map_paths, map_keys, map_names,
                 tmp_folder, target, max_jobs):
