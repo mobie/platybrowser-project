@@ -22,8 +22,23 @@ def copy_files_with_pattern(src_folder, dst_folder, pattern):
         copy_file(xml_in, xml_out)
 
 
+# For now we put symlinks with relative paths, but I am not sure
+# if this is the best idea, because I don't know if it will work on windows
 def copy_tables(src_folder, dst_folder, name):
-    pass
+    table_in = os.path.join(src_folder, 'tables', name)
+    table_out = os.path.join(dst_folder, 'tables', name)
+    os.makedirs(table_out, exist_ok=True)
+
+    table_files = os.listdir(table_in)
+    table_files = [ff for ff in table_files if os.path.splitext(ff)[1] == '.csv']
+
+    for ff in table_files:
+        src_file = os.path.join(table_in, ff)
+        dst_file = os.path.join(table_out, ff)
+
+        rel_path = os.path.relpath(src_file, table_out)
+        if not os.path.exists(dst_file):
+            os.symlink(rel_path, dst_file)
 
 
 def copy_segmentation(src_folder, dst_folder, name):
@@ -59,8 +74,3 @@ def copy_misc_data(src_folder, dst_folder):
     if os.path.exists(bkmrk_in):
         shutil.copyfile(bkmrk_in,
                         os.path.join(dst_folder, 'bookmarks.json'))
-
-
-# TODO
-def copy_static_segmentations(src_folder, dst_folder):
-    pass

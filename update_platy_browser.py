@@ -95,11 +95,10 @@ def make_attributes(folder, new_folder,
     # update or copy nucleus tables
     if update_nucleus_tables:
         make_nucleus_tables(new_folder, NAME_NUCLEI, 'tmp_tables_nuclei', RES_NUCLEI,
-                         target=target, max_jobs=max_jobs)
+                            target=target, max_jobs=max_jobs)
     else:
         copy_tables(folder, new_folder, NAME_NUCLEI)
 
-    # TODO
     # copy tables associated with static segmentations
     static_seg_names = ('sbem-6dpf-1-whole-segmented-tissue-labels',)
     for seg_name in static_seg_names:
@@ -114,7 +113,7 @@ def make_release(tag, folder, description=''):
         call(['git', 'tag', tag])
     else:
         call(['git', '-m', description, 'tag', tag])
-    # TODO autopush ???
+    # TODO use the gitlab api instead
     # call(['git', 'push', 'origin', 'master', '--tags'])
 
 
@@ -170,8 +169,10 @@ def update_platy_browser(update_cell_segmentation=False,
     new_folder = os.path.join('data', new_tag)
     make_folder_structure(new_folder)
 
-    target = 'slurm'
-    max_jobs = 250
+    # target = 'slurm'
+    # max_jobs = 250
+    target = 'local'
+    max_jobs = 48
 
     # copy static image and misc data
     copy_image_data(os.path.join(folder, 'images'),
@@ -191,15 +192,15 @@ def update_platy_browser(update_cell_segmentation=False,
                     update_nucleus_tables,
                     target=target, max_jobs=max_jobs)
 
+    # TODO implement make release properly
+    return
     # make new release
     make_release(new_tag, new_folder, description)
     print("Updated platybrowser to new release", new_tag)
     print("All changes were successfully made. Starting clean up now.")
-    print("This can take a few hours, you can already use the new data; clean up will only remove temp files.")
-
-    # TODO would be better to start this as a job on a different machine, not the login node!
-    # TODO clean up tmp folders
-    # clean_up()
+    print("This can take a few hours, you can already use the new data.")
+    print("Clean-up will only remove temp files.")
+    clean_up()
 
 
 def str2bool(v):
