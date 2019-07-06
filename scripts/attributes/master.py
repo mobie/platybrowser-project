@@ -96,3 +96,21 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
 
     # TODO additional tables:
     # ???
+
+
+def make_cilia_tables(folder, name, tmp_folder, resolution,
+                      target='slurm', max_jobs=100):
+    # make the table folder
+    table_folder = os.path.join(folder, 'tables', name)
+    os.makedirs(table_folder, exist_ok=True)
+
+    seg_key = 't00000/s00/0/cells'
+    seg_path = get_seg_path(folder, name, seg_key)
+
+    # make the basic attributes table
+    base_out = os.path.join(table_folder, 'default.csv')
+    base_attributes(seg_path, seg_key, base_out, resolution,
+                    tmp_folder, target=target, max_jobs=max_jobs,
+                    correct_anchors=True)
+    # TODO additional tables:
+    # ???

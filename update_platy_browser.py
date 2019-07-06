@@ -5,7 +5,7 @@ import argparse
 from subprocess import check_output, call
 from shutil import rmtree
 
-from scripts.attributes import make_cell_tables, make_nucleus_tables
+from scripts.attributes import make_cell_tables, make_nucleus_tables, make_cilia_tables
 from scripts.export import export_segmentation
 from scripts.files import copy_image_data, copy_misc_data
 from scripts.files import copy_tables, copy_segmentation, make_folder_structure
@@ -17,41 +17,56 @@ from scripts.files import copy_tables, copy_segmentation, make_folder_structure
 PAINTERA_ROOT = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
 PROJECT_CELLS = 'volumes/paintera/proofread_cells'
 PROJECT_NUCLEI = 'volumes/paintera/nuclei'
+PROJECT_CILIA = 'volumes/paintera/cilia'
 
 # name for cell and nucleus segmentations
 NAME_CELLS = 'sbem-6dpf-1-whole-segmented-cells-labels'
 NAME_NUCLEI = 'sbem-6dpf-1-whole-segmented-nuclei-labels'
+NAME_CILIA = 'sbem-6dpf-1-whole-segmented-cilia-labels'
 
 # resolutions of cell and nucleus segmentation
 RES_CELLS = [.025, .02, .02]
 RES_NUCLEI = [.1, .08, .08]
+RES_CILIA = [.025, .01, .01]
 
 
 def check_inputs(update_cell_segmentation,
                  update_nucleus_segmentation,
+                 update_cilia_segmentation,
                  update_cell_tables,
-                 update_nucleus_tables):
+                 update_nucleus_tables,
+                 update_cilia_tables):
     inputs = (update_cell_segmentation, update_nucleus_segmentation,
-              update_cell_tables, update_nucleus_tables)
+              update_cell_tables, update_nucleus_tables,
+              update_cilia_segmentation, update_cilia_tables)
+
     have_changes = any(inputs)
     if update_cell_segmentation:
         update_cell_tables = True
     if update_nucleus_segmentation:
         update_nucleus_tables = True
-    return have_changes, update_cell_tables, update_nucleus_tables
+    if update_cilia_segmentation:
+        update_cilia_tables = True
+
+    return {'have_changes': have_changes,
+            'update_cell_tables': update_cell_tables,
+            'update_nucleus_tables': update_nucleus_tables,
+            'update_cilia_tables': update_cilia_tables}
 
 
-def get_tags():
-    tag = check_output(['git', 'tag']).decode('utf-8').rstrip('\n')
-    new_tag = tag.split('.')
-    new_tag[-1] = str(int(new_tag[-1]) + 1)
-    new_tag = '.'.join(new_tag)
+def get_tags(new_tag):
+    tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
+    if new_tag == '':
+        new_tag = tag.split('.')
+        new_tag[-1] = str(int(new_tag[-1]) + 1)
+        new_tag = '.'.join(new_tag)
     return tag, new_tag
 
 
 def export_segmentations(folder, new_folder,
                          update_cell_segmentation,
                          update_nucleus_segmentation,
+                         update_cilia_segmentation,
                          target, max_jobs):
     # update or copy cell segmentation
     if update_cell_segmentation:
@@ -75,6 +90,17 @@ def export_segmentations(folder, new_folder,
     else:
         copy_segmentation(folder, new_folder, NAME_NUCLEI)
 
+    # update or copy cilia segmentation
+    if update_cilia_segmentation:
+        tmp_cilia_seg = 'tmp_export_cilia'
+        export_segmentation(PAINTERA_ROOT, PROJECT_CILIA,
+                            folder, new_folder, NAME_CILIA,
+                            resolution=RES_CILIA,
+                            tmp_folder=tmp_cilia_seg,
+                            target=target, max_jobs=max_jobs)
+    else:
+        copy_segmentation(folder, new_folder, NAME_CILIA)
+
     # copy static segmentations
     static_seg_names = ('sbem-6dpf-1-whole-segmented-muscles',
                         'sbem-6dpf-1-whole-segmented-tissue-labels')
@@ -83,7 +109,9 @@ def export_segmentations(folder, new_folder,
 
 
 def make_attributes(folder, new_folder,
-                    update_cell_tables, update_nucleus_tables,
+                    update_cell_tables,
+                    update_nucleus_tables,
+                    update_cilia_tables,
                     target, max_jobs):
     # update or copy cell tables
     if update_cell_tables:
@@ -98,6 +126,12 @@ def make_attributes(folder, new_folder,
                             target=target, max_jobs=max_jobs)
     else:
         copy_tables(folder, new_folder, NAME_NUCLEI)
+
+    if update_cilia_tables:
+        make_cilia_tables(new_folder, NAME_CILIA, 'tmp_tables_cilia', RES_CILIA,
+                          target=target, max_jobs=max_jobs)
+    else:
+        copy_tables(folder, new_folder, NAME_CILIA)
 
     # copy tables associated with static segmentations
     static_seg_names = ('sbem-6dpf-1-whole-segmented-tissue-labels',)
@@ -135,33 +169,45 @@ def clean_up():
 # TODO catch all exceptions and handle them properly
 def update_platy_browser(update_cell_segmentation=False,
                          update_nucleus_segmentation=False,
+                         update_cilia_segmentation=False,
                          update_cell_tables=False,
                          update_nucleus_tables=False,
-                         description=''):
+                         update_cilia_tables=False,
+                         description='',
+                         new_tag=''):
     """ Generate new version of platy-browser derived data.
 
     Arguments:
         update_cell_segmentation: Update the cell segmentation volume.
         update_nucleus_segmentation: Update the nucleus segmentation volume.
+        update_cilia_segmentation: Update the cilia segmentation volume.
         update_cell_tables: Update the cell tables. This needs to be specified if the cell
             segmentation is not update, but the tables should be updated.
         update_nucleus_tables: Update the nucleus tables. This needs to be specified if the nucleus
             segmentation is not updated, but the tables should be updated.
+        update_cilia_tables: Update the cilia tables. This needs to be specified if the cilia
+            segmentation is not updated, but the tables should be updated.
         description: Optional descrption for release message.
+        new_tag: Optional tag to override the default new tag.
     """
 
     # check inputs
-    have_changes, update_cell_tables, update_nucleus_tables = check_inputs(update_cell_segmentation,
-                                                                           update_nucleus_segmentation,
-                                                                           update_cell_tables,
-                                                                           update_nucleus_tables)
-    if not have_changes:
+    update_dict = check_inputs(update_cell_segmentation,
+                               update_nucleus_segmentation,
+                               update_cilia_segmentation,
+                               update_cell_tables,
+                               update_nucleus_tables,
+                               update_cilia_tables)
+    if not update_dict['have_changes']:
         print("Nothing needs to be update, skipping")
         return
 
+    update_cell_tables, update_nucleus_tables, update_cilia_tables =\
+        update_dict['update_cell_tables'], update_dict['update_nucleus_tables'], update_dict['update_cilia_tables']
+
     # we always increase the release tag (in the last digit)
     # when making a new version of segmentation or attributes
-    tag, new_tag = get_tags()
+    tag, new_tag = get_tags(new_tag)
     print("Updating platy browser from", tag, "to", new_tag)
 
     # make new folder structure
@@ -184,12 +230,14 @@ def update_platy_browser(update_cell_segmentation=False,
     export_segmentations(folder, new_folder,
                          update_cell_segmentation,
                          update_nucleus_segmentation,
+                         update_cilia_segmentation,
                          target=target, max_jobs=max_jobs)
 
     # generate new attribute tables
     make_attributes(folder, new_folder,
                     update_cell_tables,
                     update_nucleus_tables,
+                    update_cilia_tables,
                     target=target, max_jobs=max_jobs)
 
     # TODO implement make release properly
@@ -228,16 +276,25 @@ if __name__ == '__main__':
                         default=False, help="Update the cell segmentation.")
     parser.add_argument('--update_nucleus_segmentation', type=str2bool,
                         default=False, help="Update the nucleus segmentation.")
+    parser.add_argument('--update_cilia_segmentation', type=str2bool,
+                        default=False, help="Update the cilia segmentation.")
     parser.add_argument('--update_cell_tables', type=str2bool,
                         default=False, help=table_help_str("cell"))
     parser.add_argument('--update_nucleus_tables', type=str2bool,
                         default=False, help=table_help_str("nucleus"))
+    parser.add_argument('--update_cilia_tables', type=str2bool,
+                        default=False, help=table_help_str("cilia"))
     parser.add_argument('--description', type=str, default='',
                         help="Optional description for release message")
+    parser.add_argument('--new_tag', type=str, default='',
+                        help="Specify a new tag that will override the default new tag")
 
     args = parser.parse_args()
     update_platy_browser(args.update_cell_segmentation,
                          args.update_nucleus_segmentation,
+                         args.update_cilia_segmentation,
                          args.update_cell_tables,
                          args.update_nucleus_tables,
-                         args.description)
+                         args.update_cilia_tables,
+                         args.description,
+                         args.new_tag)
