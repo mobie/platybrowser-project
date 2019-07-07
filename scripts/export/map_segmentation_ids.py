@@ -27,7 +27,7 @@ def get_seg_path(folder, name):
             raise RuntimeError("Invalid path in xml")
         return path
     else:
-        raise RuntimeError("The specified folder does not contain segmentation")
+        raise RuntimeError("The specified folder does not contain segmentation file with name %s" % name)
 
 
 def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
@@ -72,7 +72,11 @@ def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
 
 
 def map_segmentation_ids(src_folder, dest_folder, name, tmp_folder, max_jobs, target):
-    src_path = get_seg_path(src_folder, name)
+    # might not have an initial version of the segmentation and in this case need to skip
+    try:
+        src_path = get_seg_path(src_folder, name)
+    except RuntimeError:
+        return
     dest_path = get_seg_path(dest_folder, name)
 
     # map ids from src to dest via maximal overlap

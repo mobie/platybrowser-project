@@ -42,10 +42,21 @@ def copy_tables(src_folder, dst_folder, name):
 
 
 def copy_segmentation(src_folder, dst_folder, name):
+    # copy the segmentation xml
     name_with_ext = '%s.xml' % name
     xml_in = os.path.join(src_folder, 'segmentations', name_with_ext)
     xml_out = os.path.join(dst_folder, 'segmentations', name_with_ext)
     copy_file(xml_in, xml_out)
+
+    # make link to the previous id look-up-table (if present)
+    lut_name = 'new_id_lut_%s.json' % name
+    lut_in = os.path.join(src_folder, 'misc', lut_name)
+    if not os.path.exists(lut_in):
+        return
+    lut_out = os.path.join(dst_folder, 'misc', lut_name)
+    if not os.path.exists(lut_out):
+        rel_path = os.path.relpath(lut_in, os.path.split(lut_out)[0])
+        os.symlink(rel_path, lut_out)
 
 
 def copy_image_data(src_folder, dst_folder):
