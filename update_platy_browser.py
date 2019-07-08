@@ -215,10 +215,10 @@ def update_platy_browser(update_cell_segmentation=False,
     new_folder = os.path.join('data', new_tag)
     make_folder_structure(new_folder)
 
-    # target = 'slurm'
-    # max_jobs = 250
-    target = 'local'
-    max_jobs = 48
+    target = 'slurm'
+    max_jobs = 250
+    # target = 'local'
+    # max_jobs = 48
 
     # copy static image and misc data
     copy_image_data(os.path.join(folder, 'images'),
