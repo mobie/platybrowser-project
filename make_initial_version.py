@@ -2,11 +2,14 @@
 
 import os
 from shutil import copyfile
+from glob import glob
 
+import h5py
 from scripts.files import make_folder_structure
 from scripts.export import export_segmentation
 from scripts.files import make_bdv_server_file, copy_image_data, copy_misc_data
 from scripts.attributes import make_nucleus_tables, make_cell_tables
+from pybdv.converter import make_bdv
 
 
 def make_sbem_segmentations(old_folder, folder):
@@ -51,6 +54,23 @@ def make_sbem_tables(folder):
     copyfile(tissue_table_in, tissue_table_out)
 
 
+def make_prospr_region_segmentations():
+    in_prefix = '/g/arendt/EM_6dpf_segmentation/EM-Prospr/BodyPart_*.h5'
+    out_prefix = './data/rawdata/prospr-6dpf-1-whole-segmented-'
+    files = glob(in_prefix)
+    for p in files:
+        name = p.split('_')[-1][:-3]
+        o = out_prefix + name + '.h5'
+        print(p, "to", o)
+        with h5py.File(p) as f:
+            key = 't00000/s00/0/cells'
+            data = f[key][:]
+            data[data > 0] = 0
+            data[data < 0] = 255
+        make_bdv(data, o, 3 * [[2, 2, 2]],
+                 unit='micrometer', resolution=[0.5, 0.5, 0.5])
+
+
 def make_initial_version():
 
     src_folder = 'data/rawdata'
@@ -76,5 +96,7 @@ def make_initial_version():
                          os.path.join(folder, 'misc', 'bdvserver.txt'))
 
 
+
 if __name__ == '__main__':
+    # make_prospr_region_segmentations()
     make_initial_version()

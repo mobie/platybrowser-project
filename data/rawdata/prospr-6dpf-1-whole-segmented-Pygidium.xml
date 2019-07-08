@@ -5,6 +5,12 @@
       <hdf5 type="relative">prospr-6dpf-1-whole-segmented-Pygidium.h5</hdf5>
     </ImageLoader>
     <ViewSetups>
+      <Attributes name="channel">
+        <Channel>
+          <id>1</id>
+          <name>1</name>
+        </Channel>
+      </Attributes>
       <ViewSetup>
         <id>0</id>
         <name>channel 1</name>
@@ -17,12 +23,6 @@
           <channel>1</channel>
         </attributes>
       </ViewSetup>
-      <Attributes name="channel">
-        <Channel>
-          <id>1</id>
-          <name>1</name>
-        </Channel>
-      </Attributes>
     </ViewSetups>
     <Timepoints type="range">
       <first>0</first>
