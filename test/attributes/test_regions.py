@@ -15,7 +15,7 @@ sys.path.append('../..')
 class TestRegions(unittest.TestCase):
     tmp_folder = 'tmp'
 
-    def _tearDown(self):
+    def tearDown(self):
         try:
             rmtree(self.tmp_folder)
         except OSError:

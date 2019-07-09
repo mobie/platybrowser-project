@@ -6,7 +6,7 @@ from cremi_tools.viewer.volumina import view
 
 
 def check_region_mapping():
-    t = '../../data/tmp/tables/sbem-6dpf-1-whole-segmented-cells-labels/regions.csv'
+    t = '../../data/0.1.1/tables/sbem-6dpf-1-whole-segmented-cells-labels/regions.csv'
     table = pd.read_csv(t, sep='\t')
     label_ids = table['label_id'].values
     head_ids = table['head'].values
