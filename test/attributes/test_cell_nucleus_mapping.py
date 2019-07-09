@@ -15,7 +15,7 @@ sys.path.append('../..')
 class TestCellNucleusMapping(unittest.TestCase):
     tmp_folder = 'tmp'
 
-    def _tearDown(self):
+    def tearDown(self):
         try:
             rmtree(self.tmp_folder)
         except OSError:
@@ -53,15 +53,11 @@ class TestCellNucleusMapping(unittest.TestCase):
         table = pandas.read_csv(output_path, sep='\t')
         assert len(table) == max_id + 1
 
-        # base_path = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-cells-labels/default.csv'
-        # base_table = pandas.read_csv(base_path, sep='\t')
-
-        # seg_key = 't00000/s00/2/cells'
-        # tissue_path = '../../data/rawdata/sbem-6dpf-1-whole-segmented-tissue-labels.h5'
-        # tissue_key = 't00000/s00/0/cells'
-        # self.check_result(table, base_table,
-        #                   seg_path, seg_key,
-        #                   tissue_path, tissue_key)
+        # make sure each nucleus is mapped only once
+        nucleus_ids = table['nucleus_id'].values
+        nucleus_ids, id_counts = np.unique(nucleus_ids, return_counts=True)
+        nucleus_ids, id_counts = nucleus_ids[1:], id_counts[1:]
+        self.assertEqual(id_counts.sum(), id_counts.size)
 
 
 if __name__ == '__main__':
