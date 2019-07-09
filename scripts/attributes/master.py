@@ -2,7 +2,7 @@ import os
 import h5py
 
 from .base_attributes import base_attributes
-from .map_objects import map_objects
+from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import write_genes_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes
@@ -31,17 +31,13 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     base_out = os.path.join(table_folder, 'default.csv')
     label_ids = base_attributes(seg_path, seg_key, base_out, resolution,
                                 tmp_folder, target=target, max_jobs=max_jobs,
-                                correct_anchors=True)
+                                correct_anchors=False)
 
-    # make table with mapping to other objects
-    # nuclei, cellular models (TODO), ...
-    map_out = os.path.join(table_folder, 'objects.csv')
-    map_paths = [get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-nuclei-labels', seg_key)]
-    map_keys = [seg_key]
-    map_names = ['nucleus_id']
-    map_objects(label_ids, seg_path, seg_key, map_out,
-                map_paths, map_keys, map_names,
-                tmp_folder, target, max_jobs)
+    # make table with cell nucleus mapping
+    nuc_mapping_table = os.path.join(table_folder, 'cells_to_nuclei.csv')
+    nuc_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-nuclei-labels', seg_key)
+    map_cells_to_nuclei(label_ids, seg_path, nuc_path, nuc_mapping_table,
+                        tmp_folder, target, max_jobs)
 
     # make table with gene mapping
     aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
@@ -55,7 +51,7 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     # make table with morphology
     morpho_out = os.path.join(table_folder, 'morphology.csv')
     n_labels = len(label_ids)
-    write_morphology_cells(seg_path, base_out, map_out, morpho_out,
+    write_morphology_cells(seg_path, base_out, nuc_mapping_table, morpho_out,
                            n_labels, resolution, tmp_folder,
                            target, max_jobs)
 

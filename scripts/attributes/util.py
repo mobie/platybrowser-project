@@ -28,7 +28,7 @@ def normalize_overlap_dict(label_overlap_dict):
 def node_labels(seg_path, seg_key,
                 input_path, input_key, prefix,
                 tmp_folder, target, max_jobs,
-                max_overlap=True):
+                max_overlap=True, ignore_label=None):
     task = NodeLabelWorkflow
     config_folder = os.path.join(tmp_folder, 'configs')
 
@@ -40,7 +40,8 @@ def node_labels(seg_path, seg_key,
              ws_path=seg_path, ws_key=seg_key,
              input_path=input_path, input_key=input_key,
              output_path=out_path, output_key=out_key,
-             prefix=prefix, max_overlap=max_overlap)
+             prefix=prefix, max_overlap=max_overlap,
+             ignore_label=ignore_label)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
         raise RuntimeError("Node labels for %s" % prefix)

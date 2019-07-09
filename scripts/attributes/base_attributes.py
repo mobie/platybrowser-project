@@ -51,6 +51,8 @@ def run_correction(input_path, input_key,
     out_path = os.path.join(tmp_folder, 'data.n5')
     out_key = 'region_centers'
 
+    # FIXME anchor correction still takes very long at this scale,
+    # maybe should switch to s5
     # we need to run this at a lower scale, as a heuristic,
     # we take the first scale with all dimensions < 1750 pix
     # (corresponds to scale 4 in sbem)
@@ -72,6 +74,11 @@ def run_correction(input_path, input_key,
         shape1 = f[input_key].shape
         shape2 = f[scale_key].shape
     scale_factor = np.array([float(sh1) / sh2 for sh1, sh2 in zip(shape1, shape2)])
+
+    config = task.get_config()['region_centers']
+    config.update({'time_limit': 180, 'mem_limit': 32})
+    with open(os.path.join(config_folder, 'region_centers.config'), 'w') as f:
+        json.dump(config, f)
 
     t = task(tmp_folder=tmp_folder, config_dir=config_folder,
              max_jobs=max_jobs, target=target,
