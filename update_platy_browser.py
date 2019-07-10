@@ -102,8 +102,11 @@ def export_segmentations(folder, new_folder,
         copy_segmentation(folder, new_folder, NAME_CILIA)
 
     # copy static segmentations
+    # we also treat the chromatin segmentation as static for now,
+    # but might change this at some point
     static_seg_names = ('sbem-6dpf-1-whole-segmented-muscles',
-                        'sbem-6dpf-1-whole-segmented-tissue-labels')
+                        'sbem-6dpf-1-whole-segmented-tissue-labels',
+                        'sbem-6dpf-1-whole-segmented-chromatin-labels')
     for seg_name in static_seg_names:
         copy_segmentation(folder, new_folder, seg_name)
 
@@ -134,7 +137,8 @@ def make_attributes(folder, new_folder,
         copy_tables(folder, new_folder, NAME_CILIA)
 
     # copy tables associated with static segmentations
-    static_seg_names = ('sbem-6dpf-1-whole-segmented-tissue-labels',)
+    static_seg_names = ('sbem-6dpf-1-whole-segmented-tissue-labels',
+                        'sbem-6dpf-1-whole-segmented-chromatin-labels')
     for seg_name in static_seg_names:
         copy_tables(folder, new_folder, seg_name)
 
@@ -198,7 +202,10 @@ def update_platy_browser(update_cell_segmentation=False,
                                update_cell_tables,
                                update_nucleus_tables,
                                update_cilia_tables)
-    if not update_dict['have_changes']:
+
+    # if an explicit tag was given, we force an update
+    force_update = new_tag != ''
+    if not update_dict['have_changes'] and not force_update:
         print("Nothing needs to be update, skipping")
         return
 
@@ -239,6 +246,8 @@ def update_platy_browser(update_cell_segmentation=False,
                     update_nucleus_tables,
                     update_cilia_tables,
                     target=target, max_jobs=max_jobs)
+
+    # TODO add some quality control that cheks that all files are there
 
     # TODO implement make release properly
     return

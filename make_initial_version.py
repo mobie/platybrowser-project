@@ -8,6 +8,7 @@ import h5py
 from scripts.files import make_folder_structure
 from scripts.export import export_segmentation
 from scripts.files import make_bdv_server_file, copy_image_data, copy_misc_data
+from scripts.files import copy_segmentation
 from scripts.attributes import make_nucleus_tables, make_cell_tables
 from pybdv.converter import make_bdv
 
@@ -71,6 +72,18 @@ def make_prospr_region_segmentations():
                  unit='micrometer', resolution=[0.5, 0.5, 0.5])
 
 
+def insert_chromatin():
+    src_folder = 'data/rawdata'
+    dst_folder = 'data/0.2.0'
+    name = 'sbem-6dpf-1-whole-segmented-chromatin-labels'
+    copy_segmentation(src_folder, dst_folder, name)
+    src_table = '/g/arendt/EM_6dpf_segmentation/EM-Prospr/tables/em-segmented-chromatin-labels.csv'
+    dst_table = os.path.join(dst_folder, 'tables', name)
+    os.makedirs(dst_table, exist_ok=True)
+    dst_table = os.path.join(dst_table, 'base.csv')
+    copyfile(src_table, dst_table)
+
+
 def make_initial_version():
 
     src_folder = 'data/rawdata'
@@ -96,7 +109,7 @@ def make_initial_version():
                          os.path.join(folder, 'misc', 'bdvserver.txt'))
 
 
-
 if __name__ == '__main__':
+    insert_chromatin()
     # make_prospr_region_segmentations()
-    make_initial_version()
+    # make_initial_version()
