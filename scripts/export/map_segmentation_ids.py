@@ -22,7 +22,7 @@ def get_seg_path(folder, name):
     path = os.path.join(data_folder, '%s.xml' % name)
     # read h5 path from the xml
     if os.path.exists(path):
-        path = get_h5_path_from_xml(path)
+        path = get_h5_path_from_xml(path, return_absolute_path=True)
         if not os.path.exists(path):
             raise RuntimeError("Invalid path in xml")
         return path
@@ -76,6 +76,8 @@ def map_segmentation_ids(src_folder, dest_folder, name, tmp_folder, max_jobs, ta
     try:
         src_path = get_seg_path(src_folder, name)
     except RuntimeError:
+        print("Did not find old segmentation dataset for %s in %s" % (src_folder, name))
+        print("Skip mappnig of segmentation ids")
         return
     dest_path = get_seg_path(dest_folder, name)
 
