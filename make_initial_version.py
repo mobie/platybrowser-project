@@ -51,7 +51,7 @@ def make_sbem_tables(folder):
     table_folder = os.path.join(folder, 'tables', tissue_name_out)
     os.makedirs(table_folder, exist_ok=True)
     tissue_table_in = os.path.join(old_folder, 'tables', 'em-segmented-tissue-labels.csv')
-    tissue_table_out = os.path.join(table_folder, 'base.csv')
+    tissue_table_out = os.path.join(table_folder, 'default.csv')
     copyfile(tissue_table_in, tissue_table_out)
 
 

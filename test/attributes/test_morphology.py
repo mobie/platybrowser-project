@@ -11,7 +11,7 @@ sys.path.append('../..')
 class TestMorphologyAttributes(unittest.TestCase):
     tmp_folder = 'tmp_morpho'
 
-    def _tearDown(self):
+    def tearDown(self):
         try:
             rmtree(self.tmp_folder)
         except OSError:
