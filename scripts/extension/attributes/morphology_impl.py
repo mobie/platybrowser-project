@@ -1,4 +1,4 @@
-#! /bin/python
+from datetime import datetime
 
 # this is a task called by multiple processes,
 # so we need to restrict the number of threads used by numpy
@@ -11,6 +11,10 @@ import pandas as pd
 from skimage.measure import regionprops, marching_cubes_lewiner, mesh_surface_area
 from skimage.transform import resize
 from skimage.util import pad
+
+
+def log(msg):
+    print("%s: %s" % (str(datetime.now()), msg))
 
 
 # get shape of full data & downsampling factor
@@ -149,7 +153,7 @@ def compute_morphology_features(table, segmentation_path, raw_path,
 
         stats = []
         for label_a, label_b in zip(label_starts, label_stops):
-            # fu.log("Computing features from label-id %i to %i" % (label_a, label_b))
+            log("Computing features from label-id %i to %i" % (label_a, label_b))
             stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
                                                              scale_factor_seg, scale_factor_raw,
                                                              label_a, label_b))
@@ -205,13 +209,13 @@ def morphology_impl(segmentation_path, raw_path, table, mapping_path,
 
     # get scale factor for raw data (if it's given)
     if raw_path != '':
-        # fu.log("Have raw path; compute intensity features")
+        log("Have raw path; compute intensity features")
         # NOTE for now we can hard-code the resolution for the raw data here,
         # but we might need to change this if we get additional dataset(s)
         raw_resolution = [0.025, 0.01, 0.01]
         scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
     else:
-        # fu.log("Don't have raw path; do not compute intensity features")
+        log("Don't have raw path; do not compute intensity features")
         raw_resolution = scale_factor_raw = None
 
     # remove zero label if it exists
@@ -220,14 +224,14 @@ def morphology_impl(segmentation_path, raw_path, table, mapping_path,
     # if we have a mappin, only keep objects in the mapping
     # (i.e cells that have assigned nuclei)
     if mapping_path != '':
-        # fu.log("Have mapping path %s" % mapping_path)
+        log("Have mapping path %s" % mapping_path)
         table = filter_table_from_mapping(table, mapping_path)
-        # fu.log("Number of labels after filter with mapping: %i" % table.shape[0])
+        log("Number of labels after filter with mapping: %i" % table.shape[0])
     # filter by size
     table = filter_table(table, min_size, max_size)
-    # fu.log("Number of labels after size filte: %i" % table.shape[0])
+    log("Number of labels after size filte: %i" % table.shape[0])
 
-    # fu.log("Computing morphology features")
+    log("Computing morphology features")
     stats = compute_morphology_features(table, segmentation_path, raw_path,
                                         seg_key, raw_key, scale_factor_seg, scale_factor_raw,
                                         label_starts, label_stops)

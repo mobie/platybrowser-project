@@ -38,7 +38,7 @@ class TestMorphologyAttributes(unittest.TestCase):
         self.write_global_config(MorphologyWorkflow.get_config()['global'])
 
         raw_path = '../../data/0.0.0/images/sbem-6dpf-1-whole-raw.xml'
-        raw_path = get_h5_path_from_xml(raw_path)
+        raw_path = get_h5_path_from_xml(raw_path, return_absolute_path=True)
 
         # compute and load the morpho table
         seg_path = '../../data/0.0.0/segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.h5'

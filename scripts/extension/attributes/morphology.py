@@ -140,8 +140,8 @@ def morphology(job_id, config_path):
     label_starts, label_stops = [], []
     for block_id in block_list:
         block = blocking.getBlock(block_id)
-        label_starts.append(block.begin)
-        label_stops.append(block.end)
+        label_starts.append(block.begin[0])
+        label_stops.append(block.end[0])
 
     stats = morphology_impl(segmentation_path, raw_path, table, mapping_path,
                             min_size, max_size,
