@@ -12,6 +12,7 @@ import pandas as pd
 from skimage.measure import regionprops, marching_cubes_lewiner, mesh_surface_area
 from skimage.transform import resize
 from skimage.util import pad
+from scipy.ndimage.morphology import distance_transform_edt
 
 
 def log(msg):
@@ -71,8 +72,26 @@ def morphology_row_features(mask, scale):
     # volume in pixels
     volume_in_pix = ski_morph[0]['area']
 
+    # volume in microns
+    volume_in_microns = np.prod(scale) * volume_in_pix
+
     # extent
     extent = ski_morph[0]['extent']
+
+    # volume of convex hull
+    convex_area = ski_morph[0]['convex_area']
+
+    # equivalent diameter
+    equiv_diameter = ski_morph[0]['equivalent_diameter']
+
+    # major axis length
+    major_axis = ski_morph[0]['major_axis_length']
+
+    # minor axis length
+    minor_axis = ski_morph[0]['minor_axis_length']
+
+    # solidity
+    solidity = ski_morph[0]['solidity']
 
     # The mesh calculation below fails if an edge of the segmentation is right up against the
     # edge of the volume - gives an open, rather than a closed surface
@@ -83,14 +102,16 @@ def morphology_row_features(mask, scale):
     verts, faces, normals, values = marching_cubes_lewiner(mask, spacing=tuple(scale))
     surface_area = mesh_surface_area(verts, faces)
 
-    # volume in microns
-    volume_in_microns = np.prod(scale)*volume_in_pix
-
     # sphericity (as in morpholibj)
     # Should run from zero to one
     sphericity = (36*np.pi*(float(volume_in_microns)**2))/(float(surface_area)**3)
 
-    return [volume_in_microns, extent, surface_area, sphericity]
+    # max radius - max distance from pixel to outside
+    edt = distance_transform_edt(mask, sampling=scale, return_distances=True)
+    max_radius = np.max(edt)
+
+    return [volume_in_microns, extent, convex_area, equiv_diameter, major_axis,
+            minor_axis, solidity, surface_area, sphericity, max_radius]
 
 
 def intensity_row_features(raw, mask):
@@ -165,7 +186,8 @@ def compute_morphology_features(table, segmentation_path, raw_path,
     # convert to pandas table and add column names
     stats = pd.DataFrame(stats)
     columns = ['label_id',
-               'shape_volume_in_microns', 'shape_extent', 'shape_surface_area', 'shape_sphericity']
+               'shape_volume_in_microns', 'shape_extent', 'shape_convex_area', 'shape_equiv_diameter',
+               'shape_major_axis', 'shape_minor_axis', 'shape_solidity', 'shape_surface_area', 'shape_sphericity', 'shape_max_radius']
     if raw_path != '':
         columns += ['intensity_mean', 'intensity_st_dev']
     stats.columns = columns
