@@ -1,9 +1,10 @@
 from datetime import datetime
 
+#TODO - uncomment this part
 # this is a task called by multiple processes,
 # so we need to restrict the number of threads used by numpy
-from cluster_tools.utils.numpy_utils import set_numpy_threads
-set_numpy_threads(1)
+#from cluster_tools.utils.numpy_utils import set_numpy_threads
+#set_numpy_threads(1)
 import numpy as np
 
 import h5py
@@ -31,11 +32,12 @@ def get_scale_factor(path, key_full, key, resolution):
     return scale_factor
 
 
+# changed to shape_pixel_size, is the plan to go to n_pixels in future?
 def filter_table(table, min_size, max_size):
     if max_size is None:
-        table = table.loc[table['n_pixels'] >= min_size, :]
+        table = table.loc[table['shape_pixelsize'] >= min_size, :]
     else:
-        criteria = np.logical_and(table['n_pixels'] > min_size, table['n_pixels'] < max_size)
+        criteria = np.logical_and(table['shape_pixelsize'] > min_size, table['shape_pixelsize'] < max_size)
         table = table.loc[criteria, :]
     return table
 
