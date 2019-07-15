@@ -13,6 +13,8 @@ from skimage.measure import regionprops, marching_cubes_lewiner, mesh_surface_ar
 from skimage.transform import resize
 from skimage.util import pad
 from scipy.ndimage.morphology import distance_transform_edt
+from mahotas.features import haralick
+from skimage.morphology import label, remove_small_objects
 
 
 def log(msg):
@@ -121,6 +123,23 @@ def intensity_row_features(raw, mask):
     st_dev = np.std(intensity_vals_in_mask, dtype=np.float64)
     return mean_intensity, st_dev
 
+
+def texture_row_features(raw, mask):
+    # errors if there are small, isolated spots (because I'm using ignore zeros as true)
+    # so here remove components that are < 10 pixels
+    labelled = label(mask)
+    if len(np.unique(labelled)) > 2:
+        labelled = remove_small_objects(labelled, min_size=10)
+        mask = labelled != 0
+        mask = mask.astype('uint8')
+
+    # set regions outside mask to zero
+    raw_copy = raw.copy()
+    raw_copy[mask == 0] = 0
+
+    hara = haralick(raw_copy, ignore_zeros=True, return_mean=True, distance=2)
+
+    return hara
 
 # compute morphology (and intensity features) for label range
 def morphology_features_for_label_range(table, ds, ds_raw,
