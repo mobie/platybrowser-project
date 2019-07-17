@@ -1,10 +1,13 @@
 from datetime import datetime
 
-#TODO - uncomment this part
+# TODO - uncomment this part
 # this is a task called by multiple processes,
 # so we need to restrict the number of threads used by numpy
-#from cluster_tools.utils.numpy_utils import set_numpy_threads
-#set_numpy_threads(1)
+# from cluster_tools.utils.numpy_utils import set_numpy_threads
+# set_numpy_threads(1)
+from tmp.numpy_utils import set_numpy_threads
+
+set_numpy_threads(1)
 import numpy as np
 
 import h5py
@@ -44,16 +47,46 @@ def filter_table(table, min_size, max_size):
         table = table.loc[criteria, :]
     return table
 
+# some cell segmentations have a sensible total pixel size but very large bounding boxes i.e. they are small spots
+# distributed over a large region, not one cell > filter for these cases by capping the bounding box size
+def filter_table_bb(table, max_bb):
+
+    total_bb = (table['bb_max_z'] - table['bb_min_z']) * (table['bb_max_y'] - table['bb_min_y']) * (
+                table['bb_max_x'] - table['bb_min_x'])
+
+    table = table.loc[total_bb < max_bb, :]
+
+    return table
 
 def filter_table_from_mapping(table, mapping_path):
     # read in numpy array of mapping of cells to nuclei - first column cell id, second nucleus id
-    mapping = np.genfromtxt(mapping_path, skip_header=1, delimiter='\t')[:, :2].astype('uint64')
-    # remove zero labels from this table too, if exist
-    mapping = mapping[np.logical_and(mapping[:, 0] != 0,
-                                     mapping[:, 1] != 0)]
-    table = table.loc[np.isin(table['label_id'], mapping[:, 0]), :]
+    mapping = pd.read_csv(mapping_path, sep='\t')
 
-    # TODO - ADD a column for the nucleus id from the mapping
+    # mapping = np.genfromtxt(mapping_path, skip_header=1, delimiter='\t')[:, :2].astype('uint64')
+    # remove zero labels from this table too, if exist
+    mapping = mapping.loc[np.logical_and(mapping.iloc[:, 0] != 0,
+                                         mapping.iloc[:, 1] != 0), :]
+    table = table.loc[np.isin(table['label_id'], mapping['label_id']), :]
+
+    # add a column for the id of the mapped nucleus (use this later to exclude the area covered by the nucleus)
+    table = table.join(mapping.set_index('label_id'), on='label_id', how='left')
+
+    return table
+
+
+def filter_table_region(table, region_path, regions=('empty', 'yolk', 'neuropil', 'cuticle')):
+    # regions here are regions to exclude
+
+    region_mapping = pd.read_csv(region_path, sep='\t')
+
+    # remove zero label if it exists
+    region_mapping = region_mapping.loc[region_mapping['label_id'] != 0, :]
+
+    for region in regions:
+        region_mapping = region_mapping.loc[region_mapping[region] == 0, :]
+
+    table = table.loc[np.isin(table['label_id'], region_mapping['label_id']), :]
+
     return table
 
 
@@ -69,7 +102,6 @@ def load_data(ds, row, scale):
 
 
 def morphology_row_features(mask, scale):
-
     # Calculate stats from skimage
     ski_morph = regionprops(mask.astype('uint8'))
 
@@ -82,8 +114,17 @@ def morphology_row_features(mask, scale):
     # extent
     extent = ski_morph[0]['extent']
 
-    # volume of convex hull
-    convex_area = ski_morph[0]['convex_area']
+    try:
+        # volume of convex hull
+        convex_area = ski_morph[0]['convex_area']
+
+        # solidity
+        solidity = ski_morph[0]['solidity']
+
+    except MemoryError:
+        log("Too large to compute convex hull")
+        convex_area = 0
+        solidity = 0
 
     # equivalent diameter
     equiv_diameter = ski_morph[0]['equivalent_diameter']
@@ -93,9 +134,6 @@ def morphology_row_features(mask, scale):
 
     # minor axis length
     minor_axis = ski_morph[0]['minor_axis_length']
-
-    # solidity
-    solidity = ski_morph[0]['solidity']
 
     # The mesh calculation below fails if an edge of the segmentation is right up against the
     # edge of the volume - gives an open, rather than a closed surface
@@ -108,7 +146,7 @@ def morphology_row_features(mask, scale):
 
     # sphericity (as in morpholibj)
     # Should run from zero to one
-    sphericity = (36*np.pi*(float(volume_in_microns)**2))/(float(surface_area)**3)
+    sphericity = (36 * np.pi * (float(volume_in_microns) ** 2)) / (float(surface_area) ** 3)
 
     # max radius - max distance from pixel to outside
     edt = distance_transform_edt(mask, sampling=scale, return_distances=True)
@@ -132,7 +170,8 @@ def intensity_row_features(raw, mask):
 
     return mean_intensity, st_dev, median_intensity, interquartile_range_intensity, total
 
-def radial_intensity_row_features(raw, mask, scale, stops = (0.0, 0.25, 0.5, 0.75, 1.0)):
+
+def radial_intensity_row_features(raw, mask, scale, stops=(0.0, 0.25, 0.5, 0.75, 1.0)):
     result = ()
 
     edt = distance_transform_edt(mask, sampling=scale, return_distances=True)
@@ -152,6 +191,7 @@ def radial_intensity_row_features(raw, mask, scale, stops = (0.0, 0.25, 0.5, 0.7
 def texture_row_features(raw, mask):
     # errors if there are small, isolated spots (because I'm using ignore zeros as true)
     # so here remove components that are < 10 pixels
+    # may still error in some cases
     labelled = label(mask)
     if len(np.unique(labelled)) > 2:
         labelled = remove_small_objects(labelled, min_size=10)
@@ -162,11 +202,17 @@ def texture_row_features(raw, mask):
     raw_copy = raw.copy()
     raw_copy[mask == 0] = 0
 
-    hara = haralick(raw_copy, ignore_zeros=True, return_mean=True, distance=2)
+    try:
+        hara = haralick(raw_copy, ignore_zeros=True, return_mean=True, distance=2)
+
+    except ValueError:
+        log('Texture computation failed - can happen when using ignore_zeros')
+        hara = (0.,)*13
 
     return tuple(hara)
 
-def radial_distribution (edt, mask, stops = (0.0, 0.25, 0.5, 0.75, 1.0)):
+
+def radial_distribution(edt, mask, stops=(0.0, 0.25, 0.5, 0.75, 1.0)):
     result = ()
 
     bottoms = stops[0:len(stops) - 1]
@@ -179,7 +225,8 @@ def radial_distribution (edt, mask, stops = (0.0, 0.25, 0.5, 0.75, 1.0)):
 
     return result
 
-def chromatin_row_features (chromatin, edt, raw, scale_chromatin, scale_raw):
+
+def chromatin_row_features(chromatin, edt, raw, scale_chromatin, scale_raw):
     """
 
     :param chromatin: numpy ndarray mask, boolean
@@ -199,8 +246,8 @@ def chromatin_row_features (chromatin, edt, raw, scale_chromatin, scale_raw):
     # resize the chromatin masks if not same size as raw
     if chromatin.shape != raw.shape:
         chromatin = resize(chromatin, raw.shape,
-                                 order=0, mode='reflect',
-                                 anti_aliasing=True, preserve_range=True).astype('bool')
+                           order=0, mode='reflect',
+                           anti_aliasing=True, preserve_range=True).astype('bool')
 
     result += intensity_row_features(raw, chromatin)
     result += texture_row_features(raw, chromatin)
@@ -211,13 +258,16 @@ def chromatin_row_features (chromatin, edt, raw, scale_chromatin, scale_raw):
 # compute morphology (and intensity features) for label range
 def morphology_features_for_label_range(table, ds, ds_raw,
                                         ds_chromatin,
+                                        ds_exclude,
                                         scale_factor_seg, scale_factor_raw,
                                         scale_factor_chromatin,
+                                        scale_factor_exclude,
                                         label_begin, label_end):
     label_range = np.logical_and(table['label_id'] >= label_begin, table['label_id'] < label_end)
     sub_table = table.loc[label_range, :]
     stats = []
     for row in sub_table.itertuples(index=False):
+        log(str(row.label_id))
         label_id = int(row.label_id)
 
         # load the segmentation data from the bounding box corresponding
@@ -234,7 +284,24 @@ def morphology_features_for_label_range(table, ds, ds_raw,
         # compute the morphology features from the segmentation mask
         result = (float(label_id),) + morphology_row_features(seg_mask, scale_factor_seg)
 
-        # TODO - if exclude, remove that part form mask before continuing, use added nucleus_id column
+        if ds_exclude is not None:
+            exclude = load_data(ds_exclude, row, scale_factor_exclude)
+
+            # resize to fit seg
+            if exclude.shape != seg_mask.shape:
+                exclude = resize(exclude, seg_mask.shape,
+                                 order=0, mode='reflect',
+                                 anti_aliasing=True, preserve_range=True).astype('bool')
+
+            # binary for correct nucleus
+            exclude = exclude == int(row.nucleus_id)
+
+            # remove nucleus area form seg_mask
+            seg_mask[exclude] = False
+
+            # just testing
+            from skimage.io import imsave
+            imsave('Z:\\Kimberly\\temp\\test_ex' + str(row.label_id) + '.tiff', seg_mask.astype('uint8'))
 
         # compute the intensiry features from raw data and segmentation mask
         if ds_raw is not None:
@@ -266,31 +333,31 @@ def morphology_features_for_label_range(table, ds, ds_raw,
             # euclidean distance transform for whole nucleus, normalised to run from 0 to 1
             whole_nucleus = np.logical_or(heterochromatin, euchromatin)
             edt = distance_transform_edt(whole_nucleus, sampling=scale_factor_chromatin, return_distances=True)
-            edt = edt/np.max(edt)
+            edt = edt / np.max(edt)
 
             if total_heterochromatin != 0:
                 result += chromatin_row_features(heterochromatin, edt, raw, scale_factor_chromatin, scale_factor_raw)
 
             else:
-                result += (0.,)*36
+                result += (0.,) * 36
 
             if total_euchromatin != 0:
                 result += chromatin_row_features(euchromatin, edt, raw, scale_factor_chromatin, scale_factor_raw)
             else:
-                result += (0.,)*36
-
+                result += (0.,) * 36
 
         stats.append(result)
     return stats
 
 
 def compute_morphology_features(table, segmentation_path, raw_path,
-                                chromatin_path,
+                                chromatin_path, exclude_nuc_path,
                                 seg_key, raw_key, chromatin_key,
+                                exclude_key,
                                 scale_factor_seg, scale_factor_raw,
                                 scale_factor_chromatin,
+                                scale_factor_exclude,
                                 label_starts, label_stops):
-
     if raw_path != '':
         assert raw_key is not None and scale_factor_raw is not None
         f_raw = h5py.File(raw_path, 'r')
@@ -305,8 +372,13 @@ def compute_morphology_features(table, segmentation_path, raw_path,
     else:
         f_chromatin = ds_chromatin = None
 
+    if exclude_nuc_path != '':
+        assert exclude_key is not None and scale_factor_exclude is not None
+        f_exclude = h5py.File(exclude_nuc_path, 'r')
+        ds_exclude = f_exclude[exclude_key]
 
-    # TODO - opening of exclude dataset
+    else:
+        f_exclude = ds_exclude = None
 
     with h5py.File(segmentation_path, 'r') as f:
         ds = f[seg_key]
@@ -316,14 +388,19 @@ def compute_morphology_features(table, segmentation_path, raw_path,
             log("Computing features from label-id %i to %i" % (label_a, label_b))
             stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
                                                              ds_chromatin,
+                                                             ds_exclude,
                                                              scale_factor_seg, scale_factor_raw,
                                                              scale_factor_chromatin,
+                                                             scale_factor_exclude,
                                                              label_a, label_b))
     if f_raw is not None:
         f_raw.close()
 
     if f_chromatin is not None:
         f_chromatin.close()
+
+    if f_exclude is not None:
+        f_exclude.close()
 
     # convert to pandas table and add column names
     stats = pd.DataFrame(stats)
@@ -335,8 +412,9 @@ def compute_morphology_features(table, segmentation_path, raw_path,
     columns += morph_columns
 
     if raw_path != '':
-        intensity_columns = ['intensity_mean', 'intensity_st_dev', 'intensity_median', 'intensity_iqr', 'intensity_total']
-        texture_columns = ['texture_hara' + str(x) for x in range(1,14)]
+        intensity_columns = ['intensity_mean', 'intensity_st_dev', 'intensity_median', 'intensity_iqr',
+                             'intensity_total']
+        texture_columns = ['texture_hara' + str(x) for x in range(1, 14)]
 
         columns += intensity_columns
         # radial intensity columns
@@ -359,10 +437,13 @@ def compute_morphology_features(table, segmentation_path, raw_path,
 
 
 def morphology_impl(segmentation_path, raw_path, chromatin_path,
+                    exclude_nuc_path,
                     table, mapping_path,
+                    region_mapping_path,
                     min_size, max_size,
+                    max_bb,
                     resolution, raw_scale, seg_scale,
-                    chromatin_scale,
+                    chromatin_scale, exclude_nuc_scale,
                     label_starts, label_stops):
     """ Compute morphology features for a segmentation.
 
@@ -378,6 +459,8 @@ def morphology_impl(segmentation_path, raw_path, chromatin_path,
             (sizes, center of mass and bounding boxes) for segmentation
         mapping_path [str] - path to - path to nucleus id mapping.
             Pass 'None' if not relevant.
+        region_mapping_path [str] - path to - path to cellid to region mapping
+            Pass 'None' if not relevant
         min_size [int] - minimal size for objects used in calcualtion
         max_size [int] - maximum size for objects used in calcualtion
         resolution [listlike] - resolution in nanometer.
@@ -395,6 +478,8 @@ def morphology_impl(segmentation_path, raw_path, chromatin_path,
     raw_key = 't00000/s00/%i/cells' % raw_scale
     chromatin_key_full = 't00000/s00/0/cells'
     chromatin_key = 't00000/s00/%i/cells' % chromatin_scale
+    exclude_key_full = 't00000/s00/0/cells'
+    exclude_key = 't00000/s00/%i/cells' % exclude_nuc_scale
 
     # get scale factor for the segmentation
     scale_factor_seg = get_scale_factor(segmentation_path, seg_key_full, seg_key, resolution)
@@ -416,10 +501,23 @@ def morphology_impl(segmentation_path, raw_path, chromatin_path,
         # NOTE for now we can hard-code the resolution for the chromatin data here,
         # but we might need to change this if we get additional dataset(s)
         chromatin_resolution = [0.025, 0.02, 0.02]
-        scale_factor_chromatin = get_scale_factor(chromatin_path, chromatin_key_full, chromatin_key, chromatin_resolution)
+        scale_factor_chromatin = get_scale_factor(chromatin_path, chromatin_key_full, chromatin_key,
+                                                  chromatin_resolution)
     else:
         log("Don't have chromatin path; do not compute chromatin features")
         chromatin_resolution = scale_factor_chromatin = None
+
+    # get scale factor for nuclei segmentation (to be used to exclude nucleus) if given
+    if exclude_nuc_path != '':
+        log("Have nucleus path; exclude nucleus for intensity measures")
+        # NOTE for now we can hard-code the resolution for the nuclei data here,
+        # but we might need to change this if we get additional dataset(s)
+        exclude_resolution = [0.1, 0.08, 0.08]
+        scale_factor_exclude = get_scale_factor(exclude_nuc_path, exclude_key_full, exclude_key,
+                                                exclude_resolution)
+    else:
+        log("Don't have exclude path; don't exclude nucleus area for intensity measures")
+        scale_factor_exclude = scale_factor_exclude = None
 
     # remove zero label if it exists
     table = table.loc[table['label_id'] != 0, :]
@@ -430,18 +528,29 @@ def morphology_impl(segmentation_path, raw_path, chromatin_path,
         log("Have mapping path %s" % mapping_path)
         table = filter_table_from_mapping(table, mapping_path)
         log("Number of labels after filter with mapping: %i" % table.shape[0])
+
+    if region_mapping_path != '':
+        log("Have region mapping path %s" % region_mapping_path)
+        table = filter_table_region(table, region_mapping_path)
+        log("Number of labels after region filter: %i" % table.shape[0])
+
     # filter by size
     table = filter_table(table, min_size, max_size)
-    log("Number of labels after size filte: %i" % table.shape[0])
+    log("Number of labels after size filter: %i" % table.shape[0])
 
-    # TODO - add filtering for region - just add another path like the mapping_path one
+    # filter by bounding box size
+    if max_bb is not None:
+        table = filter_table_bb(table, max_bb)
+        log("Number of labels after bounding box size filter %i" % table.shape[0])
 
     log("Computing morphology features")
     stats = compute_morphology_features(table, segmentation_path, raw_path,
-                                        chromatin_path,
+                                        chromatin_path, exclude_nuc_path,
                                         seg_key, raw_key, chromatin_key,
+                                        exclude_key,
                                         scale_factor_seg, scale_factor_raw,
                                         scale_factor_chromatin,
+                                        scale_factor_exclude,
                                         label_starts, label_stops)
     return stats
 
