@@ -2,13 +2,13 @@ import os
 from .xml_utils import get_h5_path_from_xml
 
 
-# TODO enable filtering for files by some patter.
+# TODO enable filtering for files by some pattern
 # e.g. if we don't want to expose the fib dataset to the public yet
-def make_bdv_server_file(folders, out_path):
-    """ Make the bigserver config file from
-    all xmls in folders.
+def make_bdv_server_file(folders, out_path, relative_paths=True):
+    """ Make the bigserver config file from all xmls in folders.
     """
     file_list = {}
+    ref_dir = os.path.split(out_path)[0]
     for folder in folders:
         files = os.listdir(folder)
         for ff in files:
@@ -27,6 +27,8 @@ def make_bdv_server_file(folders, out_path):
                 return RuntimeError(msg)
 
             name = os.path.splitext(ff)[0]
+            if relative_paths:
+                path = os.path.relpath(path, ref_dir)
             file_list[name] = path
 
     with open(out_path, 'w') as f:

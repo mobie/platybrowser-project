@@ -7,7 +7,7 @@ from shutil import rmtree
 
 from scripts.attributes import make_cell_tables, make_nucleus_tables, make_cilia_tables
 from scripts.export import export_segmentation
-from scripts.files import copy_image_data, copy_misc_data
+from scripts.files import copy_image_data, copy_misc_data, make_bdv_server_file
 from scripts.files import copy_tables, copy_segmentation, make_folder_structure
 
 
@@ -247,6 +247,10 @@ def update_platy_browser(update_cell_segmentation=False,
                     update_cilia_tables,
                     target=target, max_jobs=max_jobs)
 
+    make_bdv_server_file([os.path.join(new_folder, 'images'),
+                          os.path.join(new_folder, 'segmentations')],
+                         os.path.join(new_folder, 'misc', 'bdv_server.txt'),
+                         relative_paths=True)
     # TODO add some quality control that cheks that all files are there
 
     # TODO implement make release properly
