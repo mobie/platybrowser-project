@@ -1,0 +1,14 @@
+name:
+    platy-browser
+channels:
+    - cpape
+    - conda-forge
+dependencies:
+    - affogato
+    - scikit-image
+    - luigi
+    - nifty
+    - vigra
+    - h5py
+    - z5py
+    - cluster_tools
