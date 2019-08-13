@@ -7,6 +7,7 @@ from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit
 from .to_bdv import to_bdv
 from .map_segmentation_ids import map_segmentation_ids
+from ..default_config import write_default_global_config
 
 
 def get_n_scales(paintera_path, paintera_key):
@@ -23,15 +24,8 @@ def downscale(path, in_key, out_key,
     task = DownscalingWorkflow
 
     config_folder = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_folder, exist_ok=True)
+    write_default_global_config(config_folder)
     configs = task.get_config()
-
-    global_conf = configs['global']
-    global_conf.update({'shebang':
-                        "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python",
-                        'block_shape': [64, 512, 512]})
-    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
-        json.dump(global_conf, f)
 
     config = configs['downscaling']
     config.update({'mem_limit': 8, 'time_limit': 120,

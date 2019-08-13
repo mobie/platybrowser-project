@@ -8,19 +8,7 @@ import luigi
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.morphology import RegionCentersWorkflow
 from .util import write_csv
-
-
-def make_config(tmp_folder):
-    configs = MorphologyWorkflow.get_config()
-    config_folder = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_folder, exist_ok=True)
-    global_config = configs['global']
-    # TODO use new platy browser env
-    shebang = '#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python'
-    global_config['shebang'] = shebang
-    global_config['block_shape'] = [64, 512, 512]
-    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
-        json.dump(global_config, f)
+from ..default_config import write_default_global_config
 
 
 def n5_attributes(input_path, input_key, tmp_folder, target, max_jobs):
@@ -149,7 +137,7 @@ def base_attributes(input_path, input_key, output_path, resolution,
                     tmp_folder, target, max_jobs, correct_anchors=True):
 
     # prepare cluster tools tasks
-    make_config(tmp_folder)
+    write_default_global_config(os.path.join(tmp_folder, 'configs'))
 
     # make base attributes as n5 dataset
     tmp_path, tmp_key = n5_attributes(input_path, input_key,

@@ -5,6 +5,7 @@ import luigi
 import h5py
 import z5py
 from cluster_tools.downscaling import PainteraToBdvWorkflow
+from ..default_config import write_default_global_config
 
 
 def check_max_id(path, key):
@@ -23,15 +24,8 @@ def to_bdv(in_path, in_key, out_path, resolution, tmp_folder, target='slurm'):
     max_id = check_max_id(in_path, in_key)
 
     config_folder = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_folder, exist_ok=True)
+    write_default_global_config(config_folder)
     configs = PainteraToBdvWorkflow.get_config()
-
-    global_conf = configs['global']
-    global_conf.update({'shebang':
-                        "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python",
-                        'block_shape': [64, 512, 512]})
-    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
-        json.dump(global_conf, f)
 
     config = configs['copy_volume']
     config.update({'threads_per_job': 8, 'mem_limit': 32, 'time_limit': 1600,
