@@ -1,4 +1,5 @@
 import json
+from.files import check_bdv
 
 SOURCE_FILE = '../data/sources.json'
 SEGMENTATION_FILE = '../data/segmentations.json'
@@ -51,13 +52,49 @@ def get_name_prefixes():
     return prefixes
 
 
-def add_image(input_path):
+def load_image_names():
+    with open(IMAGE_FILE) as f:
+        names = json.load(f)
+    return names
+
+
+def add_image(input_path, source_prefix, name):
     """ Add image volume to the platy browser data.
+
+    Parameter:
+        input_path [str] - path to the data that should be added.
+            Needs to be in bdv data format.
+        source_prefix [str] - prefix of the primary data source.
+        name [str] - name of the data.
     """
-    pass
+    # validate the inputs
+    prefixes = get_name_prefixes()
+    if source_prefix not in prefixes:
+        raise ValueError("""Source prefix %s is not in the current sources.
+                            Use 'add_source' to add a new source.""" % source_prefix)
+    is_bdv = check_bdv(input_path)
+    if not is_bdv:
+        raise ValueError("Expect input to be in bdv format")
+    output_name = '%s-%s' % (source_prefix, name)
+    names = load_image_names()
+    if output_name in names:
+        raise ValueError("Name %s is already taken" % output_name)
+
+    # TODO copy h5 and xml to the rawdata folder, update the xml with new relative path
+
+    # add name to the name list and serialze
+    names.append(output_name)
+    with open(IMAGE_FILE, 'w') as f:
+        json.dump(names, f)
 
 
-def add_segmentation():
+def load_segmentation_names():
+    with open(SEGMENTATION_FILE) as f:
+        names = list(json.load(f).keys())
+    return names
+
+
+def add_segmentation(source_prefix, name):
     """ Add segmentation volume to the platy browser data.
     """
     pass

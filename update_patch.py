@@ -282,6 +282,7 @@ def table_help_str(name):
     return help_str % (name, name)
 
 
+# TODO instead of specifying all these things, pass list of stuff that should be changed
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update derived data for the platy browser')
 
