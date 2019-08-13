@@ -1,4 +1,4 @@
-#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python
+#! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
 
 import os
 import argparse

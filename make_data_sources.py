@@ -1,7 +1,9 @@
+#! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
+
 import os
 import glob
-from scripts.files import get_h5_path_from_xml, copy_xml_with_newpath, write_simple_xml
 from shutil import copyfile
+from scripts.files import get_h5_path_from_xml, copy_xml_with_newpath, write_simple_xml
 
 
 def copy_xmls_and_symlink_h5(name_dict, src_folder, trgt_folder):
