@@ -1,7 +1,8 @@
 import json
 import os
 from shutil import copyfile
-from.files import check_bdv, get_h5_path_from_xml, copy_xml_with_newpath
+from .checks import check_bdv
+from .xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
 
 RAW_FOLDER = 'data/rawdata'
 SOURCE_FILE = 'data/sources.json'
@@ -15,9 +16,42 @@ def get_sources():
     See https://git.embl.de/tischer/platy-browser-tables/README.md#file-naming
     for the source naming conventions.
     """
+    if not os.path.exists(SOURCE_FILE):
+        return []
     with open(SOURCE_FILE) as f:
         sources = json.load(f)
     return sources
+
+
+def source_to_prefix(source):
+    return '%s-%s-%s-%s' % (source['modality'],
+                            source['stage'],
+                            source['id'],
+                            source['region'])
+
+
+def get_source_names():
+    """ Get the name prefixes corresponding to all sources.
+    """
+    sources = get_sources()
+    prefixes = [source_to_prefix(source) for source in sources]
+    return prefixes
+
+
+def get_image_names():
+    if not os.path.exists(IMAGE_FILE):
+        return []
+    with open(IMAGE_FILE) as f:
+        names = json.load(f)
+    return names
+
+
+def get_segmentation_names():
+    if not os.path.exists(SEGMENTATION_FILE):
+        return []
+    with open(SEGMENTATION_FILE) as f:
+        names = list(json.load(f).keys())
+    return names
 
 
 def add_source(modality, stage, id=1, region='whole'):
@@ -35,33 +69,17 @@ def add_source(modality, stage, id=1, region='whole'):
     if not isinstance(region, str):
         raise ValueError("Expected region to be a string, not %s" % type(id))
     sources = get_sources()
-    sources.append({'modality': modality, 'stage': stage, 'id': str(id), 'region': region})
+    source = {'modality': modality, 'stage': stage, 'id': str(id), 'region': region}
+
+    if source in sources:
+        raise RuntimeError("Source is already present")
+
+    sources.append(source)
     with open(SOURCE_FILE, 'w') as f:
         json.dump(sources, f)
 
 
-def source_to_prefix(source):
-    return '%s-%s-%s-%s' % (source['modality'],
-                            source['stage'],
-                            source['id'],
-                            source['region'])
-
-
-def get_name_prefixes():
-    """ Get the name prefixes corresponding to all sources.
-    """
-    sources = get_sources()
-    prefixes = [source_to_prefix(source) for source in sources]
-    return prefixes
-
-
-def get_image_names():
-    with open(IMAGE_FILE) as f:
-        names = json.load(f)
-    return names
-
-
-def add_image(input_path, source_prefix, name, copy_data=True):
+def add_image(input_path, source_name, name, copy_data=True):
     """ Add image volume to the platy browser data.
 
     Parameter:
@@ -73,14 +91,14 @@ def add_image(input_path, source_prefix, name, copy_data=True):
             unless adding an image that is already in the rawdata folder. (default: True)
     """
     # validate the inputs
-    prefixes = get_name_prefixes()
-    if source_prefix not in prefixes:
-        raise ValueError("""Source prefix %s is not in the current sources.
-                            Use 'add_source' to add a new source.""" % source_prefix)
+    source_names = get_source_names()
+    if source_name not in source_names:
+        raise ValueError("""Source %s is not in the current sources.
+                            Use 'add_source' to add a new source.""" % source_name)
     is_bdv = check_bdv(input_path)
     if not is_bdv:
         raise ValueError("Expect input to be in bdv format")
-    output_name = '%s-%s' % (source_prefix, name)
+    output_name = '%s-%s' % (source_name, name)
     names = get_image_names()
     if output_name in names:
         raise ValueError("Name %s is already taken" % output_name)
@@ -102,12 +120,6 @@ def add_image(input_path, source_prefix, name, copy_data=True):
     names.append(output_name)
     with open(IMAGE_FILE, 'w') as f:
         json.dump(names, f)
-
-
-def get_segmentation_names():
-    with open(SEGMENTATION_FILE) as f:
-        names = list(json.load(f).keys())
-    return names
 
 
 def add_segmentation(source_prefix, name):

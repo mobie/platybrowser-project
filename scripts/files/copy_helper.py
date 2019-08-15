@@ -1,7 +1,7 @@
 import os
 import shutil
 from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
-from ..sources import get_image_names, RAW_FOLDER
+from .sources import get_image_names, RAW_FOLDER
 
 
 def copy_file(xml_in, xml_out):
