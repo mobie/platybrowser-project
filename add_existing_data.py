@@ -19,7 +19,7 @@ def add_images():
     sbem_prefix = 'sbem-6dpf-1-whole'
     sbem_raw = './data/0.2.1/images/sbem-6dpf-1-whole-raw.xml'
     name = 'raw'
-    add_image(sbem_raw, sbem_prefix, name, copy_data=False)
+    add_image(sbem_prefix, name, sbem_raw, copy_data=False)
 
     # add all prospr images
     prospr_prefix = 'prospr-6dpf-1-whole'
@@ -30,11 +30,32 @@ def add_images():
         if ext != '.xml':
             continue
         name = name[(len(prospr_prefix) + 1):]
-        add_image(impath, prospr_prefix, name, copy_data=False)
+        add_image(prospr_prefix, name, impath, copy_data=False)
+
+
+def add_static_segmentations():
+    source = 'sbem-6dpf-1-whole'
+
+    # chromatin segmentation
+    # chromatin_tables = {'default': './data/0.2.0/tables/sbem-6dpf-1-whole-segmented-chromatin-labels/default.csv'}
+    # add_segmentation(source, 'segmented-chromatin-labels',
+    #                  segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-chromatin-labels.xml',
+    #                  table_path_dict=chromatin_tables, copy_data=False)
+
+    # tissue segmentation
+    tissue_tables = {'default': './data/0.1.0/tables/sbem-6dpf-1-whole-segmented-tissue-labels/base.csv'}
+    add_segmentation(source, 'segmented-tissue-labels',
+                     segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-tissue-labels.xml',
+                     table_path_dict=tissue_tables, copy_data=False)
+
+    # muscle segmentation
+    add_segmentation(source, 'segmented-muscle',
+                     segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-muscle.xml', copy_data=False)
 
 
 def add_segmentations():
-    pass
+    add_static_segmentations()
+    # add_dynamic_segmentations()
 
 
 def add_existing_data():

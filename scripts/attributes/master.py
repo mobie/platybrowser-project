@@ -6,7 +6,7 @@ from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import write_genes_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes
-from ..files import get_h5_path_from_xml
+from ..files.xml_utils import get_h5_path_from_xml
 
 
 def get_seg_path(folder, name, key):
