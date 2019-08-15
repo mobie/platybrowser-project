@@ -1,9 +1,12 @@
 import json
-from.files import check_bdv
+import os
+from shutil import copyfile
+from.files import check_bdv, get_h5_path_from_xml, copy_xml_with_newpath
 
-SOURCE_FILE = '../data/sources.json'
-SEGMENTATION_FILE = '../data/segmentations.json'
-IMAGE_FILE = '../data/images.json'
+RAW_FOLDER = 'data/rawdata'
+SOURCE_FILE = 'data/sources.json'
+SEGMENTATION_FILE = 'data/segmentations.json'
+IMAGE_FILE = 'data/images.json'
 
 
 def get_sources():
@@ -52,20 +55,22 @@ def get_name_prefixes():
     return prefixes
 
 
-def load_image_names():
+def get_image_names():
     with open(IMAGE_FILE) as f:
         names = json.load(f)
     return names
 
 
-def add_image(input_path, source_prefix, name):
+def add_image(input_path, source_prefix, name, copy_data=True):
     """ Add image volume to the platy browser data.
 
     Parameter:
         input_path [str] - path to the data that should be added.
-            Needs to be in bdv data format.
+            Data needs to be in bdv-hdf5 format and the path needs to point to the xml.
         source_prefix [str] - prefix of the primary data source.
         name [str] - name of the data.
+        copy_data [bool] - whether to copy the data. This should be set to True,
+            unless adding an image that is already in the rawdata folder. (default: True)
     """
     # validate the inputs
     prefixes = get_name_prefixes()
@@ -76,11 +81,22 @@ def add_image(input_path, source_prefix, name):
     if not is_bdv:
         raise ValueError("Expect input to be in bdv format")
     output_name = '%s-%s' % (source_prefix, name)
-    names = load_image_names()
+    names = get_image_names()
     if output_name in names:
         raise ValueError("Name %s is already taken" % output_name)
 
-    # TODO copy h5 and xml to the rawdata folder, update the xml with new relative path
+    h5_path = get_h5_path_from_xml(input_path, return_absolute_path=True)
+    name_h5 = '%s.h5' % output_name
+    out_xml = os.path.join(RAW_FOLDER, '%s.xml' % output_name)
+    out_h5 = os.path.join(RAW_FOLDER, name_h5)
+    if copy_data:
+        # copy h5 and xml to the rawdata folder, update the xml with new relative path
+        copyfile(h5_path, out_h5)
+        copy_xml_with_newpath(input_path, out_xml, name_h5)
+    else:
+        if not os.path.exists(out_xml) or not os.path.exists(out_h5):
+            raise RuntimeError("""You did not specify to copy the data, but
+                                  %s and %s do not exist yet""" % (out_xml, out_h5))
 
     # add name to the name list and serialze
     names.append(output_name)
@@ -88,7 +104,7 @@ def add_image(input_path, source_prefix, name):
         json.dump(names, f)
 
 
-def load_segmentation_names():
+def get_segmentation_names():
     with open(SEGMENTATION_FILE) as f:
         names = list(json.load(f).keys())
     return names

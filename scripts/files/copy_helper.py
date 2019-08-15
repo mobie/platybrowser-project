@@ -1,7 +1,7 @@
 import os
-import glob
 import shutil
 from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
+from ..sources import get_image_names, RAW_FOLDER
 
 
 def copy_file(xml_in, xml_out):
@@ -9,17 +9,6 @@ def copy_file(xml_in, xml_out):
     xml_dir = os.path.split(xml_out)[0]
     h5path = os.path.relpath(h5path, start=xml_dir)
     copy_xml_with_newpath(xml_in, xml_out, h5path, path_type='relative')
-
-
-def copy_files_with_pattern(src_folder, dst_folder, pattern):
-    files = glob.glob(os.path.join(src_folder, pattern))
-    for ff in files:
-        ext = os.path.splitext(ff)[1]
-        if ext != '.xml':
-            continue
-        xml_in = ff
-        xml_out = os.path.join(dst_folder, os.path.split(ff)[1])
-        copy_file(xml_in, xml_out)
 
 
 # For now we put symlinks with relative paths, but I am not sure
@@ -60,17 +49,24 @@ def copy_segmentation(src_folder, dst_folder, name):
 
 
 def copy_image_data(src_folder, dst_folder):
-    # copy sbem image data
-    sbem_prefix = 'sbem-6dpf-1-whole'
-    raw_name = '%s-raw.xml' % sbem_prefix
-    copy_file(os.path.join(src_folder, raw_name),
-              os.path.join(dst_folder, raw_name))
+    # get all image names that need to be copied
+    names = get_image_names()
 
-    # copy the prospr med image data
-    copy_files_with_pattern(src_folder, dst_folder, '*-MED*')
-
-    # copy the segmented prospr regions
-    copy_files_with_pattern(src_folder, dst_folder, 'prospr-6dpf-1-whole-segmented-*')
+    for name in names:
+        name += '.xml'
+        in_path = os.path.join(src_folder, name)
+        out_path = os.path.join(dst_folder, name)
+        # we might have just added he image name, so it's not
+        # in the old version folder yet. It must be in the raw folder
+        # in that case
+        if not os.path.exists(in_path):
+            in_path = os.path.join(RAW_FOLDER, name)
+        if not os.path.exists(in_path):
+            raise RuntimeError("Could not find %s in either the src folder %s or raw folder %s" % (name,
+                                                                                                   src_folder,
+                                                                                                   RAW_FOLDER))
+        # copy the xml
+        copy_file(in_path, out_path)
 
 
 def copy_misc_data(src_folder, dst_folder):
