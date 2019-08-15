@@ -37,10 +37,10 @@ def add_static_segmentations():
     source = 'sbem-6dpf-1-whole'
 
     # chromatin segmentation
-    # chromatin_tables = {'default': './data/0.2.0/tables/sbem-6dpf-1-whole-segmented-chromatin-labels/default.csv'}
-    # add_segmentation(source, 'segmented-chromatin-labels',
-    #                  segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-chromatin-labels.xml',
-    #                  table_path_dict=chromatin_tables, copy_data=False)
+    chromatin_tables = {'default': './data/0.2.0/tables/sbem-6dpf-1-whole-segmented-chromatin-labels/default.csv'}
+    add_segmentation(source, 'segmented-chromatin-labels',
+                     segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-chromatin-labels.xml',
+                     table_path_dict=chromatin_tables, copy_data=False)
 
     # tissue segmentation
     tissue_tables = {'default': './data/0.1.0/tables/sbem-6dpf-1-whole-segmented-tissue-labels/base.csv'}
@@ -53,17 +53,40 @@ def add_static_segmentations():
                      segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-muscle.xml', copy_data=False)
 
 
+def add_dynamic_segmentations():
+    source = 'sbem-6dpf-1-whole'
+    paintera_root = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
+
+    # cell segmentation
+    add_segmentation(source, 'segmented-cells-labes',
+                     paintera_project=(paintera_root, 'volumes/paintera/proofread_cells'),
+                     resolution=[.025, .02, .02],
+                     table_update_function='make_cell_tables')
+
+    # nucleus segmentation
+    add_segmentation(source, 'segmented-nuclei-labels',
+                     paintera_project=(paintera_root, 'volumes/paintera/nuclei'),
+                     resolution=[.1, .08, .08],
+                     table_update_function='make_nucleus_tables')
+
+    # cilia segmentation
+    add_segmentation(source, 'segmented-cilia-labels',
+                     paintera_project=(paintera_root, 'volumes/paintera/cilia'),
+                     resolution=[.025, .01, .01],
+                     table_update_function='make_cilia_tables')
+
+
 def add_segmentations():
     add_static_segmentations()
-    # add_dynamic_segmentations()
+    add_dynamic_segmentations()
 
 
 def add_existing_data():
     """ Add existing data to the json files that keep track of
         sources, image data and segmentations.
     """
-    # add_sources()
-    # add_images()
+    add_sources()
+    add_images()
     add_segmentations()
 
 

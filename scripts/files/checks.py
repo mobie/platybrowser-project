@@ -35,10 +35,10 @@ def check_paintera(paintera_project):
     except TypeError:
         return False
     try:
-        f = z5py.File(path)
+        f = z5py.File(path, 'r')
         group = f[key]
         # check for expected paintera keys
-        for kk in ('data', 'label-block-mapping', 'unique-labels'):
+        for kk in ('data', 'label-to-block-mapping', 'unique-labels'):
             if kk not in group:
                 return False
     except Exception:
