@@ -136,7 +136,30 @@ def add_segmentation(source_name, name, segmentation_path=None,
                      resolution=None, table_update_function=None, copy_data=True):
     """ Add segmentation volume to the platy browser data.
 
-    TODO explain more
+    We distinguish between static and dynamic segmentations. A dynamic segmentation is generated from
+    a paintera project and can change due to corrections made in paintera, while a static segmentation
+    is just added once and does not change.
+    In addition, we can add tables associated with the data that contain derived data.
+    For static segmentations you need to pass a dict containing table names and paths,
+    for dynamic segmentations you need to register a function name that will compute the tables.
+
+    Adding a static segmentation:
+    ```
+    # if you add tables, one must have the name 'default'
+    add_segmentation(source_name, seg_name,
+                     segmentation_path='/path/to/input-segmentation.xml',
+                     table_path_dict={'default': '/path/to/default-table.csv',
+                                      'other': '/path/to/other-table.csv'})
+    ```
+
+    Adding a dynamic segmentation:
+    ```
+    # 'update_seg_table' must be importable from 'scripts.attributes'
+    add_segmentation(source_name, seg_name,
+                     paintera_project=('/path/to/paintera/root.n5', '/path/in/file'),
+                     resolution=(.025, .02, .02),  # resolution in microns, must be passed for dynamic seg
+                     table_update_function='update_seg_table')
+    ```
 
     Paramter:
         source_name [str] - prefix of the primary data source.
