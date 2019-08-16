@@ -154,9 +154,7 @@ def update_patch(update_seg_names, update_table_names,
     update_tables(folder, new_folder, table_updates,
                   target=target, max_jobs=max_jobs)
 
-    make_bdv_server_file([os.path.join(new_folder, 'images'),
-                          os.path.join(new_folder, 'segmentations')],
-                         os.path.join(new_folder, 'misc', 'bdv_server.txt'),
+    make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
                          relative_paths=True)
     # TODO add some quality control that cheks that all files are there
 

@@ -3,7 +3,7 @@
 import argparse
 import os
 from subprocess import check_output
-from scripts.files import copy_release_folder
+from scripts.files import copy_release_folder, make_folder_structure
 
 
 def make_dev_folder(dev_name, version=''):
@@ -19,6 +19,7 @@ def make_dev_folder(dev_name, version=''):
     if not os.path.exists(folder):
         raise RuntimeError("Source folder %s does not exist" % folder)
 
+    make_folder_structure(new_folder)
     copy_release_folder(folder, new_folder)
 
 

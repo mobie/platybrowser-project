@@ -9,6 +9,7 @@ RAW_FOLDER = 'data/rawdata'
 SOURCE_FILE = 'data/sources.json'
 SEGMENTATION_FILE = 'data/segmentations.json'
 IMAGE_FILE = 'data/images.json'
+PRIVATE_FILE = 'data/privates.json'
 
 # TODO we need additional functionality:
 # - remove images and segmentations
@@ -89,7 +90,21 @@ def add_source(modality, stage, id=1, region='whole'):
         json.dump(sources, f)
 
 
-def add_image(source_name, name, input_path, copy_data=True):
+def get_privates():
+    if not os.path.exists(PRIVATE_FILE):
+        return []
+    with open(PRIVATE_FILE) as f:
+        return json.load(f)
+
+
+def add_to_privates(name):
+    privates = get_privates()
+    privates.append(name)
+    with open(PRIVATE_FILE, 'w') as f:
+        json.dump(privates, f)
+
+
+def add_image(source_name, name, input_path, copy_data=True, is_private=False):
     """ Add image volume to the platy browser data.
 
     Parameter:
@@ -98,7 +113,8 @@ def add_image(source_name, name, input_path, copy_data=True):
         input_path [str] - path to the data that should be added.
             Data needs to be in bdv-hdf5 format and the path needs to point to the xml.
         copy_data [bool] - whether to copy the data. This should be set to True,
-            unless adding an image volume that is already in the rawdata folder. (default: True)
+            unless adding an image volume that is already in the rawdata folder (default: True).
+        is_private [bool] - whether this data is private (default: False).
     """
     # validate the inputs
     source_names = get_source_names()
@@ -130,10 +146,15 @@ def add_image(source_name, name, input_path, copy_data=True):
     with open(IMAGE_FILE, 'w') as f:
         json.dump(names, f)
 
+    # add the name to the private list if is_private == True
+    if is_private:
+        add_to_privates(output_name)
+
 
 def add_segmentation(source_name, name, segmentation_path=None,
                      table_path_dict=None, paintera_project=None,
-                     resolution=None, table_update_function=None, copy_data=True):
+                     resolution=None, table_update_function=None,
+                     copy_data=True, is_private=False):
     """ Add segmentation volume to the platy browser data.
 
     We distinguish between static and dynamic segmentations. A dynamic segmentation is generated from
@@ -176,6 +197,7 @@ def add_segmentation(source_name, name, segmentation_path=None,
             the segmentation is updated from paintera corrections (default: None).
         copy_data [bool] - whether to copy the data. This should be set to True,
             unless adding a segmentation that is already in the rawdata folder. (default: True)
+        is_private [bool] - whether this data is private (default: False).
     """
     # validate the inputs
 
@@ -245,3 +267,6 @@ def add_segmentation(source_name, name, segmentation_path=None,
     segmentations[output_name] = segmentation
     with open(SEGMENTATION_FILE, 'w') as f:
         json.dump(segmentations, f)
+    # add the name to the private list if is_private == True
+    if is_private:
+        add_to_privates(output_name)

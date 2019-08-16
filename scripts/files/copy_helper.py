@@ -1,7 +1,7 @@
 import os
 import shutil
 from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
-from .sources import get_image_names, RAW_FOLDER
+from .sources import get_image_names, get_segmentation_names, get_segmentations
 
 
 def copy_file(xml_in, xml_out):
@@ -56,15 +56,8 @@ def copy_image_data(src_folder, dst_folder):
         name += '.xml'
         in_path = os.path.join(src_folder, name)
         out_path = os.path.join(dst_folder, name)
-        # we might have just added he image name, so it's not
-        # in the old version folder yet. It must be in the raw folder
-        # in that case
         if not os.path.exists(in_path):
-            in_path = os.path.join(RAW_FOLDER, name)
-        if not os.path.exists(in_path):
-            raise RuntimeError("Could not find %s in either the src folder %s or raw folder %s" % (name,
-                                                                                                   src_folder,
-                                                                                                   RAW_FOLDER))
+            raise RuntimeError("Could not find %s in the src folder %s or raw folder %s" % (name, src_folder))
         # copy the xml
         copy_file(in_path, out_path)
 
@@ -81,3 +74,36 @@ def copy_misc_data(src_folder, dst_folder):
     if os.path.exists(bkmrk_in):
         shutil.copyfile(bkmrk_in,
                         os.path.join(dst_folder, 'bookmarks.json'))
+
+
+def copy_segmentations(src_folder, dst_folder):
+    names = get_segmentation_names()
+    for name in names:
+        name += '.xml'
+        in_path = os.path.join(src_folder, name)
+        out_path = os.path.join(dst_folder, name)
+        if not os.path.exists(in_path):
+            raise RuntimeError("Could not find %s in the src folder %s or raw folder %s" % (name, src_folder))
+        # copy the xml
+        copy_file(in_path, out_path)
+
+
+def copy_all_tables(src_folder, dst_folder):
+    segmentations = get_segmentations()
+    for name, seg in segmentations.items():
+        has_table = seg.get('has_tables', False) or 'table_update_function' in seg
+        if not has_table:
+            continue
+        copy_tables(src_folder, dst_folder, name)
+
+
+def copy_release_folder(src_folder, dst_folder):
+    # copy static image and misc data
+    copy_image_data(os.path.join(src_folder, 'images'),
+                    os.path.join(dst_folder, 'images'))
+    copy_misc_data(os.path.join(src_folder, 'misc'),
+                   os.path.join(dst_folder, 'misc'))
+    copy_segmentations(os.path.join(src_folder, 'segmentations'),
+                       os.path.join(dst_folder, 'segmentations'))
+    copy_all_tables(os.path.join(src_folder, 'tables'),
+                    os.path.join(dst_folder, 'tables'))
