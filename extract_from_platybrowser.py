@@ -1,3 +1,5 @@
+#! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
+
 import argparse
 import os
 import pandas as pd

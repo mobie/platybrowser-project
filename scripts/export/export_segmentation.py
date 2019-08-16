@@ -82,4 +82,6 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     to_bdv(tmp_path, tmp_key, out_path, resolution, tmp_bdv, target)
 
     # compute mapping to old segmentation
-    map_segmentation_ids(folder, new_folder, name, tmp_folder, max_jobs, target)
+    # this can be skipped for new segmentations by setting folder to None
+    if folder is not None:
+        map_segmentation_ids(folder, new_folder, name, tmp_folder, max_jobs, target)

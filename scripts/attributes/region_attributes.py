@@ -4,7 +4,7 @@ import numpy as np
 import h5py
 
 from .util import write_csv, node_labels, normalize_overlap_dict
-from ..files import get_h5_path_from_xml
+from ..files.xml_utils import get_h5_path_from_xml
 
 
 def write_region_table(label_ids, label_list, semantic_mapping_list, out_path):
