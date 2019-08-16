@@ -10,6 +10,7 @@ SOURCE_FILE = 'data/sources.json'
 SEGMENTATION_FILE = 'data/segmentations.json'
 IMAGE_FILE = 'data/images.json'
 PRIVATE_FILE = 'data/privates.json'
+POSTPROCESS_FILE = 'data/postprocess.json'
 
 # TODO we need additional functionality:
 # - remove images and segmentations
@@ -270,3 +271,29 @@ def add_segmentation(source_name, name, segmentation_path=None,
     # add the name to the private list if is_private == True
     if is_private:
         add_to_privates(output_name)
+
+
+def get_postprocess_dict():
+    if not os.path.exists(POSTPROCESS_FILE):
+        return {}
+    with open(POSTPROCESS_FILE) as f:
+        return json.load(f)
+
+
+def add_postprocessing(name, boundary_path, boundary_key,
+                       min_segment_size, label_segmentation):
+    seg_names = get_segmentation_names()
+    if name not in seg_names:
+        raise ValueError('Name %s is not registered as segmentation' % name)
+
+    if not os.path.exists(boundary_path):
+        raise ValueError('Invalid boundary path')
+    if (not isinstance(min_segment_size, int)) or (not isinstance(label_segmentation, bool)):
+        raise ValueError('Invalid postprocessing options')
+    postprocess_dict = get_postprocess_dict()
+
+    postprocess_dict[name] = {'boundary_path': boundary_path, 'boundary_key': boundary_key,
+                              'min_segment_size': min_segment_size, 'label_segmentation': label_segmentation}
+
+    with open(POSTPROCESS_FILE, 'w') as f:
+        json.dump(postprocess_dict, f)

@@ -4,10 +4,11 @@ import luigi
 import z5py
 
 from cluster_tools.downscaling import DownscalingWorkflow
-from paintera_tools import serialize_from_commit
+from paintera_tools import serialize_from_commit, postprocess
 from .to_bdv import to_bdv
 from .map_segmentation_ids import map_segmentation_ids
 from ..default_config import write_default_global_config
+from ..files import get_postprocess_dict
 
 
 def get_n_scales(paintera_path, paintera_key):
@@ -66,11 +67,27 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     tmp_key = 'seg'
     tmp_key0 = os.path.join(tmp_key, 's0')
 
+    # run post-processing if specified for this segmentation name
+    pp_dict = get_postprocess_dict()
+    run_postprocessing = name in pp_dict
+
+    if run_postprocessing:
+        pp_config = pp_dict[name]
+        boundary_path = pp_config['boundary_path']
+        boundary_key = pp_config['boundary_key']
+        min_segment_size = pp_config['min_segment_size']
+        label_segmentation = pp_config['label_segmentation']
+        tmp_postprocess = os.path.join(tmp_folder, 'postprocess_paintera')
+        postprocess(paintera_path, paintera_key,
+                    boundary_path, boundary_key,
+                    tmp_folder=tmp_postprocess,
+                    target=target, max_jobs=max_jobs,
+                    n_threads=16, size_threshold=min_segment_size,
+                    label=label_segmentation)
+
     # export segmentation from paintera commit for all scales
     serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
                           max_jobs, target, relabel_output=True)
-
-    # TODO postprocessing (size filter / conected components) ?
 
     # downscale the segemntation
     n_scales = get_n_scales(paintera_path, paintera_key)

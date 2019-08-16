@@ -1,6 +1,7 @@
 #! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
 
 import os
+import json
 import argparse
 from copy import deepcopy
 from glob import glob
@@ -103,8 +104,7 @@ def check_requested_updates(names_to_update):
 
 # TODO catch all exceptions and handle them properly
 def update_patch(update_seg_names, update_table_names,
-                 description='', force_update=False,
-                 target='slurm', max_jobs=250):
+                 description='', target='slurm', max_jobs=250):
     """ Generate new patch version of platy-browser derived data.
 
     The patch version is increased if derived data changes, e.g. by
@@ -116,7 +116,6 @@ def update_patch(update_seg_names, update_table_names,
             Not that these only need to be specified if the corresponding segmentation is not
             updated, but the tables should be updated.
         description [str] - Optional descrption for release message (default: '').
-        force_update [bool] - Force an update if no changes are specified (default: False).
         target [str] -
         max_jobs [int] -
     """
@@ -124,7 +123,7 @@ def update_patch(update_seg_names, update_table_names,
     # check if we have anything to update
     have_seg_updates = len(update_seg_names) > 0
     have_table_updates = len(update_seg_names) > 0
-    if not have_seg_updates and not have_table_updates and not force_update:
+    if not have_seg_updates and not have_table_updates:
         raise ValueError("No updates where provdied and force_update was not set")
 
     table_updates = deepcopy(update_seg_names)
@@ -178,22 +177,14 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
-# TODO take path to json as argument
 # TODO expose target and max_jobs as well
 if __name__ == '__main__':
+    help_str = "Path to a json containing list of the data to update. See docstring of 'update_patch' for details."
     parser = argparse.ArgumentParser(description='Update patch version of platy-browser-data.')
-    parser.add_argument('--segmentation_names', type=str, nargs='+', default=[],
-                        help="Names of the segmentations to update.")
-    table_help_str = ("Names of the tables to update."
-                      "The tables for segmentations in 'segmentation_names' will be updated without being passed here.")
-    parser.add_argument('--table_names', type=str, nargs='+', default=[],
-                        help=table_help_str)
-
-    parser.add_argument('--description', type=str, default='',
-                        help="Optional description for release message")
-    parser.add_argument('--force_update', type=str2bool, default='no',
-                        help="Create new release even if nothing needs to be updated.")
-
-    args = parser.parse_args()
-    update_patch(args.segmentation_names, args.table_names,
-                 args.description, args.force_update)
+    parser.add_argument('input_path', type=str, help=help_str)
+    input_path = parser.parse_args().input_path
+    with open(input_path) as f:
+        update_dict = json.load(f)
+    if not ('segmentations' in update_dict and 'tables' in update_dict):
+        raise ValueError("Invalid udpate file")
+    update_patch(update_dict['segmentations'], update_dict['tables'])

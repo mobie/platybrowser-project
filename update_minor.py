@@ -5,7 +5,7 @@ import json
 import argparse
 from subprocess import check_output
 
-from scripts.files import copy_release_folder, make_folder_structure
+from scripts.files import copy_release_folder, make_folder_structure, make_bdv_server_file
 from scripts.release_helper import add_data, check_inputs
 
 
@@ -40,6 +40,10 @@ def update_minor(new_data, target='slurm', max_jobs=250):
     # add the new data
     for data in new_data:
         add_data(data, new_folder, target, max_jobs)
+
+    # make bdv file
+    make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
+                         relative_paths=True)
 
     # TODO auto-release
     # TODO clean up

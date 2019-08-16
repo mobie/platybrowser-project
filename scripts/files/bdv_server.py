@@ -16,7 +16,6 @@ def add_to_bdv_config(name, path, bdv_config, relative_paths, ref_dir):
     bdv_config[name] = path
 
 
-# e.g. if we don't want to expose the fib dataset to the public yet
 def make_bdv_server_file(folder, out_path, relative_paths=True):
     """ Make the bigserver config file for a given release.
     """
