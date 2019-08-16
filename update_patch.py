@@ -115,9 +115,9 @@ def update_patch(update_seg_names, update_table_names,
         update_table_names [list[str]] - names of tables to be updated.
             Not that these only need to be specified if the corresponding segmentation is not
             updated, but the tables should be updated.
-        description [str] - Optional descrption for release message (default: '').
-        target [str] -
-        max_jobs [int] -
+        description [str] - optional descrption for release message (default: '').
+        target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
+        max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
 
     # check if we have anything to update

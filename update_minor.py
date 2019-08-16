@@ -21,7 +21,13 @@ def get_tags():
 def update_minor(new_data, target='slurm', max_jobs=250):
     """ Update minor version of platy browser.
 
-    TODO explain elements of input list.
+    The minor version is increased if new derived data is added.
+
+    Arguments:
+        new_data [list] - list of new data to add. For details, see
+            https://git.embl.de/tischer/platy-browser-tables#usage.
+        target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
+        max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
     check_inputs(new_data)
 

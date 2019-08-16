@@ -23,7 +23,13 @@ def get_tags():
 def update_major(new_data_dict, target='slurm', max_jobs=250):
     """ Update major version of platy browser.
 
-    TODO explain elements of input list.
+    The major version is increased if a new primary data source is added.
+
+    Arguments:
+        new_data [dict] - dictionary of new primary data sources and data to be added. For details, see
+            https://git.embl.de/tischer/platy-browser-tables#usage.
+        target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
+        max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
 
     for source, new_data in new_data_dict.items():

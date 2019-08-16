@@ -50,10 +50,43 @@ We provide three scripts to update the respective release digit:
 - `update_major.py`: Create new version folder and add primary data. 
 
 All three scripts take the path to a json file as argument. The json needs to encode which data to update/add
-according to the following specification: TODO describe.
-See some example json files in `example_updates/`.
+according to the following specifications:
 
-For now, we do not add any files to version control automatically, so after calling one of the update
+For `update_patch`, the json needs to contain a dictonary with the two keys `segmentations` and `tables`.
+Each key needs to map to a list that contains (valid) names of segmentations. For names listed in `segmentations`,
+the segmentation AND corresponding tables will be updated. For `tables`, only the tables will be updated.
+The following example would trigger segmentation and table update for the cell segmentation and a table update for the nucleus segmentation:
+```
+{"segmentations": ["sbem-6dpf-1-whole-segmented-cells-labels"],
+ "tables": ["sbem-6dpf-1-whole-segmented-nuclei-labels"]}
+```
+
+For `update_minor`, the json needs to contain a list of dictionaries. Each dictionary corresponds to new
+data to add to the platy browser. There are three valid types of data, each with different required and optional fields:
+- `images`: New image data. Required fields are `source`, `name` and `input_path`. `source` refers to the primary data the image data is associated with, see [naming scheme](https://git.embl.de/tischer/platy-browser-tables#file-naming). `name` specifies the name this image data will have, excluding the naming scheme prefix. `input_path` is the path to the data to add, needs to be in bdv hdf5 format. The field `is_private` is optional. If it is `true`, the data will not be exposed in
+  the public big data server.
+- `static segmentations`: New (static) segmentation data. The required fields are `source`, `name` and `segmentation_path` (corresponding to `input_path` in `images`). The fields `table_path_dict` and `is_private` are optional. `table_dict_path` specifies tables associated with the segmentation as a dictionary `{"table_name1": "/path/to/table1.csv", ...}`. If given, one of the table names must be `default`.
+- `dynamic segmentations`: New (dynamic) segmentation data. The required fields are `source`, `name`, `paintera_project` and `resolution`. `paintera_project` specifies path and key of a n5 container storing paintera corrections for this segmentation. `resolution` is the segmentation's resolution in micrometer. The fields `table_update_function` and `is_private` are optional. `table_update_function` can be specified to register a function to generate tables for this segmentation. The function must be
+  importable from `scripts.attributes`.
+The following example would add a new prospr gene to the images and a new static and dynamic segmentation derived from the em data:
+```
+[{"source": "prospr-6dpf-1-whole", "name": "new-gene-MED", "input_path": "/path/to/new-gene-data.xml"}
+ {"source": "sbem-6dpf-1-whole", "name": "new-static-segmentation", "segmentation_path": "/path/to/new-segmentation-data.xml",
+  "table_path_dict": {"default": "/path/to/default-table.csv", "custom": "/path/to/custom-table.csv"}},
+ {"source": "sbem-6dpf-1-whole", "name": "new-dynamic-segmentation", "paintera_project": ["/path/to/dynamic-segmentation.n5", "/paintera/project"],
+  "table_update_function": "new_update_function"}]
+```
+
+For `update_major`, the json needs to contain a dictionary. The dictionary keys correpond to new primary sources (cf. [naming scheme](https://git.embl.de/tischer/platy-browser-tables#file-naming))'
+to add to the platy browser. Each key needs to map to a list of data entries. The specification of these entries corresponds to `update_minor`, except that the field `source` is not necessary.
+The following example would add a new primary data source (FIBSEM) and add the corresponding raw data as private data:
+```
+{"fib-6dpf-1-whole": [{"name": "raw", "input_path": "/path/to/fib-raw.xml", "is_private": "true"}]}
+```
+
+See `example_updates/` for additional json update files.
+
+For now, we do not add any files to version control automatically. So after calling one of the update
 scripts, you must add all new files yourself and then make a release via `git tag -a X.Y.Z -m "DESCRIPTION"`.
 
 In addition, the script `make_dev_folder.py` can be used to create a development folder. It copies the most
