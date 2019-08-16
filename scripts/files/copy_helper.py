@@ -34,6 +34,8 @@ def copy_segmentation(src_folder, dst_folder, name):
     # copy the segmentation xml
     name_with_ext = '%s.xml' % name
     xml_in = os.path.join(src_folder, 'segmentations', name_with_ext)
+    if not os.path.exists(xml_in):
+        raise RuntimeError("Could not find %s in the src folder %s" % (name, src_folder))
     xml_out = os.path.join(dst_folder, 'segmentations', name_with_ext)
     copy_file(xml_in, xml_out)
 
@@ -54,10 +56,10 @@ def copy_image_data(src_folder, dst_folder):
 
     for name in names:
         name += '.xml'
-        in_path = os.path.join(src_folder, name)
-        out_path = os.path.join(dst_folder, name)
+        in_path = os.path.join(src_folder, 'images', name)
+        out_path = os.path.join(dst_folder, 'images', name)
         if not os.path.exists(in_path):
-            raise RuntimeError("Could not find %s in the src folder %s or raw folder %s" % (name, src_folder))
+            raise RuntimeError("Could not find %s in the src folder %s" % (name, src_folder))
         # copy the xml
         copy_file(in_path, out_path)
 
@@ -66,26 +68,20 @@ def copy_misc_data(src_folder, dst_folder):
     # copy the aux gene data
     prospr_prefix = 'prospr-6dpf-1-whole'
     aux_name = '%s_meds_all_genes.xml' % prospr_prefix
-    copy_file(os.path.join(src_folder, aux_name),
-              os.path.join(dst_folder, aux_name))
+    copy_file(os.path.join(src_folder, 'misc', aux_name),
+              os.path.join(dst_folder, 'misc', aux_name))
 
     # copy the bookmarks
-    bkmrk_in = os.path.join(src_folder, 'bookmarks.json')
+    bkmrk_in = os.path.join(src_folder, 'misc', 'bookmarks.json')
     if os.path.exists(bkmrk_in):
         shutil.copyfile(bkmrk_in,
-                        os.path.join(dst_folder, 'bookmarks.json'))
+                        os.path.join(dst_folder, 'misc', 'bookmarks.json'))
 
 
 def copy_segmentations(src_folder, dst_folder):
     names = get_segmentation_names()
     for name in names:
-        name += '.xml'
-        in_path = os.path.join(src_folder, name)
-        out_path = os.path.join(dst_folder, name)
-        if not os.path.exists(in_path):
-            raise RuntimeError("Could not find %s in the src folder %s or raw folder %s" % (name, src_folder))
-        # copy the xml
-        copy_file(in_path, out_path)
+        copy_segmentation(src_folder, dst_folder, name)
 
 
 def copy_all_tables(src_folder, dst_folder):
@@ -99,11 +95,7 @@ def copy_all_tables(src_folder, dst_folder):
 
 def copy_release_folder(src_folder, dst_folder):
     # copy static image and misc data
-    copy_image_data(os.path.join(src_folder, 'images'),
-                    os.path.join(dst_folder, 'images'))
-    copy_misc_data(os.path.join(src_folder, 'misc'),
-                   os.path.join(dst_folder, 'misc'))
-    copy_segmentations(os.path.join(src_folder, 'segmentations'),
-                       os.path.join(dst_folder, 'segmentations'))
-    copy_all_tables(os.path.join(src_folder, 'tables'),
-                    os.path.join(dst_folder, 'tables'))
+    copy_image_data(src_folder, dst_folder)
+    copy_misc_data(src_folder, dst_folder)
+    copy_segmentations(src_folder, dst_folder)
+    copy_all_tables(src_folder, dst_folder)

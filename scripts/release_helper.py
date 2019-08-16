@@ -2,6 +2,7 @@ import os
 from . import attributes
 from .export import export_segmentation
 from .files import add_image, add_segmentation, copy_tables
+from .files.sources import RAW_FOLDER
 from .files.copy_helper import copy_file
 
 
@@ -36,7 +37,9 @@ def check_inputs(new_data, check_source=True):
         raise ValueError("Expect list of dicts as input")
 
     for data in new_data:
-        if not any(is_image(data, check_source), is_static_segmentation(data, check_source), is_dynamic_segmentation(data, check_source)):
+        if not any((is_image(data, check_source),
+                    is_static_segmentation(data, check_source),
+                    is_dynamic_segmentation(data, check_source))):
             raise ValueError("Could not parse input element %s" % str(data))
 
 
@@ -55,7 +58,7 @@ def add_data(data, folder, target, max_jobs, source=None):
                   is_private=is_private)
 
         # copy image data from the raw folder to new release folder
-        xml_raw = os.path.join('data/raw', file_name)
+        xml_raw = os.path.join(RAW_FOLDER, file_name)
         xml_out = os.path.join(folder, file_name)
         copy_file(xml_raw, xml_out)
 
@@ -68,13 +71,13 @@ def add_data(data, folder, target, max_jobs, source=None):
                          is_private=is_private)
 
         # copy segmentation data from the raw folder to new release folder
-        xml_raw = os.path.join('data/raw', file_name)
+        xml_raw = os.path.join(RAW_FOLDER, file_name)
         xml_out = os.path.join(folder, file_name)
         copy_file(xml_raw, xml_out)
 
         # if we have tables, copy them as well
         if table_path_dict is not None:
-            copy_tables('data/raw', os.path.join(folder, 'tables'), full_name)
+            copy_tables(RAW_FOLDER, folder, full_name)
 
     elif is_dynamic_segmentation(data, check_source):
         # register the dynamic segmentation

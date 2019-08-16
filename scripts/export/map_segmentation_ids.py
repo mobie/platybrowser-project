@@ -4,7 +4,7 @@ import luigi
 import z5py
 
 from cluster_tools.node_labels import NodeLabelWorkflow
-from ..files import get_h5_path_from_xml
+from ..files.xml_utils import get_h5_path_from_xml
 from ..default_config import write_default_global_config
 
 

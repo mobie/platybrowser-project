@@ -141,10 +141,8 @@ def update_patch(update_seg_names, update_table_names,
     make_folder_structure(new_folder)
 
     # copy static image and misc data
-    copy_image_data(os.path.join(folder, 'images'),
-                    os.path.join(new_folder, 'images'))
-    copy_misc_data(os.path.join(folder, 'misc'),
-                   os.path.join(new_folder, 'misc'))
+    copy_image_data(folder, new_folder)
+    copy_misc_data(folder, new_folder)
 
     # export new segmentations
     update_segmentations(folder, new_folder, update_seg_names,

@@ -50,7 +50,7 @@ def add_static_segmentations():
 
     # muscle segmentation
     add_segmentation(source, 'segmented-muscle',
-                     segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-muscle.xml', copy_data=False)
+                     segmentation_path='./data/rawdata/sbem-6dpf-1-whole-segmented-muscle.h5', copy_data=False)
 
 
 def add_dynamic_segmentations():
@@ -58,7 +58,7 @@ def add_dynamic_segmentations():
     paintera_root = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
 
     # cell segmentation
-    add_segmentation(source, 'segmented-cells-labes',
+    add_segmentation(source, 'segmented-cells-labels',
                      paintera_project=(paintera_root, 'volumes/paintera/proofread_cells'),
                      resolution=[.025, .02, .02],
                      table_update_function='make_cell_tables')

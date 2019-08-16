@@ -1,0 +1,9 @@
+[{"source": "prospr-6dpf-1-whole",
+  "name": "ref-SPM",
+  "input_path": "data/tischis-new-data/prospr-6dpf-1-whole-Ref-SPM.xml"},
+ {"source": "sbem-6dpf-1-whole",
+  "name": "segmented-ariande-neuropil",
+  "segmentation_path": "data/tischis-new-data/prospr-6dpf-1-whole-segmented-aridane-Neuropil.xml"},
+ {"source": "sbem-6dpf-1-whole",
+  "name": "segmented-cats-neuropil",
+  "segmentation_path": "data/tischis-new-data/prospr-6dpf-1-whole-segmented-cats-Neuropil.xml"}]

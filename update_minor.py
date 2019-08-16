@@ -6,8 +6,7 @@ import argparse
 from subprocess import check_output
 
 from scripts.files import copy_release_folder, make_folder_structure
-from scripts.release_helper import (add_data, check_inputs,
-                                    is_image, is_static_segmentation, is_dynamic_segmentation)
+from scripts.release_helper import add_data, check_inputs
 
 
 def get_tags():
@@ -17,15 +16,6 @@ def get_tags():
     new_tag[1] = str(int(new_tag[1]) + 1)
     new_tag = '.'.join(new_tag)
     return tag, new_tag
-
-
-def check_inputs(new_data):
-    if not all(isinstance(data, dict) for data in new_data):
-        raise ValueError("Expect list of dicts as input")
-
-    for data in new_data:
-        if not any(is_image(data), is_static_segmentation(data), is_dynamic_segmentation(data)):
-            raise ValueError("Could not parse input element %s" % str(data))
 
 
 def update_minor(new_data, target='slurm', max_jobs=250):
