@@ -32,6 +32,9 @@ def is_dynamic_segmentation(data, check_source):
     return False
 
 
+# TODO check more thoroughly:
+# - check that the paths that are specified exist
+# - check table arguments if present
 def check_inputs(new_data, check_source=True):
     if not all(isinstance(data, dict) for data in new_data):
         raise ValueError("Expect list of dicts as input")
@@ -59,7 +62,7 @@ def add_data(data, folder, target, max_jobs, source=None):
 
         # copy image data from the raw folder to new release folder
         xml_raw = os.path.join(RAW_FOLDER, file_name)
-        xml_out = os.path.join(folder, file_name)
+        xml_out = os.path.join(folder, 'images', file_name)
         copy_file(xml_raw, xml_out)
 
     elif is_static_segmentation(data, check_source):
@@ -72,7 +75,7 @@ def add_data(data, folder, target, max_jobs, source=None):
 
         # copy segmentation data from the raw folder to new release folder
         xml_raw = os.path.join(RAW_FOLDER, file_name)
-        xml_out = os.path.join(folder, file_name)
+        xml_out = os.path.join(folder, 'segmentations', file_name)
         copy_file(xml_raw, xml_out)
 
         # if we have tables, copy them as well

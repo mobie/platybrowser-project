@@ -178,6 +178,7 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
+# TODO take path to json as argument
 # TODO expose target and max_jobs as well
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update patch version of platy-browser-data.')

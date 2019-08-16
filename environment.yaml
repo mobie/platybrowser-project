@@ -1,10 +1,10 @@
 name:
-    platy-browser
+    platybrowser
 channels:
     - cpape
     - conda-forge
 dependencies:
-    - affogato
+    # - affogato
     - scikit-image
     - luigi
     - nifty
@@ -12,3 +12,5 @@ dependencies:
     - h5py
     - z5py
     - cluster_tools
+    - paintera_tools
+    - pandas
