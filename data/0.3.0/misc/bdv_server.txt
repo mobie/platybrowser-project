@@ -207,9 +207,12 @@ prospr-6dpf-1-whole-segmented-RestOfAnimal	../images/prospr-6dpf-1-whole-segment
 prospr-6dpf-1-whole-segmented-Stomodeum	../images/prospr-6dpf-1-whole-segmented-Stomodeum.xml
 prospr-6dpf-1-whole-segmented-VNC	../images/prospr-6dpf-1-whole-segmented-VNC.xml
 prospr-6dpf-1-whole-six12-MED	../images/prospr-6dpf-1-whole-six12-MED.xml
+prospr-6dpf-1-whole-ref-SPM	../images/prospr-6dpf-1-whole-ref-SPM.xml
 sbem-6dpf-1-whole-segmented-chromatin-labels	../segmentations/sbem-6dpf-1-whole-segmented-chromatin-labels.xml
 sbem-6dpf-1-whole-segmented-tissue-labels	../segmentations/sbem-6dpf-1-whole-segmented-tissue-labels.xml
 sbem-6dpf-1-whole-segmented-muscle	../segmentations/sbem-6dpf-1-whole-segmented-muscle.xml
 sbem-6dpf-1-whole-segmented-cells-labels	../segmentations/sbem-6dpf-1-whole-segmented-cells-labels.xml
 sbem-6dpf-1-whole-segmented-nuclei-labels	../segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.xml
 sbem-6dpf-1-whole-segmented-cilia-labels	../segmentations/sbem-6dpf-1-whole-segmented-cilia-labels.xml
+sbem-6dpf-1-whole-segmented-ariande-neuropil	../segmentations/sbem-6dpf-1-whole-segmented-ariande-neuropil.xml
+sbem-6dpf-1-whole-segmented-cats-neuropil	../segmentations/sbem-6dpf-1-whole-segmented-cats-neuropil.xml

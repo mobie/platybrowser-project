@@ -9,11 +9,12 @@ def add_to_bdv_config(name, path, bdv_config, relative_paths, ref_dir):
     h5path = get_h5_path_from_xml(path, return_absolute_path=True)
     if not os.path.exists(h5path):
         msg = 'Path to h5-file in xml does not exist - %s, %s' % (path, h5path)
-        return RuntimeError(msg)
+        raise RuntimeError(msg)
 
     if relative_paths:
         path = os.path.relpath(path, ref_dir)
     bdv_config[name] = path
+    return bdv_config
 
 
 def make_bdv_server_file(folder, out_path, relative_paths=True):
@@ -29,13 +30,15 @@ def make_bdv_server_file(folder, out_path, relative_paths=True):
         if name in privates:
             continue
         path = os.path.join(folder, 'images', '%s.xml' % name)
-        add_to_bdv_config(name, path, bdv_config, relative_paths, ref_dir)
+        bdv_config = add_to_bdv_config(name, path, bdv_config,
+                                       relative_paths, ref_dir)
 
     for name in seg_names:
         if name in privates:
             continue
         path = os.path.join(folder, 'segmentations', '%s.xml' % name)
-        add_to_bdv_config(name, path, bdv_config, relative_paths, ref_dir)
+        bdv_config = add_to_bdv_config(name, path, bdv_config,
+                                       relative_paths, ref_dir)
 
     with open(out_path, 'w') as f:
         for name, path in bdv_config.items():
