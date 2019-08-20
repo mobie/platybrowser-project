@@ -1,0 +1,9 @@
+[{"source": "sbem-6dpf-1-whole",
+  "name": "mask-resin",
+  "input_path": "/g/kreshuk/pape/Work/my_projects/py_platy_browser/experiments/segmentation/resin/em-mask-resin.xml"},
+ {"source": "sbem-6dpf-1-whole",
+  "name": "mask-inside",
+  "input_path": "/g/kreshuk/pape/Work/my_projects/py_platy_browser/experiments/segmentation/resin/em-mask-inside.xml"},
+ {"source": "sbem-6dpf-1-whole",
+  "name": "mask-outside",
+  "input_path": "/g/kreshuk/pape/Work/my_projects/py_platy_browser/experiments/segmentation/resin/em-mask-outside.xml"}]
