@@ -66,7 +66,12 @@ if __name__ == '__main__':
     help_str = "Path to a json containing list of the data to add. See docstring of 'update_major' for details."
     parser = argparse.ArgumentParser(description='Update major version of platy-browser-data.')
     parser.add_argument('input_path', type=str, help=help_str)
-    input_path = parser.parse_args().input_path
+    parser.add_argument('--target', type=str, default='slurm',
+                        help="Computatin plaform, can be 'slurm' or 'local'")
+    parser.add_argument('--max_jobs', type=int, default=250,
+                        help="Maximal number of jobs used for computation")
+    args = parser.parse_args()
+    input_path = args.input_path
     with open(input_path) as f:
         new_data_dict = json.load(f)
-    update_major(new_data_dict)
+    update_major(new_data_dict, target=args.target, max_jobs=args.max_jobs)

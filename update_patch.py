@@ -49,21 +49,24 @@ def update_segmentations(folder, new_folder, names_to_update, target, max_jobs):
 def update_table(name, seg_dict, folder, new_folder,
                  target, max_jobs):
     tmp_folder = 'tmp_tables_%s' % name
-    update_function = getattr(scripts.attribute, seg_dict['table_update_function'])
+    update_function = getattr(scripts.attributes, seg_dict['table_update_function'])
     update_function(new_folder, name, tmp_folder, seg_dict['resolution'],
                     target=target, max_jobs=max_jobs)
 
 
 def update_tables(folder, new_folder, names_to_update, target, max_jobs):
     segmentations = get_segmentations()
-    segmentation_names = get_segmentation_names()
 
-    for name in segmentation_names:
+    for name, seg in segmentations.items():
+        has_table = seg.get('has_tables', False) or 'table_update_function' in seg
         if name in names_to_update:
-            update_table(name, segmentations[name], folder, new_folder,
+            if not has_table:
+                raise RuntimeError("Segmentation %s does not have a table:" % name)
+            update_table(name, seg, folder, new_folder,
                          target, max_jobs)
         else:
-            copy_tables(folder, new_folder, name)
+            if has_table:
+                copy_tables(folder, new_folder, name)
 
 
 # TODO check for errors
@@ -166,25 +169,19 @@ def update_patch(update_seg_names, update_table_names,
     clean_up()
 
 
-def str2bool(v):
-    if isinstance(v, bool):
-        return v
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
-        return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
-        return False
-    else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
-
-
-# TODO expose target and max_jobs as well
 if __name__ == '__main__':
     help_str = "Path to a json containing list of the data to update. See docstring of 'update_patch' for details."
     parser = argparse.ArgumentParser(description='Update patch version of platy-browser-data.')
     parser.add_argument('input_path', type=str, help=help_str)
-    input_path = parser.parse_args().input_path
+    parser.add_argument('--target', type=str, default='slurm',
+                        help="Computatin plaform, can be 'slurm' or 'local'")
+    parser.add_argument('--max_jobs', type=int, default=250,
+                        help="Maximal number of jobs used for computation")
+    args = parser.parse_args()
+    input_path = args.input_path
     with open(input_path) as f:
         update_dict = json.load(f)
     if not ('segmentations' in update_dict and 'tables' in update_dict):
         raise ValueError("Invalid udpate file")
-    update_patch(update_dict['segmentations'], update_dict['tables'])
+    update_patch(update_dict['segmentations'], update_dict['tables'],
+                 target=args.target, max_jobs=args.max_jobs)

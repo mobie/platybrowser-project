@@ -91,7 +91,7 @@ def region_attributes(seg_path, region_out,
     semantic_mapping_list = [semantics_to_carved_ids]
 
     # 2.) compute the mapping to muscles
-    muscle_path = os.path.join(segmentation_folder, 'sbem-6dpf-1-whole-segmented-muscles.xml')
+    muscle_path = os.path.join(segmentation_folder, 'sbem-6dpf-1-whole-segmented-muscle.xml')
     muscle_path = get_h5_path_from_xml(muscle_path, return_absolute_path=True)
     # need to be more lenient with the overlap criterion for the muscle mapping
     muscle_labels, semantic_muscle = muscle_attributes(muscle_path, key_tissue,
