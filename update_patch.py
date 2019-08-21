@@ -13,6 +13,7 @@ from scripts.files import get_segmentation_names, get_segmentations
 from scripts.files import (copy_image_data, copy_misc_data, copy_segmentation, copy_tables,
                            make_bdv_server_file, make_folder_structure)
 from scripts.export import export_segmentation
+from scripts.release_helper import add_version
 
 
 def get_tags():
@@ -156,6 +157,7 @@ def update_patch(update_seg_names, update_table_names,
 
     make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
                          relative_paths=True)
+    add_version(new_tag)
     # TODO add some quality control that cheks that all files are there
 
     # TODO implement make release properly

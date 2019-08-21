@@ -1,9 +1,12 @@
 import os
+import json
 from . import attributes
 from .export import export_segmentation
 from .files import add_image, add_segmentation, copy_tables
 from .files.sources import RAW_FOLDER
 from .files.copy_helper import copy_file
+
+VERSION_FILE = "data/versions.json"
 
 
 def is_image(data, check_source):
@@ -108,3 +111,13 @@ def add_data(data, folder, target, max_jobs, source=None):
             update_function = getattr(attributes, table_update_function)
             update_function(folder, name, tmp_folder, resolution,
                             target=target, max_jobs=max_jobs)
+
+
+def add_version(tag):
+    if not os.path.exists(VERSION_FILE):
+        versions = []
+    with open(VERSION_FILE) as f:
+        versions = json.load(f)
+    versions.append(tag)
+    with open(VERSION_FILE, 'w') as f:
+        json.dump(versions, f)

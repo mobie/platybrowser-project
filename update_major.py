@@ -6,7 +6,7 @@ import argparse
 from subprocess import check_output
 
 from scripts.files import add_source, copy_release_folder, make_folder_structure, make_bdv_server_file
-from scripts.release_helper import add_data, check_inputs
+from scripts.release_helper import add_data, check_inputs, add_version
 
 
 def get_tags():
@@ -54,9 +54,10 @@ def update_major(new_data_dict, target='slurm', max_jobs=250):
             add_data(data, new_folder, target, max_jobs,
                      source=source)
 
-    # make bdv file
+    # make bdv file and add new tag to versions
     make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
                          relative_paths=True)
+    add_version(new_tag)
 
     # TODO auto-release
     # TODO clean up
