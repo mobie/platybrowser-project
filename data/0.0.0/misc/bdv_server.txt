@@ -200,15 +200,7 @@ prospr-6dpf-1-whole-six4-MED	../images/prospr-6dpf-1-whole-six4-MED.xml
 prospr-6dpf-1-whole-tlx-MED	../images/prospr-6dpf-1-whole-tlx-MED.xml
 prospr-6dpf-1-whole-trk-MED	../images/prospr-6dpf-1-whole-trk-MED.xml
 prospr-6dpf-1-whole-uncx-MED	../images/prospr-6dpf-1-whole-uncx-MED.xml
-prospr-6dpf-1-whole-segmented-CrypticSegment	../images/prospr-6dpf-1-whole-segmented-CrypticSegment.xml
-prospr-6dpf-1-whole-segmented-PNS	../images/prospr-6dpf-1-whole-segmented-PNS.xml
-prospr-6dpf-1-whole-segmented-Head	../images/prospr-6dpf-1-whole-segmented-Head.xml
-prospr-6dpf-1-whole-segmented-Pygidium	../images/prospr-6dpf-1-whole-segmented-Pygidium.xml
-prospr-6dpf-1-whole-segmented-RestOfAnimal	../images/prospr-6dpf-1-whole-segmented-RestOfAnimal.xml
-prospr-6dpf-1-whole-segmented-Stomodeum	../images/prospr-6dpf-1-whole-segmented-Stomodeum.xml
-prospr-6dpf-1-whole-segmented-VNC	../images/prospr-6dpf-1-whole-segmented-VNC.xml
 sbem-6dpf-1-whole-segmented-cells-labels	../segmentations/sbem-6dpf-1-whole-segmented-cells-labels.xml
 sbem-6dpf-1-whole-segmented-nuclei-labels	../segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.xml
-sbem-6dpf-1-whole-segmented-cilia-labels	../segmentations/sbem-6dpf-1-whole-segmented-cilia-labels.xml
 sbem-6dpf-1-whole-segmented-tissue-labels	../segmentations/sbem-6dpf-1-whole-segmented-tissue-labels.xml
-sbem-6dpf-1-whole-segmented-chromatin-labels	../segmentations/sbem-6dpf-1-whole-segmented-chromatin-labels.xml
+sbem-6dpf-1-whole-segmented-muscles	../segmentations/sbem-6dpf-1-whole-segmented-muscles.xml

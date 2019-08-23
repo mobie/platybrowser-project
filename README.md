@@ -106,7 +106,13 @@ conda env create -f environment.yaml
 
 ## BigDataServer
 
-TODO
+The platy browser can be served with [BigDataViewerServer](https://github.com/bigdataviewer/bigdataviewer-server).
+On the EMBL server, you can start it from one of the version foldes misc directories:
+
+```
+cd data/X.Y.Z/misc
+java -jar /g/cba/exchange/bigdataserver/bigdataviewer-server-2.1.2-jar-with-dependencies.jar -d bdv_server.txt
+```
 
 
 ## Data generation

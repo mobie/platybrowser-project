@@ -6,10 +6,13 @@ from .sources import get_privates, get_image_names, get_segmentation_names
 def add_to_bdv_config(name, path, bdv_config, relative_paths, ref_dir):
 
     # make sure that the h5path linked in the xml exists
+    if not os.path.exists(path):
+        return bdv_config
     h5path = get_h5_path_from_xml(path, return_absolute_path=True)
     if not os.path.exists(h5path):
         msg = 'Path to h5-file in xml does not exist - %s, %s' % (path, h5path)
-        raise RuntimeError(msg)
+        # raise RuntimeError(msg)
+        return bdv_config
 
     if relative_paths:
         path = os.path.relpath(path, ref_dir)
