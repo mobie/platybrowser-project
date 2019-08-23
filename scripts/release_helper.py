@@ -121,3 +121,9 @@ def add_version(tag):
     versions.append(tag)
     with open(VERSION_FILE, 'w') as f:
         json.dump(versions, f)
+
+
+def get_latest_version():
+    with open(VERSION_FILE) as f:
+        versions = json.load(f)
+    return versions[-1]
