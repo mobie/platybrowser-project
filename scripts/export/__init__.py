@@ -1,1 +1,2 @@
 from .export_segmentation import export_segmentation
+from .extract_neuron_traces import extract_neuron_traces
