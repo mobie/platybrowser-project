@@ -9,7 +9,7 @@ def run_workflow():
     target = 'slurm'
 
     use_curated_affs = False
-    use_lmc = False
+    use_lmc = True
 
     workflow(use_curated_affs, use_lmc, target)
 

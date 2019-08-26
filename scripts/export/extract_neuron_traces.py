@@ -4,7 +4,7 @@ from glob import glob
 
 import numpy as np
 import h5py
-import elf.skeletion.io as skio
+import elf.skeleton.io as skio
 from skimage.draw import circle
 from pybdv import convert_to_bdv
 
@@ -96,7 +96,7 @@ def make_seg_and_scale(traces, reference_vol_path, reference_scale, seg_out_path
     res = get_resolution(reference_scale)
 
     # the circle radius we write out
-    radius = 10
+    radius = 5
 
     max_id = np.iinfo('int16').max
 
