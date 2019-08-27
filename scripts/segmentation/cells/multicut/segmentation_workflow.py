@@ -344,9 +344,7 @@ def unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, min
         prefix = 'curated_%s' % prefix
 
     tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_unmerge' % prefix)
-    # FIXME
-    # exp_path = os.path.join(EXP_ROOT, '%s.n5' % prefix)
-    exp_path = os.path.join(EXP_ROOT, 'lmc_curated.n5')
+    exp_path = os.path.join(EXP_ROOT, '%s.n5' % prefix)
     assignment_key = 'node_labels/%s/filtered_size' % prefix
 
     node_label_key = 'node_overlaps/nuclei'
