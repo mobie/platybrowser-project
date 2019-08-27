@@ -1,11 +1,13 @@
 import os
 import h5py
+import pandas as pd
 
 from .base_attributes import base_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import write_genes_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes
+from .manual_mapping import manual_mapping
 from ..files.xml_utils import get_h5_path_from_xml
 
 
@@ -108,5 +110,10 @@ def make_cilia_tables(folder, name, tmp_folder, resolution,
     base_attributes(seg_path, seg_key, base_out, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
-    # TODO additional tables:
-    # ???
+
+    # additional table:
+    # cilia id to nucleus id mapping, based on Rachels manual annotations
+    # TODO expose this path
+    cell_mapping_table_path = '.xlsx'  # TODO proper path
+    # TODO
+    manual_mapping()
