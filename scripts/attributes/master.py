@@ -1,6 +1,5 @@
 import os
 import h5py
-import pandas as pd
 
 from .base_attributes import base_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
@@ -111,8 +110,15 @@ def make_cilia_tables(folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO need to implement functionality to automatically map the cell ids
-    # between versions of the segmentation
+    # NOTE this is preliminary.
+    # In the end, we wan't this table to just live in the platy-browser data.
+    # Right now, something with the mapping to cell ids is off - I think the ids come
+    # from two different versions of the segmentation.
+    # We will keep this for now, but it needs another round of corrections.
+    # But this should be done in the platy-browser directly; need to wait for this
+    # until Tischi is back.
+    # Then, we will always need to update the cell id mapping table when the
+    # segmentation changes as well.
     manual_mapping_table = os.path.join(folder, 'misc', 'cilia_id_mapping.csv')
     assert os.path.exists(manual_mapping_table)
 

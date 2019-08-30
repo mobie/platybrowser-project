@@ -16,6 +16,7 @@ def get_mapped_cell_ids(cilia_ids, manual_mapping_table_path):
     return cell_ids
 
 
+# TODO implement
 # more atttributes? curvature?
 def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
     n_features = 2
@@ -24,7 +25,6 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
 
     # ids = base_table['cilia_ids'].values.astype('uiint64')
 
-    # TODO
     # with h5py.File(seg_path, 'r') as f:
     #     ds = f[seg_key]
 
@@ -46,6 +46,7 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
     return attributes, names
 
 
+# TODO the cell id mapping table should be separate
 # TODO wrap this into a luigi task so we don't recompute it every time
 def cilia_attributes(seg_path, seg_key,
                      base_table_path, manual_mapping_table_path, table_out_path,
