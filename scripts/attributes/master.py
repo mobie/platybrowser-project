@@ -6,6 +6,7 @@ from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import write_genes_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes
+from .cilia_attributes import cilia_attributes
 from ..files.xml_utils import get_h5_path_from_xml
 
 
@@ -108,5 +109,16 @@ def make_cilia_tables(folder, name, tmp_folder, resolution,
     base_attributes(seg_path, seg_key, base_out, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
-    # TODO additional tables:
-    # ???
+
+    # TODO need to implement functionality to automatically map the cell ids
+    # between versions of the segmentation
+    manual_mapping_table = os.path.join(folder, 'misc', 'cilia_id_mapping.csv')
+    assert os.path.exists(manual_mapping_table)
+
+    # compute cilia specific attributes at lower resolution ?
+
+    # add cilia specific attributes (length, diameter) and manual cell mapping done by rachel
+    cilia_out = os.path.join(table_folder, 'cilia.csv')
+    cilia_attributes(seg_path, seg_key,
+                     base_out, manual_mapping_table, cilia_out,
+                     resolution, tmp_folder, target=target, max_jobs=max_jobs)
