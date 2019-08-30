@@ -2,7 +2,7 @@ import os
 import json
 from . import attributes
 from .export import export_segmentation
-from .files import add_image, add_segmentation, copy_tables
+from .files import add_image, add_segmentation, copy_tables, rename
 from .files.sources import RAW_FOLDER
 from .files.copy_helper import copy_file
 
@@ -35,6 +35,17 @@ def is_dynamic_segmentation(data, check_source):
     return False
 
 
+def is_rename(data, check_source):
+    if not check_source:
+        # we can only rename in minor update
+        return False
+    if 'source' not in data:
+        return False
+    if 'name' in data and 'new_name' in data:
+        return True
+    return False
+
+
 # TODO check more thoroughly:
 # - check that the paths that are specified exist
 # - check table arguments if present
@@ -45,7 +56,8 @@ def check_inputs(new_data, check_source=True):
     for data in new_data:
         if not any((is_image(data, check_source),
                     is_static_segmentation(data, check_source),
-                    is_dynamic_segmentation(data, check_source))):
+                    is_dynamic_segmentation(data, check_source),
+                    is_rename(data, check_source))):
             raise ValueError("Could not parse input element %s" % str(data))
 
 
@@ -111,6 +123,10 @@ def add_data(data, folder, target, max_jobs, source=None):
             update_function = getattr(attributes, table_update_function)
             update_function(folder, name, tmp_folder, resolution,
                             target=target, max_jobs=max_jobs)
+
+    elif is_rename(data, check_source):
+        new_name = data['new_name']
+        rename(source, name, new_name, folder)
 
 
 def add_version(tag):

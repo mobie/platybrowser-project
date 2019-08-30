@@ -297,3 +297,42 @@ def add_postprocessing(name, boundary_path, boundary_key,
 
     with open(POSTPROCESS_FILE, 'w') as f:
         json.dump(postprocess_dict, f)
+
+
+# TODO for now we only rename images, but should implement this for segmentations too
+def rename(source, old_name, new_name, release_folder):
+    """ Rename an image file.
+
+    Note that this will only rename the file in future releases and
+    NOT change it in any existing data.
+
+    Parameter:
+        source [str] - prefix of the primary data source.
+        old_name [str] - old image name.
+        new_name [str] - new image name.
+        release_folder [str] - folder of the new release.
+    """
+
+    source_names = get_source_names()
+    if source not in source_names:
+        raise ValueError("""Source %s is not in the current sources.
+                            Use 'add_source' to add a new source.""" % source)
+
+    name = '%s-%s' % (source, old_name)
+    names = get_image_names()
+    if name not in names:
+        raise ValueError("Image with name %s does not exist." % old_name)
+
+    output_name = '%s-%s' % (source, new_name)
+    names = [output_name if n == name else n for n in names]
+
+    # rename the xml in the new release folder
+    old_path = os.path.join(release_folder, 'images', '%s.xml' % name)
+    if not os.path.exists(old_path):
+        raise RuntimeError("Could not find %s" % old_path)
+    new_path = os.path.join(release_folder, 'images', '%s.xml' % output_name)
+    os.rename(old_path, new_path)
+
+    # serialize new names
+    with open(IMAGE_FILE, 'w') as f:
+        json.dump(names, f)
