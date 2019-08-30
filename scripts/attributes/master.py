@@ -1,5 +1,6 @@
 import os
 import h5py
+import pandas as pd
 
 from .base_attributes import base_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
