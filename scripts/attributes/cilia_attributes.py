@@ -18,9 +18,9 @@ def get_mapped_cell_ids(cilia_ids, manual_mapping_table_path):
 
 
 def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
-    n_features = 2
+    n_features = 3
     attributes = np.zeros((len(base_table), n_features), dtype='float32')
-    names = ['length', 'diameter']
+    names = ['length', 'diameter_mean', 'diameter_std']
 
     ids = base_table['label_id'].values.astype('uint64')
 
@@ -32,6 +32,7 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
             # FIXME 1 and 2 should be part of bg label
             if cid in (1, 2):
                 return
+            print(cid)
 
             # get the row for this cilia id
             row = base_table.loc[cid]
@@ -46,23 +47,27 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
             obj = ds[bb] == cid
 
             # compute len in microns (via shortest path) and diameter (via mean boundary distance transform)
-            teasar = Teasar(obj, resolution)
+            # we switch to nanometer resolution
+            skel_res = [res * 1000 for res in resolution]
+            teasar = Teasar(obj, skel_res)
             src = teasar.root_node
-            target = np.argmax(teasar.penalized_distances)
+            target = np.argmax(teasar.distances)
             path = teasar.get_path(src, target)
-            dist = teasar.get_pathlength(path)
-            print(path[:5])
-            print(dist)
-            # diameters = teasar.boundary_distances[path]
-            # diameter = np.mean(diameters)
-            attributes[cid, 0] = dist
-            # attributes[cid, 1] = diameter
+            dist = teasar.get_pathlength(path) / 1000
 
-        [compute_attributes(cid) for cid in ids[1:]]
-        # n_threads = 8
-        # with futures.ThreadPoolExecutor(n_threads) as tp:
-        #     tasks = [tp.submit(compute_attributes(cid)) for cid in ids[1:]]
-        #     [t.result() for t in tasks]
+            # make path index-able
+            path = tuple(np.array([p[i] for p in path], dtype='uint64') for i in range(3))
+            diameters = teasar.boundary_distances[path]
+            diameters /= 1000
+            attributes[cid, 0] = dist
+            attributes[cid, 1] = np.mean(diameters)
+            attributes[cid, 2] = np.std(diameters)
+
+        # [compute_attributes(cid) for cid in ids[1:]]
+        n_threads = 8
+        with futures.ThreadPoolExecutor(n_threads) as tp:
+            tasks = [tp.submit(compute_attributes, cid) for cid in ids[1:]]
+            [t.result() for t in tasks]
 
     return attributes, names
 

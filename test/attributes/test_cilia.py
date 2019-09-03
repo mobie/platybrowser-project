@@ -13,7 +13,7 @@ class TestCilaAttributes(unittest.TestCase):
         base_path = '../../data/0.5.1/tables/sbem-6dpf-1-whole-segmented-cilia-labels/default.csv'
         base = pd.read_csv(base_path, sep='\t')
 
-        out = measure_cilia_attributes(input_path, input_key, base, resolution)
+        out, _ = measure_cilia_attributes(input_path, input_key, base, resolution)
         self.assertEqual(len(out), len(base))
 
 
