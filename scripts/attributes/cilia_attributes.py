@@ -17,6 +17,35 @@ def get_mapped_cell_ids(cilia_ids, manual_mapping_table_path):
     return cell_ids
 
 
+def compute_centerline(obj, resolution, return_teasar=False):
+    teasar = Teasar(obj, resolution)
+    src = teasar.root_node
+    target = np.argmax(teasar.distances)
+    path = teasar.get_path(src, target)
+    if return_teasar:
+        return path, teasar
+    return path
+
+
+def make_indexable(path):
+    return tuple(np.array([p[i] for p in path], dtype='uint64') for i in range(3))
+
+
+def load_seg(ds, base_table, cid, resolution):
+    # get the row for this cilia id
+    row = base_table.loc[cid]
+
+    # compute the bounding box
+    bb_min = (row.bb_min_z, row.bb_min_y, row.bb_min_x)
+    bb_max = (row.bb_max_z, row.bb_max_y, row.bb_max_x)
+    bb = tuple(slice(int(mi / re), int(ma / re))
+               for mi, ma, re in zip(bb_min, bb_max, resolution))
+
+    # load segmentation from the bounding box and get foreground
+    obj = ds[bb] == cid
+    return obj
+
+
 def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
     n_features = 3
     attributes = np.zeros((len(base_table), n_features), dtype='float32')
@@ -32,42 +61,32 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
             # FIXME 1 and 2 should be part of bg label
             if cid in (1, 2):
                 return
-            print(cid)
 
-            # get the row for this cilia id
-            row = base_table.loc[cid]
+            obj = load_seg(ds, base_table, cid, resolution)
+            if(obj.sum() == 0):
+                print("Did not find any pixels for cilia", cid)
+                return
 
-            # compute the bounding box
-            bb_min = (row.bb_min_z, row.bb_min_y, row.bb_min_x)
-            bb_max = (row.bb_max_z, row.bb_max_y, row.bb_max_x)
-            bb = tuple(slice(int(mi / re), int(ma / re))
-                       for mi, ma, re in zip(bb_min, bb_max, resolution))
-
-            # load segmentation from the bounding box and get foreground
-            obj = ds[bb] == cid
-
-            # compute len in microns (via shortest path) and diameter (via mean boundary distance transform)
-            # we switch to nanometer resolution
-            skel_res = [res * 1000 for res in resolution]
-            teasar = Teasar(obj, skel_res)
-            src = teasar.root_node
-            target = np.argmax(teasar.distances)
-            path = teasar.get_path(src, target)
+            # compute len in microns (via shortest path)
+            # and diameter (via mean boundary distance transform)
+            # we switch to nanometer resolution and convert back to microns later
+            path, teasar = compute_centerline(obj, [res * 1000 for res in resolution],
+                                              return_teasar=True)
             dist = teasar.get_pathlength(path) / 1000
 
             # make path index-able
-            path = tuple(np.array([p[i] for p in path], dtype='uint64') for i in range(3))
+            path = make_indexable(path)
             diameters = teasar.boundary_distances[path]
             diameters /= 1000
             attributes[cid, 0] = dist
             attributes[cid, 1] = np.mean(diameters)
             attributes[cid, 2] = np.std(diameters)
 
-        # [compute_attributes(cid) for cid in ids[1:]]
         n_threads = 8
         with futures.ThreadPoolExecutor(n_threads) as tp:
             tasks = [tp.submit(compute_attributes, cid) for cid in ids[1:]]
             [t.result() for t in tasks]
+        # [compute_attributes(cid) for cid in ids[1:]]
 
     return attributes, names
 
