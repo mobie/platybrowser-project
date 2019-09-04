@@ -17,8 +17,10 @@ def get_mapped_cell_ids(cilia_ids, manual_mapping_table_path):
     return cell_ids
 
 
-def compute_centerline(obj, resolution, return_teasar=False):
-    teasar = Teasar(obj, resolution)
+def compute_centerline(obj, resolution, penalty_scale=1000, penalty_exponent=16,
+                       return_teasar=False):
+    teasar = Teasar(obj, resolution,
+                    penalty_scale=penalty_scale, penalty_exponent=penalty_exponent)
     src = teasar.root_node
     target = np.argmax(teasar.distances)
     path = teasar.get_path(src, target)
@@ -31,17 +33,20 @@ def make_indexable(path):
     return tuple(np.array([p[i] for p in path], dtype='uint64') for i in range(3))
 
 
-def load_seg(ds, base_table, cid, resolution):
+def get_bb(base_table, cid, resolution):
     # get the row for this cilia id
     row = base_table.loc[cid]
-
     # compute the bounding box
     bb_min = (row.bb_min_z, row.bb_min_y, row.bb_min_x)
     bb_max = (row.bb_max_z, row.bb_max_y, row.bb_max_x)
     bb = tuple(slice(int(mi / re), int(ma / re))
                for mi, ma, re in zip(bb_min, bb_max, resolution))
+    return bb
 
+
+def load_seg(ds, base_table, cid, resolution):
     # load segmentation from the bounding box and get foreground
+    bb = get_bb(base_table, cid, resolution)
     obj = ds[bb] == cid
     return obj
 
