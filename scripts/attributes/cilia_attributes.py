@@ -2,7 +2,9 @@ from concurrent import futures
 import numpy as np
 import h5py
 import pandas as pd
-from elf.skeleton.teasar import Teasar
+import nifty
+from elf.skeleton import skeletonize
+from scipy.ndimage import distance_transform_edt
 
 
 def get_mapped_cell_ids(cilia_ids, manual_mapping_table_path):
@@ -17,20 +19,54 @@ def get_mapped_cell_ids(cilia_ids, manual_mapping_table_path):
     return cell_ids
 
 
-def compute_centerline(obj, resolution, penalty_scale=1000, penalty_exponent=16,
-                       return_teasar=False):
-    teasar = Teasar(obj, resolution,
-                    penalty_scale=penalty_scale, penalty_exponent=penalty_exponent)
-    src = teasar.root_node
-    target = np.argmax(teasar.distances)
-    path = teasar.get_path(src, target)
-    if return_teasar:
-        return path, teasar
-    return path
-
-
 def make_indexable(path):
     return tuple(np.array([p[i] for p in path], dtype='uint64') for i in range(3))
+
+
+def compute_centerline(obj, resolution):
+    """ Compute the centerline path and its length
+        by computing the 3d skeleton via thinning and extracting
+        the longest path between terminals
+    """
+    # compute skeleton and graph from skeleton
+    nodes, edges = skeletonize(obj)
+    graph = nifty.graph.undirectedGraph(len(nodes))
+    graph.insertEdges(edges)
+
+    # compute the length of the edges
+    physical_coords = nodes.astype('float32') * np.array(list(resolution))
+    edge_lens = physical_coords[edges[:, 0]] - physical_coords[edges[:, 1]]
+    edge_lens = np.linalg.norm(edge_lens, axis=1)
+    assert edge_lens.shape == (len(edges),), str(edge_lens.shape)
+
+    # compute the degrees and derive the terminals
+    degrees = np.array([len([adj for adj in graph.nodeAdjacency(u)])
+                       for u in range(graph.numberOfNodes)])
+    terminals = np.where(degrees == 1)[0]
+    if len(terminals) < 2:
+        raise ValueError("Did not find terminals.")
+
+    # compute length between all terminals and find the longest path
+    t0, t1 = None, None
+    max_plen = 0.
+    sp = nifty.graph.ShortestPathDijkstra(graph)
+    for ii, t in enumerate(terminals[:-1]):
+        targets = terminals[ii+1:]
+        paths = sp.runSingleSourceMultiTarget(edge_lens, t, targets,
+                                              returnNodes=False)
+        for target, p in zip(targets, paths):
+            # paths can be empty, not sure why
+            if not p:
+                continue
+            plen = edge_lens[np.array(p)].sum()
+            if plen > max_plen:
+                t0, t1 = t, target
+                max_plen = plen
+
+    path = sp.runSingleSourceSingleTarget(edge_lens, t0, t1,
+                                          returnNodes=True)
+    coordinates = make_indexable(nodes[np.array(path)])
+    return coordinates, max_plen
 
 
 def get_bb(base_table, cid, resolution):
@@ -63,7 +99,7 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
 
         def compute_attributes(cid):
 
-            # FIXME 1 and 2 should be part of bg label
+            # FIXME current 1 and 2 should be part of bg label
             if cid in (1, 2):
                 return
 
@@ -75,23 +111,28 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
             # compute len in microns (via shortest path)
             # and diameter (via mean boundary distance transform)
             # we switch to nanometer resolution and convert back to microns later
-            path, teasar = compute_centerline(obj, [res * 1000 for res in resolution],
-                                              return_teasar=True)
-            dist = teasar.get_pathlength(path) / 1000
+            skel_res = [res * 1000 for res in resolution]
+            try:
+                path, dist = compute_centerline(obj, skel_res)
+            except ValueError:
+                print("Centerline computation for", cid, "failed")
+                return
+            dist /= 1000.
 
             # make path index-able
-            path = make_indexable(path)
-            diameters = teasar.boundary_distances[path]
-            diameters /= 1000
+            boundary_distances = distance_transform_edt(obj, sampling=skel_res)
+            diameters = boundary_distances[path]
+            # we compute the radii before, so we only
+            # divide by 500 (2 / 1000) to get to the diameters in micron
+            diameters /= 500.
             attributes[cid, 0] = dist
             attributes[cid, 1] = np.mean(diameters)
             attributes[cid, 2] = np.std(diameters)
 
-        n_threads = 8
+        n_threads = 16
         with futures.ThreadPoolExecutor(n_threads) as tp:
             tasks = [tp.submit(compute_attributes, cid) for cid in ids[1:]]
             [t.result() for t in tasks]
-        # [compute_attributes(cid) for cid in ids[1:]]
 
     return attributes, names
 

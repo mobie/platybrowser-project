@@ -1,25 +1,9 @@
 import unittest
 import pandas as pd
-import numpy as np
 
 
 # check the basic / default attributes
 class TestCilaAttributes(unittest.TestCase):
-
-    def check_attributes(self, base, attributes, resolution):
-        base.set_index('label_id')
-        for cid, attrs in enumerate(attributes):
-
-            clen = attrs[0]
-            if clen == 0:
-                continue
-
-            row = base.loc[cid]
-            bb_min = [row.bb_min_z, row.bb_min_y, row.bb_min_x]
-            bb_max = [row.bb_max_z, row.bb_max_y, row.bb_max_x]
-            bb = [int((ma - mi) / res) for mi, ma, res in zip(bb_min, bb_max, resolution)]
-            diag_len = np.sqrt(sum([b*b for b in bb]))
-            self.assertGreater(clen, diag_len)
 
     def test_cilia_attributes(self):
         from scripts.attributes.cilia_attributes import measure_cilia_attributes
@@ -31,10 +15,8 @@ class TestCilaAttributes(unittest.TestCase):
         base = pd.read_csv(base_path, sep='\t')
 
         out, _ = measure_cilia_attributes(input_path, input_key, base, resolution)
-        # out = np.load('out.npy')
         self.assertEqual(len(out), len(base))
-        self.check_attributes(base, out, resolution)
-        # np.save('out.npy', out)
+
 
 if __name__ == '__main__':
     unittest.main()
