@@ -44,13 +44,13 @@ def export_traces():
 def get_cell_ids():
     table_path = './sbem-6dpf-1-whole-traces-table-default.csv'
     table = pd.read_csv(table_path, sep='\t')
-    cell_ids = table['cell_ids'].values
+    cell_ids = table['cell_id'].values
     cell_ids = cell_ids[cell_ids != 0].tolist()
     with open('./trace_cell_ids.json', 'w') as f:
-        json.dump(f)
+        json.dump(cell_ids, f)
 
 
 if __name__ == '__main__':
-    # get_cell_ids()
     export_traces()
+    get_cell_ids()
     # check_extraction()

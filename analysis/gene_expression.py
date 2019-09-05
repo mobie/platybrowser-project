@@ -26,7 +26,7 @@ def count_gene_expression(gene_names, threshold, version, query):
         table_path = 'data/%s/tables/sbem-6dpf-1-whole-segmented-cells-labels/genes.csv' % version
         ids = get_cells_expressing_genes(table_path, threshold, gene_names)
 
-        if query_ids:
+        if query_ids is not None:
             ids = ids[np.isin(ids, query_ids)]
 
         n = len(ids)
