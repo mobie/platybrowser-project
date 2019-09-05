@@ -51,6 +51,6 @@ def get_cell_ids():
 
 
 if __name__ == '__main__':
-    get_cell_ids()
-    # export_traces()
+    # get_cell_ids()
+    export_traces()
     # check_extraction()

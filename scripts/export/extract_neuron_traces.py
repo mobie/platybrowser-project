@@ -35,6 +35,7 @@ def extract_neuron_traces(trace_folder, reference_vol_path,
     print("Make table")
     table, col_names = make_table(traces, reference_scale, cell_seg_info, nucleus_seg_info)
     write_table(table, col_names, table_out_path)
+    return
 
     # make segmentation in tmp location and compy it to the output path
     print("Make segmentation")
@@ -51,7 +52,7 @@ def extract_traces(files):
         for k, v in skel.items():
             # for now, we only extract nodes belonging to
             # what's annotated as 'skeleton'. There are also tags for
-            # 'soma' and 'synapse'. I am ignorign these for now.
+            # 'soma' and 'synapse'. I am ignoring these for now.
 
             # is_soma = 'soma' in k
             # is_synapse = 'synapse' in k
@@ -114,7 +115,6 @@ def write_table(data, col_names, output_path):
 
 def vals_to_coords(vals, res):
     coords = np.array(vals)
-    coords = coords[::-1]
     coords /= res
     coords = coords.astype('uint64')
     return coords
@@ -143,10 +143,7 @@ def make_table(traces, reference_scale, cell_seg_info, nucleus_seg_info):
             bb_min = coords.min(axis=0)
             bb_max = coords.max(axis=0) + 1
 
-            # TODO we want the anchor to correspond to node0. I don't know if this
-            # is currently extracted correctly in the coordinates
-            # attributes:
-            # label_id anchor_x anchor_y anchor_z bb_min_x bb_min_y bb_min_z bb_max_x bb_max_y bb_max_z n_points
+            # get spatial attributes
             anchor = coords[0].astype('float32') * res / 1000.
             bb_min = bb_min.astype('float32') * res / 1000.
             bb_max = bb_max.astype('float32') * res / 1000.
@@ -156,6 +153,11 @@ def make_table(traces, reference_scale, cell_seg_info, nucleus_seg_info):
             cell_id = dsc[point_slice][0, 0, 0]
             nucleus_id = dsn[point_slice][0, 0, 0]
 
+            # attributes:
+            # label_id
+            # anchor_x anchor_y anchor_z
+            # bb_min_x bb_min_y bb_min_z bb_max_x bb_max_y bb_max_z
+            # n_points cell-id nucleus-id
             attributes = [nid, anchor[2], anchor[1], anchor[0],
                           bb_min[2], bb_min[1], bb_min[0],
                           bb_max[2], bb_max[1], bb_max[0],
