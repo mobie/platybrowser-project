@@ -148,7 +148,9 @@ def cilia_attributes(seg_path, seg_key,
     cilia_ids = base_table['label_id'].values.astype('uint64')
 
     # add the manually mapped cell ids
-    cell_ids = get_mapped_cell_ids(cilia_ids, manual_mapping_table_path)
+    # cell_ids = get_mapped_cell_ids(cilia_ids, manual_mapping_table_path)
+    # FIXME
+    cell_ids = np.zeros_like(cilia_ids)
     assert len(cell_ids) == len(cilia_ids)
 
     # measure cilia specific attributes: length, diameter, ? (could try curvature)
