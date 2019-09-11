@@ -117,6 +117,13 @@ java -jar /g/cba/exchange/bigdataserver/bigdataviewer-server-2.1.2-jar-with-depe
 
 ## Data generation
 
-In addition to the data, the scripts for generating the derived data are also collected here.
+In addition to the data, the scripts for generating registration and producing derived data are also collected here:
+
+### Registration
+
+The folder `registration` contains ...
+
+### Segmentation
+
 `scripts/segmentation` contains the scripts to generate the derived segmentations with automated segmentation approaches.
 `deprecated/make_initial_version.py` was used to generate the initial data in `/data/0.0.0`.
