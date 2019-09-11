@@ -121,7 +121,12 @@ In addition to the data, the scripts for generating registration and producing d
 
 ### Registration
 
-The folder `registration` contains ...
+The folder `registration` contains:
+A folder called transfer_ProSPr_data. This folder contains the scripts needed to copy and process the ProSPr output to 
+'/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/prospr'.
+It reads the .tif files that will be registered to the EM (e.g. MEDs, tissue manual segmentations, reference),
+mirrors them in x axis, adds size information (0.55um/px), and deals with gene names.
+run it in the cluster: sbatch ./ProSPr_copy_and_mirror.sh
 
 ### Segmentation
 
