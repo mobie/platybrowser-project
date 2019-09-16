@@ -2,7 +2,7 @@
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
     <ImageLoader format="bdv.hdf5">
-      <hdf5 type="relative">../../rawdata/prospr-6dpf-1-whole-NMDAR-MED.h5</hdf5>
+      <hdf5 type="relative">prospr-6dpf-1-whole-NMDAR-MED.h5</hdf5>
     </ImageLoader>
     <ViewSetups>
       <ViewSetup>
