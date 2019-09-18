@@ -1,1 +1,1 @@
-from apply_registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
+from .apply_registration import ApplyRegistrationLocal, ApplyRegistrationSlurm

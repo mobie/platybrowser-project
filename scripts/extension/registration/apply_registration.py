@@ -8,7 +8,7 @@ from subprocess import check_output, CalledProcessError
 import luigi
 import cluster_tools.utils.function_utils as fu
 import cluster_tools.utils.volume_utils as vu
-from cluster_tools.task_utils import DummyTask
+from cluster_tools.utils.task_utils import DummyTask
 from cluster_tools.cluster_tasks import SlurmTask, LocalTask, LSFTask
 
 
@@ -104,7 +104,7 @@ def apply_for_file(input_path, output_path,
     # "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$TMPDIR',
     # inputImageFile='$INPUT_IMAGE',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt
     # outputFile='$OUTPUT_IMAGE',outputModality='Save as BigDataViewer .xml/.h5',numThreads='1'"
-    cmd = [fiji_executable, "-ij2", "--headless", "--run", "Transformix",
+    cmd = [fiji_executable, "--ij2", "--headless", "--run", "Transformix",
            "elastix_directory=%s" % elastix_directory,
            "workingDirectory=%s" % tmp_folder,
            "inputImageFile=%s" % input_path,
@@ -112,6 +112,10 @@ def apply_for_file(input_path, output_path,
            "outputFile=%s" % output_path,
            "outputModality=\'Save as BigDataViewer .xml/.h5\'",
            "numThreads=1"]  # TODO why do we use numThreads=1 and not the same as -c in the slurm command?
+
+    cmd_str = " ".join(cmd)
+    fu.log("Calling the following command:")
+    fu.log(cmd_str)
 
     try:
         check_output(cmd)
@@ -139,6 +143,8 @@ def apply_registration(job_id, config_path):
     fiji_executable = config['fiji_executable']
     elastix_directory = config['elastix_directory']
     tmp_folder = config['tmp_folder']
+    working_dir = os.path.join(tmp_folder, 'work_dir%i' % job_id)
+    os.makedirs(working_dir, exist_ok=True)
 
     file_list = config['block_list']
     n_threads = config.get('threads_per_job', 1)
@@ -157,7 +163,7 @@ def apply_registration(job_id, config_path):
         fu.log("Output: %s" % outfile)
         apply_for_file(infile, outfile,
                        transformation_file, fiji_executable,
-                       elastix_directory, tmp_folder, n_threads)
+                       elastix_directory, working_dir, n_threads)
         fu.log_block_success(file_id)
 
     fu.log_job_success(job_id)
