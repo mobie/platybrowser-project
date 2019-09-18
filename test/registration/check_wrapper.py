@@ -9,8 +9,8 @@ from scripts.extension.registration import ApplyRegistrationLocal
 
 
 def check_wrapper():
-    in_path = '/g/kreshuk/pape/Work/my_projects/platy-browser-data/stomach_prospr_target.xml'
-    out_path = '/g/kreshuk/pape/Work/my_projects/platy-browser-data/stomach_prospr_target_registered'
+    in_path = '/g/kreshuk/pape/Work/my_projects/platy-browser-data/registration/stomach_target_prospr.tif'
+    out_path = '/g/kreshuk/pape/Work/my_projects/platy-browser-data/registration/stomach_target_prospr_registered'
 
     in_list = [in_path]
     out_list = [out_path]
@@ -32,7 +32,8 @@ def check_wrapper():
         json.dump(global_conf, f)
 
     # TODO which one is the correct trafo ?
-    trafo = '/g/kreshuk/pape/Work/my_projects/platy-browser-data/registration/0.0.0/transformations/0.0.0/TransformParameters.Affine-3Channels.0.txt'
+    trafo = os.path.join('/g/kreshuk/pape/Work/my_projects/platy-browser-data/registration/0.0.0/transformations/0.0.0',
+                         'TransformParameters.BSpline10-3Channels.0.txt')
     t = task(tmp_folder='tmp_registration', config_dir=conf_dir, max_jobs=1,
              input_path_file=in_file, output_path_file=out_file, transformation_file=trafo)
     ret = luigi.build([t], local_scheduler=True)

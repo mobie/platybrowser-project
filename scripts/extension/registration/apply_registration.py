@@ -98,20 +98,26 @@ def apply_for_file(input_path, output_path,
                    transformation_file, fiji_executable,
                    elastix_directory, tmp_folder, n_threads):
 
+    # grrr design anti-pattern
+    # the argument to transformaix needs to be one large comma separated string
+    transformix_argument = ["elastix_directory=\'%s\'" % elastix_directory,
+                            "workingDirectory=\'%s\'" % tmp_folder,
+                            "inputImageFile=\'%s\'" % input_path,
+                            "transformationFile=\'%s\'" % transformation_file,
+                            "outputFile=\'%s\'" % output_path,
+                            "outputModality=\'Save as BigDataViewer .xml/.h5\'",
+                            "numThreads=\'1\'"]  # TODO why do we use numThreads=1 and not the same as in -c?
+    transformix_argument = ",".join(transformix_argument)
+    transformix_argument = "\"%s\"" % transformix_argument
+
     # command based on https://github.com/embl-cba/fiji-plugin-elastixWrapper/issues/2:
     # srun --mem 16000 -n 1 -N 1 -c 8 -t 30:00 -o $OUT -e $ERR
     # /g/almf/software/Fiji.app/ImageJ-linux64  --ij2 --headless --run "Transformix"
     # "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$TMPDIR',
     # inputImageFile='$INPUT_IMAGE',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt
     # outputFile='$OUTPUT_IMAGE',outputModality='Save as BigDataViewer .xml/.h5',numThreads='1'"
-    cmd = [fiji_executable, "--ij2", "--headless", "--run", "Transformix",
-           "elastix_directory=%s" % elastix_directory,
-           "workingDirectory=%s" % tmp_folder,
-           "inputImageFile=%s" % input_path,
-           "transformationFile=%s" % transformation_file,
-           "outputFile=%s" % output_path,
-           "outputModality=\'Save as BigDataViewer .xml/.h5\'",
-           "numThreads=1"]  # TODO why do we use numThreads=1 and not the same as -c in the slurm command?
+    # NOTE: I ommit --run here, because fiji throws a warning that it does not recognise the argument
+    cmd = [fiji_executable, "--ij2", "--headless", "\"Transformix\"", transformix_argument]
 
     cmd_str = " ".join(cmd)
     fu.log("Calling the following command:")
