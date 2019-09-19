@@ -60,6 +60,24 @@ def update_meds():
 def diff_list():
     """ Get diff of old and new MEDs.
     """
+    old_meds = glob('../data/0.0.0/images/prospr-6dpf-1*')
+    new_meds = glob('../data/rawdata/prospr/*')
+
+    old_normalized = [os.path.split(old)[1] for old in old_meds]
+    old_normalized = [old.split('-')[-1].lower().split('.')[0]
+                      if 'segmented' in old else old.split('-')[-2].lower()
+                      for old in old_normalized]
+    old_normalized = set(old_normalized)
+
+    new_normalized = [os.path.split(new)[1] for new in new_meds]
+    new_normalized = [new.split('-')[0].lower() for new in new_normalized]
+    new_normalized = set(new_normalized)
+
+    print("MEDS present in old folder, but not in the new one:")
+    print(list(old_normalized - new_normalized))
+
+    print("MEDS present in new folder, but not in the old one:")
+    print(list(new_normalized - old_normalized))
 
 
 if __name__ == '__main__':
