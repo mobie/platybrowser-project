@@ -1,2 +1,2 @@
-from.muscle_mapping import predict_muscle_mapping
-from .workflow import run_workflow
+from .muscle_mapping import predict_and_save_to_h5, predict_and_save_to_csv
+from .muscle_mapping import ranked_false_positives, get_mapped_ids

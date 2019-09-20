@@ -2,9 +2,11 @@ import os
 import h5py
 import numpy as np
 import pandas as pd
+import vigra
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
+from pybdv import make_bdv
 
 
 def compute_labels(root):
@@ -64,7 +66,6 @@ def compute_features(root):
     feature_names.extend(['nucleus_volume', 'nucleus_extent', 'nucleus_surface_area',
                           'nucleus_sphericity', 'nucleus_intensity_mean', 'nucleus_intensity_std'])
 
-    # TODO
     # combine the features
     label_id_mask = np.zeros(len(default), dtype='uint8')
     label_id_mask[label_ids_morpho] += 1
@@ -92,7 +93,7 @@ def compute_features_and_labels(root):
     return features, labels, label_ids
 
 
-def predict_muscle_mapping(root, project_path, n_folds=4):
+def predict_muscle_mapping(root, n_folds=5, threshold=.5):
     print("Computig labels and features ...")
     features, labels, label_ids = compute_features_and_labels(root)
     print("Found", len(features), "samples and", features.shape[1], "features per sample")
@@ -108,7 +109,7 @@ def predict_muscle_mapping(root, project_path, n_folds=4):
 
         x, y = features[test_idx], labels[test_idx]
         # allow adapting the threshold ?
-        pred = rf.predict(x)
+        pred = (rf.predict_proba(x)[:, 1] > threshold)
 
         false_pos = np.logical_and(pred == 1, y == 0)
         false_neg = np.logical_and(pred == 0, y == 1)
@@ -119,9 +120,95 @@ def predict_muscle_mapping(root, project_path, n_folds=4):
 
     print("Found", len(false_pos_ids), "false positves")
     print("Found", len(false_neg_ids), "false negatitves")
+    return false_pos_ids, false_neg_ids
 
+
+def map_ids_to_seg(seg, ids):
+    bg_mask = ~np.isin(seg, ids)
+    seg[bg_mask] = 0
+    return seg.astype('uint32')
+
+
+def ranked_false_positives(root, n_folds=5, threshold=.5):
+    # compute the candidates for missing muscles
+    missing_candidates, _ = predict_muscle_mapping(root, n_folds, threshold)
+
+    # load the muscle segmentation
+    path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-segmented-muscle.h5'
+    muscle_scale = 2
+    # muscle_scale = 3
+    print("Load muscles ...")
+    with h5py.File(path) as f:
+        ds = f['t00000/s00/%i/cells' % muscle_scale]
+        muscles = ds[:]
+
+    # load the segmentation and map fp ids to it
+    path = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.3.1/segmentations',
+                        'sbem-6dpf-1-whole-segmented-cells-labels.h5')
+    print("Load and project seg ...")
+    seg_scale = muscle_scale + 2
+    with h5py.File(path) as f:
+        ds = f['t00000/s00/%i/cells' % seg_scale]
+        seg = ds[:]
+    missing_seg = map_ids_to_seg(seg, missing_candidates)
+
+    print("Resize muslce segmentation ...")
+    muscles = vigra.sampling.resize(muscles.astype('float32'), order=0, shape=missing_seg.shape)
+
+    print("Comute distance transform ...")
+    # compute distance trafo of muscle segmentation
+    distances = vigra.filters.distanceTransform((muscles > 0).astype('uint32'))
+
+    # accumulate distances over the fp segments
+    print("Accumulate distances ...")
+    mean_distances = vigra.analysis.extractRegionFeatures(distances, missing_seg, features=['mean'])['mean']
+    mean_distances = mean_distances[missing_candidates]
+    assert len(mean_distances) == len(missing_candidates)
+
+    return missing_candidates, mean_distances
+
+
+def predict_and_save_to_h5(root, project_path, n_folds=5, threshold=.5):
     # save false pos and false negatives
     print("Serializing results to", project_path)
+    false_pos_ids, false_neg_ids = predict_muscle_mapping(root, n_folds, threshold)
     with h5py.File(project_path) as f:
         f.create_dataset('false_positives/prediction', data=false_pos_ids)
         f.create_dataset('false_negatives/prediction', data=false_neg_ids)
+
+
+def predict_and_save_to_csv(root, output_path, n_folds=5, threshold=.5):
+    # save false pos and false negatives
+    print("Serializing results to", output_path)
+    false_pos_ids, false_neg_ids = predict_muscle_mapping(root, n_folds, threshold)
+    labels, label_ids = compute_labels(root)
+
+    false_pos = np.zeros_like(labels)
+    false_pos[false_pos_ids] = 1
+
+    false_neg = np.zeros_like(labels)
+    false_neg[false_neg_ids] = 1
+
+    table = np.concatenate([label_ids[:, None], labels[:, None], false_pos[:, None], false_neg[:, None]], axis=1)
+    table = pd.DataFrame(data=table, columns=['label_id', 'muscle', 'potential_miss', 'potential_extra'])
+    table.to_csv(output_path, sep='\t', index=False)
+
+
+def get_mapped_ids(ids, out_path, scale=4):
+
+    resolution = [0.025, 0.02, 0.02]
+    resolution = [res * 2**scale for res in resolution]
+
+    # load the segmentation and map fp ids to it
+    path = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.3.1/segmentations',
+                        'sbem-6dpf-1-whole-segmented-cells-labels.h5')
+    print("Load and project seg ...")
+    with h5py.File(path, 'r') as f:
+        ds = f['t00000/s00/%i/cells' % scale]
+        seg = ds[:]
+
+    seg = map_ids_to_seg(seg, ids)
+
+    ds_factors = [[2, 2, 2], [2, 2, 2], [2, 2, 2]]
+    make_bdv(seg, out_path, downscale_factors=ds_factors,
+             resolution=resolution, unit='micrometer')
