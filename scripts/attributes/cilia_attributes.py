@@ -69,20 +69,24 @@ def compute_centerline(obj, resolution):
     return coordinates, max_plen
 
 
-def get_bb(base_table, cid, resolution):
+def get_bb(base_table, cid, resolution, shape):
+    halo = (2, 2, 2)
     # get the row for this cilia id
     row = base_table.loc[cid]
     # compute the bounding box
-    bb_min = (row.bb_min_z, row.bb_min_y, row.bb_min_x)
-    bb_max = (row.bb_max_z, row.bb_max_y, row.bb_max_x)
-    bb = tuple(slice(int(mi / re), int(ma / re))
-               for mi, ma, re in zip(bb_min, bb_max, resolution))
+    bb_min = [row.bb_min_z, row.bb_min_y, row.bb_min_x]
+    bb_max = [row.bb_max_z, row.bb_max_y, row.bb_max_x]
+    bb_min = [int(mi / re) for mi, re in zip(bb_min, resolution)]
+    bb_max = [int(ma / re) for ma, re in zip(bb_max, resolution)]
+    bb = tuple(slice(max(mi - ha, 0),
+                     min(ma + ha, sh))
+               for mi, ma, sh, ha in zip(bb_min, bb_max, shape, halo))
     return bb
 
 
 def load_seg(ds, base_table, cid, resolution):
     # load segmentation from the bounding box and get foreground
-    bb = get_bb(base_table, cid, resolution)
+    bb = get_bb(base_table, cid, resolution, ds.shape)
     obj = ds[bb] == cid
     return obj
 
@@ -137,28 +141,24 @@ def measure_cilia_attributes(seg_path, seg_key, base_table, resolution):
     return attributes, names
 
 
-# TODO the cell id mapping table should be separate
-# TODO wrap this into a luigi task so we don't recompute it every time
-def cilia_attributes(seg_path, seg_key,
-                     base_table_path, manual_mapping_table_path, table_out_path,
+# TODO results are not trust-worthy yet
+# TODO wrap this into a cluster task so we don't recompute it every time
+# and can be scheduled on slurm
+def cilia_morphology(seg_path, seg_key,
+                     base_table_path, out_path,
                      resolution, tmp_folder, target, max_jobs):
 
     # read the base table
     base_table = pd.read_csv(base_table_path, sep='\t')
     cilia_ids = base_table['label_id'].values.astype('uint64')
 
-    # add the manually mapped cell ids
-    # cell_ids = get_mapped_cell_ids(cilia_ids, manual_mapping_table_path)
-    # FIXME
-    cell_ids = np.zeros_like(cilia_ids)
-    assert len(cell_ids) == len(cilia_ids)
-
     # measure cilia specific attributes: length, diameter, ? (could try curvature)
+    print("Start to compute cilia morphology ...")
     attributes, names = measure_cilia_attributes(seg_path, seg_key, base_table, resolution)
     assert len(attributes) == len(cilia_ids)
     assert attributes.shape[1] == len(names)
 
-    table = np.concatenate([cilia_ids[:, None], cell_ids[:, None], attributes], axis=1)
-    col_names = ['label_id', 'cell_id'] + names
+    table = np.concatenate([cilia_ids[:, None], attributes], axis=1)
+    col_names = ['label_id'] + names
     table = pd.DataFrame(table, columns=col_names)
-    table.to_csv(table_out_path, index=False, sep='\t')
+    table.to_csv(out_path, index=False, sep='\t')

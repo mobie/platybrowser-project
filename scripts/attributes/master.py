@@ -1,12 +1,12 @@
 import os
 import h5py
 
-from .base_attributes import base_attributes
+from .base_attributes import base_attributes, propagate_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import write_genes_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes
-from .cilia_attributes import cilia_attributes
+from .cilia_attributes import cilia_morphology
 from ..files.xml_utils import get_h5_path_from_xml
 
 
@@ -19,7 +19,7 @@ def get_seg_path(folder, name, key):
     return path
 
 
-def make_cell_tables(folder, name, tmp_folder, resolution,
+def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                      target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
@@ -67,7 +67,7 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
                       label_ids, tmp_folder, target, max_jobs)
 
 
-def make_nucleus_tables(folder, name, tmp_folder, resolution,
+def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
                         target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
@@ -91,11 +91,8 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
                             n_labels, resolution, tmp_folder,
                             target, max_jobs)
 
-    # TODO additional tables:
-    # ???
 
-
-def make_cilia_tables(folder, name, tmp_folder, resolution,
+def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
                       target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
@@ -110,22 +107,13 @@ def make_cilia_tables(folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # NOTE this is preliminary.
-    # In the end, we wan't this table to just live in the platy-browser data.
-    # Right now, something with the mapping to cell ids is off - I think the ids come
-    # from two different versions of the segmentation.
-    # We will keep this for now, but it needs another round of corrections.
-    # But this should be done in the platy-browser directly; need to wait for this
-    # until Tischi is back.
-    # Then, we will always need to update the cell id mapping table when the
-    # segmentation changes as well.
-    manual_mapping_table = os.path.join(folder, 'misc', 'cilia_id_mapping.csv')
-    assert os.path.exists(manual_mapping_table)
+    # TODO when we change the cell segmentation, we also need to update this!
+    propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'),
+                         os.path.join(old_folder, 'tables', name, 'cell_id_mapping.csv'),
+                         os.path.join(table_folder, 'cell_id_mapping.csv'))
 
-    # compute cilia specific attributes at lower resolution ?
-
-    # add cilia specific attributes (length, diameter) and manual cell mapping done by rachel
-    cilia_out = os.path.join(table_folder, 'cilia.csv')
-    cilia_attributes(seg_path, seg_key,
-                     base_out, manual_mapping_table, cilia_out,
-                     resolution, tmp_folder, target=target, max_jobs=max_jobs)
+    # add cilia specific attributes (length, diameter)
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    cilia_morphology(seg_path, seg_key,
+                     base_out, morpho_out, resolution,
+                     tmp_folder, target=target, max_jobs=max_jobs)

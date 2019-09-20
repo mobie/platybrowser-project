@@ -3,6 +3,7 @@ import json
 import h5py
 import z5py
 import numpy as np
+import pandas as pd
 
 import luigi
 from cluster_tools.morphology import MorphologyWorkflow
@@ -157,3 +158,33 @@ def base_attributes(input_path, input_key, output_path, resolution,
     with z5py.File(tmp_path, 'r') as f:
         label_ids = f[tmp_key][:, 0]
     return label_ids
+
+
+# TODO this is un-tested !!!
+def propagate_attributes(id_mapping_path, old_table_path, output_path):
+    """ Propagate all attributes to new ids. (column label id)
+    """
+    # if the output already exists, we assume that the propagation
+    # was already done and we just continue
+    if os.path.exists(output_path):
+        return
+
+    with open(id_mapping_path, 'r') as f:
+        id_mapping = json.load(f)
+    id_mapping = {int(k): v for k, v in id_mapping.items()}
+
+    n_new_ids = max(id_mapping.keys()) + 1
+
+    table = pd.read_csv(old_table_path, sep='\t')
+    col_names = table.columns.values
+    table = table.values
+
+    out_table = np.zeros((n_new_ids, table.shape[1]))
+
+    # can be vectorized
+    for new_id, old_id in id_mapping.items():
+        out_table[new_id, 0] = new_id
+        out_table[new_id, 1:] = table[old_id, 1:]
+
+    out_table = pd.DataFrame(out_table, name=col_names)
+    out_table.to_csv(output_path, index=False, sep='\t')

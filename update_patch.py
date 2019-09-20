@@ -51,7 +51,7 @@ def update_table(name, seg_dict, folder, new_folder,
                  target, max_jobs):
     tmp_folder = 'tmp_tables_%s' % name
     update_function = getattr(scripts.attributes, seg_dict['table_update_function'])
-    update_function(new_folder, name, tmp_folder, seg_dict['resolution'],
+    update_function(folder, new_folder, name, tmp_folder, seg_dict['resolution'],
                     target=target, max_jobs=max_jobs)
 
 
