@@ -98,9 +98,16 @@ def apply_for_file(input_path, output_path,
                    transformation_file, fiji_executable,
                    elastix_directory, tmp_folder, n_threads):
 
-    # grrr design anti-pattern
+    assert os.path.exists(elastix_directory)
+    assert os.path.exists(tmp_folder)
+    assert os.path.exists(input_path)
+    assert os.path.exists(transformation_file)
+    assert os.path.exists(os.path.split(output_path)[0])
+
+    # transformix arguments need to be passed as one string,
+    # with individual arguments comma separated
     # the argument to transformaix needs to be one large comma separated string
-    transformix_argument = ["elastix_directory=\'%s\'" % elastix_directory,
+    transformix_argument = ["elastixDirectory=\'%s\'" % elastix_directory,
                             "workingDirectory=\'%s\'" % tmp_folder,
                             "inputImageFile=\'%s\'" % input_path,
                             "transformationFile=\'%s\'" % transformation_file,
