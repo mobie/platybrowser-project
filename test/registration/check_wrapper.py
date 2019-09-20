@@ -9,7 +9,8 @@ from scripts.extension.registration import ApplyRegistrationLocal
 
 
 def check_wrapper():
-    in_path = '/g/kreshuk/pape/Work/my_projects/platy-browser-data/registration/9.9.9/images/ProSPr/Stomach_forRegistration.tif'
+    in_path = os.path.join('/g/kreshuk/pape/Work/my_projects/platy-browser-data/registration/9.9.9/images/ProSPr',
+                           'Stomach_forRegistration.tif')
     out_path = '/g/kreshuk/pape/Work/my_projects/dev-platy/test/registration/somach_prospr_registered'
 
     in_list = [in_path]

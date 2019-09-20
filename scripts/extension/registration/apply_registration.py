@@ -123,15 +123,26 @@ def apply_for_file(input_path, output_path,
     # "elastixDirectory='/g/almf/software/elastix_v4.8', workingDirectory='$TMPDIR',
     # inputImageFile='$INPUT_IMAGE',transformationFile='/g/cba/exchange/platy-trafos/linear/TransformParameters.BSpline10-3Channels.0.txt
     # outputFile='$OUTPUT_IMAGE',outputModality='Save as BigDataViewer .xml/.h5',numThreads='1'"
-    # NOTE: I ommit --run here, because fiji throws a warning that it does not recognise the argument
-    cmd = [fiji_executable, "--ij2", "--headless", "\"Transformix\"", transformix_argument]
+    cmd = [fiji_executable, "--ij2", "--headless", "--run", "\"Transformix\"", transformix_argument]
 
     cmd_str = " ".join(cmd)
     fu.log("Calling the following command:")
     fu.log(cmd_str)
 
+    # the elastix wrapper only works properly if we set these as environment variables as well, see
+    # TODO make issue about this
+    # os.environ['TMPDIR'] = tmp_folder
+    os.environ['TRAFO'] = transformation_file
+
     try:
-        check_output(cmd)
+        # check_output(cmd)
+        # the CLI parser is very awkward (to put it nicely).
+        # I could only get it to work by passing the whole command string
+        # and setting shell to True.
+        # otherwise, it would parse something wrong, and do nothing but
+        # throwing a warning:
+        # [WARNING] Ignoring invalid argument: --run
+        check_output([cmd_str], shell=True)
     except CalledProcessError as e:
         raise RuntimeError(e.output)
 
