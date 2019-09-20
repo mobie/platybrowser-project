@@ -5,23 +5,30 @@ import z5py
 
 from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit, postprocess
+from paintera_tools import set_default_shebang as set_ptools_shebang
 from .to_bdv import to_bdv
 from .map_segmentation_ids import map_segmentation_ids
-from ..default_config import write_default_global_config
+from ..default_config import write_default_global_config, get_default_shebang
 from ..files import get_postprocess_dict
 
 
-def get_n_scales(paintera_path, paintera_key):
+def get_scale_factors(paintera_path, paintera_key):
     f = z5py.File(paintera_path)
     g = f[paintera_key]['data']
-    keys = list(g.keys())
-    scales = [key for key in keys
-              if os.path.isdir(os.path.join(g.path, key)) and key.startswith('s')]
-    return len(scales)
+    keys = [int(k[1:]) for k in g.keys()]
+    keys = sorted(keys)
+    scale_factors = [[1, 1, 1]]
+    rel_scales = [[1, 1, 1]]
+    for k in keys[1:]:
+        factor = g['s%i' % k].attrs['downsamplingFactors']
+        rel_factor = [int(sf // prev) for sf, prev in zip(factor, scale_factors[-1])]
+        scale_factors.append(factor)
+        rel_scales.append(rel_factor[::-1])
+    return rel_scales
 
 
 def downscale(path, in_key, out_key,
-              n_scales, tmp_folder, max_jobs, target):
+              scale_factors, tmp_folder, max_jobs, target):
     task = DownscalingWorkflow
 
     config_folder = os.path.join(tmp_folder, 'configs')
@@ -34,15 +41,14 @@ def downscale(path, in_key, out_key,
     with open(os.path.join(config_folder, 'downscaling.config'), 'w') as f:
         json.dump(config, f)
 
-    # for now we hard-code scale factors to 2, but it would be cleaner to infer this from the data
-    scales = [[2, 2, 2]] * n_scales
+    n_scales = len(scale_factors)
     halos = [[0, 0, 0]] * n_scales
 
     t = task(tmp_folder=tmp_folder, config_dir=config_folder,
              target=target, max_jobs=max_jobs,
              input_path=path, input_key=in_key,
              output_key_prefix=out_key,
-             scale_factors=scales, halos=halos)
+             scale_factors=scale_factors, halos=halos)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
         raise RuntimeError("Downscaling the segmentation failed")
@@ -85,13 +91,17 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
                     n_threads=16, size_threshold=min_segment_size,
                     label=label_segmentation)
 
+    # set correct shebang for paintera tools
+    set_ptools_shebang(get_default_shebang())
+
+    # NOTE map_to_background is needed for cilia, nee some way to enable it automatically
     # export segmentation from paintera commit for all scales
     serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
-                          max_jobs, target, relabel_output=True)
+                          max_jobs, target, relabel_output=True)  # ,  map_to_background=[1])
 
     # downscale the segemntation
-    n_scales = get_n_scales(paintera_path, paintera_key)
-    downscale(tmp_path, tmp_key0, tmp_key, n_scales, tmp_folder, max_jobs, target)
+    scale_factors = get_scale_factors(paintera_path, paintera_key)
+    downscale(tmp_path, tmp_key0, tmp_key, scale_factors, tmp_folder, max_jobs, target)
 
     # convert to bdv
     out_path = os.path.join(new_folder, 'segmentations', '%s.h5' % name)

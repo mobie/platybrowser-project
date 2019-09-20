@@ -28,7 +28,7 @@ def to_bdv(in_path, in_key, out_path, resolution, tmp_folder, target='slurm'):
     configs = PainteraToBdvWorkflow.get_config()
 
     config = configs['copy_volume']
-    config.update({'threads_per_job': 8, 'mem_limit': 32, 'time_limit': 1600,
+    config.update({'threads_per_job': 32, 'mem_limit': 64, 'time_limit': 2400,
                    'chunks': [32, 256, 256]})
     with open(os.path.join(config_folder, 'copy_volume.config'), 'w') as f:
         json.dump(config, f)
