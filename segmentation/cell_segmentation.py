@@ -1,4 +1,4 @@
-#! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
+#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
 from scripts.segmentation.cells.multicut import workflow
 
 

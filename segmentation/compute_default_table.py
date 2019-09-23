@@ -1,4 +1,4 @@
-#! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
+#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
 import numpy as np
 import h5py
 from scripts.attributes.base_attributes import base_attributes

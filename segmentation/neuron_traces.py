@@ -1,4 +1,4 @@
-#! /g/arendt/pape/miniconda3/envs/platybrowser/bin/python
+#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
 import json
 import pandas as pd
 from scripts.export import extract_neuron_traces

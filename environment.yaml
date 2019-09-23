@@ -5,12 +5,14 @@ channels:
     - conda-forge
 dependencies:
     # - affogato
-    - scikit-image
+    - cluster_tools
+    - h5py
     - luigi
     - nifty
-    - vigra
-    - h5py
-    - z5py
-    - cluster_tools
     - paintera_tools
     - pandas
+    - pybdv
+    - scikit-image
+    - scikit-learn
+    - vigra
+    - z5py
