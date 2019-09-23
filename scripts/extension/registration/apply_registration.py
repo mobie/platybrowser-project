@@ -15,6 +15,8 @@ from cluster_tools.cluster_tasks import SlurmTask, LocalTask, LSFTask
 class ApplyRegistrationBase(luigi.Task):
     """ ApplyRegistration base class
     """
+    default_fiji = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/software/Fiji.app/ImageJ-linux64'
+    default_elastix = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/software/elastix_v4.8'
 
     task_name = 'apply_registration'
     src_file = os.path.abspath(__file__)
@@ -23,8 +25,8 @@ class ApplyRegistrationBase(luigi.Task):
     input_path_file = luigi.Parameter()
     output_path_file = luigi.Parameter()
     transformation_file = luigi.Parameter()
-    fiji_executable = luigi.Parameter(default='/g/almf/software/Fiji.app/ImageJ-linux64')
-    elastix_directory = luigi.Parameter(default='/g/almf/software/elastix_v4.8')
+    fiji_executable = luigi.Parameter(default=default_fiji)
+    elastix_directory = luigi.Parameter(default=default_elastix)
     dependency = luigi.TaskParameter(default=DummyTask())
 
     def requires(self):
@@ -108,12 +110,12 @@ def apply_for_file(input_path, output_path,
     # with individual arguments comma separated
     # the argument to transformaix needs to be one large comma separated string
     transformix_argument = ["elastixDirectory=\'%s\'" % elastix_directory,
-                            "workingDirectory=\'%s\'" % tmp_folder,
+                            "workingDirectory=\'%s\'" % os.path.abspath(tmp_folder),
                             "inputImageFile=\'%s\'" % input_path,
                             "transformationFile=\'%s\'" % transformation_file,
                             "outputFile=\'%s\'" % output_path,
                             "outputModality=\'Save as BigDataViewer .xml/.h5\'",
-                            "numThreads=\'1\'"]  # TODO why do we use numThreads=1 and not the same as in -c?
+                            "numThreads=\'%i\'" % n_threads]
     transformix_argument = ",".join(transformix_argument)
     transformix_argument = "\"%s\"" % transformix_argument
 
@@ -129,14 +131,16 @@ def apply_for_file(input_path, output_path,
     fu.log("Calling the following command:")
     fu.log(cmd_str)
 
-    # the elastix wrapper only works properly if we set these as environment variables as well, see
-    # TODO make issue about this
-    # os.environ['TMPDIR'] = tmp_folder
-    os.environ['TRAFO'] = transformation_file
-
+    cwd = os.getcwd()
     try:
+        # we need to change the working dir to the transformation directroy, so that relative paths in
+        # the transformations are correct
+        trafo_dir = os.path.split(transformation_file)[0]
+        fu.log("Change directory to %s" % trafo_dir)
+        os.chdir(trafo_dir)
+
         # check_output(cmd)
-        # the CLI parser is very awkward (to put it nicely).
+        # the CLI parser is very awkward.
         # I could only get it to work by passing the whole command string
         # and setting shell to True.
         # otherwise, it would parse something wrong, and do nothing but
@@ -144,7 +148,10 @@ def apply_for_file(input_path, output_path,
         # [WARNING] Ignoring invalid argument: --run
         check_output([cmd_str], shell=True)
     except CalledProcessError as e:
-        raise RuntimeError(e.output)
+        raise RuntimeError(e.output.decode('utf-8'))
+    finally:
+        fu.log("Go back to cwd: %s" % cwd)
+        os.chdir(cwd)
 
 
 def apply_registration(job_id, config_path):
