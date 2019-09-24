@@ -51,11 +51,18 @@ def copy_segmentation(src_folder, dst_folder, name):
         os.symlink(rel_path, lut_out)
 
 
-def copy_image_data(src_folder, dst_folder):
+def copy_image_data(src_folder, dst_folder, exclude_prefixes=[]):
     # get all image names that need to be copied
     names = get_image_names()
 
     for name in names:
+
+        prefix = name.split('-')[:4]
+        prefix = '-'.join(prefix)
+
+        if prefix in exclude_prefixes:
+            continue
+
         name += '.xml'
         in_path = os.path.join(src_folder, 'images', name)
         out_path = os.path.join(dst_folder, 'images', name)
@@ -94,9 +101,9 @@ def copy_all_tables(src_folder, dst_folder):
         copy_tables(src_folder, dst_folder, name)
 
 
-def copy_release_folder(src_folder, dst_folder):
+def copy_release_folder(src_folder, dst_folder, exclude_prefixes=[]):
     # copy static image and misc data
-    copy_image_data(src_folder, dst_folder)
+    copy_image_data(src_folder, dst_folder, exclude_prefixes)
     copy_misc_data(src_folder, dst_folder)
     copy_segmentations(src_folder, dst_folder)
     copy_all_tables(src_folder, dst_folder)

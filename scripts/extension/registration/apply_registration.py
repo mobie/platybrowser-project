@@ -17,6 +17,7 @@ class ApplyRegistrationBase(luigi.Task):
     """
     default_fiji = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/software/Fiji.app/ImageJ-linux64'
     default_elastix = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/software/elastix_v4.8'
+    formats = ('bdv', 'tif')
 
     task_name = 'apply_registration'
     src_file = os.path.abspath(__file__)
@@ -25,6 +26,7 @@ class ApplyRegistrationBase(luigi.Task):
     input_path_file = luigi.Parameter()
     output_path_file = luigi.Parameter()
     transformation_file = luigi.Parameter()
+    output_format = luigi.Parameter(default='bdv')
     fiji_executable = luigi.Parameter(default=default_fiji)
     elastix_directory = luigi.Parameter(default=default_elastix)
     dependency = luigi.TaskParameter(default=DummyTask())
@@ -42,13 +44,14 @@ class ApplyRegistrationBase(luigi.Task):
         with open(self.output_path_file) as f:
             outputs = json.load(f)
 
-        assert len(inputs) == len(outputs)
+        assert len(inputs) == len(outputs), "%i, %i" % (len(inputs), len(outputs))
         assert all(os.path.exists(inp) for inp in inputs)
         n_files = len(inputs)
 
         assert os.path.exists(self.transformation_file)
         assert os.path.exists(self.fiji_executable)
         assert os.path.exists(self.elastix_directory)
+        assert self.output_format in (self.formats)
 
         # get the split of file-ids to the volume
         file_list = vu.blocks_in_volume((n_files,), (1,))
@@ -59,7 +62,7 @@ class ApplyRegistrationBase(luigi.Task):
                   "transformation_file": self.transformation_file,
                   "fiji_executable": self.fiji_executable,
                   "elastix_directory": self.elastix_directory,
-                  "tmp_folder": self.tmp_folder}
+                  "tmp_folder": self.tmp_folder, 'output_format': self.output_format}
 
         # prime and run the jobs
         n_jobs = min(self.max_jobs, n_files)
@@ -98,13 +101,21 @@ class ApplyRegistrationLSF(ApplyRegistrationBase, LSFTask):
 
 def apply_for_file(input_path, output_path,
                    transformation_file, fiji_executable,
-                   elastix_directory, tmp_folder, n_threads):
+                   elastix_directory, tmp_folder, n_threads,
+                   output_format):
 
     assert os.path.exists(elastix_directory)
     assert os.path.exists(tmp_folder)
     assert os.path.exists(input_path)
     assert os.path.exists(transformation_file)
     assert os.path.exists(os.path.split(output_path)[0])
+
+    if output_format == 'tif':
+        format_str = 'Save as Tiff'
+    elif output_format == 'bdv':
+        format_str = 'Save as BigDataViewer .xml/.h5'
+    else:
+        assert False, "Invalid output format %s" % output_format
 
     # transformix arguments need to be passed as one string,
     # with individual arguments comma separated
@@ -114,7 +125,7 @@ def apply_for_file(input_path, output_path,
                             "inputImageFile=\'%s\'" % input_path,
                             "transformationFile=\'%s\'" % transformation_file,
                             "outputFile=\'%s\'" % output_path,
-                            "outputModality=\'Save as BigDataViewer .xml/.h5\'",
+                            "outputModality=\'%s\'" % format_str,
                             "numThreads=\'%i\'" % n_threads]
     transformix_argument = ",".join(transformix_argument)
     transformix_argument = "\"%s\"" % transformix_argument
@@ -175,6 +186,8 @@ def apply_registration(job_id, config_path):
     elastix_directory = config['elastix_directory']
     tmp_folder = config['tmp_folder']
     working_dir = os.path.join(tmp_folder, 'work_dir%i' % job_id)
+    output_format = config['output_format']
+
     os.makedirs(working_dir, exist_ok=True)
 
     file_list = config['block_list']
@@ -194,7 +207,8 @@ def apply_registration(job_id, config_path):
         fu.log("Output: %s" % outfile)
         apply_for_file(infile, outfile,
                        transformation_file, fiji_executable,
-                       elastix_directory, working_dir, n_threads)
+                       elastix_directory, working_dir, n_threads,
+                       output_format)
         fu.log_block_success(file_id)
 
     fu.log_job_success(job_id)
