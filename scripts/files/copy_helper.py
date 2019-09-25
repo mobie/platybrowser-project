@@ -4,7 +4,6 @@ from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
 from .sources import get_image_names, get_segmentation_names, get_segmentations
 
 
-# TODO double check this
 def copy_file(xml_in, xml_out):
     h5path = get_h5_path_from_xml(xml_in, return_absolute_path=True)
     xml_dir = os.path.split(xml_out)[0]

@@ -9,12 +9,15 @@ from concurrent import futures
 import imageio
 import luigi
 import numpy as np
+import pandas as pd
 from pybdv import make_bdv
 
 from scripts.files import copy_release_folder, make_folder_structure, make_bdv_server_file
+from scripts.files.xml_utils import get_h5_path_from_xml, write_simple_xml
 from scripts.release_helper import add_version
 from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
 from scripts.default_config import get_default_shebang
+from scripts.attributes.genes import create_auxiliary_gene_file, write_genes_table
 
 
 REGION_NAMES = ('AllGlands',
@@ -43,9 +46,11 @@ def get_out_name(prefix, name):
     name = os.path.splitext(name)[0]
     name = name.split('--')[0]
     # TODO split off further extensions here?
+    # handle ENR differently, because ENR is not very informative?
     # name = name.split('-')[0]
     if name in REGION_NAMES:
         name = '-'.join([prefix, 'segmented', name])
+    # TODO edus shouls still have MED postfix !
     elif name.startswith('edu'):  # edus are no meds
         name = '-'.join([prefix, name])
     else:
@@ -97,7 +102,7 @@ def apply_registration(input_folder, new_folder,
     outputs = [os.path.join(output_folder, name) for name in output_names]
 
     # update the task config
-    config_dir = os.path.join(tmp_folder, 'config')
+    config_dir = os.path.join(tmp_folder, 'configs')
     os.makedirs(config_dir, exist_ok=True)
 
     shebang = get_default_shebang()
@@ -133,6 +138,38 @@ def apply_registration(input_folder, new_folder,
     copy_to_h5(outputs, output_folder)
 
 
+def update_gene_attributes(new_folder, target):
+
+    # update the auxiliaty gene volume
+    image_folder = os.path.join(new_folder, 'images')
+    aux_out_path = os.path.join(new_folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.h5')
+    create_auxiliary_gene_file(image_folder, aux_out_path)
+    # write the new xml
+    h5_path = os.path.split(aux_out_path)[1]
+    xml_path = os.path.splitext(aux_out_path)[0] + '.xml'
+    write_simple_xml(xml_path, h5_path, path_type='relative')
+
+    # update the gene table
+    seg_path = os.path.join(new_folder, 'segmentations', 'sbem-6dpf-1-whole-segmented-cells-labels.xml')
+    seg_path = get_h5_path_from_xml(seg_path, return_absolute_path=True)
+    assert os.path.exists(seg_path), seg_path
+
+    table_folder = os.path.join(new_folder, 'tables', 'sbem-6dpf-1-whole-segmented-cells-labels')
+    default_table_path = os.path.join(table_folder, 'default.csv')
+    table = pd.read_csv(default_table_path, sep='\t')
+    labels = table['label_id'].values.astype('uint64')
+
+    tmp_folder = './tmp_registration'
+    out_path = os.path.join(table_folder, 'genes.csv')
+    # we need to remove the link to the old gene table, if it exists
+    if os.path.exists(out_path):
+        assert os.path.islink(out_path), out_path
+        print("Remove link to previous gene table:", out_path)
+        os.unlink(out_path)
+    write_genes_table(seg_path, aux_out_path, out_path,
+                      labels, tmp_folder, target)
+
+
 def update_regestration(transformation_file, input_folder, source_prefix, target, max_jobs,
                         new_tag=None):
     """ Update the prospr segmentation.
@@ -162,6 +199,12 @@ def update_regestration(transformation_file, input_folder, source_prefix, target
     apply_registration(input_folder, new_folder,
                        transformation_file, source_prefix,
                        target, max_jobs)
+
+    # TODO we should register virtual cells here too
+
+    # update gene table
+    update_gene_attributes(new_folder, target)
+
     add_version(new_tag)
     make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
                          relative_paths=True)

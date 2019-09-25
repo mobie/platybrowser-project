@@ -35,7 +35,6 @@ class GenesBase(luigi.Task):
     genes_path = luigi.Parameter()
     labels_path = luigi.Parameter()
     output_path = luigi.Parameter()
-    gene_shape = luigi.ListParameter()
     #
     dependency = luigi.TaskParameter(default=DummyTask())
 
@@ -56,8 +55,7 @@ class GenesBase(luigi.Task):
                        'segmentation_key': self.segmentation_key,
                        'genes_path': self.genes_path,
                        'output_path': self.output_path,
-                       'labels_path': self.labels_path,
-                       'gene_shape': self.gene_shape})
+                       'labels_path': self.labels_path})
 
         # prime and run the job
         self.prepare_jobs(1, None, config)
@@ -157,7 +155,6 @@ def genes(job_id, config_path):
     genes_path = config['genes_path']
     labels_path = config['labels_path']
     output_path = config['output_path']
-    gene_shape = tuple(config['gene_shape'])
     n_threads = config.get('threads_per_job', 1)
 
     fu.log("Loading segmentation, labels and gene-data")
@@ -169,7 +166,9 @@ def genes(job_id, config_path):
     genes_dset = 'genes'
     names_dset = 'gene_names'
     with vu.file_reader(genes_path, 'r') as f:
-        all_genes = f[genes_dset][:]
+        ds = f[genes_dset]
+        gene_shape = ds.shape[1:]
+        all_genes = ds[:]
         gene_names = [i.decode('utf-8') for i in f[names_dset]]
 
     # resize the segmentation to gene space
