@@ -1,8 +1,0 @@
-<SpimData version="0.2">
-  <BasePath type="relative">.</BasePath>
-  <SequenceDescription>
-    <ImageLoader format="bdv.hdf5">
-      <hdf5 type="relative">prospr-6dpf-1-whole_meds_all_genes.h5</hdf5>
-    </ImageLoader>
-  </SequenceDescription>
-</SpimData>
