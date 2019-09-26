@@ -56,7 +56,7 @@ class ApplyRegistrationBase(luigi.Task):
         def update_line(line, to_write):
             line = line.rstrip('\n')
             line = line.split()
-            line[1] = "\"%s\")" % to_write
+            line = [line[0], "\"%s\")" % to_write]
             line = " ".join(line) + "\n"
             return line
 
@@ -108,8 +108,7 @@ class ApplyRegistrationBase(luigi.Task):
         assert self.interpolation in self.interpolation_modes
 
         config = self.get_task_config()
-        res_type = config.pop('res_type', None)
-        # TODO what are valid res types?
+        res_type = config.pop('ResultImagePixelType', None)
         if res_type is not None:
             assert res_type in self.result_types
         trafo_file = self.update_transformations(res_type)
