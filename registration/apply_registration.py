@@ -11,10 +11,11 @@ from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistra
 
 def apply_registration(input_path, output_path, transformation_file,
                        interpolation='nearest', output_format='tif', result_dtype='unsigned char',
-                       target='local'):
+                       n_threads=8, target='local'):
     task = ApplyRegistrationSlurm if target == 'slurm' else ApplyRegistrationLocal
     assert result_dtype in task.result_types
     assert interpolation in task.interpolation_modes
+    assert output_format in task.formats
 
     rand_id = hash(random.uniform(0, 1000000))
     tmp_folder = 'tmp_%i' % rand_id
@@ -29,7 +30,7 @@ def apply_registration(input_path, output_path, transformation_file,
         json.dump(conf, f)
 
     task_config = task.default_task_config()
-    task_config.update({'mem_limit': 16, 'time_limit': 240, 'threads_per_job': 4,
+    task_config.update({'mem_limit': 16, 'time_limit': 240, 'threads_per_job': n_threads,
                         'ResultImagePixelType': result_dtype})
     with open(os.path.join(config_dir, 'apply_registration.config'), 'w') as f:
         json.dump(task_config, f)
@@ -63,13 +64,15 @@ if __name__ == '__main__':
     parser.add_argument('--interpolation', type=str, default='nearest',
                         help="Interpolation order that will be used. Can be 'nearest' or 'linear'.")
     parser.add_argument('--output_format', type=str, default='tif',
-                        help="Output file format. Can be 'tif' or 'xml'.")
+                        help="Output file format. Can be 'tif' or 'bdv'.")
     parser.add_argument('--result_dtype', type=str, default='unsigned char',
                         help="Image datatype. Can be 'unsigned char' or 'unsigned short'.")
+    parser.add_argument('--n_threads', type=int, default=8,
+                        help="Number of threads")
     parser.add_argument('--target', type=str, default='local',
                         help="Where to run the computation. Can be 'local' or 'slurm'.")
 
     args = parser.parse_args()
     apply_registration(args.input_path, args.output_path, args.transformation_file,
                        args.interpolation, args.output_format, args.result_dtype,
-                       args.target)
+                       args.n_threads, args.target)
