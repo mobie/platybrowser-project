@@ -92,6 +92,9 @@ scripts, you must add all new files yourself and then make a release via `git ta
 In addition, the script `make_dev_folder.py` can be used to create a development folder. It copies the most
 recent release folder into a folder prefixed with  dev-`, that will not be put under version control.
 
+The script `update_registration.py` can be used to update registered data with a new transformation.
+It creates a new patch version folder and updates all relevant data.
+
 
 ## Installation
 
@@ -121,7 +124,11 @@ In addition to the data, the scripts for generating registration and producing d
 
 ### Registration
 
-The folder `registration` contains:
+The folder `registration` contains the transformations for the different registration versions as well as the scripts
+to generate / curate the registration targets. You can use the script `apply_registration.py` to apply a registration transformation
+to a new input file.
+
+<!---
 - `transfer_ProSPr_data`. This folder contains the scripts needed to copy and process the ProSPr output to 
 '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/prospr'.
 It reads the .tif files that will be registered to the EM (e.g. MEDs, tissue manual segmentations, reference),
@@ -132,6 +139,7 @@ sbatch ./ProSPr_copy_and_mirror.sh
 ```
 
 - `ProSPr_files_for_registration`. The three files to guide the transformation of prospr space into the EM.
+--->
 
 ### Segmentation
 
