@@ -127,9 +127,13 @@ def apply_registration(input_folder, new_folder,
     with open(output_file, 'w') as f:
         json.dump(outputs, f)
 
+    # once we have other sources that are registered to the em space,
+    # we should expose the interpolation mode
+    interpolation = 'nearest'
     t = task(tmp_folder=tmp_folder, config_dir=config_dir, max_jobs=max_jobs,
              input_path_file=input_file, output_path_file=output_file,
-             transformation_file=transformation_file, output_format='tif')
+             transformation_file=transformation_file, output_format='tif',
+             interpolation=interpolation)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
         raise RuntimeError("Registration failed")

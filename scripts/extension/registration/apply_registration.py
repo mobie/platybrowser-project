@@ -3,6 +3,7 @@
 import os
 import json
 import sys
+from glob import glob
 from subprocess import check_output, CalledProcessError
 
 import luigi
@@ -19,6 +20,11 @@ class ApplyRegistrationBase(luigi.Task):
     default_elastix = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/software/elastix_v4.8'
     formats = ('bdv', 'tif')
 
+    # what about cubic etc?
+    interpolation_modes = {'linear': 'FinalLinearInterpolator',
+                           'nearest': 'FinalNearestNeighborInterpolator'}
+    result_types = ('unsigned char', 'unsigned short')
+
     task_name = 'apply_registration'
     src_file = os.path.abspath(__file__)
     allow_retry = False
@@ -26,6 +32,7 @@ class ApplyRegistrationBase(luigi.Task):
     input_path_file = luigi.Parameter()
     output_path_file = luigi.Parameter()
     transformation_file = luigi.Parameter()
+    interpolation = luigi.Parameter(default='nearest')
     output_format = luigi.Parameter(default='bdv')
     fiji_executable = luigi.Parameter(default=default_fiji)
     elastix_directory = luigi.Parameter(default=default_elastix)
@@ -33,6 +40,52 @@ class ApplyRegistrationBase(luigi.Task):
 
     def requires(self):
         return self.dependency
+
+    @staticmethod
+    def default_task_config():
+        config = LocalTask.default_task_config()
+        config.update({'ResultImagePixelType': None})
+        return config
+
+    # update the transformation with our interpolation mode
+    # and the corresponding dtype
+    def update_transformation(self, in_file, out_file, res_type):
+
+        interpolator_name = self.interpolation_modes[self.interpolation]
+
+        def update_line(line, to_write):
+            line = line.rstrip('\n')
+            line = line.split()
+            line[1] = "\"%s\")" % to_write
+            line = " ".join(line) + "\n"
+            return line
+
+        with open(in_file, 'r') as f_in, open(out_file, 'w') as f_out:
+            for line in f_in:
+                # change the interpolator
+                if line.startswith("(ResampleInterpolator"):
+                    line = update_line(line, interpolator_name)
+                # change the pixel result type
+                elif line.startswith("(ResultImagePixelType") and res_type is not None:
+                    line = update_line(line, res_type)
+                f_out.write(line)
+
+    def update_transformations(self, res_type):
+        trafo_folder, trafo_name = os.path.split(self.transformation_file)
+        assert trafo_name.startswith('TransformParameters')
+        trafo_files = glob(os.path.join(trafo_folder, 'TransformParameters*'))
+
+        out_folder = os.path.join(self.tmp_folder, 'transformations')
+        os.makedirs(out_folder, exist_ok=True)
+
+        for trafo in trafo_files:
+            name = os.path.split(trafo)[1]
+            out = os.path.join(out_folder, name)
+            self.update_transformation(trafo, out, res_type)
+
+        new_trafo = os.path.join(out_folder, trafo_name)
+        assert os.path.exists(new_trafo)
+        return new_trafo
 
     def run_impl(self):
         # get the global config and init configs
@@ -51,18 +104,27 @@ class ApplyRegistrationBase(luigi.Task):
         assert os.path.exists(self.transformation_file)
         assert os.path.exists(self.fiji_executable)
         assert os.path.exists(self.elastix_directory)
-        assert self.output_format in (self.formats)
+        assert self.output_format in self.formats
+        assert self.interpolation in self.interpolation_modes
+
+        config = self.get_task_config()
+        res_type = config.pop('res_type', None)
+        # TODO what are valid res types?
+        if res_type is not None:
+            assert res_type in self.result_types
+        trafo_file = self.update_transformations(res_type)
 
         # get the split of file-ids to the volume
         file_list = vu.blocks_in_volume((n_files,), (1,))
 
         # we don't need any additional config besides the paths
-        config = {"input_path_file": self.input_path_file,
-                  "output_path_file": self.output_path_file,
-                  "transformation_file": self.transformation_file,
-                  "fiji_executable": self.fiji_executable,
-                  "elastix_directory": self.elastix_directory,
-                  "tmp_folder": self.tmp_folder, 'output_format': self.output_format}
+        config.update({"input_path_file": self.input_path_file,
+                       "output_path_file": self.output_path_file,
+                       "transformation_file": trafo_file,
+                       "fiji_executable": self.fiji_executable,
+                       "elastix_directory": self.elastix_directory,
+                       "tmp_folder": self.tmp_folder,
+                       "output_format": self.output_format})
 
         # prime and run the jobs
         n_jobs = min(self.max_jobs, n_files)
@@ -108,7 +170,6 @@ def apply_for_file(input_path, output_path,
     assert os.path.exists(tmp_folder)
     assert os.path.exists(input_path)
     assert os.path.exists(transformation_file)
-    assert os.path.exists(os.path.split(output_path)[0])
 
     if output_format == 'tif':
         format_str = 'Save as Tiff'
@@ -117,14 +178,15 @@ def apply_for_file(input_path, output_path,
     else:
         assert False, "Invalid output format %s" % output_format
 
+    trafo_dir, trafo_name = os.path.split(transformation_file)
     # transformix arguments need to be passed as one string,
     # with individual arguments comma separated
     # the argument to transformaix needs to be one large comma separated string
     transformix_argument = ["elastixDirectory=\'%s\'" % elastix_directory,
                             "workingDirectory=\'%s\'" % os.path.abspath(tmp_folder),
-                            "inputImageFile=\'%s\'" % input_path,
-                            "transformationFile=\'%s\'" % transformation_file,
-                            "outputFile=\'%s\'" % output_path,
+                            "inputImageFile=\'%s\'" % os.path.abspath(input_path),
+                            "transformationFile=\'%s\'" % trafo_name,
+                            "outputFile=\'%s\'" % os.path.abspath(output_path),
                             "outputModality=\'%s\'" % format_str,
                             "numThreads=\'%i\'" % n_threads]
     transformix_argument = ",".join(transformix_argument)
@@ -163,6 +225,15 @@ def apply_for_file(input_path, output_path,
     finally:
         fu.log("Go back to cwd: %s" % cwd)
         os.chdir(cwd)
+
+    if output_format == 'tif':
+        expected_output = output_path + '-ch0.tif'
+    elif output_format == 'bdv':
+        expected_output = output_path + '.xml'
+
+    # the elastix plugin has the nasty habit of failing without throwing a proper error code.
+    # so we check here that we actually have the expected output. if not, something went wrong.
+    assert os.path.exists(expected_output), "The output %s is not there." % expected_output
 
 
 def apply_registration(job_id, config_path):

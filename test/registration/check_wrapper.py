@@ -38,8 +38,10 @@ def check_wrapper():
     # For now, we use the similarity trafo to save time
     trafo = os.path.join(trafo_dir, 'TransformParameters.Similarity-3Channels.0.txt')
 
+    interpolation = 'nearest'
     t = task(tmp_folder=tmp_folder, config_dir=conf_dir, max_jobs=1,
-             input_path_file=in_file, output_path_file=out_file, transformation_file=trafo)
+             input_path_file=in_file, output_path_file=out_file, transformation_file=trafo,
+             interpolation=interpolation)
     ret = luigi.build([t], local_scheduler=True)
     assert ret
     expected_xml = out_path + '.xml'
