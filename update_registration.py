@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from pybdv import make_bdv
 
-from scripts.files import copy_release_folder, make_folder_structure, make_bdv_server_file
+from scripts.files import copy_release_folder, make_folder_structure, make_bdv_server_file, get_source_names
 from scripts.files.xml_utils import get_h5_path_from_xml, write_simple_xml
 from scripts.release_helper import add_version
 from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
@@ -41,7 +41,7 @@ def get_tags(new_tag):
     return tag, new_tag
 
 
-def get_out_name(prefix, name):
+def parse_prospr(prefix, name):
     name = os.path.split(name)[1]
     name = os.path.splitext(name)[0]
     name = name.split('--')[0]
@@ -50,9 +50,6 @@ def get_out_name(prefix, name):
     # name = name.split('-')[0]
     if name in REGION_NAMES:
         name = '-'.join([prefix, 'segmented', name])
-    # TODO edus shouls still have MED postfix !
-    elif name.startswith('edu'):  # edus are no meds
-        name = '-'.join([prefix, name])
     else:
         name = '-'.join([prefix, name, 'MED'])
     return name
@@ -79,7 +76,7 @@ def copy_to_h5(inputs, output_folder):
 
 def apply_registration(input_folder, new_folder,
                        transformation_file, source_prefix,
-                       target, max_jobs):
+                       target, max_jobs, name_parser):
     task = ApplyRegistrationSlurm if target == 'slurm' else ApplyRegistrationLocal
     tmp_folder = './tmp_registration'
     os.makedirs(tmp_folder, exist_ok=True)
@@ -98,7 +95,7 @@ def apply_registration(input_folder, new_folder,
     # output_folder = os.path.join(new_folder, 'images')
     output_folder = os.path.join(tmp_folder, 'outputs')
     os.makedirs(output_folder, exist_ok=True)
-    output_names = [get_out_name(source_prefix, name) for name in inputs]
+    output_names = [name_parser(source_prefix, name) for name in inputs]
     outputs = [os.path.join(output_folder, name) for name in output_names]
 
     # update the task config
@@ -142,7 +139,7 @@ def apply_registration(input_folder, new_folder,
     copy_to_h5(outputs, output_folder)
 
 
-def update_gene_attributes(new_folder, target):
+def update_prospr(new_folder, target):
 
     # update the auxiliaty gene volume
     image_folder = os.path.join(new_folder, 'images')
@@ -173,8 +170,12 @@ def update_gene_attributes(new_folder, target):
     write_genes_table(seg_path, aux_out_path, out_path,
                       labels, tmp_folder, target)
 
+    # TODO we should register the virtual cells here as well
 
-def update_regestration(transformation_file, input_folder, source_prefix, target, max_jobs,
+
+# we should encode the source prefix and the transformation file to be used
+# in a config file in the transformation folder
+def update_registration(transformation_file, input_folder, source_prefix, target, max_jobs,
                         new_tag=None):
     """ Update the prospr segmentation.
     This is a special case of 'update_patch', that applies a new prospr registration.
@@ -187,6 +188,10 @@ def update_regestration(transformation_file, input_folder, source_prefix, target
         max_jobs [int] - max number of jobs for computation
         new_tag [str] - new version tag (default: None)
     """
+    prefixes = get_source_names()
+    if source_prefix not in prefixes:
+        raise ValueError("Invalid source name %s" % source_prefix)
+
     tag, new_tag = get_tags(new_tag)
     print("Updating platy browser from", tag, "to", new_tag)
 
@@ -198,16 +203,21 @@ def update_regestration(transformation_file, input_folder, source_prefix, target
     # copy the release folder
     copy_release_folder(folder, new_folder, exclude_prefixes=[source_prefix])
 
+    if source_prefix == "prospr-6dpf-1-whole":
+        name_parser = parse_prospr
+    else:
+        raise NotImplementedError
+
     # apply new registration to all files of the source prefix
     transformation_file = os.path.abspath(transformation_file)
     apply_registration(input_folder, new_folder,
                        transformation_file, source_prefix,
-                       target, max_jobs)
+                       target, max_jobs, name_parser)
 
-    # TODO we should register virtual cells here too
-
-    # update gene table
-    update_gene_attributes(new_folder, target)
+    if source_prefix == "prospr-6dpf-1-whole":
+        update_prospr(new_folder, target)
+    else:
+        raise NotImplementedError
 
     add_version(new_tag)
     make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
@@ -236,5 +246,5 @@ if __name__ == '__main__':
     new_tag = args.new_tag
     new_tag = None if new_tag == '' else new_tag
 
-    update_regestration(args.transformation_file, args.input_folder, args.source_prefix,
+    update_registration(args.transformation_file, args.input_folder, args.source_prefix,
                         args.target, args.max_jobs, new_tag)

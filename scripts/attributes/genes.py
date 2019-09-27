@@ -47,26 +47,19 @@ def create_auxiliary_gene_file(meds_path, out_file, return_result=False):
     names_dset = 'gene_names'
     dset = 't00000/s00/0/cells'
 
-    # NOTE special treatment of edu will not be necessary if we add MED postfix to them again
-    # get all the meds in the folder
-    # 1.) meds
+    # get all the med files in the image folder
     med_files = glob(os.path.join(meds_path, "*MED.h5"))
     gene_names = [os.path.splitext(os.path.basename(f))[0][:-4] for f in med_files]
-    # 2.) edu
-    edu_files = glob(os.path.join(meds_path, "*edu*"))
-    gene_names += [os.path.splitext(os.path.basename(f))[0] for f in edu_files]
-
-    all_files = med_files + edu_files
 
     # find out where the gene name actually starts (the 5th dash-separated word)
     name_start = find_nth(gene_names[0], '-', 4) + 1
 
     # cut all the preceeding prospr-... part
     gene_names = [name[name_start:] for name in gene_names]
-    num_genes = len(all_files)
+    num_genes = len(med_files)
     assert len(gene_names) == num_genes, "%i, %i" % (len(gene_names), len(num_genes))
 
-    with h5py.File(all_files[0], 'r') as f:
+    with h5py.File(med_files[0], 'r') as f:
         spatial_shape = f[dset].shape
 
     shape = (num_genes,) + spatial_shape
