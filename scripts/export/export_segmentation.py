@@ -24,7 +24,7 @@ def get_scale_factors(paintera_path, paintera_key):
         rel_factor = [int(sf // prev) for sf, prev in zip(factor, scale_factors[-1])]
         scale_factors.append(factor)
         rel_scales.append(rel_factor[::-1])
-    return rel_scales
+    return rel_scales[1:]
 
 
 def downscale(path, in_key, out_key,

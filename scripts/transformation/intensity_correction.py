@@ -42,7 +42,7 @@ def downsample(ref_path, in_path, in_key, out_path, resolution,
 
             s0 = ds0.shape
             s1 = ds1.shape
-            factor = [sh0 // sh1 for sh0, sh1 in zip(s0, s1)]
+            factor = [int(round(float(sh0) / sh1, 0)) for sh0, sh1 in zip(s0, s1)]
 
             sample_factors.append(factor)
         assert len(sample_factors) == len(levels) - 1
@@ -50,7 +50,7 @@ def downsample(ref_path, in_path, in_key, out_path, resolution,
     config_dir = os.path.join(tmp_folder, 'configs')
     task = DownscalingWorkflow
     config = task.get_config()['downscaling']
-    config.update({'library': 'skimage'})
+    config.update({'library': 'skimage', 'time_limit': 240, 'mem_limit': 4})
     with open(os.path.join(config_dir, 'downscaling.config'), 'w') as f:
         json.dump(config, f)
 
@@ -85,7 +85,7 @@ def downsample(ref_path, in_path, in_key, out_path, resolution,
 
 def intensity_correction(in_path, out_path, mask_path, mask_key,
                          trafo_path, tmp_folder, resolution,
-                         target='slurm', max_jobs=250):
+                         target='slurm', max_jobs=250, tmp_path=None):
     trafo_ext = os.path.splitext(trafo_path)[1]
     if trafo_ext == '.csv':
         trafo_path = csv_to_json(trafo_path)
@@ -98,10 +98,16 @@ def intensity_correction(in_path, out_path, mask_path, mask_key,
     config_dir = os.path.join(tmp_folder, 'configs')
     write_default_global_config(config_dir)
 
-    tmp_path = os.path.join(tmp_folder, 'data.n5')
+    if tmp_path is None:
+        tmp_path = os.path.join(tmp_folder, 'data.n5')
     tmp_key = 'data'
 
     task = LinearTransformationWorkflow
+    conf = task.get_config()['linear']
+    conf.update({'time_limit': 600, 'mem_limit': 4})
+    with open(os.path.join(config_dir, 'linear.config'), 'w') as f:
+        json.dump(conf, f)
+
     t = task(tmp_folder=tmp_folder, config_dir=config_dir,
              target=target, max_jobs=max_jobs,
              input_path=in_path, input_key=key,
