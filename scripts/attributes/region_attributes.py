@@ -11,7 +11,6 @@ def write_region_table(label_ids, label_list, semantic_mapping_list, out_path):
     assert len(label_list) == len(semantic_mapping_list)
     n_labels = len(label_ids)
     assert all(len(labels) == n_labels for labels in label_list)
-
     col_names = ['label_id'] + [name for mapping in semantic_mapping_list
                                 for name in mapping.keys()]
     n_cols = len(col_names)
@@ -49,16 +48,13 @@ def muscle_attributes(muscle_path, key_muscle,
     # we count everything that has at least 25 % overlap as muscle
     overlap_threshold = .25
     muscle_labels = normalize_overlap_dict(muscle_labels)
-    label_ids = [k for k in sorted(muscle_labels.keys())]
-    muscle_labels = np.array([foreground_id if muscle_labels[label_id].get(foreground_id, 0) > overlap_threshold
-                              else 0 for label_id in label_ids])
+    label_ids = np.array([k for k in sorted(muscle_labels.keys())])
+    overlap_values = np.array([muscle_labels[label_id].get(foreground_id, 0.) for label_id in label_ids])
+    overlap_labels = label_ids[overlap_values > overlap_threshold]
 
-    # print()
-    # print()
-    # print(np.sum(muscle_labels == foreground_id))
-    # print(muscle_labels.size)
-    # print()
-    # print()
+    n_labels = int(label_ids.max()) + 1
+    muscle_labels = np.zeros(n_labels, dtype='uint8')
+    muscle_labels[overlap_labels] = foreground_id
 
     semantic_muscle = {'muscle': [foreground_id]}
     return muscle_labels, semantic_muscle
@@ -86,7 +82,6 @@ def region_attributes(seg_path, region_out,
         ids = f['semantic_mapping'][:]
     semantics_to_carved_ids = {name: idx.tolist()
                                for name, idx in zip(names, ids)}
-
     label_list = [carved_labels]
     semantic_mapping_list = [semantics_to_carved_ids]
 

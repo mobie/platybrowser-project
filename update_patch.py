@@ -155,6 +155,7 @@ def update_patch(update_seg_names, update_table_names,
     update_tables(folder, new_folder, table_updates,
                   target=target, max_jobs=max_jobs)
 
+    print("All updates were successfull. Making bdv file and adding version tag")
     make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
                          relative_paths=True)
     add_version(new_tag)
