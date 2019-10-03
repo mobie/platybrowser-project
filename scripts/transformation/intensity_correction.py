@@ -50,7 +50,7 @@ def downsample(ref_path, in_path, in_key, out_path, resolution,
     config_dir = os.path.join(tmp_folder, 'configs')
     task = DownscalingWorkflow
     config = task.get_config()['downscaling']
-    config.update({'library': 'skimage', 'time_limit': 240, 'mem_limit': 4})
+    config.update({'library': 'skimage', 'time_limit': 360, 'mem_limit': 8})
     with open(os.path.join(config_dir, 'downscaling.config'), 'w') as f:
         json.dump(config, f)
 
@@ -104,7 +104,7 @@ def intensity_correction(in_path, out_path, mask_path, mask_key,
 
     task = LinearTransformationWorkflow
     conf = task.get_config()['linear']
-    conf.update({'time_limit': 600, 'mem_limit': 4})
+    conf.update({'time_limit': 360, 'mem_limit': 8})
     with open(os.path.join(config_dir, 'linear.config'), 'w') as f:
         json.dump(conf, f)
 

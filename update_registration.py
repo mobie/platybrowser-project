@@ -17,7 +17,9 @@ from scripts.files.xml_utils import get_h5_path_from_xml, write_simple_xml
 from scripts.release_helper import add_version
 from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
 from scripts.default_config import get_default_shebang
+from scripts.attributes.base_attributes import base_attributes
 from scripts.attributes.genes import create_auxiliary_gene_file, write_genes_table
+from scripts.util import add_max_id
 
 
 REGION_NAMES = ('AllGlands',
@@ -74,44 +76,9 @@ def copy_to_h5(inputs, output_folder):
         [t.result() for t in tasks]
 
 
-def apply_registration(input_folder, new_folder,
-                       transformation_file, source_prefix,
-                       target, max_jobs, name_parser):
+def registration_impl(inputs, outputs, transformation_file, output_folder,
+                      tmp_folder, target, max_jobs, interpolation, dtype='unsigned char'):
     task = ApplyRegistrationSlurm if target == 'slurm' else ApplyRegistrationLocal
-    tmp_folder = './tmp_registration'
-    os.makedirs(tmp_folder, exist_ok=True)
-
-    # find all input files
-    names = os.listdir(input_folder)
-    inputs = [os.path.join(input_folder, name) for name in names]
-
-    if len(inputs) == 0:
-        raise RuntimeError("Did not find any files with prefix %s in %s" % (source_prefix,
-                                                                            input_folder))
-
-    # writing multiple hdf5 files in parallel with the elastix plugin is broken,
-    # so we write temporary files to tif instead and copy them to hdf5 with python
-
-    # output_folder = os.path.join(new_folder, 'images')
-    output_folder = os.path.join(tmp_folder, 'outputs')
-    os.makedirs(output_folder, exist_ok=True)
-    output_names = [name_parser(source_prefix, name) for name in inputs]
-    outputs = [os.path.join(output_folder, name) for name in output_names]
-
-    # update the task config
-    config_dir = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_dir, exist_ok=True)
-
-    shebang = get_default_shebang()
-    global_config = task.default_global_config()
-    global_config.update({'shebang': shebang})
-    with open(os.path.join(config_dir, 'global.config'), 'w') as f:
-        json.dump(global_config, f)
-
-    task_config = task.default_task_config()
-    task_config.update({'mem_limit': 16, 'time_limit': 240, 'threads_per_job': 4})
-    with open(os.path.join(config_dir, 'apply_registration.config'), 'w') as f:
-        json.dump(task_config, f)
 
     # write path name files to json
     input_file = os.path.join(tmp_folder, 'input_files.json')
@@ -124,9 +91,22 @@ def apply_registration(input_folder, new_folder,
     with open(output_file, 'w') as f:
         json.dump(outputs, f)
 
-    # once we have other sources that are registered to the em space,
-    # we should expose the interpolation mode
-    interpolation = 'nearest'
+    # update the task config
+    config_dir = os.path.join(tmp_folder, 'configs')
+    os.makedirs(config_dir, exist_ok=True)
+
+    shebang = get_default_shebang()
+    global_config = task.default_global_config()
+    global_config.update({'shebang': shebang})
+    with open(os.path.join(config_dir, 'global.config'), 'w') as f:
+        json.dump(global_config, f)
+
+    task_config = task.default_task_config()
+    task_config.update({'mem_limit': 16, 'time_limit': 240, 'threads_per_job': 4,
+                        'ResultImagePixelType': dtype})
+    with open(os.path.join(config_dir, 'apply_registration.config'), 'w') as f:
+        json.dump(task_config, f)
+
     t = task(tmp_folder=tmp_folder, config_dir=config_dir, max_jobs=max_jobs,
              input_path_file=input_file, output_path_file=output_file,
              transformation_file=transformation_file, output_format='tif',
@@ -135,13 +115,42 @@ def apply_registration(input_folder, new_folder,
     if not ret:
         raise RuntimeError("Registration failed")
 
-    output_folder = os.path.join(new_folder, 'images')
     copy_to_h5(outputs, output_folder)
 
 
-def update_prospr(new_folder, target):
+# TODO expose interpolation mode
+def apply_registration(input_folder, new_folder,
+                       transformation_file, source_prefix,
+                       target, max_jobs, name_parser):
+    tmp_folder = './tmp_registration'
+    os.makedirs(tmp_folder, exist_ok=True)
 
-    # update the auxiliaty gene volume
+    # find all input files
+    names = os.listdir(input_folder)
+    inputs = [os.path.join(input_folder, name) for name in names]
+    # we ignore subfolders, because we might have some special volumes there
+    # (e.g. virtual cells for prospr, which are treated as segmentation)
+    inputs = [inp for inp in inputs if not os.path.isdir(inp)]
+
+    if len(inputs) == 0:
+        raise RuntimeError("Did not find any files with prefix %s in %s" % (source_prefix,
+                                                                            input_folder))
+
+    # writing multiple hdf5 files in parallel with the elastix plugin is broken,
+    # so we write temporary files to tif instead and copy them to hdf5 with python
+    output_folder = os.path.join(tmp_folder, 'outputs')
+    os.makedirs(output_folder, exist_ok=True)
+    output_names = [name_parser(source_prefix, name) for name in inputs]
+    outputs = [os.path.join(output_folder, name) for name in output_names]
+
+    output_folder = os.path.join(new_folder, 'images')
+    registration_impl(inputs, outputs, transformation_file, output_folder,
+                      tmp_folder, target, max_jobs, interpolation='nearest')
+
+
+def update_prospr(new_folder, input_folder, transformation_file, target, max_jobs):
+
+    # # update the auxiliaty gene volume
     image_folder = os.path.join(new_folder, 'images')
     aux_out_path = os.path.join(new_folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.h5')
     create_auxiliary_gene_file(image_folder, aux_out_path)
@@ -170,7 +179,33 @@ def update_prospr(new_folder, target):
     write_genes_table(seg_path, aux_out_path, out_path,
                       labels, tmp_folder, target)
 
-    # TODO we should register the virtual cells here as well
+    # register virtual cells
+    vc_name = 'prospr-6dpf-1-whole-virtual-cells-labels'
+    vc_path = os.path.join(input_folder, 'virtual_cells', 'virtual_cells--prosprspaceMEDs.tif')
+    inputs = [vc_path]
+    outputs = [os.path.join(tmp_folder, 'outputs', vc_name)]
+    output_folder = os.path.join(new_folder, 'segmentations')
+    registration_impl(inputs, outputs, transformation_file, output_folder,
+                      tmp_folder, target, max_jobs, interpolation='nearest',
+                      dtype='unsigned short')
+
+    # compute the table for the virtual cells
+    vc_table_folder = os.path.join(new_folder, 'tables', vc_name)
+    os.makedirs(vc_table_folder, exist_ok=True)
+    vc_table = os.path.join(vc_table_folder, 'default.csv')
+    if os.path.exists(vc_table):
+        assert os.path.islink(vc_table), vc_table
+        print("Remove link to previous gene table:", vc_table)
+        os.unlink(vc_table)
+    vc_path = os.path.join(new_folder, 'segmentations', vc_name + '.h5')
+    key = 't00000/s00/0/cells'
+    add_max_id(vc_path, key)
+
+    assert os.path.exists(vc_path), vc_path
+    resolution = [.55, .55, .55]
+    base_attributes(vc_path, key, vc_table, resolution,
+                    tmp_folder, target, max_jobs,
+                    correct_anchors=False)
 
 
 # we should encode the source prefix and the transformation file to be used
@@ -215,7 +250,7 @@ def update_registration(transformation_file, input_folder, source_prefix, target
                        target, max_jobs, name_parser)
 
     if source_prefix == "prospr-6dpf-1-whole":
-        update_prospr(new_folder, target)
+        update_prospr(new_folder, input_folder, transformation_file, target, max_jobs)
     else:
         raise NotImplementedError
 

@@ -1,8 +1,11 @@
 #! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
 import os
+import json
+from concurrent import futures
+
 import numpy as np
-import h5py
 import z5py
+import h5py
 import vigra
 
 from scipy.ndimage.morphology import binary_dilation
@@ -75,6 +78,41 @@ def correct_intensities(target='slurm', max_jobs=250):
                          tmp_path=tmp_path)
 
 
+def check_chunks():
+    import nifty.tools as nt
+    path = '/g/kreshuk/pape/Work/platy_tmp.n5'
+    key = 'data'
+    f = z5py.File(path, 'r')
+    ds = f[key]
+
+    shape = ds.shape
+    chunks = ds.chunks
+    blocking = nt.blocking([0, 0, 0], shape, chunks)
+
+    def check_chunk(block_id):
+        print("Check", block_id, "/", blocking.numberOfBlocks)
+        block = blocking.getBlock(block_id)
+        chunk_id = tuple(beg // ch for beg, ch in zip(block.begin, chunks))
+        try:
+            ds.read_chunk(chunk_id)
+        except RuntimeError:
+            print("Failed:", chunk_id)
+            return chunk_id
+
+    print("Start checking", blocking.numberOfBlocks, "blocks")
+    with futures.ThreadPoolExecutor(32) as tp:
+        tasks = [tp.submit(check_chunk, block_id) for block_id in range(blocking.numberOfBlocks)]
+        results = [t.result() for t in tasks]
+
+    results = [res for res in results if res is not None]
+    print()
+    print(results)
+    print()
+    with open('./failed_chunks.json', 'w') as f:
+        json.dump(results, f)
+
+
 if __name__ == '__main__':
     # combine_mask()
-    correct_intensities('local', 64)
+    correct_intensities('slurm', 125)
+    # check_chunks()
