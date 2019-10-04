@@ -1,6 +1,7 @@
 import os
 import glob
 import numpy as np
+import pandas as pd
 import h5py
 
 from .util import write_csv, node_labels, normalize_overlap_dict
@@ -110,3 +111,29 @@ def region_attributes(seg_path, region_out,
 
     # 3.) merge the mappings and write new table
     write_region_table(label_ids, label_list, semantic_mapping_list, region_out)
+
+
+def extrapolated_intensities(seg_path, seg_key, mask_path, mask_key, out_path,
+                             tmp_folder, target, max_jobs, overlap_threshold=.5):
+    mask_labels = node_labels(seg_path, seg_key,
+                              mask_path, mask_key,
+                              'extrapolated_intensities', tmp_folder,
+                              target, max_jobs, max_overlap=False)
+
+    foreground_id = 255
+
+    # we count everything that has at least 25 % overlap as muscle
+    mask_labels = normalize_overlap_dict(mask_labels)
+    label_ids = np.array([k for k in sorted(mask_labels.keys())])
+    overlap_values = np.array([mask_labels[label_id].get(foreground_id, 0.) for label_id in label_ids])
+    overlap_labels = label_ids[overlap_values > overlap_threshold]
+
+    n_labels = int(label_ids.max()) + 1
+    mask_labels = np.zeros(n_labels, dtype='uint8')
+    mask_labels[overlap_labels] = 1
+
+    label_ids = np.arange(n_labels)
+    data = np.concatenate([label_ids[:, None], mask_labels[:, None]], axis=1)
+    cols = ['label_id', 'has_extrapolated_intensities']
+    table = pd.DataFrame(data, columns=cols)
+    table.to_csv(out_path, sep='\t', index=False)

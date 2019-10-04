@@ -5,7 +5,7 @@ from .base_attributes import base_attributes, propagate_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
-from .region_attributes import region_attributes
+from .region_attributes import region_attributes, extrapolated_intensities
 from .cilia_attributes import cilia_morphology
 from ..files.xml_utils import get_h5_path_from_xml
 
@@ -76,6 +76,14 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                       image_folder, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs)
 
+    # mapping to extrapolated intensities
+    extrapol_mask = os.path.join(folder, 'segmentations', 'sbem-6dpf-mask-extrapolated.xml')
+    extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
+    extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
+    extrapolated_intensities(seg_path, 't00000/s00/3/cells',
+                             extrapol_mask, 't00000/s00/0/cells',
+                             extrapol_out, tmp_folder, target, max_jobs)
+
 
 def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
                         target='slurm', max_jobs=100):
@@ -100,6 +108,14 @@ def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
     write_morphology_nuclei(seg_path, raw_path, base_out, morpho_out,
                             n_labels, resolution, tmp_folder,
                             target, max_jobs)
+
+    # mapping to extrapolated intensities
+    extrapol_mask = os.path.join(folder, 'segmentations', 'sbem-6dpf-mask-extrapolated.xml')
+    extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
+    extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
+    extrapolated_intensities(seg_path, 't00000/s00/1/cells',
+                             extrapol_mask, 't00000/s00/0/cells',
+                             extrapol_out, tmp_folder, target, max_jobs)
 
 
 def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,

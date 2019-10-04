@@ -10,7 +10,7 @@ import vigra
 
 from scipy.ndimage.morphology import binary_dilation
 from scripts.transformation import intensity_correction
-from pybdv import make_bdv
+from pybdv import make_bdv, convert_to_bdv
 
 
 def combine_mask():
@@ -58,6 +58,7 @@ def correct_intensities_test(target='local', max_jobs=32):
                          target=target, max_jobs=max_jobs)
 
 
+# FIXME scale 0 is damaged in the h5 file !
 def correct_intensities(target='slurm', max_jobs=250):
     raw_path = '../data/rawdata/sbem-6dpf-1-whole-raw.h5'
     tmp_folder = './tmp_intensity_correction'
@@ -112,7 +113,50 @@ def check_chunks():
         json.dump(results, f)
 
 
+def make_subsampled_volume():
+    p = './em-raw-wholecorrected.h5'
+    k = 't00000/s00/2/cells'
+    with h5py.File(p, 'r') as f:
+        print(f[k].shape)
+    # return
+
+    scale_factors = [[2, 2, 2]] * 6
+    convert_to_bdv(p, k, 'em-raw-small-corrected.h5', downscale_factors=scale_factors, downscale_mode='mean',
+                   resolution=[.05, .04, .04], unit='micrometer')
+
+
+def make_extrapolation_mask():
+    z0 = 800  # extrapolation for z < z0
+    z1 = 9800  # extraplation for z > z1
+
+    ref_path = '../data/rawdata/sbem-6dpf-1-whole-raw.h5'
+    ref_scale = 4
+    ref_key = 't00000/s00/%i/cells' % ref_scale
+
+    with h5py.File(ref_path, 'r') as f:
+        shape = f[ref_key].shape
+    mask = np.zeros(shape, dtype='uint8')
+
+    # adapt to the resolution level
+    z0 //= (2 ** (ref_scale - 1))
+    z1 //= (2 ** (ref_scale - 1))
+    print(z0, z1)
+
+    mask[:z0] = 255
+    mask[z1:] = 255
+    print(mask.min(), mask.max())
+
+    scales = 3 * [[2, 2, 2]]
+    res = [.2, .16, .16]
+
+    out_path = './extrapolation_mask'
+    make_bdv(mask, out_path, downscale_factors=scales,
+             downscale_mode='nearest',
+             resolution=res, unit='micrometer',
+             convert_dtype=False)
+
+
 if __name__ == '__main__':
-    # combine_mask()
-    correct_intensities('slurm', 125)
-    # check_chunks()
+    # correct_intensities('slurm', 125)
+    # make_subsampled_volume()
+    make_extrapolation_mask()
