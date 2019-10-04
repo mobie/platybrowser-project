@@ -8,10 +8,11 @@ import h5py
 from tqdm import tqdm
 
 from ..extension.attributes import GenesLocal, GenesSlurm
+from ..extension.attributes import VCAssignmentsLocal, VCAssignmentsSlurm
 
 
-def write_genes_table(segm_file, genes_file, table_file, labels,
-                      tmp_folder, target, n_threads=8):
+def gene_assignment_table(segm_file, genes_file, table_file, labels,
+                          tmp_folder, target, n_threads=8):
     task = GenesSlurm if target == 'slurm' else GenesLocal
     seg_dset = 't00000/s00/4/cells'
 
@@ -30,6 +31,27 @@ def write_genes_table(segm_file, genes_file, table_file, labels,
              segmentation_path=segm_file, segmentation_key=seg_dset,
              genes_path=genes_file, labels_path=labels_path,
              output_path=table_file)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Computing gene expressions failed")
+
+
+def vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
+                        med_expression_path, output_path,
+                        tmp_folder, target, n_threads=8):
+    task = VCAssignmentsSlurm if target == 'slurm' else VCAssignmentsLocal
+
+    config_folder = os.path.join(tmp_folder, 'configs')
+    config = task.default_task_config()
+    # this is very ram hungry because we load all the genes at once
+    config.update({'threads_per_job': n_threads, 'mem_limit': 256})
+    with open(os.path.join(config_folder, 'vc_assignments.config'), 'w') as f:
+        json.dump(config, f)
+
+    t = task(tmp_folder=tmp_folder, config_dir=config_folder, max_jobs=1,
+             segmentation_path=seg_path, vc_volume_path=vc_vol_path,
+             vc_expression_path=vc_expression_path,
+             med_expression_path=med_expression_path, output_path=output_path)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
         raise RuntimeError("Computing gene expressions failed")
