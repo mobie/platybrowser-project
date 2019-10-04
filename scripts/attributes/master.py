@@ -3,7 +3,7 @@ import h5py
 
 from .base_attributes import base_attributes, propagate_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
-from .genes import write_genes_table
+from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes
 from .cilia_attributes import cilia_morphology
@@ -46,8 +46,18 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     if not os.path.exists(aux_gene_path):
         raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
     gene_out = os.path.join(table_folder, 'genes.csv')
-    write_genes_table(seg_path, aux_gene_path, gene_out, label_ids,
-                      tmp_folder, target)
+    gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
+                          tmp_folder, target)
+
+    # make table with gene mapping via VCs
+    vc_vol_path = os.path.join('segmentations', 'prospr-6dpf-1-whole-virtual-cells-labels.xml')
+    vc_vol_path = get_h5_path_from_xml(vc_vol_path, return_absolute_path=True)
+    vc_expression_path = os.path.join('tables', 'prospr-6dpf-1-whole-virtual-cells-labels', 'profile_clust_curated.csv')
+    med_expression_path = gene_out
+    vc_out = os.path.join(table_folder, 'vc_assignments.csv')
+    vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
+                        med_expression_path, vc_out,
+                        tmp_folder, target)
 
     # make table with morphology
     morpho_out = os.path.join(table_folder, 'morphology.csv')

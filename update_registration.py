@@ -18,7 +18,7 @@ from scripts.release_helper import add_version
 from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
 from scripts.default_config import get_default_shebang
 from scripts.attributes.base_attributes import base_attributes
-from scripts.attributes.genes import create_auxiliary_gene_file, write_genes_table
+from scripts.attributes.genes import create_auxiliary_gene_file, gene_assignment_table
 from scripts.util import add_max_id
 
 
@@ -176,8 +176,9 @@ def update_prospr(new_folder, input_folder, transformation_file, target, max_job
         assert os.path.islink(out_path), out_path
         print("Remove link to previous gene table:", out_path)
         os.unlink(out_path)
-    write_genes_table(seg_path, aux_out_path, out_path,
-                      labels, tmp_folder, target)
+    gene_assignment_table(seg_path, aux_out_path, out_path,
+                          labels, tmp_folder, target)
+    # TODO update the vc based gene assignments as well
 
     # register virtual cells
     vc_name = 'prospr-6dpf-1-whole-virtual-cells-labels'
