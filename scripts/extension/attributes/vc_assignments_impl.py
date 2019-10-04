@@ -20,10 +20,12 @@ def get_common_genes(vc_genes_file_path, cells_gene_expression, med_gene_names):
     vc_gene_indices = []
     common_gene_names = []
     med_gene_names_lowercase = [i.lower().split('-')[0] for i in med_gene_names]
+
     # get the names of genes used for vc's
     with open(vc_genes_file_path) as csv_file:
-        csv_reader = csv.DictReader(csv_file, delimiter=',')
+        csv_reader = csv.DictReader(csv_file, delimiter='\t')
         vc_gene_names = csv_reader.fieldnames
+
     # find a subset of genes both used for vc's and available as MEDs
     for i in range(len(vc_gene_names)):
         name = vc_gene_names[i].split('--')[0]
@@ -31,11 +33,12 @@ def get_common_genes(vc_genes_file_path, cells_gene_expression, med_gene_names):
             med_gene_indices.append(med_gene_names_lowercase.index(name.lower()))
             vc_gene_indices.append(i)
             common_gene_names.append(name)
+
     # from expression_by_overlap assignment extract only the subset genes
     cells_expression_subset = np.take(cells_gene_expression, med_gene_indices,
                                       axis=1)
     # from vcs_expression extract only the subset genes
-    vc_expression_subset = np.loadtxt(vc_genes_file_path, delimiter=',',
+    vc_expression_subset = np.loadtxt(vc_genes_file_path, delimiter='\t',
                                       skiprows=1, usecols=vc_gene_indices)
     # add the null vc with no expression
     vc_expression_subset = np.insert(vc_expression_subset, 0,
@@ -56,7 +59,8 @@ def get_bbs(data, offset):
     maxs = features['Coord<Maximum >'] + offset + 1
     # to prevent 'out of range' due to offsets
     mins[np.where(mins < 0)] = 0
-    maxs[np.where(maxs > shape)] = shape[np.where(maxs > shape)[1]]
+    exceed_bounds = np.where(maxs > shape)
+    maxs[exceed_bounds] = shape[exceed_bounds[1]]
     # get a bb for each cell
     cell_bbs = [tuple(slice(mi, ma) for mi, ma in zip(min_, max_))
                 for min_, max_ in zip(np.uint32(mins), np.uint32(maxs))]
@@ -72,7 +76,7 @@ def get_distances(em_data, vc_data, cells_expression, vc_expression, n_threads,
     distance_matrix = np.full((num_cells, num_vcs), np.nan)
     bbs = get_bbs(em_data, offset)
 
-    def cell_ids(cell):
+    def get_distance(cell):
         if cell == 0:
             return
 
@@ -92,7 +96,7 @@ def get_distances(em_data, vc_data, cells_expression, vc_expression, n_threads,
         distance_matrix[cell][vc_list] = distance
 
     with futures.ThreadPoolExecutor(n_threads) as tp:
-        tasks = [tp.submit(get_distances, cell)for cell in avail_cells]
+        tasks = [tp.submit(get_distance, cell_id) for cell_id in avail_cells]
         [t.result() for t in tasks]
 
     return distance_matrix
@@ -137,6 +141,7 @@ def vc_assignments(segm_volume_file, vc_volume_file, vc_expr_file,
     dist_matrix = get_distances(downsampled_segm_data, vc_data,
                                 cells_expression_subset,
                                 vc_expression_subset, n_threads)
+
     # assign the cells to the genetically closest vcs
     cell_assign = assign_vc(dist_matrix, vc_expression_subset)
     # write down a new table

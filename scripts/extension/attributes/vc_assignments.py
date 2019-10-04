@@ -5,12 +5,11 @@ import sys
 import json
 
 import luigi
-import numpy as np
 
 import cluster_tools.utils.function_utils as fu
 from cluster_tools.utils.task_utils import DummyTask
 from cluster_tools.cluster_tasks import SlurmTask, LocalTask
-from .vc_assignments_impl import vc_assignments as vc_assignments_impl
+from scripts.extension.attributes.vc_assignments_impl import vc_assignments as vc_assignments_impl
 
 #
 # Gene Attribute Tasks
@@ -88,7 +87,7 @@ def vc_assignments(job_id, config_path):
         config = json.load(f)
 
     segmentation_path = config['segmentation_path']
-    vc_volume_path = config['vc_assignments_path']
+    vc_volume_path = config['vc_volume_path']
     vc_expression_path = config['vc_expression_path']
     med_expression_path = config['med_expression_path']
 

@@ -50,6 +50,7 @@ def vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
 
     t = task(tmp_folder=tmp_folder, config_dir=config_folder, max_jobs=1,
              segmentation_path=seg_path, vc_volume_path=vc_vol_path,
+             vc_expression_path=vc_expression_path,
              med_expression_path=med_expression_path, output_path=output_path)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:

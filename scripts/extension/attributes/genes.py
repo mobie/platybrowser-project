@@ -10,7 +10,7 @@ import numpy as np
 import cluster_tools.utils.function_utils as fu
 from cluster_tools.utils.task_utils import DummyTask
 from cluster_tools.cluster_tasks import SlurmTask, LocalTask
-from .genes_impl import gene_assignments
+from scripts.extension.attributes.genes_impl import gene_assignments
 
 #
 # Gene Attribute Tasks
