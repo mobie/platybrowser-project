@@ -33,10 +33,11 @@ def update_major(new_data_dict, target='slurm', max_jobs=250):
     """
 
     for source, new_data in new_data_dict.items():
-        add_source(source)
+        sname, sstage, sid, sregion = source.split('-')
+        add_source(sname, sstage, int(sid), sregion)
         check_inputs(new_data, check_source=False)
 
-    # increase the minor (middle digit) release tag
+    # increase the major (first digit) release tag
     tag, new_tag = get_tags()
     print("Updating platy browser from", tag, "to", new_tag)
 
@@ -49,7 +50,7 @@ def update_major(new_data_dict, target='slurm', max_jobs=250):
     copy_release_folder(folder, new_folder)
 
     # add the new sources and new data
-    for source, new_data in new_data.items():
+    for source, new_data in new_data_dict.items():
         for data in new_data:
             add_data(data, new_folder, target, max_jobs,
                      source=source)
