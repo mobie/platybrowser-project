@@ -65,7 +65,7 @@ def evaluate_annotations(seg, fg_annotations, bg_annotations,
         # unless we have overlap with a background annotation
         # or are in the filter ids
         if this_labels.size == 0:
-            if not has_bg_label and radii > min_radius:
+            if not has_bg_label and radii[seg_id] > min_radius:
                 unmatched_ids.append(seg_id)
 
         # one label -> this seg-id seems to be well matched
@@ -80,17 +80,26 @@ def evaluate_annotations(seg, fg_annotations, bg_annotations,
         # increase the segment count
         n_segments += 1
 
-    # false splits = unmatched seg-ids and seg-ids corresponding to annotations that were matched
-    # more than once
+    # false splits = unmatched seg-ids and seg-ids corresponding to annotations
+    # that were matched more than once
+
+    # first, turn matched ids and labels into numpy arrays
     matched_labels = list(matched_ids.values())
     matched_ids = np.array(list(matched_ids.keys()), dtype='uint32')
-    matched_labels, matched_counts = np.unique(matched_labels, return_counts=True)
+
+    # find the unique matched labels, their counts and the mapping to the original array
+    matched_labels, inv_mapping, matched_counts = np.unique(matched_labels, return_inverse=True, return_counts=True)
+    matched_counts = matched_counts[inv_mapping]
+    assert len(matched_counts) == len(matched_ids)
+
+    # combine unmatched ids and ids matched more than once
+    unmatched_ids = np.array(unmatched_ids, dtype='uint32')
     false_split_ids = np.concatenate([unmatched_ids, matched_ids[matched_counts > 1]])
 
     # false merge annotations = overmatched ids
     false_merge_ids = list(overmatched_ids.keys())
-    false_merge_labels = np.array([lab for overmatched in overmatched_ids
-                                   for lab in overmatched.values()], dtype='uint32')
+    false_merge_labels = np.array([lab for overmatched in overmatched_ids.values()
+                                   for lab in overmatched], dtype='uint32')
 
     # find label ids that were not matched
     all_matched = np.concatenate([matched_labels, false_merge_labels])
@@ -106,8 +115,10 @@ def evaluate_annotations(seg, fg_annotations, bg_annotations,
                'n_merged_ids': len(false_merge_ids),
                'n_unmatched': len(unmatched_labels)}
 
-    ret = (metrics,)
+    if not return_masks and not return_ids:
+        return metrics
 
+    ret = (metrics,)
     if return_masks:
         fs_mask = np.isin(seg, false_split_ids).astype('uint32')
         fm_mask = np.isin(seg, false_merge_ids).astype('uint32')

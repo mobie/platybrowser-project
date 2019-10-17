@@ -19,7 +19,7 @@ def eval_slice(ds_seg, ds_ann, ignore_seg_ids, min_radius,
 
     bb = get_bounding_box(ds_ann)
     annotations = ds_ann[:]
-    seg = ds_seg[bb].squeeze()
+    seg = ds_seg[bb].squeeze().astype('uint32')
     assert annotations.shape == seg.shape
 
     seg_eval = vigra.analysis.labelImageWithBackground(seg)
@@ -39,7 +39,7 @@ def eval_slice(ds_seg, ds_ann, ignore_seg_ids, min_radius,
 
 
 def get_ignore_seg_ids(table_path, ignore_names=['cuticle', 'neuropil', 'yolk']):
-    table = pd.read_csv(table_path)
+    table = pd.read_csv(table_path, sep='\t')
     ignore_seg_ids = []
     for name in ignore_names:
         col = table[name].values.astype('uint8')
@@ -48,16 +48,25 @@ def get_ignore_seg_ids(table_path, ignore_names=['cuticle', 'neuropil', 'yolk'])
     return ignore_seg_ids
 
 
+def to_scores(eval_res):
+    n = float(eval_res['n_annotations'] - eval_res['n_unmatched'])
+    n_splits = eval_res['n_splits']
+    n_merges = eval_res['n_merged_annotations']
+    return n_merges / n, n_splits / n
+
+
 def eval_cells(seg_path, seg_key,
-               annotation_path, annotation_key,
+               annotation_path, annotation_key=None,
                ignore_seg_ids=None, min_radius=16):
-    """ Evaluate the cell segmentation.
+    """ Evaluate the cell segmentation by computing
+    the percentage of falsely merged and split cell annotations
+    in manually annotated validation slices.
     """
 
     eval_res = {}
-    with open_file(seg_path, 'r') as f_seg, open_file(annotation_path) as f_ann:
+    with open_file(seg_path, 'r') as f_seg, open_file(annotation_path, 'r') as f_ann:
         ds_seg = f_seg[seg_key]
-        g = f_ann[annotation_key]
+        g = f_ann if annotation_key is None else f_ann[annotation_key]
 
         def visit_annotation(name, node):
             nonlocal eval_res
@@ -65,9 +74,11 @@ def eval_cells(seg_path, seg_key,
                 print("Evaluating:", name)
                 res = eval_slice(ds_seg, node, ignore_seg_ids, min_radius)
                 eval_res = merge_evaluations(res, eval_res)
+                # for debugging
+                # print("current eval:", eval_res)
             else:
                 print("Group:", name)
 
         g.visititems(visit_annotation)
 
-    return eval_res
+    return to_scores(eval_res)
