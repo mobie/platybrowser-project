@@ -33,8 +33,8 @@ def compute_masks(seg, labels, ignore_seg_ids):
 def refine(seg_path, seg_key, ignore_seg_ids,
            orientation, slice_id,
            project_folder,
-           annotation_path='/g/arendt/...',
-           raw_path='/g/arendt/...',
+           annotation_path='/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation/validation_annotations.h5',
+           raw_path='/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.h5',
            raw_key='t00000/s00/1/cells'):
 
     label_path = os.path.join(project_folder, 'labels.npy')
@@ -47,6 +47,8 @@ def refine(seg_path, seg_key, ignore_seg_ids,
         labels = np.load(label_path) if os.path.exists(label_path) else None
         fm = np.load(fm_path) if os.path.exists(fm_path) else None
         fs = np.load(fs_path) if os.path.exists(fs_path) else None
+    else:
+        labels, fm, fs = None, None, None
 
     with open_file(annotation_path, 'r') as fval:
         ds = fval[orientation][str(slice_id)]
@@ -55,8 +57,8 @@ def refine(seg_path, seg_key, ignore_seg_ids,
         if labels is None:
             labels = ds[:]
 
-    starts = [b.start for b in bb]
-    stops = [b.stop for b in bb]
+    starts = [int(b.start) for b in bb]
+    stops = [int(b.stop) for b in bb]
 
     with open_file(seg_path, 'r') as f:
         ds = f[seg_key]
@@ -68,7 +70,7 @@ def refine(seg_path, seg_key, ignore_seg_ids,
         ds.n_threads = 8
         raw = ds[bb].squeeze()
 
-    assert labels.shape == seg.shape
+    assert labels.shape == seg.shape == raw.shape
     if fm is None:
         assert fs is None
         fm, fs = compute_masks(seg, labels, ignore_seg_ids)

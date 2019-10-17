@@ -22,7 +22,7 @@ def get_radii(seg):
     return radii
 
 
-def evaluate_annotations(seg, fg_annotations, bg_annotations,
+def evaluate_annotations(seg, fg_annotations, bg_annotations=None,
                          ignore_seg_ids=None, min_radius=16,
                          return_masks=False, return_ids=False):
     """ Evaluate segmentation based on evaluations.
@@ -54,7 +54,7 @@ def evaluate_annotations(seg, fg_annotations, bg_annotations,
         # check if this is an ignore id and skip
         if ignore_seg_ids is not None and seg_id in ignore_seg_ids:
             continue
-        has_bg_label = bg_annotations[mask].sum() > 0
+        has_bg_label = False if bg_annotations is None else bg_annotations[mask].sum() > 0
 
         # find the overlapping label ids
         this_labels = np.unique(labels[mask])
