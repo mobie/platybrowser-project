@@ -52,7 +52,7 @@ def to_scores(eval_res):
     n = float(eval_res['n_annotations'] - eval_res['n_unmatched'])
     n_splits = eval_res['n_splits']
     n_merges = eval_res['n_merged_annotations']
-    return n_merges / n, n_splits / n
+    return n_merges / n, n_splits / n, n
 
 
 def eval_cells(seg_path, seg_key,
