@@ -5,16 +5,22 @@ from elf.io import open_file, is_dataset
 from .evaluate_annotations import evaluate_annotations, merge_evaluations
 
 
-def eval_slice(ds_seg, ds_ann, ignore_seg_ids, min_radius):
+def get_bounding_box(ds):
+    attrs = ds.attrs
+    start, stop = attrs['starts'], attrs['stops']
+    bb = tuple(slice(sta, sto) for sta, sto in zip(start, stop))
+    return bb
+
+
+def eval_slice(ds_seg, ds_ann, ignore_seg_ids, min_radius,
+               return_masks=False):
     ds_seg.n_threads = 8
     ds_ann.n_threads = 8
 
-    attrs = ds_ann.attrs
-    start, stop = attrs['starts'], attrs['stops']
-    bb = tuple(slice(sta, sto) for sta, sto in zip(start, stop))
-
+    bb = get_bounding_box(ds_ann)
     annotations = ds_ann[:]
     seg = ds_seg[bb].squeeze()
+    assert annotations.shape == seg.shape
 
     seg_eval = vigra.analysis.labelImageWithBackground(seg)
 
@@ -28,7 +34,8 @@ def eval_slice(ds_seg, ds_ann, ignore_seg_ids, min_radius):
     bg_annotations = annotations == 3
 
     return evaluate_annotations(seg_eval, fg_annotations, bg_annotations,
-                                this_ignore_ids, min_radius=min_radius)
+                                this_ignore_ids, min_radius=min_radius,
+                                return_masks=return_masks)
 
 
 def get_ignore_seg_ids(table_path, ignore_names=['cuticle', 'neuropil', 'yolk']):
@@ -55,8 +62,11 @@ def eval_cells(seg_path, seg_key,
         def visit_annotation(name, node):
             nonlocal eval_res
             if is_dataset(node):
+                print("Evaluating:", name)
                 res = eval_slice(ds_seg, node, ignore_seg_ids, min_radius)
                 eval_res = merge_evaluations(res, eval_res)
+            else:
+                print("Group:", name)
 
         g.visititems(visit_annotation)
 
