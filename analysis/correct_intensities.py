@@ -6,11 +6,13 @@ from concurrent import futures
 import numpy as np
 import z5py
 import h5py
+import luigi
 import vigra
 
 from scipy.ndimage.morphology import binary_dilation
 from scripts.transformation import intensity_correction
-from pybdv import make_bdv, convert_to_bdv
+from pybdv import make_bdv
+from pybdv.metadata import write_h5_metadata
 
 
 def combine_mask():
@@ -113,16 +115,42 @@ def check_chunks():
         json.dump(results, f)
 
 
+# TODO write hdf5 meta-data
 def make_subsampled_volume():
+    from cluster_tools.copy_volume import CopyVolumeLocal
+    task = CopyVolumeLocal
     p = './em-raw-wholecorrected.h5'
-    k = 't00000/s00/2/cells'
-    with h5py.File(p, 'r') as f:
-        print(f[k].shape)
-    # return
 
-    scale_factors = [[2, 2, 2]] * 6
-    convert_to_bdv(p, k, 'em-raw-small-corrected.h5', downscale_factors=scale_factors, downscale_mode='mean',
-                   resolution=[.05, .04, .04], unit='micrometer')
+    glob_conf = task.default_global_config()
+    task_conf = task.default_task_config()
+
+    tmp_folder = './tmp_copy'
+    config_dir = os.path.join(tmp_folder, 'configs')
+    os.makedirs(config_dir, exist_ok=True)
+
+    out_path = 'em-raw-small-corrected.h5'
+
+    shebang = '/g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python'
+    block_shape = [64, 512, 512]
+    chunks = [32, 256, 256]
+    glob_conf.update({'shebang': shebang, 'block_shape': block_shape})
+    task_conf.update({'threads_per_job': 32, 'chunks': chunks})
+    with open(os.path.join(config_dir, 'global.config'), 'w') as f:
+        json.dump(glob_conf, f)
+    with open(os.path.join(config_dir, 'copy_volume.config'), 'w') as f:
+        json.dump(task_conf, f)
+    for scale in range(5):
+        pref = 's%i' % scale
+        in_key = 't00000/s00/%i/cells' % (scale + 3,)
+        out_key = 't00000/s00/%i/cells' % scale
+        t = task(tmp_folder=tmp_folder, config_dir=config_dir,
+                 max_jobs=1, input_path=p, input_key=in_key,
+                 output_path=out_path, output_key=out_key,
+                 prefix=pref)
+        luigi.build([t], local_scheduler=True)
+
+    scale_factors = 5 * [[2, 2, 2]]
+    write_h5_metadata(out_path, scale_factors)
 
 
 def make_extrapolation_mask():
@@ -158,5 +186,5 @@ def make_extrapolation_mask():
 
 if __name__ == '__main__':
     # correct_intensities('slurm', 125)
-    # make_subsampled_volume()
-    make_extrapolation_mask()
+    make_subsampled_volume()
+    # make_extrapolation_mask()
