@@ -2,6 +2,7 @@ import os
 import json
 import luigi
 
+import numpy as np
 import h5py
 import z5py
 from cluster_tools.downscaling import PainteraToBdvWorkflow
@@ -12,7 +13,7 @@ def check_max_id(path, key):
     with z5py.File(path) as f:
         attrs = f[key].attrs
         max_id = attrs['maxId']
-    if max_id > 32000:
+    if max_id > np.iinfo('int16').max:
         print("Max-id:", max_id, "does not fit int16")
         raise RuntimeError("Uint16 overflow")
     else:

@@ -6,7 +6,7 @@ import z5py
 from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit, postprocess
 from paintera_tools import set_default_shebang as set_ptools_shebang
-from .to_bdv import to_bdv
+from .to_bdv import to_bdv, check_max_id
 from .map_segmentation_ids import map_segmentation_ids
 from ..default_config import write_default_global_config, get_default_shebang
 from ..files import get_postprocess_dict
@@ -73,15 +73,20 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     tmp_key = 'seg'
     tmp_key0 = os.path.join(tmp_key, 's0')
 
+    # set correct shebang for paintera tools
+    set_ptools_shebang(get_default_shebang())
+
     # run post-processing if specified for this segmentation name
     pp_dict = get_postprocess_dict()
     run_postprocessing = name in pp_dict
-
     if run_postprocessing:
         pp_config = pp_dict[name]
         boundary_path = pp_config['boundary_path']
         boundary_key = pp_config['boundary_key']
-        min_segment_size = pp_config['min_segment_size']
+
+        min_segment_size = pp_config.get('min_segment_size', None)
+        max_segment_number = pp_config.get('max_segment_number', None)
+
         label_segmentation = pp_config['label_segmentation']
         tmp_postprocess = os.path.join(tmp_folder, 'postprocess_paintera')
         postprocess(paintera_path, paintera_key,
@@ -89,15 +94,19 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
                     tmp_folder=tmp_postprocess,
                     target=target, max_jobs=max_jobs,
                     n_threads=16, size_threshold=min_segment_size,
-                    label=label_segmentation)
+                    target_number=max_segment_number,
+                    label=label_segmentation,
+                    output_path=tmp_path, output_key=tmp_key0)
 
-    # set correct shebang for paintera tools
-    set_ptools_shebang(get_default_shebang())
+    else:
+        # NOTE map_to_background is needed for cilia, need some way to enable it automatically
+        # export segmentation from paintera commit for all scales
+        serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
+                              max_jobs, target, relabel_output=True)  # ,  map_to_background=[1])
 
-    # NOTE map_to_background is needed for cilia, nee some way to enable it automatically
-    # export segmentation from paintera commit for all scales
-    serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
-                          max_jobs, target, relabel_output=True)  # ,  map_to_background=[1])
+    # check for overflow
+    print("Check max-id @", tmp_path, tmp_key0)
+    check_max_id(tmp_path, tmp_key0)
 
     # downscale the segemntation
     scale_factors = get_scale_factors(paintera_path, paintera_key)
