@@ -58,16 +58,24 @@ def update_table(name, seg_dict, folder, new_folder,
 def update_tables(folder, new_folder, names_to_update, target, max_jobs):
     segmentations = get_segmentations()
 
+    # first copy all tables that just need to be copied
     for name, seg in segmentations.items():
         has_table = seg.get('has_tables', False) or 'table_update_function' in seg
-        if name in names_to_update:
-            if not has_table:
-                raise RuntimeError("Segmentation %s does not have a table:" % name)
-            update_table(name, seg, folder, new_folder,
-                         target, max_jobs)
-        else:
-            if has_table:
-                copy_tables(folder, new_folder, name)
+        needs_update = name in names_to_update
+        if not has_table or needs_update:
+            continue
+        copy_tables(folder, new_folder, name)
+
+    # now update all tables that need to be updated
+    for name, seg in segmentations.items():
+        has_table = seg.get('has_tables', False) or 'table_update_function' in seg
+        needs_update = name in names_to_update
+        if not needs_update:
+            continue
+        if needs_update and not has_table:
+            raise RuntimeError("Segmentation %s does not have a table:" % name)
+        update_table(name, seg, folder, new_folder,
+                     target, max_jobs)
 
 
 # TODO check for errors

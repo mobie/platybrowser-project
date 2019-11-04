@@ -60,7 +60,6 @@ def correct_intensities_test(target='local', max_jobs=32):
                          target=target, max_jobs=max_jobs)
 
 
-# FIXME scale 0 is damaged in the h5 file !
 def correct_intensities(target='slurm', max_jobs=250):
     raw_path = '../data/rawdata/sbem-6dpf-1-whole-raw.h5'
     tmp_folder = './tmp_intensity_correction'
@@ -185,6 +184,6 @@ def make_extrapolation_mask():
 
 
 if __name__ == '__main__':
-    # correct_intensities('slurm', 125)
-    make_subsampled_volume()
+    correct_intensities('local', 1)
+    # make_subsampled_volume()
     # make_extrapolation_mask()

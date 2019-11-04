@@ -50,9 +50,9 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                           tmp_folder, target)
 
     # make table with gene mapping via VCs
-    vc_vol_path = os.path.join('segmentations', 'prospr-6dpf-1-whole-virtual-cells-labels.xml')
-    vc_vol_path = get_h5_path_from_xml(vc_vol_path, return_absolute_path=True)
-    vc_expression_path = os.path.join('tables', 'prospr-6dpf-1-whole-virtual-cells-labels', 'profile_clust_curated.csv')
+    vc_vol_path = get_seg_path(folder, 'prospr-6dpf-1-whole-virtual-cells-labels', 't00000/s00/0/cells')
+    vc_expression_path = os.path.join(folder, 'tables',
+                                      'prospr-6dpf-1-whole-virtual-cells-labels', 'profile_clust_curated.csv')
     med_expression_path = gene_out
     vc_out = os.path.join(table_folder, 'vc_assignments.csv')
     vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
