@@ -6,3 +6,4 @@ data/dev-*
 *.tif
 *.swp
 software
+*.zip

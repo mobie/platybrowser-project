@@ -1,0 +1,30 @@
+(Transform "SimilarityTransform")
+(NumberOfParameters 7)
+(TransformParameters -0.005155 -0.003504 0.004710 0.005581 0.012887 0.005637 1.069388)
+(InitialTransformParametersFileName "/Users/tischer/Desktop/9.9.9/transformations/TransformParameters.Similarity.0.0.0.txt")
+(HowToCombineTransforms "Compose")
+
+// Image specific
+(FixedImageDimension 3)
+(MovingImageDimension 3)
+(FixedInternalImagePixelType "float")
+(MovingInternalImagePixelType "float")
+(Size 500 471 519)
+(Index 0 0 0)
+(Spacing 0.0005500002 0.0005500002 0.0005501931)
+(Origin 0.0000000000 0.0000000000 0.0000000000)
+(Direction 1.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000)
+(UseDirectionCosines "false")
+
+// SimilarityTransform specific
+(CenterOfRotationPoint 0.0815426140 0.1434373964 0.0602607405)
+
+// ResampleInterpolator specific
+(ResampleInterpolator "FinalLinearInterpolator")
+
+// Resampler specific
+(Resampler "DefaultResampler")
+(DefaultPixelValue 0.000000)
+(ResultImageFormat "mhd")
+(ResultImagePixelType "unsigned char")
+(CompressResultImage "false")
