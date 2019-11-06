@@ -77,7 +77,7 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                       label_ids, tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
-    extrapol_mask = os.path.join(folder, 'segmentations', 'sbem-6dpf-mask-extrapolated.xml')
+    extrapol_mask = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-mask-extrapolated.xml')
     extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
     extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
     extrapolated_intensities(seg_path, 't00000/s00/3/cells',
