@@ -1,7 +1,7 @@
 import os
 import h5py
 
-from .base_attributes import base_attributes, propagate_attributes
+from .base_attributes import base_attributes, propagate_attributes, write_additional_table_file
 from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
@@ -84,6 +84,8 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                              extrapol_mask, 't00000/s00/0/cells',
                              extrapol_out, tmp_folder, target, max_jobs)
 
+    write_additional_table_file(table_folder)
+
 
 def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
                         target='slurm', max_jobs=100):
@@ -117,6 +119,8 @@ def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
                              extrapol_mask, 't00000/s00/0/cells',
                              extrapol_out, tmp_folder, target, max_jobs)
 
+    write_additional_table_file(table_folder)
+
 
 def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
                       target='slurm', max_jobs=100):
@@ -144,3 +148,5 @@ def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
     cilia_morphology(seg_path, seg_key,
                      base_out, morpho_out, resolution,
                      tmp_folder, target=target, max_jobs=max_jobs)
+
+    write_additional_table_file(table_folder)
