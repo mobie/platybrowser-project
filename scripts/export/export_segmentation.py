@@ -99,10 +99,13 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
                     output_path=tmp_path, output_key=tmp_key0)
 
     else:
-        # NOTE map_to_background is needed for cilia, need some way to enable it automatically
+        if name == 'sbem-6dpf-1-whole-segmented-cilia-labels':
+            map_to_background = [1]
+        else:
+            map_to_background = None
         # export segmentation from paintera commit for all scales
         serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
-                              max_jobs, target, relabel_output=True)  # ,  map_to_background=[1])
+                              max_jobs, target, relabel_output=True, map_to_background=map_to_background)
 
     # check for overflow
     print("Check max-id @", tmp_path, tmp_key0)

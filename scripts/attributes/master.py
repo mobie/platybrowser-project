@@ -133,10 +133,11 @@ def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO when we change the cell segmentation, we also need to update this!
-    propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'),
-                         os.path.join(old_folder, 'tables', name, 'cell_id_mapping.csv'),
-                         os.path.join(table_folder, 'cell_id_mapping.csv'))
+    # TODO we need to propagate new cilia ids AND cell ids here
+    # FIXME this does not work yet
+    # propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'),
+    #                      os.path.join(old_folder, 'tables', name, 'cell_id_mapping.csv'),
+    #                      os.path.join(table_folder, 'cell_id_mapping.csv'))
 
     # add cilia specific attributes (length, diameter)
     morpho_out = os.path.join(table_folder, 'morphology.csv')
