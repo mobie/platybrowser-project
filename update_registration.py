@@ -18,7 +18,7 @@ from scripts.release_helper import add_version
 from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
 from scripts.default_config import get_default_shebang
 from scripts.attributes.base_attributes import base_attributes
-from scripts.attributes.genes import create_auxiliary_gene_file, gene_assignment_table
+from scripts.attributes.genes import create_auxiliary_gene_file, gene_assignment_table, vc_assignment_table
 from scripts.util import add_max_id
 
 
@@ -148,9 +148,18 @@ def apply_registration(input_folder, new_folder,
                       tmp_folder, target, max_jobs, interpolation='nearest')
 
 
+def remove_link(path):
+    if os.path.exists(path):
+        assert os.path.islink(path), path
+        print("Remove link to previous table:", path)
+        os.unlink(path)
+
+
+# TODO right now this can only be run once (then parts of it need to be commented out)
+# fix this, so that the function can be rerun properly, in case some intermediate part goes wrong
 def update_prospr(new_folder, input_folder, transformation_file, target, max_jobs):
 
-    # # update the auxiliaty gene volume
+    # update the auxiliaty gene volume
     image_folder = os.path.join(new_folder, 'images')
     aux_out_path = os.path.join(new_folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.h5')
     create_auxiliary_gene_file(image_folder, aux_out_path)
@@ -170,15 +179,11 @@ def update_prospr(new_folder, input_folder, transformation_file, target, max_job
     labels = table['label_id'].values.astype('uint64')
 
     tmp_folder = './tmp_registration'
-    out_path = os.path.join(table_folder, 'genes.csv')
-    # we need to remove the link to the old gene table, if it exists
-    if os.path.exists(out_path):
-        assert os.path.islink(out_path), out_path
-        print("Remove link to previous gene table:", out_path)
-        os.unlink(out_path)
-    gene_assignment_table(seg_path, aux_out_path, out_path,
+    gene_out_path = os.path.join(table_folder, 'genes.csv')
+    # # we need to remove the link to the old gene table, if it exists
+    remove_link(gene_out_path)
+    gene_assignment_table(seg_path, aux_out_path, gene_out_path,
                           labels, tmp_folder, target)
-    # TODO update the vc based gene assignments as well
 
     # register virtual cells
     vc_name = 'prospr-6dpf-1-whole-virtual-cells-labels'
@@ -186,18 +191,17 @@ def update_prospr(new_folder, input_folder, transformation_file, target, max_job
     inputs = [vc_path]
     outputs = [os.path.join(tmp_folder, 'outputs', vc_name)]
     output_folder = os.path.join(new_folder, 'segmentations')
+    tmp_folder_vc = os.path.join(tmp_folder, 'vc')
+    os.makedirs(tmp_folder_vc, exist_ok=True)
     registration_impl(inputs, outputs, transformation_file, output_folder,
-                      tmp_folder, target, max_jobs, interpolation='nearest',
+                      tmp_folder_vc, target, max_jobs, interpolation='nearest',
                       dtype='unsigned short')
 
     # compute the table for the virtual cells
     vc_table_folder = os.path.join(new_folder, 'tables', vc_name)
     os.makedirs(vc_table_folder, exist_ok=True)
     vc_table = os.path.join(vc_table_folder, 'default.csv')
-    if os.path.exists(vc_table):
-        assert os.path.islink(vc_table), vc_table
-        print("Remove link to previous gene table:", vc_table)
-        os.unlink(vc_table)
+    remove_link(vc_table)
     vc_path = os.path.join(new_folder, 'segmentations', vc_name + '.h5')
     key = 't00000/s00/0/cells'
     add_max_id(vc_path, key)
@@ -205,8 +209,20 @@ def update_prospr(new_folder, input_folder, transformation_file, target, max_job
     assert os.path.exists(vc_path), vc_path
     resolution = [.55, .55, .55]
     base_attributes(vc_path, key, vc_table, resolution,
-                    tmp_folder, target, max_jobs,
+                    tmp_folder_vc, target, max_jobs,
                     correct_anchors=False)
+
+    # update the vc based gene assignments as well
+    vc_vol_path = os.path.join(new_folder, 'segmentations',
+                               'prospr-6dpf-1-whole-virtual-cells-labels.h5')
+    vc_expression_path = os.path.join(new_folder, 'tables',
+                                      'prospr-6dpf-1-whole-virtual-cells-labels', 'profile_clust_curated.csv')
+    med_expression_path = gene_out_path
+    vc_assignment_out = os.path.join(table_folder, 'vc_assignments.csv')
+    remove_link(vc_assignment_out)
+    vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
+                        med_expression_path, vc_assignment_out,
+                        tmp_folder_vc, target)
 
 
 # we should encode the source prefix and the transformation file to be used
