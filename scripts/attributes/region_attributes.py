@@ -63,9 +63,8 @@ def muscle_attributes(muscle_path, key_muscle,
 
 def region_attributes(seg_path, region_out,
                       image_folder, segmentation_folder,
-                      label_ids, tmp_folder, target, max_jobs):
-
-    key_seg = 't00000/s00/2/cells'
+                      label_ids, tmp_folder, target, max_jobs,
+                      key_seg='t00000/s00/2/cells'):
     key_tissue = 't00000/s00/0/cells'
 
     # 1.) compute the mapping to carved regions
