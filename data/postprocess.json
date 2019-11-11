@@ -1,1 +1,1 @@
-{"sbem-6dpf-1-whole-segmented-cells-labels": {"boundary_path": "/g/kreshuk/data/arendt/platyneris_v1/data.n5", "boundary_key": "volumes/affinities/s1", "max_segment_number": 32700, "label_segmentation": true}}
+{"sbem-6dpf-1-whole-segmented-cells-labels": {"boundary_path": "/g/kreshuk/data/arendt/platyneris_v1/data.n5", "boundary_key": "volumes/affinities/s1", "max_segment_number": 32700, "label_segmentation": false}}
