@@ -6,6 +6,7 @@ import z5py
 from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit, postprocess
 from paintera_tools import set_default_shebang as set_ptools_shebang
+from paintera_tools import set_default_block_shape as set_ptools_block_shape
 from .to_bdv import to_bdv, check_max_id
 from .map_segmentation_ids import map_segmentation_ids
 from ..default_config import write_default_global_config, get_default_shebang
@@ -73,8 +74,16 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     tmp_key = 'seg'
     tmp_key0 = os.path.join(tmp_key, 's0')
 
-    # set correct shebang for paintera tools
+    # we need to have the same processing block shape
+    # as the paintera labels chunk size, otherwise we
+    # will run into issues for label multisets
+    with z5py.File(paintera_path, 'r') as f:
+        ds = f[os.path.join(paintera_key, 'data', 's0')]
+        chunks = ds.chunks
+
+    # set correct shebang and block shape for paintera tools
     set_ptools_shebang(get_default_shebang())
+    set_ptools_block_shape(chunks)
 
     # run post-processing if specified for this segmentation name
     pp_dict = get_postprocess_dict()

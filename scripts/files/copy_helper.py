@@ -30,7 +30,7 @@ def copy_tables(src_folder, dst_folder, name):
         if not os.path.exists(dst_file):
             os.symlink(rel_path, dst_file)
     # write the txt file for additional tables
-    write_additional_table_file(dst_folder)
+    write_additional_table_file(table_out)
 
 
 def copy_segmentation(src_folder, dst_folder, name):
