@@ -5,6 +5,23 @@ from .sources import get_image_names, get_segmentation_names, get_segmentations
 from ..attributes.base_attributes import write_additional_table_file
 
 
+def make_squashed_link(src_file, dst_file, override=False):
+
+    if os.path.exists(dst_file):
+        if override and os.path.islink(dst_file):
+            os.unlink(dst_file)
+        elif override and not os.path.islink(dst_file):
+            raise RuntimeError("Cannot override an actual file!")
+        elif not override:
+            return
+
+    if os.path.islink(src_file):
+        src_file = os.path.realpath(src_file)
+    dst_folder = os.path.split(dst_file)[0]
+    rel_path = os.path.relpath(src_file, dst_folder)
+    os.symlink(rel_path, dst_file)
+
+
 def copy_file(xml_in, xml_out):
     h5path = get_h5_path_from_xml(xml_in, return_absolute_path=True)
     xml_dir = os.path.split(xml_out)[0]
@@ -26,9 +43,11 @@ def copy_tables(src_folder, dst_folder, name):
         src_file = os.path.join(table_in, ff)
         dst_file = os.path.join(table_out, ff)
 
-        rel_path = os.path.relpath(src_file, table_out)
-        if not os.path.exists(dst_file):
-            os.symlink(rel_path, dst_file)
+        make_squashed_link(src_file, dst_file)
+
+        # rel_path = os.path.relpath(src_file, table_out)
+        # if not os.path.exists(dst_file):
+        #     os.symlink(rel_path, dst_file)
     # write the txt file for additional tables
     write_additional_table_file(table_out)
 
