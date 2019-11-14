@@ -47,6 +47,7 @@ def eval_seg(path, key, table):
     print("Total number of annotations:", tot)
 
 
+# TODO check the baseline segmentations; right now all results are the same !
 def eval_baselines():
     path = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation',
                         'baseline_cell_segmentations.h5')

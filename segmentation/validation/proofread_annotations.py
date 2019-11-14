@@ -16,14 +16,25 @@ def proofread(orientation, slice_id):
            orientation, slice_id, proj_folder)
 
 
+def export_slices(orientation, slice_ids):
+    out_path = '../../data/rawdata/evaluation/validation_annotations.h5'
+    for slice_id in slice_ids:
+        out_key = '%s/%i' % (orientation, slice_id)
+        project_folder = 'project_folders/proofread_%s_%i' % (orientation, slice_id)
+        export_refined(project_folder, out_path, out_key)
+
+
 # orientation xy has slices:
 # 1000, 2000, 4000, 7000
 # orientation xz has slices:
 # 4000, 5998, 8662, 9328
 if __name__ == '__main__':
-    orientation = 'xz'
+
+    orientation = 'xy'
     slice_id = 4000
     proofread(orientation, slice_id)
-    # done:
-    # xy: 1000, 2000, 4000, 7000
-    # xz: 4000 (partially)
+
+    # slices_xy = [1000, 2000, 4000, 7000]
+    # slices_xz = [4000, 5998, 8662, 9328]
+    # export_slices('xy', slices_xy)
+    # export_slices('xz', slices_xz)
