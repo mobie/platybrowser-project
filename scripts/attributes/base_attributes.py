@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 
 import luigi
+import nifty.tools as nt
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.morphology import RegionCentersWorkflow
 from .util import write_csv
@@ -188,31 +189,40 @@ def write_additional_table_file(table_folder):
             f.write(name + '\n')
 
 
-# TODO this is un-tested !!!
-def propagate_attributes(id_mapping_path, old_table_path, output_path):
-    """ Propagate all attributes to new ids. (column label id)
+# TODO implement merge rules
+def propagate_attributes(id_mapping_path, table_path, output_path,
+                         column_name, merge_rule=None, override=False):
+    """ Propagate id column to new ids.
     """
     # if the output already exists, we assume that the propagation
     # was already done and we just continue
-    if os.path.exists(output_path):
+    if os.path.exists(output_path) and override:
+        if os.path.islink(output_path):
+            os.unlink(output_path)
+        else:
+            raise RuntimeError("Cannot override file.")
+    elif os.path.exists(output_path) and not override:
         return
 
+    print(id_mapping_path)
     with open(id_mapping_path, 'r') as f:
         id_mapping = json.load(f)
     id_mapping = {int(k): v for k, v in id_mapping.items()}
 
-    n_new_ids = max(id_mapping.keys()) + 1
+    assert os.path.exists(table_path), table_path
+    table = pd.read_csv(table_path, sep='\t')
+    id_col = table[column_name].values
+    id_col[np.isnan(id_col)] = 0
+    id_col = id_col.astype('uint32')
 
-    table = pd.read_csv(old_table_path, sep='\t')
-    col_names = table.columns.values
-    table = table.values
+    keys = list(id_mapping.keys())
+    id_col = nt.takeDict(id_mapping, id_col)
 
-    out_table = np.zeros((n_new_ids, table.shape[1]))
+    # TODO need to implement merge rules
+    # to update values for multiple ids that were mapped to the same value
+    # (this is necessary if we update a label_id column, for which the values should be unique)
+    # new_ids, new_id_counts = np.unique(id_col, return_counts=True)
+    # merge_ids = new_ids[]
 
-    # can be vectorized
-    for new_id, old_id in id_mapping.items():
-        out_table[new_id, 0] = new_id
-        out_table[new_id, 1:] = table[old_id, 1:]
-
-    out_table = pd.DataFrame(out_table, name=col_names)
-    out_table.to_csv(output_path, index=False, sep='\t')
+    table[column_name] = id_col
+    table.to_csv(output_path, index=False, sep='\t')

@@ -9,6 +9,10 @@ from elf.io import open_file
 from .eval_cells import get_bounding_box
 from .evaluate_annotations import evaluate_annotations
 
+DEFAULT_ANNOTATION_PATH = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data',
+                                       'rawdata/evaluation/validation_annotations.h5')
+DEFAULT_RAW_PATH = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.h5'
+
 
 def compute_masks(seg, labels, ignore_seg_ids):
 
@@ -33,8 +37,8 @@ def compute_masks(seg, labels, ignore_seg_ids):
 def refine(seg_path, seg_key, ignore_seg_ids,
            orientation, slice_id,
            project_folder,
-           annotation_path='/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation/validation_annotations.h5',
-           raw_path='/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.h5',
+           annotation_path=DEFAULT_ANNOTATION_PATH,
+           raw_path=DEFAULT_RAW_PATH,
            raw_key='t00000/s00/1/cells'):
 
     label_path = os.path.join(project_folder, 'labels.npy')
@@ -48,6 +52,7 @@ def refine(seg_path, seg_key, ignore_seg_ids,
         fm = np.load(fm_path) if os.path.exists(fm_path) else None
         fs = np.load(fs_path) if os.path.exists(fs_path) else None
     else:
+        print("Start new project")
         labels, fm, fs = None, None, None
 
     with open_file(annotation_path, 'r') as fval:

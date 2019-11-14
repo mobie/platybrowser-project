@@ -84,6 +84,12 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                              extrapol_mask, 't00000/s00/0/cells',
                              extrapol_out, tmp_folder, target, max_jobs)
 
+    # update the cell id column of the cilia cell_id_mapping table
+    cilia_name = 'sbem-6dpf-1-whole-segmented-cilia-labels'
+    propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cells-labels.json'),
+                         os.path.join(old_folder, 'tables', cilia_name, 'cell_mapping.csv'),
+                         os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv'), 'cell_id')
+
     write_additional_table_file(table_folder)
 
 
@@ -137,16 +143,15 @@ def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO we need to propagate new cilia ids AND cell ids here
-    # FIXME this does not work yet
-    # propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'),
-    #                      os.path.join(old_folder, 'tables', name, 'cell_id_mapping.csv'),
-    #                      os.path.join(table_folder, 'cell_id_mapping.csv'))
-
     # add cilia specific attributes (length, diameter)
     morpho_out = os.path.join(table_folder, 'morphology.csv')
     cilia_morphology(seg_path, seg_key,
                      base_out, morpho_out, resolution,
                      tmp_folder, target=target, max_jobs=max_jobs)
+
+    # update the label id column of the cell_id_mapping table
+    propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'),
+                         os.path.join(old_folder, 'tables', name, 'cell_mapping.csv'),
+                         os.path.join(table_folder, 'cell_mapping.csv'), 'label_id')
 
     write_additional_table_file(table_folder)
