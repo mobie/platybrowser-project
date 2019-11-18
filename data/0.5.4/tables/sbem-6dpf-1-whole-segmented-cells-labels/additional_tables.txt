@@ -1,6 +1,6 @@
 cells_to_nuclei.csv
-extrapolated_intensity_correction.csv
 genes.csv
+missing_muscle_candidates.csv
 morphology.csv
+muscle.csv
 regions.csv
-vc_assignments.csv
