@@ -18,9 +18,6 @@ def write_region_table(label_ids, label_list, semantic_mapping_list, out_path):
     table = np.zeros((n_labels, n_cols))
     table[:, 0] = label_ids
 
-    # print()
-    # print()
-    # print()
     col_offset = 1
     for labels, mapping in zip(label_list, semantic_mapping_list):
         for map_name, map_ids in mapping.items():
@@ -29,9 +26,6 @@ def write_region_table(label_ids, label_list, semantic_mapping_list, out_path):
             # print("Number of mapped:", with_label.sum())
             table[:, col_offset] = with_label
             col_offset += 1
-    # print()
-    # print()
-    # print()
 
     write_csv(out_path, table, col_names)
 

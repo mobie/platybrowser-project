@@ -90,6 +90,9 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                          os.path.join(old_folder, 'tables', cilia_name, 'cell_mapping.csv'),
                          os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv'), 'cell_id')
 
+    # TODO
+    # update the ganglia id mapping table
+
     write_additional_table_file(table_folder)
 
 

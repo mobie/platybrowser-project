@@ -9,7 +9,7 @@ from paintera_tools import set_default_shebang as set_ptools_shebang
 from paintera_tools import set_default_block_shape as set_ptools_block_shape
 from .to_bdv import to_bdv, check_max_id
 from .map_segmentation_ids import map_segmentation_ids
-from ..default_config import write_default_global_config, get_default_shebang
+from ..default_config import write_default_global_config, get_default_shebang, get_default_block_shape
 from ..files import get_postprocess_dict
 
 
@@ -83,7 +83,8 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
 
     # set correct shebang and block shape for paintera tools
     set_ptools_shebang(get_default_shebang())
-    set_ptools_block_shape(chunks)
+    # set_ptools_block_shape(chunks)
+    set_ptools_block_shape(get_default_block_shape())
 
     # run post-processing if specified for this segmentation name
     pp_dict = get_postprocess_dict()
