@@ -95,15 +95,17 @@ def make_overlap_table():
     assert len(reg_table) == len(ganglia_labels)
 
     have_ganglia = ganglia_labels > 0
-    muscle_ids = reg_table['muscle'].values > 0
-    muscle_ids = np.logical_and(muscle_ids, have_ganglia)
-    print("Muscles in ganglia:", muscle_ids.sum())
-    ganglia_labels[muscle_ids] = n_ganglia
 
     head_ids = reg_table['head'].values > 0
     head_ids = np.logical_and(head_ids, ~have_ganglia)
     print("Rest of head:", head_ids.sum())
-    ganglia_labels[head_ids] = n_ganglia + 1
+    ganglia_labels[head_ids] = n_ganglia
+
+    have_labels = ganglia_labels > 0
+    muscle_ids = reg_table['muscle'].values > 0
+    muscle_ids = np.logical_and(muscle_ids, have_labels)
+    print("Muscles in labels:", muscle_ids.sum())
+    ganglia_labels[muscle_ids] = 0
 
     table = np.zeros((n_labels, n_cols))
     table[:, 0] = np.arange(n_labels)
