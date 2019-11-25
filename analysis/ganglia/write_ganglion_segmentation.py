@@ -88,6 +88,23 @@ def make_overlap_table():
     col_names = ['label_id', 'ganglion_id']
     n_cols = len(col_names)
 
+    reg_table = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.5',
+                             'tables/sbem-6dpf-1-whole-segmented-cells-labels/regions.csv')
+    reg_table = pd.read_csv(reg_table, sep='\t')
+    print(reg_table.columns)
+    assert len(reg_table) == len(ganglia_labels)
+
+    have_ganglia = ganglia_labels > 0
+    muscle_ids = reg_table['muscle'].values > 0
+    muscle_ids = np.logical_and(muscle_ids, have_ganglia)
+    print("Muscles in ganglia:", muscle_ids.sum())
+    ganglia_labels[muscle_ids] = n_ganglia
+
+    head_ids = reg_table['head'].values > 0
+    head_ids = np.logical_and(head_ids, ~have_ganglia)
+    print("Rest of head:", head_ids.sum())
+    ganglia_labels[head_ids] = n_ganglia + 1
+
     table = np.zeros((n_labels, n_cols))
     table[:, 0] = np.arange(n_labels)
     table[:, 1] = ganglia_labels
