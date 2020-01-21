@@ -89,7 +89,7 @@ def region_attributes(seg_path, region_out,
     label_list.append(muscle_labels)
     semantic_mapping_list.append(semantic_muscle)
 
-    # map all the segmented prospr regions
+    # 3.) map all the segmented prospr regions
     region_paths = glob.glob(os.path.join(image_folder, "prospr-6dpf-1-whole-segmented-*"))
     region_names = [os.path.splitext(pp.split('-')[-1])[0].lower() for pp in region_paths]
     region_paths = [get_h5_path_from_xml(rp, return_absolute_path=True)
@@ -102,7 +102,15 @@ def region_attributes(seg_path, region_out,
         label_list.append(rlabels)
         semantic_mapping_list.append({rname: [255]})
 
-    # 3.) merge the mappings and write new table
+    # 4.) map the midgut segmentation
+    midgut_path = os.path.join(segmentation_folder, 'sbem-6dpf-1-whole-segmented-midgut.xml')
+    midgut_path = get_h5_path_from_xml(midgut_path, return_absolute_path=True)
+    midgut_labels = node_labels(seg_path, key_seg, midgut_path, key_tissue,
+                                'midgut', tmp_folder, target, max_jobs)
+    label_list.append(midgut_labels)
+    semantic_mapping_list.append({'midgut': [255]})
+
+    # 5.) merge the mappings and write new table
     write_region_table(label_ids, label_list, semantic_mapping_list, region_out)
 
 
