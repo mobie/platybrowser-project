@@ -87,6 +87,35 @@ def filter_table_region(table, region_path, regions=('empty', 'yolk', 'neuropil'
 
     return table
 
+def run_all_filters(table, min_size, max_size, max_bb, mapping_path, region_mapping_path):
+
+    # remove zero label if present
+    table = table.loc[table['label_id'] != 0, :]
+
+    # filter to only keep cells with assigned nuclei)
+    if mapping_path is not None:
+        log("Have mapping path %s" % mapping_path)
+        table = filter_table_from_mapping(table, mapping_path)
+        log("Number of labels after filter with mapping: %i" % table.shape[0])
+
+    # filter to exclude certain regions
+    if region_mapping_path is not None:
+        log("Have region mapping path %s" % region_mapping_path)
+        table = filter_table_region(table, region_mapping_path)
+        log("Number of labels after region filter: %i" % table.shape[0])
+
+    # filter by size of object (no. pixels)
+    if min_size is not None or max_size is not None:
+        table = filter_table(table, min_size, max_size)
+        log("Number of labels after size filter: %i" % table.shape[0])
+
+    # filter by bounding box size
+    if max_bb is not None:
+        table = filter_table_bb(table, max_bb)
+        log("Number of labels after bounding box size filter %i" % table.shape[0])
+
+    return table
+
 
 def load_data(ds, row, scale):
     # compute the bounding box from the row information
@@ -364,18 +393,8 @@ def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path
     chromatin_key_full = 't00000/s00/0/cells'
     chromatin_key = 't00000/s00/%i/cells' % chromatin_scale
 
-    # remove zero label if it exists
-    table = table.loc[table['label_id'] != 0, :]
-
-    # filter by size
-    if min_size is not None or max_size is not None:
-        table = filter_table(table, min_size, max_size)
-        log("Number of labels after size filter: %i" % table.shape[0])
-
-    # filter by bounding box size
-    if max_bb is not None:
-        table = filter_table_bb(table, max_bb)
-        log("Number of labels after bounding box size filter %i" % table.shape[0])
+    # filter table
+    table = run_all_filters(table, min_size, max_size, max_bb, None, None)
 
     # get scale factors
     if raw_path is not None:
@@ -447,30 +466,8 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
     nucleus_seg_key_full = 't00000/s00/0/cells'
     nucleus_seg_key = 't00000/s00/%i/cells' % nucleus_seg_scale
 
-    # remove zero label if it exists
-    table = table.loc[table['label_id'] != 0, :]
-
-    # filter to only keep cells with assigned nuclei)
-    if mapping_path is not None:
-        log("Have mapping path %s" % mapping_path)
-        table = filter_table_from_mapping(table, mapping_path)
-        log("Number of labels after filter with mapping: %i" % table.shape[0])
-
-    # filter to exclude certain regions
-    if region_mapping_path is not None:
-        log("Have region mapping path %s" % region_mapping_path)
-        table = filter_table_region(table, region_mapping_path)
-        log("Number of labels after region filter: %i" % table.shape[0])
-
-    # filter by size of object (no. pixels)
-    if min_size is not None or max_size is not None:
-        table = filter_table(table, min_size, max_size)
-        log("Number of labels after size filter: %i" % table.shape[0])
-
-    # filter by bounding box size
-    if max_bb is not None:
-        table = filter_table_bb(table, max_bb)
-        log("Number of labels after bounding box size filter %i" % table.shape[0])
+    # filter table
+    table = run_all_filters(table, min_size, max_size, max_bb, mapping_path, region_mapping_path)
 
     # get scale factors
     if raw_path is not None:
@@ -491,7 +488,7 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
         scale_factor_nucleus = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
                                                 nucleus_resolution)
         f_nucleus = h5py.File(nucleus_segmentation_path, 'r')
-        ds_nucleus = f_exclude[nucleus_seg_key]
+        ds_nucleus = f_nucleus[nucleus_seg_key]
     else:
         log("Don't have exclude path; don't exclude nucleus area for intensity measures")
         scale_factor_nucleus = None
