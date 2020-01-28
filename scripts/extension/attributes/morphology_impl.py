@@ -10,10 +10,10 @@ from tmp.numpy_utils import set_numpy_threads
 set_numpy_threads(1)
 import numpy as np
 
+import vigra
 import h5py
 import pandas as pd
 from skimage.measure import regionprops, marching_cubes_lewiner, mesh_surface_area
-from skimage.transform import resize
 from skimage.util import pad
 from scipy.ndimage.morphology import distance_transform_edt
 from mahotas.features import haralick
@@ -92,7 +92,7 @@ def run_all_filters(table, min_size, max_size, max_bb, mapping_path, region_mapp
     # remove zero label if present
     table = table.loc[table['label_id'] != 0, :]
 
-    # filter to only keep cells with assigned nuclei)
+    # filter to only keep cells with assigned nuclei
     if mapping_path is not None:
         log("Have mapping path %s" % mapping_path)
         table = filter_table_from_mapping(table, mapping_path)
@@ -186,7 +186,7 @@ def morphology_row_features(mask, scale):
     # Should run from zero to one
     sphericity = (36 * np.pi * (float(volume_in_microns) ** 2)) / (float(surface_area) ** 3)
 
-    # max radius - max distance from pixel to outside
+    # max radius = max distance from pixel to outside
     edt = distance_transform_edt(mask, sampling=scale, return_distances=True)
     max_radius = np.max(edt)
 
@@ -214,6 +214,14 @@ def radial_intensity_row_features(raw, mask, scale, stops=(0.0, 0.25, 0.5, 0.75,
 
     edt = distance_transform_edt(mask, sampling=scale, return_distances=True)
     edt = edt / np.max(edt)
+
+
+    #TESTING
+    # from skimage.io import imsave
+    # imsave('Z:\\Kimberly\\test_edt.tif', edt.astype('uint8'))
+    # import napari
+    # with napari.gui_qt():
+    #     viewer = napari.view_image(edt)
 
     bottoms = stops[0:len(stops) - 1]
     tops = stops[1:]
@@ -276,10 +284,11 @@ def chromatin_row_features(chromatin, edt, raw, scale_chromatin):
     if raw is not None:
 
         # resize the chromatin masks if not same size as raw
+        chromatin_type = chromatin.dtype
         if chromatin.shape != raw.shape:
-            chromatin = resize(chromatin, raw.shape,
-                               order=0, mode='reflect',
-                               anti_aliasing=True, preserve_range=True).astype('bool')
+            chromatin = chromatin.astype('float32')
+            chromatin = vigra.sampling.resize(chromatin, shape=raw.shape, order=0)
+            chromatin = chromatin.astype(chromatin_type)
 
         result += intensity_row_features(raw, chromatin)
         result += texture_row_features(raw, chromatin)
@@ -318,12 +327,13 @@ def morphology_features_for_label_range(table, ds, ds_raw,
 
         if ds_exclude is not None:
             exclude = load_data(ds_exclude, row, scale_factor_exclude)
+            exclude_type = exclude.dtype
 
             # resize to fit seg
             if exclude.shape != seg_mask.shape:
-                exclude = resize(exclude, seg_mask.shape,
-                                 order=0, mode='reflect',
-                                 anti_aliasing=True, preserve_range=True).astype('bool')
+                exclude = exclude.astype('float32')
+                exclude = vigra.sampling.resize(exclude, shape=seg_mask.shape, order=0)
+                exclude = exclude.astype(exclude_type)
 
             # binary for correct nucleus
             exclude = exclude == int(row.nucleus_id)
@@ -331,14 +341,23 @@ def morphology_features_for_label_range(table, ds, ds_raw,
             # remove nucleus area form seg_mask
             seg_mask[exclude] = False
 
+            # import napari
+            # with napari.gui_qt():
+            #     viewer = napari.view_image(exclude, name='nucleus_resized')
+            #     viewer.add_image(seg_mask, name='cell')
+
         # compute the intensity features from raw data and segmentation mask
         if ds_raw is not None:
             raw = load_data(ds_raw, row, scale_factor_raw)
+
             # resize the segmentation mask if it does not fit the raw data
+            seg_mask_type = seg_mask.dtype
+
             if seg_mask.shape != raw.shape:
-                seg_mask = resize(seg_mask, raw.shape,
-                                  order=0, mode='reflect',
-                                  anti_aliasing=True, preserve_range=True).astype('bool')
+                seg_mask = seg_mask.astype('float32')
+                seg_mask = vigra.sampling.resize(seg_mask, shape=raw.shape, order=0)
+                seg_mask = seg_mask.astype(seg_mask_type)
+
             result += intensity_row_features(raw, seg_mask)
             result += radial_intensity_row_features(raw, seg_mask, scale_factor_raw)
             result += texture_row_features(raw, seg_mask)
@@ -407,8 +426,7 @@ def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path
         ds_raw = f_raw[raw_key]
     else:
         log("Don't have raw path; do not compute intensity features")
-        scale_factor_raw = None
-        f_raw = ds_raw = None
+        scale_factor_raw = f_raw = ds_raw = None
 
     if chromatin_path is not None:
         log("Have chromatin path; compute chromatin features")
@@ -418,8 +436,7 @@ def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path
         ds_chromatin = f_chromatin[chromatin_key]
     else:
         log("Don't have chromatin path; do not compute chromatin features")
-        scale_factor_chromatin = None
-        f_chromatin = ds_chromatin = None
+        scale_factor_chromatin = f_chromatin = ds_chromatin = None
 
     log("Computing morphology features")
     scale_factor_nucleus_seg = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
@@ -432,10 +449,10 @@ def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path
             log("Computing features from label-id %i to %i" % (label_a, label_b))
             stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
                                                              ds_chromatin,
-                                                             ds_exclude,
-                                                             scale_factor_seg, scale_factor_raw,
+                                                             None,
+                                                             scale_factor_nucleus_seg, scale_factor_raw,
                                                              scale_factor_chromatin,
-                                                             scale_factor_exclude,
+                                                             None,
                                                              label_a, label_b))
 
     for var in f_raw, f_chromatin:
@@ -480,8 +497,7 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
         ds_raw = f_raw[raw_key]
     else:
         log("Don't have raw path; do not compute intensity features")
-        scale_factor_raw = None
-        f_raw = ds_raw = None
+        scale_factor_raw = f_raw = ds_raw = None
 
     if nucleus_segmentation_path is not None:
         log("Have nucleus path; exclude nucleus for intensity measures")
@@ -491,11 +507,10 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
         ds_nucleus = f_nucleus[nucleus_seg_key]
     else:
         log("Don't have exclude path; don't exclude nucleus area for intensity measures")
-        scale_factor_nucleus = None
-        f_nucleus = ds_nucleus = None
+        scale_factor_nucleus = f_nucleus = ds_nucleus = None
 
     log("Computing morphology features")
-    cell_seg_scale_factor = get_scale_factor(cell_segmentation_path, cell_seg_key_full, cell_seg_key, cell_resolution)
+    scale_factor_cell_seg = get_scale_factor(cell_segmentation_path, cell_seg_key_full, cell_seg_key, cell_resolution)
     with h5py.File(cell_segmentation_path, 'r') as f:
         ds = f[cell_seg_key]
 
@@ -503,11 +518,11 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
         for label_a, label_b in zip(label_starts, label_stops):
             log("Computing features from label-id %i to %i" % (label_a, label_b))
             stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
-                                                             ds_chromatin,
-                                                             ds_exclude,
-                                                             scale_factor_seg, scale_factor_raw,
-                                                             scale_factor_chromatin,
-                                                             scale_factor_exclude,
+                                                             None,
+                                                             ds_nucleus,
+                                                             scale_factor_cell_seg, scale_factor_raw,
+                                                             None,
+                                                             scale_factor_nucleus,
                                                              label_a, label_b))
 
     for var in f_raw, f_nucleus:
