@@ -37,7 +37,6 @@ def get_scale_factor(path, key_full, key, resolution):
                                            shape)]
     return scale_factor
 
-
 def filter_table(table, min_size, max_size):
     if max_size is None:
         table = table.loc[table['n_pixels'] >= min_size, :]
@@ -98,6 +97,40 @@ def load_data(ds, row, scale):
     bb = tuple(slice(mi, ma) for mi, ma in zip(mins, maxs))
     # load the data from the bounding box
     return ds[bb]
+
+def generate_column_names (raw_path, chromatin_path):
+    columns = ['label_id']
+    morph_columns = ['shape_volume_in_microns', 'shape_extent', 'shape_equiv_diameter',
+                     'shape_major_axis', 'shape_minor_axis', 'shape_surface_area', 'shape_sphericity',
+                     'shape_max_radius']
+
+    columns += morph_columns
+
+    if raw_path is not None:
+        intensity_columns = ['intensity_mean', 'intensity_st_dev', 'intensity_median', 'intensity_iqr',
+                             'intensity_total']
+        texture_columns = ['texture_hara%s' % x for x in range(1, 14)]
+
+        columns += intensity_columns
+
+        # radial intensity columns
+        for val in [25, 50, 75, 100]:
+            columns += ['%s_%s' % (var, val) for var in intensity_columns]
+        columns += texture_columns
+
+    if chromatin_path is not None:
+        edt_columns = ['shape_edt_mean', 'shape_edt_stdev', 'shape_edt_median', 'shape_edt_iqr']
+        edt_columns += ['shape_percent_%s' % var for var in [25, 50, 75, 100]]
+
+        for phase in ['_het', '_eu']:
+            columns += [var + phase for var in morph_columns]
+            columns += [var + phase for var in edt_columns]
+
+            if raw_path is not None:
+                columns += [var + phase for var in intensity_columns]
+                columns += [var + phase for var in texture_columns]
+
+    return columns
 
 # @profile
 def morphology_row_features(mask, scale):
@@ -315,96 +348,6 @@ def morphology_features_for_label_range(table, ds, ds_raw,
         stats.append(result)
     return stats
 
-
-def compute_morphology_features(table, segmentation_path, raw_path,
-                                chromatin_path, exclude_nuc_path,
-                                seg_key, raw_key, chromatin_key,
-                                exclude_key,
-                                scale_factor_seg, scale_factor_raw,
-                                scale_factor_chromatin,
-                                scale_factor_exclude,
-                                label_starts, label_stops):
-    if raw_path != '':
-        assert raw_key is not None and scale_factor_raw is not None
-        f_raw = h5py.File(raw_path, 'r')
-        ds_raw = f_raw[raw_key]
-    else:
-        f_raw = ds_raw = None
-
-    if chromatin_path != '':
-        assert chromatin_key is not None and scale_factor_chromatin is not None
-        f_chromatin = h5py.File(chromatin_path, 'r')
-        ds_chromatin = f_chromatin[chromatin_key]
-    else:
-        f_chromatin = ds_chromatin = None
-
-    if exclude_nuc_path != '':
-        assert exclude_key is not None and scale_factor_exclude is not None
-        f_exclude = h5py.File(exclude_nuc_path, 'r')
-        ds_exclude = f_exclude[exclude_key]
-
-    else:
-        f_exclude = ds_exclude = None
-
-    with h5py.File(segmentation_path, 'r') as f:
-        ds = f[seg_key]
-
-        stats = []
-        for label_a, label_b in zip(label_starts, label_stops):
-            log("Computing features from label-id %i to %i" % (label_a, label_b))
-            stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
-                                                             ds_chromatin,
-                                                             ds_exclude,
-                                                             scale_factor_seg, scale_factor_raw,
-                                                             scale_factor_chromatin,
-                                                             scale_factor_exclude,
-                                                             label_a, label_b))
-    if f_raw is not None:
-        f_raw.close()
-
-    if f_chromatin is not None:
-        f_chromatin.close()
-
-    if f_exclude is not None:
-        f_exclude.close()
-
-    # convert to pandas table and add column names
-    stats = pd.DataFrame(stats)
-    columns = ['label_id']
-    morph_columns = ['shape_volume_in_microns', 'shape_extent', 'shape_equiv_diameter',
-                     'shape_major_axis', 'shape_minor_axis', 'shape_surface_area', 'shape_sphericity',
-                     'shape_max_radius']
-
-    columns += morph_columns
-
-    if raw_path != '':
-        intensity_columns = ['intensity_mean', 'intensity_st_dev', 'intensity_median', 'intensity_iqr',
-                             'intensity_total']
-        texture_columns = ['texture_hara%s' % x for x in range(1, 14)]
-
-        columns += intensity_columns
-        # radial intensity columns
-        for val in [25, 50, 75, 100]:
-            columns += ['%s_%s' % (var, val) for var in intensity_columns]
-        columns += texture_columns
-
-    if chromatin_path != '':
-        edt_columns = ['shape_edt_mean', 'shape_edt_stdev', 'shape_edt_median', 'shape_edt_iqr']
-        edt_columns += ['shape_percent_%s' % var for var in [25, 50, 75, 100]]
-
-        for phase in ['_het', '_eu']:
-            columns += [var + phase for var in morph_columns]
-            columns += [var + phase for var in edt_columns]
-
-            if raw_path != '':
-                columns += [var + phase for var in intensity_columns]
-                columns += [var + phase for var in texture_columns]
-
-    stats.columns = columns
-    return stats
-
-
-
 def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path,
                     table,
                     min_size, max_size,
@@ -421,28 +364,6 @@ def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path
     chromatin_key_full = 't00000/s00/0/cells'
     chromatin_key = 't00000/s00/%i/cells' % chromatin_scale
 
-    # get scale factors
-    scale_factor_nucleus_seg = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
-                                                nucleus_resolution)
-
-    if raw_path is not None:
-        log("Have raw path; compute intensity features")
-        # NOTE for now we can hard-code the resolution for the raw data here,
-        # but we might need to change this if we get additional dataset(s)
-        raw_resolution = [0.025, 0.01, 0.01]
-        scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
-    else:
-        log("Don't have raw path; do not compute intensity features")
-        scale_factor_raw = None
-
-    if chromatin_path is not None:
-        log("Have chromatin path; compute chromatin features")
-        scale_factor_chromatin = get_scale_factor(chromatin_path, chromatin_key_full, chromatin_key,
-                                                  chromatin_resolution)
-    else:
-        log("Don't have chromatin path; do not compute chromatin features")
-        scale_factor_chromatin = None
-
     # remove zero label if it exists
     table = table.loc[table['label_id'] != 0, :]
 
@@ -456,15 +377,56 @@ def morphology_impl_nucleus (nucleus_segmentation_path, raw_path, chromatin_path
         table = filter_table_bb(table, max_bb)
         log("Number of labels after bounding box size filter %i" % table.shape[0])
 
+    # get scale factors
+    if raw_path is not None:
+        log("Have raw path; compute intensity features")
+        # NOTE for now we can hard-code the resolution for the raw data here,
+        # but we might need to change this if we get additional dataset(s)
+        raw_resolution = [0.025, 0.01, 0.01]
+        scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
+        f_raw = h5py.File(raw_path, 'r')
+        ds_raw = f_raw[raw_key]
+    else:
+        log("Don't have raw path; do not compute intensity features")
+        scale_factor_raw = None
+        f_raw = ds_raw = None
+
+    if chromatin_path is not None:
+        log("Have chromatin path; compute chromatin features")
+        scale_factor_chromatin = get_scale_factor(chromatin_path, chromatin_key_full, chromatin_key,
+                                                  chromatin_resolution)
+        f_chromatin = h5py.File(chromatin_path, 'r')
+        ds_chromatin = f_chromatin[chromatin_key]
+    else:
+        log("Don't have chromatin path; do not compute chromatin features")
+        scale_factor_chromatin = None
+        f_chromatin = ds_chromatin = None
+
     log("Computing morphology features")
-    stats = compute_morphology_features(table, segmentation_path, raw_path,
-                                        chromatin_path, exclude_nuc_path,
-                                        seg_key, raw_key, chromatin_key,
-                                        exclude_key,
-                                        scale_factor_seg, scale_factor_raw,
-                                        scale_factor_chromatin,
-                                        scale_factor_exclude,
-                                        label_starts, label_stops)
+    scale_factor_nucleus_seg = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
+                                                nucleus_resolution)
+    with h5py.File(nucleus_segmentation_path, 'r') as f:
+        ds = f[nucleus_seg_key]
+
+        stats = []
+        for label_a, label_b in zip(label_starts, label_stops):
+            log("Computing features from label-id %i to %i" % (label_a, label_b))
+            stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
+                                                             ds_chromatin,
+                                                             ds_exclude,
+                                                             scale_factor_seg, scale_factor_raw,
+                                                             scale_factor_chromatin,
+                                                             scale_factor_exclude,
+                                                             label_a, label_b))
+
+    for var in f_raw, f_chromatin:
+        if var is not None:
+            var.close()
+
+    # convert to pandas table and add column names
+    stats = pd.DataFrame(stats)
+    stats.columns = generate_column_names(raw_path, chromatin_path)
+
     return stats
 
 def morphology_impl_cell (cell_segmentation_path, raw_path,
@@ -484,27 +446,6 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
     raw_key = 't00000/s00/%i/cells' % raw_scale
     nucleus_seg_key_full = 't00000/s00/0/cells'
     nucleus_seg_key = 't00000/s00/%i/cells' % nucleus_seg_scale
-
-    # get scale factors
-    cell_seg_scale_factor = get_scale_factor(cell_segmentation_path, cell_seg_key_full, cell_seg_key, cell_resolution)
-
-    if raw_path is not None:
-        log("Have raw path; compute intensity features")
-        # NOTE for now we can hard-code the resolution for the raw data here,
-        # but we might need to change this if we get additional dataset(s)
-        raw_resolution = [0.025, 0.01, 0.01]
-        scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
-    else:
-        log("Don't have raw path; do not compute intensity features")
-        scale_factor_raw = None
-
-    if nucleus_segmentation_path is not None:
-        log("Have nucleus path; exclude nucleus for intensity measures")
-        scale_factor_nucleus = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
-                                                nucleus_resolution)
-    else:
-        log("Don't have exclude path; don't exclude nucleus area for intensity measures")
-        scale_factor_nucleus = None
 
     # remove zero label if it exists
     table = table.loc[table['label_id'] != 0, :]
@@ -531,15 +472,55 @@ def morphology_impl_cell (cell_segmentation_path, raw_path,
         table = filter_table_bb(table, max_bb)
         log("Number of labels after bounding box size filter %i" % table.shape[0])
 
+    # get scale factors
+    if raw_path is not None:
+        log("Have raw path; compute intensity features")
+        # NOTE for now we can hard-code the resolution for the raw data here,
+        # but we might need to change this if we get additional dataset(s)
+        raw_resolution = [0.025, 0.01, 0.01]
+        scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
+        f_raw = h5py.File(raw_path, 'r')
+        ds_raw = f_raw[raw_key]
+    else:
+        log("Don't have raw path; do not compute intensity features")
+        scale_factor_raw = None
+        f_raw = ds_raw = None
+
+    if nucleus_segmentation_path is not None:
+        log("Have nucleus path; exclude nucleus for intensity measures")
+        scale_factor_nucleus = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
+                                                nucleus_resolution)
+        f_nucleus = h5py.File(nucleus_segmentation_path, 'r')
+        ds_nucleus = f_exclude[nucleus_seg_key]
+    else:
+        log("Don't have exclude path; don't exclude nucleus area for intensity measures")
+        scale_factor_nucleus = None
+        f_nucleus = ds_nucleus = None
+
     log("Computing morphology features")
-    stats = compute_morphology_features(table, segmentation_path, raw_path,
-                                        chromatin_path, exclude_nuc_path,
-                                        seg_key, raw_key, chromatin_key,
-                                        exclude_key,
-                                        scale_factor_seg, scale_factor_raw,
-                                        scale_factor_chromatin,
-                                        scale_factor_exclude,
-                                        label_starts, label_stops)
+    cell_seg_scale_factor = get_scale_factor(cell_segmentation_path, cell_seg_key_full, cell_seg_key, cell_resolution)
+    with h5py.File(cell_segmentation_path, 'r') as f:
+        ds = f[cell_seg_key]
+
+        stats = []
+        for label_a, label_b in zip(label_starts, label_stops):
+            log("Computing features from label-id %i to %i" % (label_a, label_b))
+            stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
+                                                             ds_chromatin,
+                                                             ds_exclude,
+                                                             scale_factor_seg, scale_factor_raw,
+                                                             scale_factor_chromatin,
+                                                             scale_factor_exclude,
+                                                             label_a, label_b))
+
+    for var in f_raw, f_nucleus:
+        if var is not None:
+            var.close()
+
+    # convert to pandas table and add column names
+    stats = pd.DataFrame(stats)
+    stats.columns = generate_column_names(raw_path, None)
+
     return stats
 
 
@@ -666,6 +647,93 @@ def morphology_impl(segmentation_path, raw_path, chromatin_path,
                                         scale_factor_chromatin,
                                         scale_factor_exclude,
                                         label_starts, label_stops)
+    return stats
+
+def compute_morphology_features(table, segmentation_path, raw_path,
+                                chromatin_path, exclude_nuc_path,
+                                seg_key, raw_key, chromatin_key,
+                                exclude_key,
+                                scale_factor_seg, scale_factor_raw,
+                                scale_factor_chromatin,
+                                scale_factor_exclude,
+                                label_starts, label_stops):
+    if raw_path != '':
+        assert raw_key is not None and scale_factor_raw is not None
+        f_raw = h5py.File(raw_path, 'r')
+        ds_raw = f_raw[raw_key]
+    else:
+        f_raw = ds_raw = None
+
+    if chromatin_path != '':
+        assert chromatin_key is not None and scale_factor_chromatin is not None
+        f_chromatin = h5py.File(chromatin_path, 'r')
+        ds_chromatin = f_chromatin[chromatin_key]
+    else:
+        f_chromatin = ds_chromatin = None
+
+    if exclude_nuc_path != '':
+        assert exclude_key is not None and scale_factor_exclude is not None
+        f_exclude = h5py.File(exclude_nuc_path, 'r')
+        ds_exclude = f_exclude[exclude_key]
+
+    else:
+        f_exclude = ds_exclude = None
+
+    with h5py.File(segmentation_path, 'r') as f:
+        ds = f[seg_key]
+
+        stats = []
+        for label_a, label_b in zip(label_starts, label_stops):
+            log("Computing features from label-id %i to %i" % (label_a, label_b))
+            stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
+                                                             ds_chromatin,
+                                                             ds_exclude,
+                                                             scale_factor_seg, scale_factor_raw,
+                                                             scale_factor_chromatin,
+                                                             scale_factor_exclude,
+                                                             label_a, label_b))
+    if f_raw is not None:
+        f_raw.close()
+
+    if f_chromatin is not None:
+        f_chromatin.close()
+
+    if f_exclude is not None:
+        f_exclude.close()
+
+    # convert to pandas table and add column names
+    stats = pd.DataFrame(stats)
+    columns = ['label_id']
+    morph_columns = ['shape_volume_in_microns', 'shape_extent', 'shape_equiv_diameter',
+                     'shape_major_axis', 'shape_minor_axis', 'shape_surface_area', 'shape_sphericity',
+                     'shape_max_radius']
+
+    columns += morph_columns
+
+    if raw_path != '':
+        intensity_columns = ['intensity_mean', 'intensity_st_dev', 'intensity_median', 'intensity_iqr',
+                             'intensity_total']
+        texture_columns = ['texture_hara%s' % x for x in range(1, 14)]
+
+        columns += intensity_columns
+        # radial intensity columns
+        for val in [25, 50, 75, 100]:
+            columns += ['%s_%s' % (var, val) for var in intensity_columns]
+        columns += texture_columns
+
+    if chromatin_path != '':
+        edt_columns = ['shape_edt_mean', 'shape_edt_stdev', 'shape_edt_median', 'shape_edt_iqr']
+        edt_columns += ['shape_percent_%s' % var for var in [25, 50, 75, 100]]
+
+        for phase in ['_het', '_eu']:
+            columns += [var + phase for var in morph_columns]
+            columns += [var + phase for var in edt_columns]
+
+            if raw_path != '':
+                columns += [var + phase for var in intensity_columns]
+                columns += [var + phase for var in texture_columns]
+
+    stats.columns = columns
     return stats
 
 
