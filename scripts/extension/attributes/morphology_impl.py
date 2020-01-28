@@ -481,7 +481,7 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
 
     # convert to pandas table and add column names
     stats = pd.DataFrame(stats)
-    stats.columns = generate_column_names(raw_path, chromatin_path)
+    stats.columns = generate_column_names(raw_path, chromatin_path, None)
 
     return stats
 
@@ -584,7 +584,7 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
 
     # convert to pandas table and add column names
     stats = pd.DataFrame(stats)
-    stats.columns = generate_column_names(raw_path, None)
+    stats.columns = generate_column_names(raw_path, None, nucleus_segmentation_path)
 
     return stats
 
