@@ -129,7 +129,7 @@ def load_data(ds, row, scale):
     return ds[bb]
 
 
-def generate_column_names(raw_path, chromatin_path):
+def generate_column_names(raw_path, chromatin_path, exclude_path):
     columns = ['label_id']
     morph_columns = ['shape_volume_in_microns', 'shape_extent', 'shape_equiv_diameter',
                      'shape_major_axis', 'shape_minor_axis', 'shape_surface_area', 'shape_sphericity',
@@ -144,9 +144,11 @@ def generate_column_names(raw_path, chromatin_path):
 
         columns += intensity_columns
 
-        # radial intensity columns
-        for val in [25, 50, 75, 100]:
-            columns += ['%s_%s' % (var, val) for var in intensity_columns]
+        if exclude_path is None:
+            # radial intensity columns
+            for val in [25, 50, 75, 100]:
+                columns += ['%s_%s' % (var, val) for var in intensity_columns]
+
         columns += texture_columns
 
     if chromatin_path is not None:
@@ -347,7 +349,10 @@ def morphology_features_for_label_range(table, ds, ds_raw,
                 seg_mask = seg_mask.astype(seg_mask_type)
 
             result += intensity_row_features(raw, seg_mask)
-            result += radial_intensity_row_features(raw, seg_mask, scale_factor_raw)
+            # doesn't make sense to run the radial intensity if the nucleus area is being excluded, as the euclidean
+            # distance transform then gives distance from the outside & nuclear surface - hard to interpret
+            if ds_exclude is None:
+                result += radial_intensity_row_features(raw, seg_mask, scale_factor_raw)
             result += texture_row_features(raw, seg_mask)
 
         if ds_chromatin is not None:
