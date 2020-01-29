@@ -1,13 +1,10 @@
 from datetime import datetime
 
-# TODO - uncomment this part
 # this is a task called by multiple processes,
 # so we need to restrict the number of threads used by numpy
-# from cluster_tools.utils.numpy_utils import set_numpy_threads
-# set_numpy_threads(1)
-from tmp.numpy_utils import set_numpy_threads
-
+from cluster_tools.utils.numpy_utils import set_numpy_threads
 set_numpy_threads(1)
+
 import numpy as np
 
 import vigra
