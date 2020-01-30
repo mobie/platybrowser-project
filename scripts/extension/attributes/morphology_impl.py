@@ -260,6 +260,7 @@ def radial_distribution(edt, mask, stops=(0.0, 0.25, 0.5, 0.75, 1.0)):
     radial_masks = [np.logical_and(edt > b, edt <= t) for b, t in zip(bottoms, tops)]
 
     for m in radial_masks:
+        # percent of that zone that is covered by the mask
         result += (np.sum(mask[m]) / np.sum(m),)
 
     return result
@@ -270,7 +271,7 @@ def chromatin_row_features(chromatin, edt, raw, scale_chromatin):
 
     result += morphology_row_features(chromatin, scale_chromatin)
 
-    # edt stats, dropping the total value
+    # edt stats i.e. stats on distribution of chromatin, dropping the total value
     result += intensity_row_features(edt, chromatin)[:-1]
     result += radial_distribution(edt, chromatin)
 
