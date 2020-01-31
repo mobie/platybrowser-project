@@ -1,3 +1,0 @@
-sbem-6dpf-1-whole-raw	../images/sbem-6dpf-1-whole-raw.xml
-prospr-6dpf-1-whole-AChE-MED	../images/prospr-6dpf-1-whole-AChE-MED.xml
-sbem-6dpf-1-whole-segmented-tissue-labels	../segmentations/sbem-6dpf-1-whole-segmented-tissue-labels.xml
