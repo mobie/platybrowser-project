@@ -1,12 +1,13 @@
 import os
 import h5py
 
-from .base_attributes import base_attributes
+from .base_attributes import base_attributes, propagate_attributes, write_additional_table_file
 from .cell_nucleus_mapping import map_cells_to_nuclei
-from .genes import write_genes_table
+from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
-from .region_attributes import region_attributes
-from ..files import get_h5_path_from_xml
+from .region_attributes import region_attributes, extrapolated_intensities
+from .cilia_attributes import cilia_morphology
+from ..files.xml_utils import get_h5_path_from_xml
 
 
 def get_seg_path(folder, name, key):
@@ -18,7 +19,7 @@ def get_seg_path(folder, name, key):
     return path
 
 
-def make_cell_tables(folder, name, tmp_folder, resolution,
+def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                      target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
@@ -45,8 +46,18 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
     if not os.path.exists(aux_gene_path):
         raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
     gene_out = os.path.join(table_folder, 'genes.csv')
-    write_genes_table(seg_path, aux_gene_path, gene_out, label_ids,
-                      tmp_folder, target)
+    gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
+                          tmp_folder, target)
+
+    # make table with gene mapping via VCs
+    vc_vol_path = get_seg_path(folder, 'prospr-6dpf-1-whole-virtual-cells-labels', 't00000/s00/0/cells')
+    vc_expression_path = os.path.join(folder, 'tables',
+                                      'prospr-6dpf-1-whole-virtual-cells-labels', 'profile_clust_curated.csv')
+    med_expression_path = gene_out
+    vc_out = os.path.join(table_folder, 'vc_assignments.csv')
+    vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
+                        med_expression_path, vc_out,
+                        tmp_folder, target)
 
     # make table with morphology
     morpho_out = os.path.join(table_folder, 'morphology.csv')
@@ -65,8 +76,27 @@ def make_cell_tables(folder, name, tmp_folder, resolution,
                       image_folder, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs)
 
+    # mapping to extrapolated intensities
+    extrapol_mask = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-mask-extrapolated.xml')
+    extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
+    extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
+    extrapolated_intensities(seg_path, 't00000/s00/3/cells',
+                             extrapol_mask, 't00000/s00/0/cells',
+                             extrapol_out, tmp_folder, target, max_jobs)
 
-def make_nucleus_tables(folder, name, tmp_folder, resolution,
+    # update the cell id column of the cilia cell_id_mapping table
+    cilia_name = 'sbem-6dpf-1-whole-segmented-cilia-labels'
+    propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cells-labels.json'),
+                         os.path.join(old_folder, 'tables', cilia_name, 'cell_mapping.csv'),
+                         os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv'), 'cell_id')
+
+    # TODO
+    # update the ganglia id mapping table
+
+    write_additional_table_file(table_folder)
+
+
+def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
                         target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
@@ -90,11 +120,18 @@ def make_nucleus_tables(folder, name, tmp_folder, resolution,
                             n_labels, resolution, tmp_folder,
                             target, max_jobs)
 
-    # TODO additional tables:
-    # ???
+    # mapping to extrapolated intensities
+    extrapol_mask = os.path.join(folder, 'segmentations', 'sbem-6dpf-mask-extrapolated.xml')
+    extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
+    extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
+    extrapolated_intensities(seg_path, 't00000/s00/1/cells',
+                             extrapol_mask, 't00000/s00/0/cells',
+                             extrapol_out, tmp_folder, target, max_jobs)
+
+    write_additional_table_file(table_folder)
 
 
-def make_cilia_tables(folder, name, tmp_folder, resolution,
+def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
                       target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
@@ -108,5 +145,16 @@ def make_cilia_tables(folder, name, tmp_folder, resolution,
     base_attributes(seg_path, seg_key, base_out, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
-    # TODO additional tables:
-    # ???
+
+    # add cilia specific attributes (length, diameter)
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    cilia_morphology(seg_path, seg_key,
+                     base_out, morpho_out, resolution,
+                     tmp_folder, target=target, max_jobs=max_jobs)
+
+    # update the label id column of the cell_id_mapping table
+    propagate_attributes(os.path.join(folder, 'misc', 'new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'),
+                         os.path.join(old_folder, 'tables', name, 'cell_mapping.csv'),
+                         os.path.join(table_folder, 'cell_mapping.csv'), 'label_id')
+
+    write_additional_table_file(table_folder)

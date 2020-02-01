@@ -53,8 +53,7 @@ def node_labels(seg_path, seg_key,
         data = ds_out[:]
     else:
         n_chunks = ds_out.number_of_chunks
-        out_path = ds_out.path
-        data = [ndist.deserializeOverlapChunk(out_path, (chunk_id,))[0]
+        data = [ndist.deserializeOverlapChunk(out_path, out_key, (chunk_id,))[0]
                 for chunk_id in range(n_chunks)]
         data = {label_id: overlaps
                 for chunk_data in data

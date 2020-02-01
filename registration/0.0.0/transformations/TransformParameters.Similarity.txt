@@ -1,0 +1,30 @@
+(Transform "SimilarityTransform")
+(NumberOfParameters 7)
+(TransformParameters 0.124765 0.434730 0.001912 0.018053 0.015951 -0.003734 0.854469)
+(InitialTransformParametersFileName "./TransformParameters.RotationPreAlign.0.txt")
+(HowToCombineTransforms "Compose")
+
+// Image specific
+(FixedImageDimension 3)
+(MovingImageDimension 3)
+(FixedInternalImagePixelType "float")
+(MovingInternalImagePixelType "float")
+(Size 550 518 570)
+(Index 0 0 0)
+(Spacing 0.0005000000 0.0005000000 0.0005000000)
+(Origin 0.0000000000 0.0000000000 0.0000000000)
+(Direction 1.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000)
+(UseDirectionCosines "false")
+
+// SimilarityTransform specific
+(CenterOfRotationPoint 0.0622715807 0.0973624433 0.0627662152)
+
+// ResampleInterpolator specific
+(ResampleInterpolator "FinalLinearInterpolator")
+
+// Resampler specific
+(Resampler "DefaultResampler")
+(DefaultPixelValue 0.000000)
+(ResultImageFormat "mhd")
+(ResultImagePixelType "unsigned char")
+(CompressResultImage "false")

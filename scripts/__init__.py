@@ -1,1 +1,1 @@
-from .sources import get_name_prefixes
+from .release_helper import get_latest_version

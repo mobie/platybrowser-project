@@ -1,0 +1,41 @@
+
+# manually_matched_points.xlsx
+
+From Hernando ...
+
+# em-fixed-points
+
+Taken from manually_matched_points.xlsx
+Changed to mm units
+Formatted as input to Transformix
+
+# outputpoints.txt
+
+Transformed points as created by Transformix
+ 
+# Transformix
+
+(From Elastix manual)
+
+Besides using transformix for deforming images, you can also use transformix to evaluate the trans- formation Tμ(x) at some points x ∈ ΩF . This means that the input points are specified in the fixed image domain (!), since the transformation direction is from fixed to moving image, as explained in Section 2.6. If you want to deform a set of user-specified points, the appropriate call is:
+
+     transformix -def inputPoints.txt -out outputDirectory -tp TransformParameters.txt
+
+This will create a file outputpoints.txt containing the input points x and the transformed points Tμ(x) (given as voxel indices of the fixed image and additionally as physical coordinates), the displacement vector Tμ(x) − x (in physical coordinates), and, if -in inputImage.ext is also specified, the transformed output points as indices of the input image1. The inputPoints.txt file should have the following structure:
+
+<index, point>
+<number of points>
+point1 x point1 y [point1 z] 
+point2 x point2 y [point2 z] ...
+
+The first line indicates whether the points are given as “indices” (of the fixed image), or as “points” (in physical coordinates). The second line stores the number of points that will be specified. After that the point data is given.
+
+## Example calls
+
+/Applications/elastix_macosx64_v4.8/run_transformix.sh -def /Users/tischer/Desktop/9.9.9/quality-assessment/em-fixed-points.txt -out /Users/tischer/Desktop/9.9.9/quality-assessment -tp /Users/tischer/Documents/detlev-arendt-clem-registration/transformations-new/TransformParameters.BSpline10-3Channels.0.txt
+
+
+/Applications/elastix_macosx64_v4.8/run_transformix.sh -def /Users/tischer/Desktop/9.9.9/quality-assessment/em-fixed-points.txt -out /Users/tischer/Desktop/9.9.9/quality-assessment -tp /Users/tischer/Desktop/9.9.9/transformations/TransformParameters.BSpline100.9.9.9.txt
+
+
+

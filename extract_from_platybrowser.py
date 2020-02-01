@@ -1,3 +1,5 @@
+#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
+
 import argparse
 import os
 import pandas as pd

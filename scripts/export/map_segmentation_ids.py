@@ -4,7 +4,8 @@ import luigi
 import z5py
 
 from cluster_tools.node_labels import NodeLabelWorkflow
-from ..files import get_h5_path_from_xml
+from ..files.xml_utils import get_h5_path_from_xml
+from ..default_config import write_default_global_config
 
 
 def get_seg_path(folder, name):
@@ -34,15 +35,8 @@ def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
     task = NodeLabelWorkflow
 
     config_folder = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_folder, exist_ok=True)
+    write_default_global_config(config_folder)
     configs = task.get_config()
-
-    global_conf = configs['global']
-    global_conf.update({'shebang':
-                        "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python",
-                        'block_shape': [64, 512, 512]})
-    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
-        json.dump(global_conf, f)
 
     conf = configs['merge_node_labels']
     conf.update({'threads_per_job': 8, 'mem_limit': 16})

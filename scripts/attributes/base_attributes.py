@@ -3,24 +3,14 @@ import json
 import h5py
 import z5py
 import numpy as np
+import pandas as pd
 
 import luigi
+import nifty.tools as nt
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.morphology import RegionCentersWorkflow
 from .util import write_csv
-
-
-def make_config(tmp_folder):
-    configs = MorphologyWorkflow.get_config()
-    config_folder = os.path.join(tmp_folder, 'configs')
-    os.makedirs(config_folder, exist_ok=True)
-    global_config = configs['global']
-    # TODO use new platy browser env
-    shebang = '#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python'
-    global_config['shebang'] = shebang
-    global_config['block_shape'] = [64, 512, 512]
-    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
-        json.dump(global_config, f)
+from ..default_config import write_default_global_config
 
 
 def n5_attributes(input_path, input_key, tmp_folder, target, max_jobs):
@@ -149,7 +139,7 @@ def base_attributes(input_path, input_key, output_path, resolution,
                     tmp_folder, target, max_jobs, correct_anchors=True):
 
     # prepare cluster tools tasks
-    make_config(tmp_folder)
+    write_default_global_config(os.path.join(tmp_folder, 'configs'))
 
     # make base attributes as n5 dataset
     tmp_path, tmp_key = n5_attributes(input_path, input_key,
@@ -169,3 +159,70 @@ def base_attributes(input_path, input_key, output_path, resolution,
     with z5py.File(tmp_path, 'r') as f:
         label_ids = f[tmp_key][:, 0]
     return label_ids
+
+
+def write_additional_table_file(table_folder):
+    # get all the file names in the table folder
+    file_names = os.listdir(table_folder)
+    file_names.sort()
+
+    # make sure we have the default table
+    default_name = 'default.csv'
+    if default_name not in file_names:
+        raise RuntimeError("Did not find the default table ('default.csv') in the table folder %s" % table_folder)
+
+    # don't write anything if we don't have additional tables
+    if len(file_names) == 1:
+        return
+
+    # write file for the additional tables
+    out_file = os.path.join(table_folder, 'additional_tables.txt')
+    with open(out_file, 'w') as f:
+        for name in file_names:
+            ext = os.path.splitext(name)[1]
+            # only add csv files
+            if ext != '.csv':
+                continue
+            # don't add the default table
+            if name == 'default.csv':
+                continue
+            f.write(name + '\n')
+
+
+# TODO implement merge rules
+def propagate_attributes(id_mapping_path, table_path, output_path,
+                         column_name, merge_rule=None, override=False):
+    """ Propagate id column to new ids.
+    """
+    # if the output already exists, we assume that the propagation
+    # was already done and we just continue
+    if os.path.exists(output_path) and override:
+        if os.path.islink(output_path):
+            os.unlink(output_path)
+        else:
+            raise RuntimeError("Cannot override file.")
+    elif os.path.exists(output_path) and not override:
+        return
+
+    print(id_mapping_path)
+    with open(id_mapping_path, 'r') as f:
+        id_mapping = json.load(f)
+    id_mapping = {int(k): v for k, v in id_mapping.items()}
+
+    assert os.path.exists(table_path), table_path
+    table = pd.read_csv(table_path, sep='\t')
+    id_col = table[column_name].values
+    id_col[np.isnan(id_col)] = 0
+    id_col = id_col.astype('uint32')
+
+    keys = list(id_mapping.keys())
+    id_col = nt.takeDict(id_mapping, id_col)
+
+    # TODO need to implement merge rules
+    # to update values for multiple ids that were mapped to the same value
+    # (this is necessary if we update a label_id column, for which the values should be unique)
+    # new_ids, new_id_counts = np.unique(id_col, return_counts=True)
+    # merge_ids = new_ids[]
+
+    table[column_name] = id_col
+    table.to_csv(output_path, index=False, sep='\t')

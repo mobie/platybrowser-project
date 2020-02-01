@@ -1,0 +1,150 @@
+# General notes
+
+We are using a SmoothingImagePyramid thus there is not downsampling.
+As a consequence the NumberOfSpatialSamples does not have to be adapted to the settings for computing the SmoothingImagePyramid. In fact, I thus changed the name of the corresponding setting in the UI to GaussianSmoothingSigma
+
+It is important to use a good mask in order to restrict the computation to relevant image regions.
+
+In the belly region there are not many nuclei, thus we only rely on the muscles. Thus it could make sense to give them more weight during registration.
+
+I do not have a good feeling for which NumberOfSpatialSamples makes sense. Maybe makes more sense to think in terms of fraction of pixels within mask? 
+In our mask there are around 40.000.000 pixels.
+
+Maybe less NumberOfSpatialSamples but rather high NumberOfIterations is a good strategy in order to explore more possibilities?
+
+The neuropil is not present one one side of the belly region, thus putting too much weight on it during the registration might lead to bad alignments in this region. However, maybe, once the overall shape is well matched one can increase the weight during fine adjustments done at more fine grained BSplines.
+ 
+Changing the smoothing ( = ImagePyramidSchedule ) during the registration can be confusing, because the quality metric values will change as well. However, the feeling is that in order to get high accuracy at fine grained BSplines one might need to smooth less?!
+
+Also changing the channel weights will change the overall metric value, the ones of the individual channels stay the same though.
+
+# Rotation pre-align
+
+We use the rotation prealign as an inital transformation for the following ones.
+It is critical that this is quite good already, otherwise Elastix will not work.
+
+For the new registration we thus used in fact the Similarity transform of the last version as a starting point, because, I could not easily get it to work again from only the manual rotation pre-alignment...
+
+# Similarity
+
+initialTransform: Similarity.0.0.0 (this was quite good already).
+
+## Settings
+
+(MaximumNumberOfIterations 3000)
+(NumberOfSpatialSamples 10000)
+(ImagePyramidSchedule 15 15 15) // smoothing sigma
+(Metric0Weight 1.0 )
+(Metric1Weight 1.0 )
+(Metric2Weight 1.0 )
+(Metric3Weight 1.0 )
+
+### Convergence
+
+0	-0.670076	-0.052695	-0.098571	-0.231706	-0.287104	
+814	-1.088252	-0.118285	-0.196155	-0.464497	-0.309316
+1931	-1.095039	-0.125889	-0.204493	-0.463037	-0.301619
+2978	-1.075339	-0.116687	-0.206191	-0.457672	-0.294789
+
+Looked good.
+
+
+## Observations
+
+The results in the end looked really very good! 
+
+It seems to sometimes need that many (over even more) iterations to find a good registration.
+
+It also seems that a strong smoothing is a good strategy (at least for finding an initial transformation), because, I think, it increases the basin of attraction, i.e. gradients are easier to find, especially given our binary input data.
+
+## Quality assessment, comparing to manual
+
+[1] "mean distance [um]: 13.0705100192582"                                                         
+[1] "median distance [um]: 12.0030001963097"
+
+# Affine
+
+Maybe this can be skipped as there is no scientific reason why one sample should be shrunk in one specific direction more than in an other orthogonal direction ?!
+I skipped it.
+
+
+# BSpline 100
+
+(Transform "BSplineTransform")
+(MaximumNumberOfIterations 3000)
+(ImagePyramidSchedule 15 15 15)
+(NumberOfSpatialSamples 10000)
+(FinalGridSpacingInVoxels 100 100 100 )
+(Metric0Weight 1.0 )
+(Metric1Weight 1.0 )
+(Metric2Weight 1.0 )
+(Metric3Weight 1.0 )
+
+
+## Convergence
+
+0	-1.083039	-0.117097	-0.210687	-0.456328	-0.298926
+1051	-1.888671	-0.181024	-0.324553	-0.964566	-0.418528
+2082	-1.891719	-0.178800	-0.314921	-0.972870	-0.425128
+2999	-1.904033	-0.191775	-0.325224	-0.973824	-0.413210	
+
+## Quality assessment, comparing to manual
+
+[1] "mean distance [um]: 6.79148843273195"                                                         
+[1] "median distance [um]: 5.3036845188078"
+
+
+# BSpline 30
+
+
+(Transform "BSplineTransform")
+(MaximumNumberOfIterations 3000)
+(ImagePyramidSchedule 15 15 15) // maybe finer is better?
+(NumberOfSpatialSamples 10000)
+(FinalGridSpacingInVoxels 30 30 30 )
+(Registration "MultiMetricMultiResolutionRegistration" )
+(Metric0Weight 1.0)
+(Metric1Weight 1.0)
+(Metric2Weight 1.0) 
+(Metric3Weight 1.0) 
+
+## Convergence
+
+0	-1.901998	-0.181355	-0.318081	-0.976434	-0.426128
+993	-2.814913	-0.192677	-0.541399	-1.097984	-0.982853
+1774	-2.829157	-0.195391	-0.543349	-1.089123	-1.001293
+2999	-2.850299	-0.198496	-0.554399	-1.089770	-1.007634
+
+## Quality assessment, comparing to manual
+
+[1] "mean distance [um]: 7.6404333441996"                                                          
+[1] "median distance [um]: 5.67814229929993"
+
+
+# BSpline 10
+
+(Transform "BSplineTransform")
+(MaximumNumberOfIterations 10000)
+(ImagePyramidSchedule 2 2 2)    // less smoothing ( => metric changed )
+(NumberOfSpatialSamples 10000)
+(FinalGridSpacingInVoxels 10 10 10 )
+(Registration "MultiMetricMultiResolutionRegistration" )
+(Metric0Weight 1.0)
+(Metric1Weight 1.0)
+(Metric2Weight 1.0) 
+(Metric3Weight 1.0) 
+
+## Convergence
+
+7	-1.235577	-0.075201	-0.223914	-0.466092	-0.470371
+1454	-1.651422	-0.111368	-0.373711	-0.521828	-0.644514
+2353	-1.677129	-0.120860	-0.375803	-0.529933	-0.650533
+3872	-1.706704	-0.121855	-0.398798	-0.525477	-0.660573
+4665	-1.745655	-0.121189	-0.416312	-0.538935	-0.669219
+9699	-1.743924	-0.122475	-0.416448	-0.538164	-0.666838
+
+## Quality assessment, comparing to manual
+
+[1] "mean distance [um]: 6.96336261718872"                                                         
+[1] "median distance [um]: 5.05191242410221"
+

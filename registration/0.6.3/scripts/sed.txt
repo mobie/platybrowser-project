@@ -1,0 +1,33 @@
+cp * /Volumes/cba/tischer/projects/tmp
+sed -i '' -e 's/\/Users\/tischer\/Documents\/detlev-arendt-clem-registration\/
+transformations-new/\./g' *
+
+# change directory of the transformations
+sed -i '' -e 's/\.\//\/Users\/tischer\/Documents\/n\.n\.n\/
+transformations\//g' *
+
+sed -i '' -e 's/\/Users/"\/Users/g' *
+
+sed -i '' -e 's/Documents/Desktop/g' *
+
+
+
+"./
+
+
+# generate transformation files for label images, using nn-resampling
+cp * label-resampler/
+cd label-resampler
+
+# change directories
+sed -i '' -e 's/transformations-new/transformations-new\/label-resampler/g' *
+
+# change resampler
+sed -i '' -e 's/FinalLinearInterpolator/FinalNearestNeighborInterpolator/g' *
+
+# change pixel output type
+sed -i '' -e 's/unsigned char/unsigned short/g' *
+
+FinalLinearInterpolator
+
+
