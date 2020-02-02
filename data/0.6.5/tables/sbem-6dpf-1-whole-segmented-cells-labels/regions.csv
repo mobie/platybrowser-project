@@ -1,4 +1,4 @@
-label_id	secretory	gut	empty	gland	yolk	neuropil	cuticle	muscle	glands	allglands	head	crypticsegment	pygidium	pns	restofanimal	stomodeum	vnc	ref	midgut
+label_id	secretory	gut	empty	gland	yolk	neuropil	cuticle	muscle	glands	allglands	head	crypticsegment	pygidium	lateralectoderm	restofanimal	foregut	vnc	ref	midgut
 0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0
 1.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0
 2.0	0.0	0.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0
