@@ -165,7 +165,7 @@ def copy_images(in_folder, out_folder, data_out_folder,
 
         # copy from hdf5 to n5
         copy_file_to_bdv_n5(in_h5, out_file, resolution, chunks, start_scale)
-        key = get_key(False, 0, 0, start_scale)
+        key = get_key(False, 0, 0, 0)
         with open_file(out_file, 'r') as f:
             shape = f[key].shape
 
@@ -216,7 +216,7 @@ def copy_segmentations(in_folder, out_folder, segmentations_to_copy, output_root
 
         # copy from hdf5 to n5
         copy_file_to_bdv_n5(in_h5, out_file, resolution, chunks, start_scale)
-        key = get_key(False, 0, 0, start_scale)
+        key = get_key(False, 0, 0, 0)
         with open_file(out_file, 'r') as f:
             shape = f[key].shape
 

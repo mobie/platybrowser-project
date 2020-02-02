@@ -11,7 +11,7 @@
       <ViewSetup>
         <id>0</id>
         <name>channel 1</name>
-        <size>860 810 714</size>
+        <size>3438 3240 2854</size>
         <voxelSize>
           <unit>micrometer</unit>
           <size>0.08 0.08 0.1</size>
