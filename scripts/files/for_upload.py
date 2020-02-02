@@ -98,7 +98,7 @@ def make_xml_s3(in_file, out_file, path_in_bucket,
 
     # TODO read this from the s3 config instead
     el = ET.SubElement(imgload, 'ServiceEndpoint')
-    el.text = 'https://s3/embl.de'
+    el.text = 'https://s3.embl.de'
     el = ET.SubElement(imgload, 'BucketName')
     el.text = 'platybrowser'
     el = ET.SubElement(imgload, 'SigningRegion')
