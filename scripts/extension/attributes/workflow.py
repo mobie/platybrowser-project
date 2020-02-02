@@ -36,27 +36,35 @@ class MergeTables(luigi.Task):
 
 
 class MorphologyWorkflow(WorkflowBase):
-    # input volumes and graph
-    segmentation_path = luigi.Parameter()
+    # compute cell features or nucleus features?
+    compute_cell_features = luigi.BoolParameter()
+
+    # paths to raw data and segmentations
+    # if the raw path is None, we don't compute intensity features
+    raw_path = luigi.Parameter(default=None)
+    # we always need the nucleus segmentation
+    nucleus_segmentation_path = luigi.Paramter()
+    # we only need the cell segmentation if we compute cell morphology features
+    cell_segmentation_path = luigi.Parameter(default=None)
+    # we only need the chromatin segmentation if we compute nucleus features
+    chromatin_segmentation_path = luigi.Paramter(default=None)
+
+    # the scale used for computation, relative to the raw scale
+    scale = luigi.IntParameter(default=3)
+
+    # the input tables paths for the default table, the
+    # nucleus mapping table and the region mapping table
     in_table_path = luigi.Parameter()
-    output_path = luigi.Parameter()
-    # resolution of the segmentation at full scale
-    resolution = luigi.ListParameter()
-    # scales of segmentation and raw data used for the computation
-    seg_scale = luigi.IntParameter()
-    raw_scale = luigi.IntParameter(default=3)
-    # prefix
-    prefix = luigi.Parameter()
-    number_of_labels = luigi.IntParameter()
-    # minimum and maximum sizes for objects
+    # only need the mapping paths for the nucleus features
+    nucleus_mapping_path = luigi.Paramter(default=None)
+    region_mapping_path = luigi.Paramter(default=None)
+
+    # minimum and maximum sizes for objects / bounding box
     min_size = luigi.IntParameter()
     max_size = luigi.IntParameter(default=None)
-    # path for cell nucleus mapping, that is used for additional
-    # table filtering
-    mapping_path = luigi.IntParameter(default='')
-    # input path for intensity calcuation
-    # if '', intensities will not be calculated
-    raw_path = luigi.Parameter(default='')
+    max_bb = luigi.IntParameter()
+
+    output_path = luigi.Paramter()
 
     def requires(self):
         out_prefix = os.path.join(self.tmp_folder, 'sub_table_%s' % self.prefix)
@@ -64,12 +72,15 @@ class MorphologyWorkflow(WorkflowBase):
                               self._get_task_name('Morphology'))
         dep = morpho_task(tmp_folder=self.tmp_folder, config_dir=self.config_dir,
                           dependency=self.dependency, max_jobs=self.max_jobs,
-                          segmentation_path=self.segmentation_path,
+                          compute_cell_features=self.compute_cell_features,
+                          raw_path=self.raw_path,
+                          nucleus_segmentation_path=self.nucleus_segmentation_path,
+                          cell_segmentation_path=self.cell_segmentation_path,
+                          chromatin_segmentation_path=self.chromatin_segmentation_path,
                           in_table_path=self.in_table_path, output_prefix=out_prefix,
-                          resolution=self.resolution, seg_scale=self.seg_scale, raw_scale=self.raw_scale,
-                          prefix=self.prefix, number_of_labels=self.number_of_labels,
-                          min_size=self.min_size, max_size=self.max_size, mapping_path=self.mapping_path,
-                          raw_path=self.raw_path)
+                          nucleus_mapping_path=self.nucleus_mapping_path,
+                          region_mapping_path=self.region_mapping_path,
+                          min_size=self.min_size, max_size=self.max_size, max_bb=self.max_bb)
         dep = MergeTables(output_prefix=out_prefix, output_path=self.output_path,
                           max_jobs=self.max_jobs, dependency=dep)
 
