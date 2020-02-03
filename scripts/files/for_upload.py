@@ -12,9 +12,6 @@ from pybdv.metadata import write_n5_metadata, get_resolution, indent_xml
 
 
 def normalize_scale_factors(scale_factors, start_scale):
-    if start_scale == 0:
-        return scale_factors
-
     # we expect scale_factors[0] == [1 1 1]
     assert np.prod(scale_factors[0]) == 1
 
@@ -25,15 +22,8 @@ def normalize_scale_factors(scale_factors, start_scale):
                                                           scale_factors[scale - 1])]
         rel_scales.append(rel_factor)
 
-    # start at new scale
-    new_factors = [[1, 1, 1]] + rel_scales[(start_scale + 1):]
-
-    # back to absolute factors
-    for scale in range(1, len(new_factors)):
-        new_factor = [sf * prev_sf for sf, prev_sf in zip(new_factors[scale],
-                                                          new_factors[scale - 1])]
-        new_factors[scale] = new_factor
-
+    # return the relative scales starting at the new scale
+    new_factors = [[1., 1., 1.]] + rel_scales[(start_scale + 1):]
     return new_factors
 
 
