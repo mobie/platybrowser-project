@@ -1,6 +1,6 @@
 {
     "prospr-6dpf-1-whole-AChE": {"Color": "Magenta", "MinValue": 0, "MaxValue": 255},
-    "sbem-6dpf-1-whole-raw": {"Color": "Gray", "MinValue": 0, "MaxValue": 255},
+    "sbem-6dpf-1-whole-raw": {"Color": "White", "MinValue": 0, "MaxValue": 255},
     "sbem-6dpf-1-whole-segmented-cells": {"TableFolder": "tables/sbem-6dpf-1-whole-segmented-cells",
                                           "PainteraProject": "/g/kreshuk/software/paintera/sbem_platy_segmentations/proofread_cells"}
 }
