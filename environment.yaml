@@ -16,3 +16,4 @@ dependencies:
     - scikit-learn
     - vigra
     - z5py
+    - mahotas

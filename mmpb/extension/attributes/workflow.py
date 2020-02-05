@@ -43,11 +43,11 @@ class MorphologyWorkflow(WorkflowBase):
     # if the raw path is None, we don't compute intensity features
     raw_path = luigi.Parameter(default=None)
     # we always need the nucleus segmentation
-    nucleus_segmentation_path = luigi.Paramter()
+    nucleus_segmentation_path = luigi.Parameter()
     # we only need the cell segmentation if we compute cell morphology features
     cell_segmentation_path = luigi.Parameter(default=None)
     # we only need the chromatin segmentation if we compute nucleus features
-    chromatin_segmentation_path = luigi.Paramter(default=None)
+    chromatin_segmentation_path = luigi.Parameter(default=None)
 
     # the scale used for computation, relative to the raw scale
     scale = luigi.IntParameter(default=3)
@@ -56,15 +56,15 @@ class MorphologyWorkflow(WorkflowBase):
     # nucleus mapping table and the region mapping table
     in_table_path = luigi.Parameter()
     # only need the mapping paths for the nucleus features
-    nucleus_mapping_path = luigi.Paramter(default=None)
-    region_mapping_path = luigi.Paramter(default=None)
+    nucleus_mapping_path = luigi.Parameter(default=None)
+    region_mapping_path = luigi.Parameter(default=None)
 
     # minimum and maximum sizes for objects / bounding box
     min_size = luigi.IntParameter()
     max_size = luigi.IntParameter(default=None)
     max_bb = luigi.IntParameter()
 
-    output_path = luigi.Paramter()
+    output_path = luigi.Parameter()
 
     def requires(self):
         out_prefix = os.path.join(self.tmp_folder, 'sub_table_%s' % self.prefix)
