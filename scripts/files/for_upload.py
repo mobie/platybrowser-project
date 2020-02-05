@@ -214,7 +214,7 @@ def copy_segmentations(in_folder, out_folder, segmentations_to_copy, output_root
         # path in bucket is the relative path from out_file to output_root
         path_in_bucket = os.path.relpath(out_file, output_root)
         out_file = os.path.join(s3_folder, seg_name + '.xml')
-        make_xml_s3(in_file, out_file, path_in_bucket, s3_config, shape, resolution)
+        make_xml_s3(in_file, out_file, path_in_bucket, None, shape, resolution)
 
         # check if we need to copy tables
         seg_table_in = os.path.join(table_in, seg_name)
@@ -258,7 +258,7 @@ def copy_folder_for_s3(version, images_to_copy, segmentations_to_copy, output_ro
                        segmentations_to_copy, output_root)
 
 
-if __name__ == '__main__':
+def make_test_folder():
     res = [.1, .08, .08]
     im_names = {'sbem-6dpf-1-whole-raw': {'start_scale': 3, 'resolution': res},
                 'prospr-6dpf-1-whole-AChE-MED': {'resolution': [.55, .55, .55]}}
@@ -268,3 +268,91 @@ if __name__ == '__main__':
     out = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/test_n5'
     s3_config = {}
     copy_folder_for_s3('0.6.5', im_names, seg_names, out, s3_config)
+
+
+def make_different_chunkings():
+    path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.h5'
+    xml_path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.5/images/sbem-6dpf-1-whole-raw.xml'
+    output_root = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/test_n5'
+    data_out_folder = os.path.join(output_root, 'rawdata')
+    start_scale = 3
+    resolution = [.1, .08, .08]
+    chunk_shapes = [(32, 256, 256), (32, 128, 128), (64, 64, 64)]
+    chunk_shapes = [(128, 128, 128)]
+    for ii, chunks in enumerate(chunk_shapes, 4):
+        out_path = os.path.join(data_out_folder, 'sbem-6dpf-1-whole-raw-%i.n5' % ii)
+        copy_file_to_bdv_n5(path, out_path, resolution, chunks, start_scale)
+        # make the xml
+        path_in_bucket = os.path.relpath(out_path, output_root)
+        with open_file(out_path, 'r') as f:
+            shape = f['setup0/timepoint0/s0'].shape
+        out_path = os.path.join(data_out_folder, 'sbem-6dpf-1-whole-raw-%i.xml' % ii)
+        make_xml_s3(xml_path, out_path, path_in_bucket, None, shape, resolution)
+
+
+def iterate_chunks(path, key):
+    with open_file(path, 'r') as f:
+        ds = f[key]
+        n_chunks = ds.number_of_chunks
+
+    ds_path = os.path.join(path, key)
+    chunk_sizes = []
+    for root, dirs, files in os.walk(ds_path):
+        for name in files:
+            if name == 'attributes.json':
+                continue
+            size = os.path.getsize(os.path.join(root, name))
+            chunk_sizes.append(size)
+
+    n_filled = len(chunk_sizes)
+    percent_filled = float(n_filled) / n_chunks
+
+    return percent_filled, chunk_sizes
+
+
+def check_block_shapes():
+    import nifty.tools as nt
+    full_path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.h5'
+    key = 't00000/s00/0/cells'
+    with open_file(full_path, 'r') as f:
+        shape = f[key].shape
+
+    prefix = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/test_n5/rawdata/sbem-6dpf-1-whole-raw-%i.n5'
+    ds_key = 'setup0/timepoint0/s0'
+    block_shapes = [[32, 256, 256], [32, 128, 128], [64, 64, 64], [128, 128, 128]]
+    for ii, block_shape in enumerate(block_shapes, 1):
+        path = prefix % ii
+        percent_filled, sizes = iterate_chunks(path, ds_key)
+        n_total = nt.blocking([0, 0, 0], shape, block_shape).numberOfBlocks
+        n_filled = int(n_total * percent_filled)
+        print("Chunk-shape:", block_shape)
+        print("Nr. chunks at highest res:", n_filled)
+        print("Mean chunk size in MB:", np.mean(sizes) / 1.e6, "+-", np.std(sizes) / 1.e6)
+        print("Min/max chunk size in MB:", np.min(sizes) / 1.e6, "/", np.max(sizes) / 1.e6)
+        print()
+
+
+def estimate_chunk_sizes():
+    ref_chunk_shape = [128, 128, 128]
+    ref_chunk_size = float(np.prod(ref_chunk_shape))
+    ref_chunk_mb = 1.0160599442530536
+    ref_n_chunks = 1553606.
+
+    start = 64
+    stop = 128
+    step = 16
+    for chunk_len in range(start, stop + step, step):
+        print("Chunks: %i^3" % chunk_len)
+        rel_size = chunk_len ** 3 / ref_chunk_size
+        chunk_mb = ref_chunk_mb * rel_size
+        n_chunks = ref_n_chunks / rel_size
+        print("Nr. chunks at highest res:", int(n_chunks))
+        print("Mean chunk size in MB:", chunk_mb)
+        print()
+
+
+if __name__ == '__main__':
+    # make_test_folder()
+    # make_different_chunkings()
+    # check_block_shapes()
+    estimate_chunk_sizes()

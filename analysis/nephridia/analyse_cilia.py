@@ -1,13 +1,22 @@
 import numpy as np
 import pandas as pd
-from make_cell_table import right_nephr_ids, left_nephr_ids
 from matplotlib import pyplot as plt
 
-TABLE_PATH = '../../data/0.6.2/tables/sbem-6dpf-1-whole-segmented-cilia-labels/cell_mapping.csv'
+
+def get_nephr_ids(version):
+    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cells-labels/regions.csv' % version
+    table = pd.read_csv(table_path, sep='\t')
+    nephr_ids = table['nephridia'].values
+    right_nephr_ids = np.where(nephr_ids == 1)[0]
+    left_nephr_ids = np.where(nephr_ids == 2)[0]
+    return right_nephr_ids, left_nephr_ids
 
 
-def check_cell_ids():
-    table = pd.read_csv(TABLE_PATH, sep='\t')
+def check_cell_ids(version):
+    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cilia-labels/cell_mapping.csv' % version
+
+    right_nephr_ids, left_nephr_ids = get_nephr_ids(version)
+    table = pd.read_csv(table_path, sep='\t')
     cell_ids = table['cell_id'].values
 
     matched_right = []
@@ -35,16 +44,18 @@ def check_cell_ids():
     print("With cilia:", len(matched_left))
 
 
-def plot_cilia_per_cell():
+def plot_cilia_per_cell(version):
     counts_left = []
     counts_right = []
 
-    table = pd.read_csv(TABLE_PATH, sep='\t')
+    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cilia-labels/cell_mapping.csv' % version
+    table = pd.read_csv(table_path, sep='\t')
     cell_ids = table['cell_id']
     cell_ids = cell_ids[cell_ids != 0]
     cell_ids = cell_ids[~np.isnan(cell_ids)]
     cell_ids = cell_ids.astype('uint32')
 
+    right_nephr_ids, left_nephr_ids = get_nephr_ids(version)
     unique_cell_ids = np.unique(cell_ids)
 
     total_count = 0
@@ -84,5 +95,6 @@ def plot_cilia_per_cell():
 
 
 if __name__ == '__main__':
-    check_cell_ids()
-    plot_cilia_per_cell()
+    version = '0.6.5'
+    check_cell_ids(version)
+    plot_cilia_per_cell(version)
