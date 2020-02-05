@@ -10,12 +10,13 @@ from .cilia_attributes import cilia_morphology
 from ..files.xml_utils import get_h5_path_from_xml
 
 
-def get_seg_path(folder, name, key):
+def get_seg_path(folder, name, key=None):
     xml_path = os.path.join(folder, 'segmentations', '%s.xml' % name)
     path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
     assert os.path.exists(path), path
-    with h5py.File(path, 'r') as f:
-        assert key in f, "%s not in %s" % (key, str(list(f.keys())))
+    if key is not None:
+        with h5py.File(path, 'r') as f:
+            assert key in f, "%s not in %s" % (key, str(list(f.keys())))
     return path
 
 
@@ -59,13 +60,6 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
                         med_expression_path, vc_out,
                         tmp_folder, target)
 
-    # make table with morphology
-    morpho_out = os.path.join(table_folder, 'morphology.csv')
-    n_labels = len(label_ids)
-    write_morphology_cells(seg_path, base_out, nuc_mapping_table, morpho_out,
-                           n_labels, resolution, tmp_folder,
-                           target, max_jobs)
-
     # region and semantic mapping
     region_out = os.path.join(table_folder, 'regions.csv')
     # need to make sure the inputs are copied / updated in
@@ -75,6 +69,13 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     region_attributes(seg_path, region_out,
                       image_folder, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs)
+
+    # make table with morphology
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    write_morphology_cells(seg_path, nuc_path,
+                           base_out, morpho_out,
+                           nuc_mapping_table, region_out,
+                           tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     extrapol_mask = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-mask-extrapolated.xml')
@@ -107,18 +108,20 @@ def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
 
     # make the basic attributes table
     base_out = os.path.join(table_folder, 'default.csv')
-    label_ids = base_attributes(seg_path, seg_key, base_out, resolution,
-                                tmp_folder, target=target, max_jobs=max_jobs,
-                                correct_anchors=True)
+    base_attributes(seg_path, seg_key, base_out, resolution,
+                    tmp_folder, target=target, max_jobs=max_jobs,
+                    correct_anchors=True)
 
+    # make the morphology attribute table
     xml_raw = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-raw.xml')
     raw_path = get_h5_path_from_xml(xml_raw, return_absolute_path=True)
-    # make the morphology attribute table
+    cell_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-cells-labels')
+    chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin-labels')
     morpho_out = os.path.join(table_folder, 'morphology.csv')
-    n_labels = len(label_ids)
-    write_morphology_nuclei(seg_path, raw_path, base_out, morpho_out,
-                            n_labels, resolution, tmp_folder,
-                            target, max_jobs)
+    write_morphology_nuclei(raw_path, seg_path,
+                            cell_seg_path, chromatin_seg_path,
+                            base_out, morpho_out,
+                            tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     extrapol_mask = os.path.join(folder, 'segmentations', 'sbem-6dpf-mask-extrapolated.xml')

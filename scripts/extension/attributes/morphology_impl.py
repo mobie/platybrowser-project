@@ -394,7 +394,7 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
                             max_bb,
                             nucleus_resolution, chromatin_resolution,
                             nucleus_seg_scale, raw_scale, chromatin_scale,
-                            label_starts, label_stops):
+                            label_start, label_stop):
     """ Compute morphology features for nucleus segmentation.
 
        Can compute features for multiple label ranges. If you want to
@@ -418,8 +418,8 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
            nucleus_seg_scale [int] - scale level of the segmentation.
            raw_scale [int] - scale level of the raw data
            chromatin_scale [int] - scale level of the segmentation.
-           label_starts [listlike] - list with label start positions
-           label_stops [listlike] - list with label stop positions
+           label_start [int] - label start position
+           label_stop [int] - label stop position
        """
 
     # keys for the different scales
@@ -463,15 +463,14 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
         ds = f[nucleus_seg_key]
 
         stats = []
-        for label_a, label_b in zip(label_starts, label_stops):
-            log("Computing features from label-id %i to %i" % (label_a, label_b))
-            stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
-                                                             ds_chromatin,
-                                                             None,
-                                                             scale_factor_nucleus_seg, scale_factor_raw,
-                                                             scale_factor_chromatin,
-                                                             None,
-                                                             label_a, label_b))
+        log("Computing features from label-id %i to %i" % (label_start, label_stop))
+        stats = morphology_features_for_label_range(table, ds, ds_raw,
+                                                    ds_chromatin,
+                                                    None,
+                                                    scale_factor_nucleus_seg, scale_factor_raw,
+                                                    scale_factor_chromatin,
+                                                    None,
+                                                    label_start, label_stop)
 
     for var in f_raw, f_chromatin:
         if var is not None:
@@ -492,7 +491,7 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
                          max_bb,
                          cell_resolution, nucleus_resolution,
                          cell_seg_scale, raw_scale, nucleus_seg_scale,
-                         label_starts, label_stops):
+                         label_start, label_stop):
     """ Compute morphology features for cell segmentation.
 
        Can compute features for multiple label ranges. If you want to
@@ -522,8 +521,8 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
            cell_seg_scale [int] - scale level of the segmentation
            raw_scale [int] - scale level of the raw data
            nucleus_seg_scale [int] - scale level of the segmentation.
-           label_starts [listlike] - list with label start positions
-           label_stops [listlike] - list with label stop positions
+           label_start [int] - label start position
+           label_stop [int] - label stop position
        """
 
     # keys for the different scales
@@ -565,16 +564,14 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
     with h5py.File(cell_segmentation_path, 'r') as f:
         ds = f[cell_seg_key]
 
-        stats = []
-        for label_a, label_b in zip(label_starts, label_stops):
-            log("Computing features from label-id %i to %i" % (label_a, label_b))
-            stats.extend(morphology_features_for_label_range(table, ds, ds_raw,
-                                                             None,
-                                                             ds_nucleus,
-                                                             scale_factor_cell_seg, scale_factor_raw,
-                                                             None,
-                                                             scale_factor_nucleus,
-                                                             label_a, label_b))
+        log("Computing features from label-id %i to %i" % (label_start, label_stop))
+        stats = morphology_features_for_label_range(table, ds, ds_raw,
+                                                    None,
+                                                    ds_nucleus,
+                                                    scale_factor_cell_seg, scale_factor_raw,
+                                                    None,
+                                                    scale_factor_nucleus,
+                                                    label_start, label_stop)
 
     for var in f_raw, f_nucleus:
         if var is not None:
