@@ -24,7 +24,7 @@ def get_skipped_ids(out_path):
 
 
 def check_export():
-    from scripts.segmentation.correction.export_node_labels import check_exported_paintera
+    from mmpb.segmentation.correction.export_node_labels import check_exported_paintera
 
     path1 = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
     assignment_key = 'volumes/paintera/proofread_cells/fragment-segment-assignment'

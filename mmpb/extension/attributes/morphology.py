@@ -13,8 +13,8 @@ import cluster_tools.utils.volume_utils as vu
 import cluster_tools.utils.function_utils as fu
 from cluster_tools.utils.task_utils import DummyTask
 from cluster_tools.cluster_tasks import SlurmTask, LocalTask
-from scripts.extension.attributes.morphology_impl import (morphology_impl_cell,
-                                                          morphology_impl_nucleus)
+from mmpb.extension.attributes.morphology_impl import (morphology_impl_cell,
+                                                       morphology_impl_nucleus)
 
 #
 # Morphology Attribute Tasks

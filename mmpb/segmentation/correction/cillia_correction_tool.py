@@ -13,7 +13,7 @@ import napari
 
 from heimdall import view, to_source
 from elf.io import open_file
-from scripts.files.xml_utils import get_h5_path_from_xml
+from mmpb.files.xml_utils import get_h5_path_from_xml
 
 
 def xml_to_h5_path(xml_path):

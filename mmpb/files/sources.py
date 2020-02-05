@@ -176,7 +176,7 @@ def add_segmentation(source_name, name, segmentation_path=None,
 
     Adding a dynamic segmentation:
     ```
-    # 'update_seg_table' must be importable from 'scripts.attributes'
+    # 'update_seg_table' must be importable from 'mmpb.attributes'
     add_segmentation(source_name, seg_name,
                      paintera_project=('/path/to/paintera/root.n5', '/path/in/file'),
                      resolution=(.025, .02, .02),  # resolution in microns, must be passed for dynamic seg

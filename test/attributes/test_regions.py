@@ -59,7 +59,7 @@ class TestRegions(unittest.TestCase):
                     self.assertGreater(np.in1d(tis[seg_mask], tis_ids).sum(), 0)
 
     def test_regions(self):
-        from scripts.attributes.region_attributes import region_attributes
+        from mmpb.attributes.region_attributes import region_attributes
 
         image_folder = '../../data/0.0.0/images'
         segmentation_folder = '../../data/0.0.0/segmentations'

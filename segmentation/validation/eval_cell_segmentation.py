@@ -2,9 +2,9 @@ import argparse
 import os
 import numpy as np
 import h5py
-from scripts.segmentation.validation import eval_cells, get_ignore_seg_ids
-from scripts.attributes.region_attributes import region_attributes
-from scripts.default_config import write_default_global_config
+from mmpb.segmentation.validation import eval_cells, get_ignore_seg_ids
+from mmpb.attributes.region_attributes import region_attributes
+from mmpb.default_config import write_default_global_config
 
 ANNOTATIONS = '../../data/rawdata/evaluation/validation_annotations.h5'
 BASELINES = '../../data/rawdata/evaluation/baseline_cell_segmentations.h5'

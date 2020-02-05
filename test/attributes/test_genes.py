@@ -24,9 +24,9 @@ class TestGeneAttributes(unittest.TestCase):
         return table
 
     def test_genes(self):
-        from scripts.attributes.genes import write_genes_table
-        from scripts.extension.attributes import GenesLocal
-        from scripts.files import get_h5_path_from_xml
+        from mmpb.attributes.genes import write_genes_table
+        from mmpb.extension.attributes import GenesLocal
+        from mmpb.files import get_h5_path_from_xml
 
         # load original genes table
         original_table_file = '../../data/0.0.0/tables/sbem-6dpf-1-whole-segmented-cells-labels/genes.csv'

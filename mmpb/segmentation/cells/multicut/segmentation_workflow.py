@@ -8,10 +8,10 @@ from cluster_tools.affinities import InsertAffinitiesWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.postprocess import SizeFilterAndGraphWatershedWorkflow
 
-from scripts.default_config import write_default_global_config
+from mmpb.default_config import write_default_global_config
 # special workflows
-from scripts.extension.segmentation.nucleus_assignments import NucleusAssignmentWorkflow
-from scripts.extension.segmentation.unmerge import UnmergeWorkflow
+from mmpb.extension.segmentation.nucleus_assignments import NucleusAssignmentWorkflow
+from mmpb.extension.segmentation.unmerge import UnmergeWorkflow
 
 
 # TODO expose this

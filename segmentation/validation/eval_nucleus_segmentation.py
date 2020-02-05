@@ -1,6 +1,6 @@
 import argparse
 import os
-from scripts.segmentation.validation import eval_nuclei
+from mmpb.segmentation.validation import eval_nuclei
 
 ANNOTATIONS = '../../data/rawdata/evaluation/validation_annotations.h5'
 

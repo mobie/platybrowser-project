@@ -3,7 +3,7 @@ import json
 
 
 def get_assignments(version):
-    from scripts.segmentation.correction.assignment_diffs import node_labels
+    from mmpb.segmentation.correction.assignment_diffs import node_labels
     assert version in ('0.5.5', '0.6.1', 'local')
     ws_path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
     ws_key = 'volumes/paintera/proofread_cells_multiset/data/s0'
@@ -30,7 +30,7 @@ def get_assignments(version):
 
 def get_split_assignments():
     import z5py
-    from scripts.segmentation.correction.assignment_diffs import assignment_diff_splits
+    from mmpb.segmentation.correction.assignment_diffs import assignment_diff_splits
     with z5py.File('./data.n5') as f:
         ref = f['assignments/055'][:]
         new = f['assignments/corrected'][:]

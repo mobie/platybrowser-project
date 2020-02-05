@@ -6,8 +6,7 @@ import h5py
 import pandas as pd
 
 from heimdall import view
-from scripts.attributes.cilia_attributes import (compute_centerline,
-                                                 get_bb, load_seg)
+from mmpb.attributes.cilia_attributes import compute_centerline, get_bb, load_seg
 
 
 def view_centerline(raw, obj, path=None):

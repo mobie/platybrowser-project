@@ -10,7 +10,7 @@ import luigi
 import vigra
 
 from scipy.ndimage.morphology import binary_dilation
-from scripts.transformation import intensity_correction
+from mmpb.transformation import intensity_correction
 from pybdv import make_bdv
 from pybdv.metadata import write_h5_metadata
 

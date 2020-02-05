@@ -12,14 +12,14 @@ import numpy as np
 import pandas as pd
 from pybdv import make_bdv
 
-from scripts.files import copy_release_folder, make_folder_structure, make_bdv_server_file, get_source_names
-from scripts.files.xml_utils import get_h5_path_from_xml, write_simple_xml
-from scripts.release_helper import add_version
-from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
-from scripts.default_config import get_default_shebang
-from scripts.attributes.base_attributes import base_attributes
-from scripts.attributes.genes import create_auxiliary_gene_file, gene_assignment_table, vc_assignment_table
-from scripts.util import add_max_id
+from mmpb.files import copy_release_folder, make_folder_structure, make_bdv_server_file, get_source_names
+from mmpb.files.xml_utils import get_h5_path_from_xml, write_simple_xml
+from mmpb.release_helper import add_version
+from mmpb.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
+from mmpb.default_config import get_default_shebang
+from mmpb.attributes.base_attributes import base_attributes
+from mmpb.attributes.genes import create_auxiliary_gene_file, gene_assignment_table, vc_assignment_table
+from mmpb.util import add_max_id
 
 
 REGION_NAMES = ('AllGlands',

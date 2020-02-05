@@ -3,8 +3,8 @@
 import argparse
 import os
 import numpy as np
-from scripts import get_latest_version
-from scripts.analysis import get_region_ids, get_morphology_attribute
+from mmpb import get_latest_version
+from mmpb.analysis import get_region_ids, get_morphology_attribute
 
 
 def cell_volumes(region_name, version):

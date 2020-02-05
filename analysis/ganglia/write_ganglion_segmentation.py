@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import nifty.tools as nt
 from pybdv import make_bdv
-from scripts.attributes.base_attributes import base_attributes
+from mmpb.attributes.base_attributes import base_attributes
 
 
 # Segmentation version: 0.2.1
@@ -64,7 +64,7 @@ def make_table():
 
 
 def make_overlap_table():
-    from scripts.attributes.util import write_csv, node_labels
+    from mmpb.attributes.util import write_csv, node_labels
     tmp_folder = './tmp_ganglia'
     target = 'slurm'
     max_jobs = 200

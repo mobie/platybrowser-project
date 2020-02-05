@@ -6,7 +6,7 @@ import luigi
 import numpy as np
 import imageio
 from shutil import rmtree
-from scripts.extension.registration import ApplyRegistrationLocal
+from mmpb.extension.registration import ApplyRegistrationLocal
 
 
 class TestRegistrationWrapper(unittest.TestCase):

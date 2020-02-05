@@ -8,12 +8,12 @@ from glob import glob
 from shutil import rmtree
 from subprocess import check_output, call
 
-import scripts.attributes
-from scripts.files import get_segmentation_names, get_segmentations
-from scripts.files import (copy_image_data, copy_misc_data, copy_segmentation, copy_tables,
-                           make_bdv_server_file, make_folder_structure)
-from scripts.export import export_segmentation
-from scripts.release_helper import add_version
+import mmpb.attributes
+from mmpb.files import get_segmentation_names, get_segmentations
+from mmpb.files import (copy_image_data, copy_misc_data, copy_segmentation, copy_tables,
+                        make_bdv_server_file, make_folder_structure)
+from mmpb.export import export_segmentation
+from mmpb.release_helper import add_version
 
 
 def get_tags():
@@ -50,7 +50,7 @@ def update_segmentations(folder, new_folder, names_to_update, target, max_jobs):
 def update_table(name, seg_dict, folder, new_folder,
                  target, max_jobs):
     tmp_folder = 'tmp_tables_%s' % name
-    update_function = getattr(scripts.attributes, seg_dict['table_update_function'])
+    update_function = getattr(mmpb.attributes, seg_dict['table_update_function'])
     update_function(folder, new_folder, name, tmp_folder, seg_dict['resolution'],
                     target=target, max_jobs=max_jobs)
 

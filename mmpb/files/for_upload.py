@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import numpy as np
 from shutil import copyfile
 
-from scripts.files.xml_utils import get_h5_path_from_xml
+from mmpb.files.xml_utils import get_h5_path_from_xml
 from glob import glob
 from elf.io import open_file
 from pybdv.converter import copy_dataset

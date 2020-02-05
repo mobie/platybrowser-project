@@ -3,8 +3,8 @@ import argparse
 import os
 import json
 import numpy as np
-from scripts import get_latest_version
-from scripts.analysis import get_cells_expressing_genes
+from mmpb import get_latest_version
+from mmpb.analysis import get_cells_expressing_genes
 
 
 def count_gene_expression(gene_names, threshold, version, query):

@@ -1,8 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from scripts.analysis.nephridia import filter_by_size, plot_sizes
-from scripts.analysis.nephridia import match_cilia_to_cells
+from mmpb.analysis.nephridia import filter_by_size, match_cilia_to_cells
 
 cell_ids = [24449, 22584, 21904, 21590, 21594, 21595, 21910, 21911, 21915]
 print("Number of cells:", len(cell_ids))
