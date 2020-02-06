@@ -79,6 +79,9 @@ def update_name_lut():
         # get rid of '-ariande' tag [sic]
         if '-ariande' in new_name:
             new_name = new_name.replace('-ariande', '')
+        # replace '-mask' with '-segmented'
+        if '-mask' in new_name:
+            new_name = new_name.replace('-mask', '-segmented')
 
         # update the gene / region names for prospr
         # and make everything lowercase
@@ -102,19 +105,45 @@ def update_name_lut():
 
 def update_image_properties():
     global IMAGE_PROPERTIES
-    for name in FILE_NAME_LUT:
+    for name in FILE_NAME_LUT.values():
         properties = {}
+        table_folder = 'tables/%s' % name
 
         # prospr: Color Magenta
         #         value range 0 - 1000
         if name.startswith('prospr'):
             if 'virtual-cells' in name:
-                vc_table_folder = 'tables/%s' % name
-                properties.update({'ColorMap': 'Glasbey', 'TableFolder': vc_table_folder})
+                properties.update({'ColorMap': 'Glasbey', 'TableFolder': table_folder})
             else:
                 properties.update({'Color': 'Magenta', 'MinValue': 0, 'MaxValue': 1000})
-        # TODO handle segmentations / masks
-        # TODO segmented / mask is not consistent, get rid of '-mask' tag?
+
+        # handle all special segmentations:
+        # - dynamic and with tables:
+        # -- cells
+        # -- cilia
+        # -- nuclei
+        elif 'segmented-cells' in name:
+            paintera_project = ''
+            table_update_function = ''
+            # TODO postprocessing options in Dynamic
+            properties.update({'ColorMap': 'Glasbey',
+                               'TableFolder': table_folder,
+                               'Dynamic': {'PainteraProject': paintera_project,
+                                           'TableUpdateFunction': table_update_function}})
+        # - static but with tables:
+        # -- chromatin
+        # -- tissue
+        # -- ganglia
+        elif ('segmented-chromatin' in name
+              or 'segmented-tissue' in name
+              or 'segmented-ganglia' in name):
+            properties.update({'ColorMap': 'Glasbey', 'TableFolder': table_folder})
+
+        # TODO is white correct ?
+        # all other segmentations are binary masks
+        elif '-segmented' in name:
+            properties.update({'Color': 'White', 'MinValue': 0, 'MaxValue': 1})
+
         # em-raw: Color White
         #         value range 0 - 255
         else:

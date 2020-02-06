@@ -66,7 +66,7 @@ def move_image_file(image_folder, xml_path):
         copy_xml_with_newpath(new_xml_path, new_xml_path, new_rel_data_path)
 
     # update the h5 path in the new xml
-    return {new_name: get_image_properties(name)}
+    return {new_name: get_image_properties(new_name)}
 
 
 def update_image_dict(image_folder, image_dict):
@@ -145,6 +145,7 @@ def migrate_version(version):
     # - remove segmentations folder (make sure it's empty)
     # - remove bdv server config
     clean_up(version_folder)
+    # TODO make README for version
 
 
 # migrate all the data in the raw folder
