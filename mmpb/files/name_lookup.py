@@ -41,6 +41,12 @@ NEW_GENE_NAMES = {
     "ENR69": "BCA1",
     "ENR71": "Patched"
 }
+
+#
+DYNAMIC_SEGMENTATIONS = ['sbem-6dpf-1-whole-segmented-cells',
+                         'sbem-6dpf-1-whole-segmented-cilia',
+                         'sbem-6dpf-1-whole-segmented-nuclei']
+
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
 FILE_NAME_LUT = {}
@@ -104,7 +110,7 @@ def update_name_lut():
 def update_image_properties():
     global IMAGE_PROPERTIES
     for name in FILE_NAME_LUT.values():
-        properties = {}
+        properties = {'Storage': {'local': 'local/%s.xml' % name}}
         table_folder = 'tables/%s' % name
 
         # prospr: Color Magenta
@@ -115,29 +121,21 @@ def update_image_properties():
             else:
                 properties.update({'Color': 'Magenta', 'MinValue': 0, 'MaxValue': 1000})
 
-        # handle all special segmentations:
-        # - dynamic and with tables:
-        # -- cells
-        # -- cilia
-        # -- nuclei
-        elif 'segmented-cells' in name:
-            paintera_project = ''
-            table_update_function = ''
-            # TODO postprocessing options in Dynamic
-            properties.update({'ColorMap': 'Glasbey',
-                               'TableFolder': table_folder,
-                               'Dynamic': {'PainteraProject': paintera_project,
-                                           'TableUpdateFunction': table_update_function}})
-        # - static but with tables:
-        # -- chromatin
-        # -- tissue
-        # -- ganglia
-        elif ('segmented-chromatin' in name
-              or 'segmented-tissue' in name
-              or 'segmented-ganglia' in name):
+        # handle all real segmentations with glasbey color map and tables
+        # - cells
+        # - chromatin
+        # - cilia
+        # - ganglia
+        # - nuclei
+        # - tissue
+        elif ('segmented-cells' in name
+              or 'segmented-chromatin' in name
+              or 'segmented-cilia' in name
+              or 'segmented-ganglia' in name
+              or 'segmented-nuclei' in name
+              or 'segmented-tissue' in name):
             properties.update({'ColorMap': 'Glasbey', 'TableFolder': table_folder})
 
-        # TODO is white correct ?
         # all other segmentations are binary masks
         elif '-segmented' in name:
             properties.update({'Color': 'White', 'MinValue': 0, 'MaxValue': 1})
@@ -155,15 +153,64 @@ update_image_properties()
 
 
 def look_up_filename(file_name):
-    return FILE_NAME_LUT.get(file_name, None)
+    new_file_name = FILE_NAME_LUT.get(file_name, None)
+    # Try to match ENR/NOV filenames
+    if new_file_name is None:
+        old_gene_name = file_name.split('-')[4]
+        # hox5 was renamed to hox4
+        if old_gene_name.lower() == 'hox5':
+            gene_name = 'hox4'
+        # irx was renamed to irx6
+        elif old_gene_name.lower() == 'irx':
+            gene_name = 'irx6'
+        # prospr reference volume was renamed
+        elif old_gene_name.lower() == 'ref':
+            gene_name = 'segmented-prospr6-ref'
+        # muscles lost an s at some point
+        elif old_gene_name == 'segmented' and file_name.split('-')[5] == 'muscles':
+            gene_name = 'segmented-muscle'
+        else:
+            assert old_gene_name in NEW_GENE_NAMES, file_name
+            gene_name = NEW_GENE_NAMES[old_gene_name].lower()
+        new_file_name = '-'.join(file_name.split('-')[:4] + [gene_name])
+        assert new_file_name in FILE_NAME_LUT.values(), new_file_name
+    return new_file_name
 
 
 def get_image_properties(name):
     return IMAGE_PROPERTIES[name]
 
 
+# TODO currently we have a lot of different version of paintera projects.
+# for cells and cilia, the most up-to-date are actually the label-multiset variants
+# need to clean that up and move the most up to date versions to the names used here,
+# but need to coordinate with valentyna first
+def get_dynamic_segmentation_properties(name):
+    # cell segmentation
+    if name == DYNAMIC_SEGMENTATIONS[0]:
+        return {'PainteraProject:': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
+                                     'volumes/paintera/proofread_cells'],
+                'TableUpdateFunction': 'make_cell_tables',
+                'Postprocess': {"BoundaryPath": "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
+                                "BoundaryKey": "volumes/affinities/s1",
+                                "MaxSegmentNumber": 32700,
+                                "LabelSegmentation": False}}
+    # cilia segmentation
+    elif name == DYNAMIC_SEGMENTATIONS[1]:
+        return {'PainteraProject:': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
+                                     'volumes/paintera/proofread_cilia'],
+                'TableUpdateFunction': 'make_cilia_tables'}
+    # nuclei segmentation
+    elif name == DYNAMIC_SEGMENTATIONS[2]:
+        return {'PainteraProject:': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
+                                     'volumes/paintera/nuclei'],
+                'TableUpdateFunction': 'make_nuclei_tables'}
+    else:
+        return None
+
+
 if __name__ == '__main__':
-    x = json.dumps(FILE_NAME_LUT, sort_keys=True, indent=2)
-    print(x)
-    # with open('/home/pape/new_names.json', 'w') as f:
-    #     json.dump(FILE_NAME_LUT, f, sort_keys=True, indent=2)
+    # x = json.dumps(FILE_NAME_LUT, sort_keys=True, indent=2)
+    # print(x)
+    with open('/g/kreshuk/pape/new_names.json', 'w') as f:
+        json.dump(FILE_NAME_LUT, f, sort_keys=True, indent=2)

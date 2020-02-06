@@ -2,8 +2,10 @@ import os
 import json
 import shutil
 from glob import glob
-from mmpb.files.name_lookup import look_up_filename, get_image_properties
+from mmpb.files.name_lookup import (look_up_filename, get_image_properties,
+                                    DYNAMIC_SEGMENTATIONS, get_dynamic_segmentation_properties)
 from mmpb.files.xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
+from mmpb.files.copy_helper import make_squashed_link
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 DRY_RUN = True
@@ -25,8 +27,6 @@ def new_folder_structure(folder):
 def move_image_file(image_folder, xml_path):
     name = os.path.splitext(os.path.split(xml_path)[1])[0]
     new_name = look_up_filename(name)
-    if new_name is None:
-        new_name = name
 
     # get the linked hdf5 path
     image_path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
@@ -39,7 +39,7 @@ def move_image_file(image_folder, xml_path):
         shutil.move(xml_path, new_xml_path)
 
     # if the hdf5 file is in the same folder, move it to 'images/local' as well
-    h5_is_local = len(os.relpath(image_path, os.path.split(xml_path)[0]).split('/')) > 1
+    h5_is_local = len(os.path.relpath(image_path, os.path.split(xml_path)[0]).split('/')) == 1
     if h5_is_local:
         new_image_path = os.path.join(image_folder, 'local', new_name + '.h5')
         if DRY_RUN:
@@ -64,8 +64,7 @@ def move_image_file(image_folder, xml_path):
         # set path in xml
         copy_xml_with_newpath(new_xml_path, new_xml_path, new_rel_data_path)
 
-    # update the h5 path in the new xml
-    return {new_name: get_image_properties(new_name)}
+    return new_name
 
 
 def update_image_dict(image_folder, image_dict):
@@ -84,46 +83,105 @@ def update_image_data(folder):
     xmls = glob(os.path.join(image_folder, "*.xml"))
 
     for xml in xmls:
-        image_properties = move_image_file(image_folder, xml)
-        image_dict.update(image_properties)
+        name = move_image_file(image_folder, xml)
+        image_dict.update({name: get_image_properties(name)})
 
     if DRY_RUN:
         print("New image dict:")
-        print(image_dict)
+        # print(image_dict)
     else:
         update_image_dict(image_folder, image_dict)
 
 
+# rename the table folders correctly
+# fix links to account for the updated names
+def update_tables(folder):
+    table_folder = os.path.join(folder, 'tables')
+    tables = os.listdir(table_folder)
+    for name in tables:
+        new_name = look_up_filename(name)
+        path, new_path = os.path.join(table_folder, name), os.path.join(table_folder, new_name)
+        if DRY_RUN:
+            print("Rename", path, "to", new_path)
+        else:
+            os.rename(path, new_path)
+
+        # update links if necessary
+        table_files = glob(os.path.join(new_path, '*.csv'))
+        for table_file in table_files:
+            if os.path.isfile(table_file):
+                continue
+
+            # read the link location
+            link_location = os.path.realpath(table_file)
+
+            # check if this soft-link is still valid
+            if os.path.exists(link_location):
+                continue
+
+            # otherwise try to link to the renamed table file
+            link_folder, table_name = os.path.split(table_file)
+            link_folder = os.path.split(link_folder)[0]
+            link_location = os.path.join(link_folder, new_name, table_name)
+            assert os.path.exists(link_location), link_location
+
+            if DRY_RUN:
+                print("Moving link from", table_file, link_location)
+            else:
+                make_squashed_link(link_location, table_file, override=True)
+
+
 def update_segmentation_data(folder):
     image_dict = {}
+    dynamic_seg_dict = {}
+
     image_folder = os.path.join(folder, 'images')
     seg_folder = os.path.join(folder, 'segmentations')
     xmls = glob(os.path.join(seg_folder, "*.xml"))
 
     for xml in xmls:
-        image_properties = move_image_file(image_folder, xml)
-        image_dict.update(image_properties)
+        name = move_image_file(image_folder, xml)
+        image_dict.update({name: get_image_properties(name)})
+        if name in DYNAMIC_SEGMENTATIONS:
+            dynamic_seg_dict.update({name: get_dynamic_segmentation_properties(name)})
 
     if DRY_RUN:
         print("New image dict:")
-        print(image_dict)
+        # print(image_dict)
     else:
         update_image_dict(image_folder, image_dict)
 
-    # TODO need to update tables:
-    # - rename the table folders correctly
-    # - fix links to account for the updated names
+    if DRY_RUN:
+        print("New dynamic seg dict")
+        # print(dynamic_seg_dict)
+    else:
+        dynamic_seg_path = os.path.join(folder, 'misc', 'dynamic_segmentations.json')
+        with open(dynamic_seg_path, 'w') as f:
+            json.dump(dynamic_seg_dict, f)
+
+    # update the tables
+    update_tables(folder)
 
 
 def clean_up(version_folder):
     # remove segmentation folder (needs to be empty!)
     seg_folder = os.path.join(version_folder, 'segmentations')
-    os.rmdir(seg_folder)
+    if DRY_RUN:
+        print("Removing", seg_folder)
+    else:
+        os.rmdir(seg_folder)
 
     # remove bdv server config
     bdv_server_config = os.path.join(version_folder, 'misc', 'bdv_server.txt')
-    if os.path.exists(bdv_server_config):
-        os.remove(bdv_server_config)
+    if DRY_RUN:
+        print("Removing", bdv_server_config)
+    else:
+        if os.path.exists(bdv_server_config):
+            os.remove(bdv_server_config)
+
+
+def make_readme(version):
+    pass
 
 
 # migrate version folder from old to new data layout
@@ -144,7 +202,9 @@ def migrate_version(version):
     # - remove segmentations folder (make sure it's empty)
     # - remove bdv server config
     clean_up(version_folder)
-    # TODO make README for version
+
+    # 5.) Make a readme for this version
+    make_readme(version)
 
 
 # migrate all the data in the raw folder
@@ -155,8 +215,6 @@ def migrate_rawfolder():
     for xml_path in xmls:
         name = os.path.splitext(os.path.split(xml_path)[1])[0]
         new_name = look_up_filename(name)
-        if new_name is None:
-            new_name = name
 
         # get the linked hdf5 path
         image_path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
@@ -206,6 +264,9 @@ def make_remote_xmls(version):
 def remove_deprecated_data():
     # cats-neuropil
     # traces
+    # AcTub (this was removed at some point)
+    # Pty2 (this was removed at some point)
+    # meds_all_genes (does not belong in image folder)
     # xray (is not part of any version yet, but we need to move the raw data)
 
     def remove_deprecated_seg(folder, pattern):
@@ -227,12 +288,25 @@ def remove_deprecated_data():
             else:
                 shutil.rmtree(files[0])
 
+    def remove_deprecated_im(folder, pattern):
+        # remove xml for traces
+        files = glob(os.path.join(vfolder, 'images', pattern))
+        if len(files) > 0:
+            assert len(files) == 1, str(files)
+            if DRY_RUN:
+                print("Remove", files[0])
+            else:
+                os.remove(files[0])
+
     # remove xmls from the version folders
     # (data from rawfolder should be backed up by hand!)
     version_folders = glob(os.path.join(ROOT, "0.*"))
     for vfolder in version_folders:
         remove_deprecated_seg(vfolder, '*traces*')
         remove_deprecated_seg(vfolder, '*cats*')
+        remove_deprecated_im(vfolder, '*AcTub*')
+        remove_deprecated_im(vfolder, '*Pty2*')
+        remove_deprecated_im(vfolder, '*meds_all_genes*')
 
 
 if __name__ == '__main__':
@@ -240,7 +314,7 @@ if __name__ == '__main__':
     # remove_deprecated_data()
 
     # change names and xmls in the rawfolder
-    migrate_rawfolder()
+    # migrate_rawfolder()
 
-    # version = '0.0.0'
-    # migrate_version(version)
+    version = '0.0.0'
+    migrate_version(version)

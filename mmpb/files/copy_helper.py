@@ -29,8 +29,6 @@ def copy_file(xml_in, xml_out):
     copy_xml_with_newpath(xml_in, xml_out, h5path, path_type='relative')
 
 
-# For now we put symlinks with relative paths, but I am not sure
-# if this is the best idea, because I don't know if it will work on windows
 def copy_tables(src_folder, dst_folder, name):
     table_in = os.path.join(src_folder, 'tables', name)
     table_out = os.path.join(dst_folder, 'tables', name)
@@ -45,9 +43,6 @@ def copy_tables(src_folder, dst_folder, name):
 
         make_squashed_link(src_file, dst_file)
 
-        # rel_path = os.path.relpath(src_file, table_out)
-        # if not os.path.exists(dst_file):
-        #     os.symlink(rel_path, dst_file)
     # write the txt file for additional tables
     write_additional_table_file(table_out)
 
