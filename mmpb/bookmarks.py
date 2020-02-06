@@ -1,21 +1,48 @@
 import os
 import json
+import pandas as pd
 
-# TODO change to the proper root folder
-ROOT_FOLDER = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/test_n5'
-# TODO allowed values ?
-LAYER_KEYS = {'Color', 'MinValue', 'MaxValue', 'SelectedIds'}
+ROOT_FOLDER = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
+LAYER_KEYS = {'Color', 'MinValue', 'MaxValue',
+              'SelectedIds', 'Tables'}
+# TODO add all color maps supported by platybrowser
+COLORMAPS = {'Glasbey', 'Viridis'}
+
+
+def validate_tables(table_dict, table_folder):
+    n_color_by = 0
+    for table_name, table_values in table_dict.items():
+        table_file = os.path.join(table_folder, table_name)
+        if not os.path.exists(table_file):
+            return False
+        if table_values:
+            if not len(table_values) == 2:
+                return False
+            table = pd.from_csv(table_file, sep='\t')
+            col, cmap = table_values
+
+            if col not in table.comlumns:
+                return False
+
+            if cmap not in COLORMAPS:
+                return False
+
+            n_color_by += 1
+
+    # can color by maximally 1 column
+    if n_color_by > 1:
+        return False
+
+    return True
 
 
 def validate_layer(version, name, layer):
-    # check that the corresponding file exists
-    if 'segmented' in name:
-        data_folder = os.path.join(ROOT_FOLDER, version, 'segmentations', 's3-n5')
-    else:
-        data_folder = os.path.join(ROOT_FOLDER, version, 'images', 's3-n5')
+    # check that the corresponding name exists
+    image_dict = os.path.join(ROOT_FOLDER, version, 'images', 'images.json')
+    with open(image_dict) as f:
+        image_dict = json.load(f)
 
-    file_name = os.path.join(data_folder, name + '.xml')
-    if not os.path.exists(file_name):
+    if name not in image_dict:
         return False
 
     if not isinstance(layer, dict):
@@ -24,6 +51,10 @@ def validate_layer(version, name, layer):
     keys = set(layer.keys())
     if len(keys - LAYER_KEYS) > 0:
         return False
+
+    if 'Tables' in keys:
+        table_folder = os.path.join(ROOT_FOLDER, version, image_dict[name]['TableFolder'])
+        return validate_tables(layer['Tables'], table_folder)
 
     return True
 
