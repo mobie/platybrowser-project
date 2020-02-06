@@ -97,8 +97,8 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     write_additional_table_file(table_folder)
 
 
-def make_nucleus_tables(old_folder, folder, name, tmp_folder, resolution,
-                        target='slurm', max_jobs=100):
+def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
+                       target='slurm', max_jobs=100):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)

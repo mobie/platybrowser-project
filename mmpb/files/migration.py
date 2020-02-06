@@ -20,7 +20,7 @@ def new_folder_structure(folder):
         print("Creating folder", remote_folder)
     else:
         assert os.path.exists(image_folder), image_folder
-        os.makedirs(image_folder, exist_ok=True)
+        os.makedirs(local_folder, exist_ok=True)
         os.makedirs(remote_folder, exist_ok=True)
 
 
@@ -74,7 +74,7 @@ def update_image_dict(image_folder, image_dict):
             image_dict.update(json.load(f))
 
     with open(dict_out_file, 'w') as f:
-        json.dump(f, sort_keys=True, indent=2)
+        json.dump(image_dict, f, sort_keys=True, indent=2)
 
 
 def update_image_data(folder):
@@ -157,7 +157,7 @@ def update_segmentation_data(folder):
     else:
         dynamic_seg_path = os.path.join(folder, 'misc', 'dynamic_segmentations.json')
         with open(dynamic_seg_path, 'w') as f:
-            json.dump(dynamic_seg_dict, f)
+            json.dump(dynamic_seg_dict, f, sort_keys=True, indent=2)
 
     # update the tables
     update_tables(folder)
@@ -180,10 +180,6 @@ def clean_up(version_folder):
             os.remove(bdv_server_config)
 
 
-def make_readme(version):
-    pass
-
-
 # migrate version folder from old to new data layout
 def migrate_version(version):
     version_folder = os.path.join(ROOT, version)
@@ -199,12 +195,7 @@ def migrate_version(version):
     update_segmentation_data(version_folder)
 
     # 4.) clean up:
-    # - remove segmentations folder (make sure it's empty)
-    # - remove bdv server config
     clean_up(version_folder)
-
-    # 5.) Make a readme for this version
-    make_readme(version)
 
 
 # migrate all the data in the raw folder
