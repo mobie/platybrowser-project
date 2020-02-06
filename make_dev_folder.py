@@ -3,7 +3,7 @@
 import argparse
 import os
 from subprocess import check_output
-from scripts.files import copy_release_folder, make_folder_structure
+from mmpb.files import copy_release_folder, make_folder_structure
 
 
 def make_dev_folder(dev_name, version=''):

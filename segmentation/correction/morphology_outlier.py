@@ -2,10 +2,10 @@ import os
 import json
 import numpy as np
 import z5py
-from scripts.segmentation.correction import preprocess
-from scripts.segmentation.correction.heuristics import (compute_ratios,
-                                                        components_per_slice,
-                                                        get_ignore_ids)
+from mmpb.segmentation.correction import preprocess
+from mmpb.segmentation.correction.heuristics import (compute_ratios,
+                                                     components_per_slice,
+                                                     get_ignore_ids)
 
 
 def run_preprocessing():

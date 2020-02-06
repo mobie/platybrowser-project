@@ -1,6 +1,6 @@
 import os
-from scripts.segmentation.validation.refine_annotations import refine, export_refined
-from scripts.segmentation.validation.eval_cells import get_ignore_seg_ids
+from mmpb.segmentation.validation.refine_annotations import refine, export_refined
+from mmpb.segmentation.validation.eval_cells import get_ignore_seg_ids
 
 
 def proofread(orientation, slice_id):

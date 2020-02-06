@@ -6,7 +6,7 @@ import pandas as pd
 class TestCilaAttributes(unittest.TestCase):
 
     def test_cilia_attributes(self):
-        from scripts.attributes.cilia_attributes import measure_cilia_attributes
+        from mmpb.attributes.cilia_attributes import measure_cilia_attributes
 
         input_path = '../../data/0.5.1/segmentations/sbem-6dpf-1-whole-segmented-cilia-labels.h5'
         input_key = 't00000/s00/0/cells'

@@ -22,7 +22,7 @@ class TestCellNucleusMapping(unittest.TestCase):
             pass
 
     def test_cell_nucleus_mappings(self):
-        from scripts.attributes.cell_nucleus_mapping import map_cells_to_nuclei
+        from mmpb.attributes.cell_nucleus_mapping import map_cells_to_nuclei
 
         segmentation_folder = '../../data/0.1.1/segmentations'
         seg_path = os.path.join(segmentation_folder,

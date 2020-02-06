@@ -31,9 +31,9 @@ class TestMorphologyAttributes(unittest.TestCase):
             json.dump(conf, f)
 
     def test_nucleus_morphology(self):
-        from scripts.attributes.morphology import write_morphology_nuclei
-        from scripts.extension.attributes import MorphologyWorkflow
-        from scripts.files import get_h5_path_from_xml
+        from mmpb.attributes.morphology import write_morphology_nuclei
+        from mmpb.extension.attributes import MorphologyWorkflow
+        from mmpb.files import get_h5_path_from_xml
 
         self.write_global_config(MorphologyWorkflow.get_config()['global'])
 
@@ -59,8 +59,8 @@ class TestMorphologyAttributes(unittest.TestCase):
         self.assertTrue(np.allclose(table, original_table))
 
     def test_cell_morphology(self):
-        from scripts.attributes.morphology import write_morphology_cells
-        from scripts.extension.attributes import MorphologyWorkflow
+        from mmpb.attributes.morphology import write_morphology_cells
+        from mmpb.extension.attributes import MorphologyWorkflow
 
         self.write_global_config(MorphologyWorkflow.get_config()['global'])
 

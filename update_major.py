@@ -5,8 +5,8 @@ import json
 import argparse
 from subprocess import check_output
 
-from scripts.files import add_source, copy_release_folder, make_folder_structure, make_bdv_server_file
-from scripts.release_helper import add_data, check_inputs, add_version
+from mmpb.files import add_source, copy_release_folder, make_folder_structure, make_bdv_server_file
+from mmpb.release_helper import add_data, check_inputs, add_version
 
 
 def get_tags():

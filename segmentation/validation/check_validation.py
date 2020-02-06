@@ -1,15 +1,15 @@
 import os
 import h5py
 from heimdall import view, to_source
-from scripts.segmentation.validation import eval_cells, eval_nuclei, get_ignore_seg_ids
+from mmpb.segmentation.validation import eval_cells, eval_nuclei, get_ignore_seg_ids
 
 # ROOT_FOLDER = '../../data'
 ROOT_FOLDER = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
 
 def check_cell_evaluation():
-    from scripts.segmentation.validation.eval_cells import (eval_slice,
-                                                            get_bounding_box)
+    from mmpb.segmentation.validation.eval_cells import (eval_slice,
+                                                         get_bounding_box)
 
     praw = os.path.join(ROOT_FOLDER, 'rawdata/sbem-6dpf-1-whole-raw.h5')
     pseg = os.path.join(ROOT_FOLDER, '0.5.5/segmentations/sbem-6dpf-1-whole-segmented-cells-labels.h5')
@@ -57,8 +57,8 @@ def eval_all_cells():
 
 
 def check_nucleus_evaluation():
-    from scripts.segmentation.validation.eval_nuclei import (eval_slice,
-                                                             get_bounding_box)
+    from mmpb.segmentation.validation.eval_nuclei import (eval_slice,
+                                                          get_bounding_box)
 
     praw = os.path.join(ROOT_FOLDER, 'rawdata/sbem-6dpf-1-whole-raw.h5')
     pseg = os.path.join(ROOT_FOLDER, '0.0.0/segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.h5')

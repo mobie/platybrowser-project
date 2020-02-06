@@ -2,8 +2,8 @@
 import json
 import numpy as np
 import pandas as pd
-from scripts.segmentation.muscle import ranked_false_positives, get_mapped_ids
-from scripts.segmentation.muscle.muscle_mapping import compute_labels
+from mmpb.segmentation.muscle import ranked_false_positives, get_mapped_ids
+from mmpb.segmentation.muscle.muscle_mapping import compute_labels
 
 
 PROJECT_PATH = '/g/kreshuk/pape/Work/muscle_mapping_v1.h5'

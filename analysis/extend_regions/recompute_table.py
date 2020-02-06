@@ -2,9 +2,9 @@ import os
 import h5py
 import numpy as np
 
-from scripts.default_config import write_default_global_config
-from scripts.attributes.region_attributes import region_attributes
-from scripts.files.xml_utils import get_h5_path_from_xml
+from mmpb.default_config import write_default_global_config
+from mmpb.attributes.region_attributes import region_attributes
+from mmpb.files.xml_utils import get_h5_path_from_xml
 
 
 def recompute_table(version):

@@ -6,7 +6,7 @@ import random
 from shutil import rmtree
 
 import luigi
-from scripts.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
+from mmpb.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
 
 
 def apply_registration(input_path, output_path, transformation_file,

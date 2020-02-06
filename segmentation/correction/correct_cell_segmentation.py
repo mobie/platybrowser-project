@@ -1,12 +1,12 @@
 import os
 import json
-from scripts.segmentation.correction import (preprocess,
-                                             AnnotationTool,
-                                             CorrectionTool,
-                                             export_node_labels,
-                                             to_paintera_format,
-                                             rank_false_merges,
-                                             get_ignore_ids)
+from mmpb.segmentation.correction import (preprocess,
+                                          AnnotationTool,
+                                          CorrectionTool,
+                                          export_node_labels,
+                                          to_paintera_format,
+                                          rank_false_merges,
+                                          get_ignore_ids)
 
 
 def run_preprocessing(project_folder):
@@ -104,7 +104,7 @@ def run_correction(project_folder, fm_id_path, scale=2):
 
 
 def export_correction(project_folder, correct_merges=True, zero_out=True):
-    from scripts.segmentation.correction.export_node_labels import zero_out_ids
+    from mmpb.segmentation.correction.export_node_labels import zero_out_ids
 
     p = os.path.join(project_folder, 'data.n5')
     in_key = 'node_labels'

@@ -1,7 +1,7 @@
 #! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
 import numpy as np
 import h5py
-from scripts.attributes.base_attributes import base_attributes
+from mmpb.attributes.base_attributes import base_attributes
 
 
 def add_max_id():
