@@ -7,20 +7,20 @@
     <ViewSetups>
       <Attributes name="channel">
         <Channel>
-          <id>1</id>
-          <name>1</name>
+          <id>0</id>
+          <name>0</name>
         </Channel>
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>channel 1</name>
+        <name>Setup0</name>
         <size>13750 12958 11416</size>
         <voxelSize>
           <unit>micrometer</unit>
           <size>0.02 0.02 0.025</size>
         </voxelSize>
         <attributes>
-          <channel>1</channel>
+          <channel>0</channel>
         </attributes>
       </ViewSetup>
     </ViewSetups>
