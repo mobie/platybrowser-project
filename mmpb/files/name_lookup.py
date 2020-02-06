@@ -41,9 +41,7 @@ NEW_GENE_NAMES = {
     "ENR69": "BCA1",
     "ENR71": "Patched"
 }
-
-# ROOT = '/g/arendt/...'
-ROOT = '/home/pape/Work/my_projects/platy-browser-data/data'
+ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
 FILE_NAME_LUT = {}
 IMAGE_PROPERTIES = {}
@@ -165,7 +163,7 @@ def get_image_properties(name):
 
 
 if __name__ == '__main__':
-    # x = json.dumps(FILE_NAME_LUT, sort_keys=True, indent=2)
-    # print(x)
-    with open('/home/pape/new_names.json', 'w') as f:
-        json.dump(FILE_NAME_LUT, f, sort_keys=True, indent=2)
+    x = json.dumps(FILE_NAME_LUT, sort_keys=True, indent=2)
+    print(x)
+    # with open('/home/pape/new_names.json', 'w') as f:
+    #     json.dump(FILE_NAME_LUT, f, sort_keys=True, indent=2)

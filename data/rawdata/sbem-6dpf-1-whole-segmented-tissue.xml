@@ -2,25 +2,25 @@
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
     <ImageLoader format="bdv.hdf5">
-      <hdf5 type="relative">sbem-6dpf-1-whole-mask-outside.h5</hdf5>
+      <hdf5 type="relative">sbem-6dpf-1-whole-segmented-tissue.h5</hdf5>
     </ImageLoader>
     <ViewSetups>
       <Attributes name="channel">
         <Channel>
-          <id>0</id>
-          <name>0</name>
+          <id>1</id>
+          <name>1</name>
         </Channel>
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
-        <size>860 810 714</size>
+        <name>channel 1</name>
+        <size>3438 3240 2854</size>
         <voxelSize>
           <unit>micrometer</unit>
-          <size>0.32 0.32 0.4</size>
+          <size>0.08 0.08 0.1</size>
         </voxelSize>
         <attributes>
-          <channel>0</channel>
+          <channel>1</channel>
         </attributes>
       </ViewSetup>
     </ViewSetups>
@@ -32,7 +32,7 @@
   <ViewRegistrations>
     <ViewRegistration setup="0" timepoint="0">
       <ViewTransform type="affine">
-        <affine>0.32 0.0 0.0 0.0 0.0 0.32 0.0 0.0 0.0 0.0 0.4 0.0</affine>
+        <affine>0.08 0.0 0.0 0.0 0.0 0.08 0.0 0.0 0.0 0.0 0.1 0.0</affine>
       </ViewTransform>
     </ViewRegistration>
   </ViewRegistrations>

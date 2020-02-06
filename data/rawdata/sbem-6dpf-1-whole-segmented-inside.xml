@@ -2,27 +2,27 @@
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
     <ImageLoader format="bdv.hdf5">
-      <hdf5 type="relative">sbem-6dpf-1-whole-segmented-ariande-neuropil.h5</hdf5>
+      <hdf5 type="relative">sbem-6dpf-1-whole-segmented-inside.h5</hdf5>
     </ImageLoader>
     <ViewSetups>
-      <ViewSetup>
-        <id>0</id>
-        <name>channel 1</name>
-        <size>2750 2592 2854</size>
-        <voxelSize>
-          <unit>micrometer</unit>
-          <size>0.1 0.1 0.1</size>
-        </voxelSize>
-        <attributes>
-          <channel>1</channel>
-        </attributes>
-      </ViewSetup>
       <Attributes name="channel">
         <Channel>
-          <id>1</id>
-          <name>1</name>
+          <id>0</id>
+          <name>0</name>
         </Channel>
       </Attributes>
+      <ViewSetup>
+        <id>0</id>
+        <name>Setup0</name>
+        <size>860 810 714</size>
+        <voxelSize>
+          <unit>micrometer</unit>
+          <size>0.32 0.32 0.4</size>
+        </voxelSize>
+        <attributes>
+          <channel>0</channel>
+        </attributes>
+      </ViewSetup>
     </ViewSetups>
     <Timepoints type="range">
       <first>0</first>
@@ -32,7 +32,7 @@
   <ViewRegistrations>
     <ViewRegistration setup="0" timepoint="0">
       <ViewTransform type="affine">
-        <affine>0.1 0.0 0.0 0.0 0.0 0.1 0.0 0.0 0.0 0.0 0.1 0.0</affine>
+        <affine>0.32 0.0 0.0 0.0 0.0 0.32 0.0 0.0 0.0 0.0 0.4 0.0</affine>
       </ViewTransform>
     </ViewRegistration>
   </ViewRegistrations>

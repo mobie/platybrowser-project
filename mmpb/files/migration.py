@@ -5,8 +5,7 @@ from glob import glob
 from mmpb.files.name_lookup import look_up_filename, get_image_properties
 from mmpb.files.xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
 
-# ROOT = '/g/arendt/...'
-ROOT = '/home/pape/Work/my_projects/platy-browser-data/data'
+ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 DRY_RUN = True
 
 
@@ -184,6 +183,15 @@ def migrate_rawfolder():
             # set path in xml
             copy_xml_with_newpath(new_xml_path, new_xml_path, new_rel_data_path)
 
+        # rename the tables folder if it exists
+        table_folder = os.path.join(raw_folder, 'tables', name)
+        if os.path.exists(table_folder):
+            new_table_folder = os.path.join(raw_folder, 'tables', new_name)
+            if DRY_RUN:
+                print("Rename", table_folder, "to", new_table_folder)
+            else:
+                os.rename(table_folder, new_table_folder)
+
 
 # iterate over all the xmls in this version, follow the links
 # and replace h5 files with n5 (if necessary)
@@ -202,22 +210,22 @@ def remove_deprecated_data():
 
     def remove_deprecated_seg(folder, pattern):
         # remove xml for traces
-        trace_files = glob(os.path.join(vfolder, 'segmentations', pattern))
-        if len(trace_files) > 0:
-            assert len(trace_files) == 1
+        files = glob(os.path.join(vfolder, 'segmentations', pattern))
+        if len(files) > 0:
+            assert len(files) == 1
             if DRY_RUN:
-                print("Remove", trace_files[0])
+                print("Remove", files[0])
             else:
-                os.remove(trace_files[0])
+                os.remove(files[0])
 
         # remove tables for traces
-        trace_files = glob(os.path.join(vfolder, 'tables', pattern))
-        if len(trace_files) > 0:
-            assert len(trace_files) == 1
+        files = glob(os.path.join(vfolder, 'tables', pattern))
+        if len(files) > 0:
+            assert len(files) == 1
             if DRY_RUN:
-                print("Remove", trace_files[0])
+                print("Remove", files[0])
             else:
-                shutil.rmtree(trace_files[0])
+                shutil.rmtree(files[0])
 
     # remove xmls from the version folders
     # (data from rawfolder should be backed up by hand!)
@@ -228,14 +236,11 @@ def remove_deprecated_data():
 
 
 if __name__ == '__main__':
-    # TODO before doing any migration:
-    # - replace the chromatin segmentation and table
-    # - check nephridia segmentation
+    # remove the data we don't want to upload (yet)
+    # remove_deprecated_data()
 
-    # remove the data we don't want to upload (yet):
-    remove_deprecated_data()
-
-    # migrate_rawfolder()
+    # change names and xmls in the rawfolder
+    migrate_rawfolder()
 
     # version = '0.0.0'
     # migrate_version(version)
