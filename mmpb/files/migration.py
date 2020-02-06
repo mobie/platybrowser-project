@@ -5,7 +5,6 @@ from glob import glob
 from mmpb.files.name_lookup import (look_up_filename, get_image_properties,
                                     DYNAMIC_SEGMENTATIONS, get_dynamic_segmentation_properties)
 from mmpb.files.xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
-from mmpb.files.copy_helper import make_squashed_link
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 DRY_RUN = True
@@ -52,6 +51,9 @@ def move_image_file(image_folder, xml_path):
         # the new image path might be in rawdata; in this case there is now '/local'
         # subfolder, if it is in a version folder, it is in '/local'
         im_root, im_name = os.path.split(image_path)
+        # take care of 'segmentations'
+        if os.path.split(im_root)[1] == 'segmentations':
+            im_root = os.path.join(os.path.split(im_root)[0], 'images')
         new_image_path = os.path.join(im_root, new_name + '.h5')
         if not os.path.exists(new_image_path):
             new_image_path = os.path.join(im_root, 'local', new_name + '.h5')
@@ -120,7 +122,10 @@ def update_tables(folder):
                 continue
 
             # otherwise try to link to the renamed table file
-            link_folder, table_name = os.path.split(table_file)
+            link_folder, table_name = os.path.split(link_location)
+            # some table names have this typo
+            if table_name == 'base.csv':
+                table_name = 'default.csv'
             link_folder = os.path.split(link_folder)[0]
             link_location = os.path.join(link_folder, new_name, table_name)
             assert os.path.exists(link_location), link_location
@@ -128,7 +133,9 @@ def update_tables(folder):
             if DRY_RUN:
                 print("Moving link from", table_file, link_location)
             else:
-                make_squashed_link(link_location, table_file, override=True)
+                os.unlink(table_file)
+                rel_link = os.path.relpath(link_location, os.path.split(table_file)[0])
+                os.symlink(rel_link, table_file)
 
 
 def update_segmentation_data(folder):
@@ -158,9 +165,6 @@ def update_segmentation_data(folder):
         dynamic_seg_path = os.path.join(folder, 'misc', 'dynamic_segmentations.json')
         with open(dynamic_seg_path, 'w') as f:
             json.dump(dynamic_seg_dict, f, sort_keys=True, indent=2)
-
-    # update the tables
-    update_tables(folder)
 
 
 def clean_up(version_folder):
@@ -194,7 +198,10 @@ def migrate_version(version):
     # 3.) iterate over all table links and repair them
     update_segmentation_data(version_folder)
 
-    # 4.) clean up:
+    # 4.) update the tables
+    update_tables(version_folder)
+
+    # 5.) clean up:
     clean_up(version_folder)
 
 
@@ -307,5 +314,5 @@ if __name__ == '__main__':
     # change names and xmls in the rawfolder
     # migrate_rawfolder()
 
-    version = '0.0.0'
+    version = '0.0.1'
     migrate_version(version)
