@@ -2,9 +2,11 @@ import os
 import json
 import shutil
 from glob import glob
+from pybdv.metadata import get_resolution
 from mmpb.files.name_lookup import (look_up_filename, get_image_properties,
                                     DYNAMIC_SEGMENTATIONS, get_dynamic_segmentation_properties)
 from mmpb.files.xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
+from mmpb.files.copy_helper import copy_to_bdv_n5
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 DRY_RUN = True
@@ -250,8 +252,42 @@ def migrate_rawfolder():
 
 
 # iterate over all the xmls in this version, follow the links
-# and replace h5 files with n5 (if necessary)
-def to_n5(version):
+# and make corresponding n5 files (if they don't exist yet)
+def make_n5_files(version):
+    version_folder = os.path.join(ROOT, version)
+
+    # default chunk size
+    default_chunks = 3 * (128,)
+    # special chunk sizes
+    chunk_dict = {'sbem-6dpf-1-whole-raw': None}  # don't copy raw yet
+
+    paths_to_remove = []
+
+    xmls = glob(os.path.join(version_folder, 'images', 'local', '*.xml'))
+    for xml in xmls:
+        name = os.path.splitext(os.path.split(xml)[1])[0]
+        chunks = chunk_dict.get(name, default_chunks)
+        # chunks None means we skip copying for now
+        if chunks is None:
+            continue
+
+        h5_path = get_h5_path_from_xml(xml, return_absolute_path=True)
+        n5_path = os.path.splitext(h5_path)[0] + '.n5'
+        if os.path.exists(n5_path):
+            continue
+
+        # load resolution from xml
+        resolution = get_resolution(xml)
+        copy_to_bdv_n5(h5_path, n5_path, resolution, chunks)
+
+        paths_to_remove.append(h5_path)
+
+    return paths_to_remove
+
+
+# TODO
+# switch xmls to n5 format if n5 file at image location exists
+def update_n5_xmls(version):
     pass
 
 
@@ -314,5 +350,10 @@ if __name__ == '__main__':
     # change names and xmls in the rawfolder
     # migrate_rawfolder()
 
-    version = '0.0.1'
-    migrate_version(version)
+    # version = '0.0.1'
+    # migrate_version(version)
+
+    version = '0.6.5'
+    paths_to_remove = make_n5_files(version)
+    print(paths_to_remove)
+    # update_n5_xmls(version)

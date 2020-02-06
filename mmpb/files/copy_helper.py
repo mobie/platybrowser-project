@@ -1,5 +1,12 @@
 import os
 import shutil
+import numpy as np
+
+from elf.io import open_file
+from pybdv.converter import copy_dataset
+from pybdv.metadata import write_n5_metadata
+from pybdv.util import get_key, get_number_of_scales, get_scale_factors
+
 from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
 from .sources import get_image_names, get_segmentation_names, get_segmentations
 from ..attributes.base_attributes import write_additional_table_file
@@ -130,3 +137,45 @@ def copy_release_folder(src_folder, dst_folder, exclude_prefixes=[]):
     copy_misc_data(src_folder, dst_folder)
     copy_segmentations(src_folder, dst_folder, exclude_prefixes)
     copy_all_tables(src_folder, dst_folder)
+
+
+def normalize_scale_factors(scale_factors, start_scale):
+    # we expect scale_factors[0] == [1 1 1]
+    assert np.prod(scale_factors[0]) == 1
+
+    # convert to relative scale factors
+    rel_scales = [scale_factors[0]]
+    for scale in range(1, len(scale_factors)):
+        rel_factor = [sf / prev_sf for sf, prev_sf in zip(scale_factors[scale],
+                                                          scale_factors[scale - 1])]
+        rel_scales.append(rel_factor)
+
+    # return the relative scales starting at the new scale
+    new_factors = [[1., 1., 1.]] + rel_scales[(start_scale + 1):]
+    return new_factors
+
+
+def copy_to_bdv_n5(in_file, out_file, chunks, resolution,
+                   n_threads=32, start_scale=0):
+
+    n_scales = get_number_of_scales(in_file, 0, 0)
+    scale_factors = get_scale_factors(in_file, 0)
+    # double check newly implemented functions in pybdv
+    assert n_scales == len(scale_factors)
+
+    scale_factors = normalize_scale_factors(scale_factors, start_scale)
+
+    for out_scale, in_scale in enumerate(range(start_scale, n_scales)):
+        in_key = get_key(True, 0, 0, in_scale)
+        out_key = get_key(False, 0, 0, out_scale)
+
+        if chunks is None:
+            with open_file(in_file, 'r') as f:
+                chunks_ = f[in_key].chunks
+        else:
+            chunks_ = chunks
+
+        copy_dataset(in_file, in_key, out_file, out_key, False,
+                     chunks_, n_threads)
+
+    write_n5_metadata(out_file, scale_factors, resolution, setup_id=0)
