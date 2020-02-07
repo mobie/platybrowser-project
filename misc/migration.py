@@ -3,10 +3,10 @@ import json
 import shutil
 from glob import glob
 from pybdv.metadata import get_resolution, get_data_path
-from mmpb.files.name_lookup import (look_up_filename, get_image_properties,
-                                    DYNAMIC_SEGMENTATIONS, get_dynamic_segmentation_properties)
-from mmpb.files.xml_utils import copy_xml_with_newpath
+from mmpb.files.xml_utils import copy_xml_with_newpath, write_s3_xml
 from mmpb.files.copy_helper import copy_to_bdv_n5
+from name_lookup import (look_up_filename, get_image_properties,
+                         DYNAMIC_SEGMENTATIONS, get_dynamic_segmentation_properties)
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 DRY_RUN = True
@@ -296,19 +296,34 @@ def update_n5_xmls(version):
 
         # get the absolute path and check if the corresponding n5 file exists
         data_abs_path = get_data_path(xml, return_absolute_path=True)
-        new_abs_path = os.path.splitext(data_abs_path) + '.n5'
+        new_abs_path = os.path.splitext(data_abs_path)[0] + '.n5'
         # n5 file is not there? -> continue
         if not os.path.exists(new_abs_path):
             continue
 
         # write the new relative path
-        new_rel_path = os.path.splitext(data_rel_path) + '.n5'
+        new_rel_path = os.path.splitext(data_rel_path)[0] + '.n5'
         copy_xml_with_newpath(xml, xml, new_rel_path,
                               data_format='bdv.n5')
 
 
 def make_remote_xmls(version):
-    pass
+    version_folder = os.path.join(ROOT, version)
+    xmls = glob(os.path.join(version_folder, 'images', 'local', '*.xml'))
+
+    # iterate over the xmls, check if target is a n5 file
+    # if it is, make xml with correct path in bucket in the remote folder
+    for xml in xmls:
+        data_path = get_data_path(xml, return_absolute_path=True)
+        if not data_path.endswith('.n5'):
+            continue
+        # TODO check that this is correct
+        path_in_bucket = os.path.relpath(data_path, ROOT)
+        if '/local/' in path_in_bucket:
+            path_in_bucket.replace('local', 'remote')
+
+        xml_out = xml.replace('local', 'remote')
+        write_s3_xml(xml, xml_out, path_in_bucket)
 
 
 def remove_deprecated_data():
@@ -366,13 +381,16 @@ if __name__ == '__main__':
     # change names and xmls in the rawfolder
     # migrate_rawfolder()
 
-    version = '0.6.5'
-    migrate_version(version)
-
-    version = '0.6.5'
-    copied = make_n5_files(version)
-    with open('/g/kreshuk/pape/copied_to_n5.json', 'w') as f:
-        json.dump(copied, f)
+    # version = '0.6.5'
+    # migrate_version(version)
 
     # version = '0.6.5'
-    # update_n5_xmls(version)
+    # copied = make_n5_files(version)
+    # with open('/g/kreshuk/pape/copied_to_n5.json', 'w') as f:
+    #     json.dump(copied, f)
+
+    version = '0.6.5'
+    update_n5_xmls(version)
+
+    # version = '0.6.5'
+    # make_remote_xmls(version)
