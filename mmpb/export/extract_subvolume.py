@@ -1,8 +1,7 @@
 import os
 import h5py
 import imageio
-
-from ..files.xml_utils import get_h5_path_from_xml
+from pybdv.metadata import get_data_path
 
 
 def parse_coordinate(coord):
@@ -79,7 +78,7 @@ def cutout_data(tag, name, scale, bb_start, bb_stop):
     assert all(sta < sto for sta, sto in zip(bb_start, bb_stop))
 
     path = os.path.join('data', tag, name_to_path(name))
-    path = get_h5_path_from_xml(path, return_absolute_path=True)
+    path = get_data_path(path, return_absolute_path=True)
     resolution = get_res_level(scale)
 
     base_scale = name_to_base_scale(name)

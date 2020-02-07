@@ -1,9 +1,11 @@
 import json
 import os
 from shutil import copyfile
+from pybdv.metadata import get_data_path
+
 from .checks import check_bdv, check_tables, check_paintera
 from ..check_attributes import check_attributes
-from .xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
+from .xml_utils import copy_xml_with_newpath
 
 RAW_FOLDER = 'data/rawdata'
 SOURCE_FILE = 'data/sources.json'
@@ -129,7 +131,7 @@ def add_image(source_name, name, input_path, copy_data=True, is_private=False):
     if output_name in names:
         raise ValueError("Name %s is already taken" % output_name)
 
-    h5_path = get_h5_path_from_xml(input_path, return_absolute_path=True)
+    h5_path = get_data_path(input_path, return_absolute_path=True)
     name_h5 = '%s.h5' % output_name
     out_xml = os.path.join(RAW_FOLDER, '%s.xml' % output_name)
     out_h5 = os.path.join(RAW_FOLDER, name_h5)
@@ -236,7 +238,7 @@ def add_segmentation(source_name, name, segmentation_path=None,
 
     # copy the segmentation data if we have a static segmentation
     if is_static:
-        h5_path = get_h5_path_from_xml(segmentation_path, return_absolute_path=True)
+        h5_path = get_data_path(segmentation_path, return_absolute_path=True)
         name_h5 = '%s.h5' % output_name
         out_xml = os.path.join(RAW_FOLDER, '%s.xml' % output_name)
         out_h5 = os.path.join(RAW_FOLDER, name_h5)

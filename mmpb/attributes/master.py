@@ -1,5 +1,6 @@
 import os
 import h5py
+from pybdv.metadata import get_data_path
 
 from .base_attributes import base_attributes, propagate_attributes, write_additional_table_file
 from .cell_nucleus_mapping import map_cells_to_nuclei
@@ -7,12 +8,11 @@ from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes, extrapolated_intensities
 from .cilia_attributes import cilia_morphology
-from ..files.xml_utils import get_h5_path_from_xml
 
 
 def get_seg_path(folder, name, key=None):
     xml_path = os.path.join(folder, 'segmentations', '%s.xml' % name)
-    path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
+    path = get_data_path(xml_path, return_absolute_path=True)
     assert os.path.exists(path), path
     if key is not None:
         with h5py.File(path, 'r') as f:
@@ -43,7 +43,7 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
 
     # make table with gene mapping
     aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
-    aux_gene_path = get_h5_path_from_xml(aux_gene_xml, return_absolute_path=True)
+    aux_gene_path = get_data_path(aux_gene_xml, return_absolute_path=True)
     if not os.path.exists(aux_gene_path):
         raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
     gene_out = os.path.join(table_folder, 'genes.csv')
@@ -79,7 +79,7 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
 
     # mapping to extrapolated intensities
     extrapol_mask = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-mask-extrapolated.xml')
-    extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
+    extrapol_mask = get_data_path(extrapol_mask, return_absolute_path=True)
     extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
     extrapolated_intensities(seg_path, 't00000/s00/3/cells',
                              extrapol_mask, 't00000/s00/0/cells',
@@ -114,7 +114,7 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
 
     # make the morphology attribute table
     xml_raw = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-raw.xml')
-    raw_path = get_h5_path_from_xml(xml_raw, return_absolute_path=True)
+    raw_path = get_data_path(xml_raw, return_absolute_path=True)
     cell_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-cells-labels')
     chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin-labels')
     morpho_out = os.path.join(table_folder, 'morphology.csv')
@@ -125,7 +125,7 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
 
     # mapping to extrapolated intensities
     extrapol_mask = os.path.join(folder, 'segmentations', 'sbem-6dpf-mask-extrapolated.xml')
-    extrapol_mask = get_h5_path_from_xml(extrapol_mask, return_absolute_path=True)
+    extrapol_mask = get_data_path(extrapol_mask, return_absolute_path=True)
     extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
     extrapolated_intensities(seg_path, 't00000/s00/1/cells',
                              extrapol_mask, 't00000/s00/0/cells',

@@ -4,10 +4,10 @@ import numpy as np
 
 from elf.io import open_file
 from pybdv.converter import copy_dataset
-from pybdv.metadata import write_n5_metadata
+from pybdv.metadata import write_n5_metadata, get_data_path
 from pybdv.util import get_key, get_number_of_scales, get_scale_factors
 
-from .xml_utils import copy_xml_with_newpath, get_h5_path_from_xml
+from .xml_utils import copy_xml_with_newpath
 from .sources import get_image_names, get_segmentation_names, get_segmentations
 from ..attributes.base_attributes import write_additional_table_file
 
@@ -30,7 +30,7 @@ def make_squashed_link(src_file, dst_file, override=False):
 
 
 def copy_file(xml_in, xml_out):
-    h5path = get_h5_path_from_xml(xml_in, return_absolute_path=True)
+    h5path = get_data_path(xml_in, return_absolute_path=True)
     xml_dir = os.path.split(xml_out)[0]
     h5path = os.path.relpath(h5path, start=xml_dir)
     copy_xml_with_newpath(xml_in, xml_out, h5path, path_type='relative')
@@ -175,7 +175,10 @@ def copy_to_bdv_n5(in_file, out_file, chunks, resolution,
         else:
             chunks_ = chunks
 
-        copy_dataset(in_file, in_key, out_file, out_key, False,
-                     chunks_, n_threads)
+        print(chunks_)
+        copy_dataset(in_file, in_key, out_file, out_key,
+                     convert_dtype=False,
+                     chunks=chunks_,
+                     n_threads=n_threads)
 
     write_n5_metadata(out_file, scale_factors, resolution, setup_id=0)

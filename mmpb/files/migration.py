@@ -2,10 +2,10 @@ import os
 import json
 import shutil
 from glob import glob
-from pybdv.metadata import get_resolution
+from pybdv.metadata import get_resolution, get_data_path
 from mmpb.files.name_lookup import (look_up_filename, get_image_properties,
                                     DYNAMIC_SEGMENTATIONS, get_dynamic_segmentation_properties)
-from mmpb.files.xml_utils import get_h5_path_from_xml, copy_xml_with_newpath
+from mmpb.files.xml_utils import copy_xml_with_newpath
 from mmpb.files.copy_helper import copy_to_bdv_n5
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
@@ -30,7 +30,7 @@ def move_image_file(image_folder, xml_path):
     new_name = look_up_filename(name)
 
     # get the linked hdf5 path
-    image_path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
+    image_path = get_data_path(xml_path, return_absolute_path=True)
 
     # move the xml to 'images/local'
     new_xml_path = os.path.join(image_folder, 'local', new_name + '.xml')
@@ -217,7 +217,7 @@ def migrate_rawfolder():
         new_name = look_up_filename(name)
 
         # get the linked hdf5 path
-        image_path = get_h5_path_from_xml(xml_path, return_absolute_path=True)
+        image_path = get_data_path(xml_path, return_absolute_path=True)
 
         # move the xml to 'images/local'
         new_xml_path = os.path.join(raw_folder, new_name + '.xml')
@@ -261,7 +261,7 @@ def make_n5_files(version):
     # special chunk sizes
     chunk_dict = {'sbem-6dpf-1-whole-raw': None}  # don't copy raw yet
 
-    paths_to_remove = []
+    copied = []
 
     xmls = glob(os.path.join(version_folder, 'images', 'local', '*.xml'))
     for xml in xmls:
@@ -271,24 +271,40 @@ def make_n5_files(version):
         if chunks is None:
             continue
 
-        h5_path = get_h5_path_from_xml(xml, return_absolute_path=True)
+        h5_path = get_data_path(xml, return_absolute_path=True)
         n5_path = os.path.splitext(h5_path)[0] + '.n5'
+        copied.append(h5_path)
         if os.path.exists(n5_path):
             continue
 
         # load resolution from xml
-        resolution = get_resolution(xml)
-        copy_to_bdv_n5(h5_path, n5_path, resolution, chunks)
+        resolution = get_resolution(xml, 0)
+        copy_to_bdv_n5(h5_path, n5_path, chunks, resolution)
 
-        paths_to_remove.append(h5_path)
-
-    return paths_to_remove
+    return copied
 
 
-# TODO
 # switch xmls to n5 format if n5 file at image location exists
 def update_n5_xmls(version):
-    pass
+    version_folder = os.path.join(ROOT, version)
+    xmls = glob(os.path.join(version_folder, 'images', 'local', '*.xml'))
+    for xml in xmls:
+        data_rel_path = get_data_path(xml)
+        # is this already n5? -> continue
+        if os.path.splitext(data_rel_path) == '.n5':
+            continue
+
+        # get the absolute path and check if the corresponding n5 file exists
+        data_abs_path = get_data_path(xml, return_absolute_path=True)
+        new_abs_path = os.path.splitext(data_abs_path) + '.n5'
+        # n5 file is not there? -> continue
+        if not os.path.exists(new_abs_path):
+            continue
+
+        # write the new relative path
+        new_rel_path = os.path.splitext(data_rel_path) + '.n5'
+        copy_xml_with_newpath(xml, xml, new_rel_path,
+                              data_format='bdv.n5')
 
 
 def make_remote_xmls(version):
@@ -354,6 +370,11 @@ if __name__ == '__main__':
     # migrate_version(version)
 
     version = '0.6.5'
-    paths_to_remove = make_n5_files(version)
-    print(paths_to_remove)
+    copied = make_n5_files(version)
+    with open('/g/kreshuk/pape/copied_to_n5.json', 'w') as f:
+        json.dump(copied, f)
+    # x = json.dumps(copied, indent=2, sort_keys=True)
+    # print(x)
+
+    # version = '0.6.5'
     # update_n5_xmls(version)

@@ -66,9 +66,12 @@ def update_name_lut():
     image_names = os.listdir(os.path.join(folder, 'images'))
     image_names = [os.path.splitext(name)[0] for name in image_names
                    if os.path.splitext(name)[1] == '.xml']
-    seg_names = os.listdir(os.path.join(folder, 'segmentations'))
-    seg_names = [os.path.splitext(name)[0] for name in seg_names
-                 if os.path.splitext(name)[1] == '.xml']
+    if os.path.exists(os.path.join(folder, 'segmentations')):
+        seg_names = os.listdir(os.path.join(folder, 'segmentations'))
+        seg_names = [os.path.splitext(name)[0] for name in seg_names
+                     if os.path.splitext(name)[1] == '.xml']
+    else:
+        seg_names = []
 
     file_names = image_names + seg_names
     for name in file_names:

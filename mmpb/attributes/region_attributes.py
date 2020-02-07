@@ -3,9 +3,9 @@ import glob
 import numpy as np
 import pandas as pd
 import h5py
+from pybdv.metadata import get_data_path
 
 from .util import write_csv, node_labels, normalize_overlap_dict
-from ..files.xml_utils import get_h5_path_from_xml
 
 
 def write_region_table(label_ids, label_list, semantic_mapping_list, out_path):
@@ -55,17 +55,19 @@ def muscle_attributes(muscle_path, key_muscle,
     return muscle_labels, semantic_muscle
 
 
+# TODO add nephridia
 def region_attributes(seg_path, region_out,
                       image_folder, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs,
                       key_seg='t00000/s00/2/cells'):
+    assert False, "Add nephridia before running this!"
     key_tissue = 't00000/s00/0/cells'
 
     # 1.) compute the mapping to carved regions
     #
     carved_path = os.path.join(segmentation_folder,
                                'sbem-6dpf-1-whole-segmented-tissue-labels.xml')
-    carved_path = get_h5_path_from_xml(carved_path, return_absolute_path=True)
+    carved_path = get_data_path(carved_path, return_absolute_path=True)
     carved_labels = node_labels(seg_path, key_seg,
                                 carved_path, key_tissue,
                                 'carved-regions', tmp_folder,
@@ -81,7 +83,7 @@ def region_attributes(seg_path, region_out,
 
     # 2.) compute the mapping to muscles
     muscle_path = os.path.join(segmentation_folder, 'sbem-6dpf-1-whole-segmented-muscle.xml')
-    muscle_path = get_h5_path_from_xml(muscle_path, return_absolute_path=True)
+    muscle_path = get_data_path(muscle_path, return_absolute_path=True)
     # need to be more lenient with the overlap criterion for the muscle mapping
     muscle_labels, semantic_muscle = muscle_attributes(muscle_path, key_tissue,
                                                        seg_path, key_seg,
@@ -92,7 +94,7 @@ def region_attributes(seg_path, region_out,
     # 3.) map all the segmented prospr regions
     region_paths = glob.glob(os.path.join(image_folder, "prospr-6dpf-1-whole-segmented-*"))
     region_names = [os.path.splitext(pp.split('-')[-1])[0].lower() for pp in region_paths]
-    region_paths = [get_h5_path_from_xml(rp, return_absolute_path=True)
+    region_paths = [get_data_path(rp, return_absolute_path=True)
                     for rp in region_paths]
     for rpath, rname in zip(region_paths, region_names):
         rlabels = node_labels(seg_path, key_seg,
@@ -104,7 +106,7 @@ def region_attributes(seg_path, region_out,
 
     # 4.) map the midgut segmentation
     midgut_path = os.path.join(segmentation_folder, 'sbem-6dpf-1-whole-segmented-midgut.xml')
-    midgut_path = get_h5_path_from_xml(midgut_path, return_absolute_path=True)
+    midgut_path = get_data_path(midgut_path, return_absolute_path=True)
     midgut_labels = node_labels(seg_path, key_seg, midgut_path, key_tissue,
                                 'midgut', tmp_folder, target, max_jobs)
     label_list.append(midgut_labels)

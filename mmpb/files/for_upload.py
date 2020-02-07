@@ -3,12 +3,11 @@ import xml.etree.ElementTree as ET
 import numpy as np
 from shutil import copyfile
 
-from mmpb.files.xml_utils import get_h5_path_from_xml
 from glob import glob
 from elf.io import open_file
 from pybdv.converter import copy_dataset
 from pybdv.util import get_key, get_number_of_scales, get_scale_factors
-from pybdv.metadata import write_n5_metadata, get_resolution, indent_xml
+from pybdv.metadata import write_n5_metadata, get_resolution, indent_xml, get_data_path
 
 
 def normalize_scale_factors(scale_factors, start_scale):
@@ -140,7 +139,7 @@ def copy_images(in_folder, out_folder, data_out_folder,
 
     for im_name, in_file in zip(image_names, files_to_copy):
         print("Copying", im_name, "...")
-        in_h5 = get_h5_path_from_xml(in_file, True)
+        in_h5 = get_data_path(in_file, True)
         # TODO we don't want to always copy to rawdata, but instead we
         # need to copy to the correct path extract from the old path
         out_file = os.path.join(data_out_folder, im_name + '.n5')
@@ -191,7 +190,7 @@ def copy_segmentations(in_folder, out_folder, segmentations_to_copy, output_root
 
     for seg_name, in_file in zip(seg_names, files_to_copy):
         print("Copying", seg_name, "...")
-        in_h5 = get_h5_path_from_xml(in_file, True)
+        in_h5 = get_data_path(in_file, True)
         # TODO we don't want to always copy to rawdata, but instead we
         # need to copy to the correct path extract from the old path
         out_file = os.path.join(s3_folder, seg_name + '.n5')

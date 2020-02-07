@@ -4,7 +4,7 @@ import luigi
 import z5py
 
 from cluster_tools.node_labels import NodeLabelWorkflow
-from ..files.xml_utils import get_h5_path_from_xml
+from pybdv.metadata import get_data_path
 from ..default_config import write_default_global_config
 
 
@@ -23,7 +23,7 @@ def get_seg_path(folder, name):
     path = os.path.join(data_folder, '%s.xml' % name)
     # read h5 path from the xml
     if os.path.exists(path):
-        path = get_h5_path_from_xml(path, return_absolute_path=True)
+        path = get_data_path(path, return_absolute_path=True)
         if not os.path.exists(path):
             raise RuntimeError("Invalid path in xml")
         return path
