@@ -3,7 +3,8 @@
 import argparse
 import os
 import pandas as pd
-from mmpb.export.extract_subvolume import make_cutout, get_res_level, parse_coordinate, name_to_path
+from mmpb.export.extract_subvolume import (make_cutout, get_res_level,
+                                           parse_coordinate, name_to_path)
 
 
 def get_bounding_box(tag, lower, upper, table_name, table_id):
