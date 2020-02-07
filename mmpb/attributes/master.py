@@ -2,7 +2,8 @@ import os
 import h5py
 from pybdv.metadata import get_data_path
 
-from .base_attributes import base_attributes, propagate_attributes, write_additional_table_file
+from .base_attributes import (add_cell_criterion_column, base_attributes,
+                              propagate_attributes, write_additional_table_file)
 from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
@@ -40,6 +41,9 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     nuc_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-nuclei-labels', seg_key)
     map_cells_to_nuclei(label_ids, seg_path, nuc_path, nuc_mapping_table,
                         tmp_folder, target, max_jobs)
+
+    # add a column with (somewhat stringent) cell criterion to the default table
+    add_cell_criterion_column(base_out, nuc_mapping_table)
 
     # make table with gene mapping
     aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')

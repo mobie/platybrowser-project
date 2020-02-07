@@ -215,7 +215,7 @@ def propagate_attributes(id_mapping_path, table_path, output_path,
     id_col[np.isnan(id_col)] = 0
     id_col = id_col.astype('uint32')
 
-    keys = list(id_mapping.keys())
+    # keys = list(id_mapping.keys())
     id_col = nt.takeDict(id_mapping, id_col)
 
     # TODO need to implement merge rules
@@ -226,3 +226,28 @@ def propagate_attributes(id_mapping_path, table_path, output_path,
 
     table[column_name] = id_col
     table.to_csv(output_path, index=False, sep='\t')
+
+
+# Do we need to extend the cell criterion? Possibilties:
+# - size threshold
+def add_cell_criterion_column(base_table_path, nucleus_mapping_path, out_table_path=None):
+    """ Add a column to the cell defaults table that indicates whether the id
+        is considered as a cell or not.
+
+        Currently the criterion is based on having a unique nucleus id mapped to the cell.
+    """
+    base_table = pd.read_csv(base_table_path, sep='\t')
+    nucleus_mapping = pd.read_csv(nucleus_mapping_path, sep='\t')
+    assert len(base_table) == len(nucleus_mapping)
+
+    mapped_nucleus_ids = nucleus_mapping['nucleus_id'].values
+    mapped, mapped_counts = np.unique(mapped_nucleus_ids, return_counts=True)
+
+    unique_mapped_nuclei = mapped[mapped_counts == 1]
+    cell_criterion = np.isin(mapped_nucleus_ids, unique_mapped_nuclei)
+    assert len(cell_criterion) == len(base_table)
+
+    base_table['cells'] = cell_criterion.astype('uint8')
+
+    out_path = base_table_path if out_table_path is None else out_table_path
+    base_table.to_csv(out_path, index=False, sep='\t')
