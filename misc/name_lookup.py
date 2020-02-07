@@ -48,9 +48,9 @@ DYNAMIC_SEGMENTATIONS = ['sbem-6dpf-1-whole-segmented-cells',
                          'sbem-6dpf-1-whole-segmented-nuclei']
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
+LUT_PATH = 'new_name_lut.json'
 
 FILE_NAME_LUT = {}
-LUT_PATH = os.path.join(ROOT, 'new_name_lut.json')
 IMAGE_PROPERTIES = {}
 
 

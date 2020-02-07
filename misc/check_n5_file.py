@@ -34,6 +34,26 @@ def summarise_chunk_stats(path, key):
     print("Min/max chunk size in MB:", np.min(sizes) / 1.e6, "/", np.max(sizes) / 1.e6)
 
 
+# TODO update this to be more general
+def estimate_chunk_sizes():
+    ref_chunk_shape = [128, 128, 128]
+    ref_chunk_size = float(np.prod(ref_chunk_shape))
+    ref_chunk_mb = 1.0160599442530536
+    ref_n_chunks = 1553606.
+
+    start = 64
+    stop = 128
+    step = 16
+    for chunk_len in range(start, stop + step, step):
+        print("Chunks: %i^3" % chunk_len)
+        rel_size = chunk_len ** 3 / ref_chunk_size
+        chunk_mb = ref_chunk_mb * rel_size
+        n_chunks = ref_n_chunks / rel_size
+        print("Nr. chunks at highest res:", int(n_chunks))
+        print("Mean chunk size in MB:", chunk_mb)
+        print()
+
+
 if __name__ == '__main__':
     p = '../data/0.6.5/images/local/sbem-6dpf-1-whole-segmented-cells.n5'
     k = 'setup0/timepoint0/s0'
