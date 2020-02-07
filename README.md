@@ -101,9 +101,9 @@ It creates a new patch version folder and updates all relevant data.
 The data is currently hosted on the arendt EMBL share, where a conda environment with all necessary dependencies is
 available. This environment is used by default.
 
-It can be installed elsewhere using the `environment.yaml` file we provide:
-```
-conda env create -f environment.yaml
+It can be installed elsewhere using the `software/mmpb_environment.yaml` file we provide:
+```bash
+conda env create -f mmpb_environment.yaml
 ```
 
 ## Data generation
