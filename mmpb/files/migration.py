@@ -191,20 +191,20 @@ def migrate_version(version):
     version_folder = os.path.join(ROOT, version)
 
     # 1.) make new folder structure
-    new_folder_structure(version_folder)
+    # new_folder_structure(version_folder)
 
     # 2.) iterate over all images and segmentations, replace names (if necessary),
     # move the files and make the new images.json dict
-    update_image_data(version_folder)
+    # update_image_data(version_folder)
 
     # 3.) iterate over all table links and repair them
-    update_segmentation_data(version_folder)
+    # update_segmentation_data(version_folder)
 
     # 4.) update the tables
     update_tables(version_folder)
 
     # 5.) clean up:
-    clean_up(version_folder)
+    # clean_up(version_folder)
 
 
 # migrate all the data in the raw folder
@@ -366,15 +366,13 @@ if __name__ == '__main__':
     # change names and xmls in the rawfolder
     # migrate_rawfolder()
 
-    # version = '0.0.1'
-    # migrate_version(version)
+    version = '0.6.5'
+    migrate_version(version)
 
     version = '0.6.5'
     copied = make_n5_files(version)
     with open('/g/kreshuk/pape/copied_to_n5.json', 'w') as f:
         json.dump(copied, f)
-    # x = json.dumps(copied, indent=2, sort_keys=True)
-    # print(x)
 
     # version = '0.6.5'
     # update_n5_xmls(version)

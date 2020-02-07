@@ -50,6 +50,7 @@ DYNAMIC_SEGMENTATIONS = ['sbem-6dpf-1-whole-segmented-cells',
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
 FILE_NAME_LUT = {}
+LUT_PATH = os.path.join(ROOT, 'new_name_lut.json')
 IMAGE_PROPERTIES = {}
 
 
@@ -60,18 +61,19 @@ IMAGE_PROPERTIES = {}
 # - segmentations -> get rid of '-labels' postifx
 def update_name_lut():
     global FILE_NAME_LUT
+    if os.path.exists(LUT_PATH):
+        with open(LUT_PATH, 'r') as f:
+            FILE_NAME_LUT.update(json.load(f))
+        return
 
     # update files according to the last version folder
     folder = os.path.join(ROOT, '0.6.5')
     image_names = os.listdir(os.path.join(folder, 'images'))
     image_names = [os.path.splitext(name)[0] for name in image_names
                    if os.path.splitext(name)[1] == '.xml']
-    if os.path.exists(os.path.join(folder, 'segmentations')):
-        seg_names = os.listdir(os.path.join(folder, 'segmentations'))
-        seg_names = [os.path.splitext(name)[0] for name in seg_names
-                     if os.path.splitext(name)[1] == '.xml']
-    else:
-        seg_names = []
+    seg_names = os.listdir(os.path.join(folder, 'segmentations'))
+    seg_names = [os.path.splitext(name)[0] for name in seg_names
+                 if os.path.splitext(name)[1] == '.xml']
 
     file_names = image_names + seg_names
     for name in file_names:
@@ -213,7 +215,5 @@ def get_dynamic_segmentation_properties(name):
 
 
 if __name__ == '__main__':
-    # x = json.dumps(FILE_NAME_LUT, sort_keys=True, indent=2)
-    # print(x)
-    with open('/g/kreshuk/pape/new_names.json', 'w') as f:
+    with open(LUT_PATH, 'w') as f:
         json.dump(FILE_NAME_LUT, f, sort_keys=True, indent=2)
