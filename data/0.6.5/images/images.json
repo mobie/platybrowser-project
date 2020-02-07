@@ -1703,6 +1703,13 @@
       "local": "local/prospr-6dpf-1-whole-vglut.xml"
     }
   },
+  "prospr-6dpf-1-whole-virtual-cells": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/prospr-6dpf-1-whole-virtual-cells.xml"
+    },
+    "TableFolder": "tables/prospr-6dpf-1-whole-virtual-cells"
+  },
   "prospr-6dpf-1-whole-wnt16": {
     "Color": "Magenta",
     "MaxValue": 1000,
@@ -1727,6 +1734,27 @@
       "local": "local/sbem-6dpf-1-whole-raw.xml"
     }
   },
+  "sbem-6dpf-1-whole-segmented-cells": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-cells.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cells"
+  },
+  "sbem-6dpf-1-whole-segmented-chromatin": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-chromatin.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-chromatin"
+  },
+  "sbem-6dpf-1-whole-segmented-cilia": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-cilia.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cilia"
+  },
   "sbem-6dpf-1-whole-segmented-extrapolated": {
     "Color": "White",
     "MaxValue": 1,
@@ -1743,6 +1771,37 @@
       "local": "local/sbem-6dpf-1-whole-segmented-inside.xml"
     }
   },
+  "sbem-6dpf-1-whole-segmented-muscle": {
+    "Color": "White",
+    "MaxValue": 1,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-muscle.xml"
+    }
+  },
+  "sbem-6dpf-1-whole-segmented-neuropil": {
+    "Color": "White",
+    "MaxValue": 1,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-neuropil.xml"
+    }
+  },
+  "sbem-6dpf-1-whole-segmented-nephridia": {
+    "Color": "White",
+    "MaxValue": 1,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-nephridia.xml"
+    }
+  },
+  "sbem-6dpf-1-whole-segmented-nuclei": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-nuclei.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-nuclei"
+  },
   "sbem-6dpf-1-whole-segmented-outside": {
     "Color": "White",
     "MaxValue": 1,
@@ -1758,5 +1817,12 @@
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-resin.xml"
     }
+  },
+  "sbem-6dpf-1-whole-segmented-tissue": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-tissue.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-tissue"
   }
 }
