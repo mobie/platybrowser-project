@@ -4,7 +4,7 @@ channels:
     - cpape
     - conda-forge
 dependencies:
-    # - affogato
+    - affogato
     - cluster_tools
     - h5py
     - luigi
