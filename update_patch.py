@@ -4,14 +4,12 @@ import os
 import json
 import argparse
 from copy import deepcopy
-from glob import glob
-from shutil import rmtree
-from subprocess import check_output, call
+from subprocess import check_output
 
 import mmpb.attributes
 from mmpb.files import get_segmentation_names, get_segmentations
 from mmpb.files import (copy_image_data, copy_misc_data, copy_segmentation, copy_tables,
-                        make_bdv_server_file, make_folder_structure)
+                        make_folder_structure)
 from mmpb.export import export_segmentation
 from mmpb.release_helper import add_version
 
@@ -78,33 +76,6 @@ def update_tables(folder, new_folder, names_to_update, target, max_jobs):
                      target, max_jobs)
 
 
-# TODO check for errors
-def make_release(tag, folder, description=''):
-    call(['git', 'add', folder])
-    call(['git', 'commit', '-m', 'Automatic platybrowser update'])
-    if description == '':
-        call(['git', 'tag', tag])
-    else:
-        call(['git', '-m', description, 'tag', tag])
-    # TODO use the gitlab api instead
-    # call(['git', 'push', 'origin', 'master', '--tags'])
-
-
-def clean_up():
-    """ Clean up all tmp folders
-    """
-
-    def remove_dir(dir_name):
-        try:
-            rmtree(dir_name)
-        except OSError:
-            pass
-
-    tmp_folders = glob('tmp_*')
-    for tmp_folder in tmp_folders:
-        remove_dir(tmp_folder)
-
-
 def check_requested_updates(names_to_update):
     segmentations = get_segmentations()
     for name in names_to_update:
@@ -114,9 +85,8 @@ def check_requested_updates(names_to_update):
             raise ValueError("Requested update for %s, which is a static segmentation" % name)
 
 
-# TODO catch all exceptions and handle them properly
 def update_patch(update_seg_names, update_table_names,
-                 description='', target='slurm', max_jobs=250):
+                 target='slurm', max_jobs=250):
     """ Generate new patch version of platy-browser derived data.
 
     The patch version is increased if derived data changes, e.g. by
@@ -127,7 +97,6 @@ def update_patch(update_seg_names, update_table_names,
         update_table_names [list[str]] - names of tables to be updated.
             Not that these only need to be specified if the corresponding segmentation is not
             updated, but the tables should be updated.
-        description [str] - optional descrption for release message (default: '').
         target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
         max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
@@ -163,25 +132,17 @@ def update_patch(update_seg_names, update_table_names,
     update_tables(folder, new_folder, table_updates,
                   target=target, max_jobs=max_jobs)
 
-    print("All updates were successfull. Making bdv file and adding version tag")
-    make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
-                         relative_paths=True)
     add_version(new_tag)
     # TODO add some quality control that cheks that all files are there
 
-    # TODO implement make release properly
-    return
-    # make new release
-    make_release(new_tag, new_folder, description)
     print("Updated platybrowser to new release", new_tag)
-    print("All changes were successfully made. Starting clean up now.")
-    print("This can take a few hours, you can already use the new data.")
-    print("Clean-up will only remove temp files.")
-    clean_up()
+    # TODO print instructions on how to make release, upload to embl.s3/platybrowser
+    # and how to clean up
 
 
 if __name__ == '__main__':
-    help_str = "Path to a json containing list of the data to update. See docstring of 'update_patch' for details."
+    help_str = """Path to a json containing list of the data to update.
+                  See docstring of 'update_patch' for details."""
     parser = argparse.ArgumentParser(description='Update patch version of platy-browser-data.')
     parser.add_argument('input_path', type=str, help=help_str)
     parser.add_argument('--target', type=str, default='slurm',
@@ -190,9 +151,11 @@ if __name__ == '__main__':
                         help="Maximal number of jobs used for computation")
     args = parser.parse_args()
     input_path = args.input_path
+
     with open(input_path) as f:
         update_dict = json.load(f)
     if not ('segmentations' in update_dict and 'tables' in update_dict):
         raise ValueError("Invalid udpate file")
+
     update_patch(update_dict['segmentations'], update_dict['tables'],
                  target=args.target, max_jobs=args.max_jobs)
