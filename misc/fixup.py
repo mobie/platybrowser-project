@@ -1,5 +1,6 @@
 import os
 import json
+import h5py
 from glob import glob
 from mmpb.files.copy_helper import copy_attributes
 from pybdv.util import get_key, get_number_of_scales
@@ -67,7 +68,40 @@ def fix_all_id_luts():
         fix_id_luts(folder)
 
 
+def replace_gene_names_h5():
+    path = '../data/0.6.3/misc/prospr-6dpf-1-whole_meds_all_genes.h5'
+
+    ref_gene_names = glob('../data/0.6.3/images/local/prospr*.xml')
+    ref_gene_names = [os.path.splitext(os.path.split(name)[1])[0]
+                      for name in ref_gene_names]
+    ref_gene_names = ['-'.join(name.split('-')[4:]) for name in ref_gene_names]
+    ref_gene_names = [name for name in ref_gene_names if 'segmented' not in name]
+    ref_gene_names = [name for name in ref_gene_names if 'virtual' not in name]
+
+    def replace_gene_name(name):
+        new_name = name.split('-')
+        if new_name[0].startswith('ENR') or new_name[0].startswith('NOV'):
+            new_name = new_name[1:]
+        new_name = '-'.join(new_name).lower()
+        return new_name
+
+    with h5py.File(path) as f:
+        ds = f['gene_names']
+        gene_names = [i.decode('utf-8') for i in ds]
+        gene_names = [replace_gene_name(name) for name in gene_names]
+
+        assert len(gene_names) == len(ref_gene_names)
+        print(set(gene_names) - set(ref_gene_names))
+        print(set(ref_gene_names) - set(gene_names))
+        assert len(set(gene_names) - set(ref_gene_names)) == 0
+
+        # TODO once all gene names agree
+        # gene_names_ascii = [n.encode('ascii', 'ignore') for n in gene_names]
+        # f.create_dataset(names_dset, data=gene_names_ascii, dtype='S40')
+
+
 if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
     # fix_copy_attributes()
-    fix_all_id_luts()
+    # fix_all_id_luts()
+    replace_gene_names_h5()
