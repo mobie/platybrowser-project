@@ -1,8 +1,8 @@
 <SpimData version="0.2">
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
-    <ImageLoader format="bdv.hdf5">
-      <hdf5 type="relative">../../../0.6.3/images/local/prospr-6dpf-1-whole-six4.h5</hdf5>
+    <ImageLoader format="bdv.n5">
+      <n5 type="relative">../../../0.6.3/images/local/prospr-6dpf-1-whole-six4.n5</n5>
     </ImageLoader>
     <ViewSetups>
       <Attributes name="channel">
