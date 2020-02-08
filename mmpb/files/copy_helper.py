@@ -56,7 +56,6 @@ def copy_tables(src_folder, dst_folder, table_folder):
     for ff in table_files:
         src_file = os.path.join(table_in, ff)
         dst_file = os.path.join(table_out, ff)
-
         make_squashed_link(src_file, dst_file)
 
     # write the txt file for additional tables

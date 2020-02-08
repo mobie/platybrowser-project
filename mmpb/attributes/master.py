@@ -1,7 +1,5 @@
 import os
-from elf.io import open_file
-from pybdv.metadata import get_data_path, get_bdv_format
-from pybdv.util import get_key
+from pybdv.metadata import get_data_path
 
 from .base_attributes import (add_cell_criterion_column, base_attributes,
                               propagate_attributes, write_additional_table_file)
@@ -10,31 +8,12 @@ from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
 from .region_attributes import region_attributes, extrapolated_intensities
 from .cilia_attributes import cilia_morphology
-
-
-def get_seg_path(folder, name, key=None):
-    xml_path = os.path.join(folder, 'images', 'local', '%s.xml' % name)
-    path = get_data_path(xml_path, return_absolute_path=True)
-    assert os.path.exists(path), path
-    if key is not None:
-        with open_file(path, 'r') as f:
-            assert key in f, "%s not in %s" % (key, path)
-    return path
-
-
-def get_seg_key(folder, name, scale):
-    xml_path = os.path.join(folder, 'images', 'local', '%s.xml' % name)
-    bdv_format = get_bdv_format(xml_path)
-    if bdv_format == 'bdv.hdf5':
-        return get_key(True, time_point=0, setup_id=0, scale=scale)
-    elif bdv_format == 'bdv.n5':
-        return get_key(False, time_point=0, setup_id=0, scale=scale)
-    else:
-        raise RuntimeError("Invalid bdv format: %s" % bdv_format)
+from .util import get_seg_path, get_seg_key
+from ..files.copy_helper import make_squashed_link
 
 
 def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
-                     target='slurm', max_jobs=100):
+                     target='slurm', max_jobs=100, seg_has_changed=True):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)
@@ -82,18 +61,19 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     region_out = os.path.join(table_folder, 'regions.csv')
     # need to make sure the inputs are copied / updated in
     # the segmentation folder beforehand
-    image_folder = os.path.join(folder, 'images')
-    segmentation_folder = os.path.join(folder, 'segmentations')
-    region_attributes(seg_path, region_out,
-                      image_folder, segmentation_folder,
+    segmentation_folder = os.path.join(folder, 'images', 'local')
+    region_attributes(seg_path, region_out, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs)
 
-    # make table with morphology
-    morpho_out = os.path.join(table_folder, 'morphology.csv')
-    write_morphology_cells(seg_path, nuc_path,
-                           base_out, morpho_out,
-                           nuc_mapping_table, region_out,
-                           tmp_folder, target, max_jobs)
+    # TODO make morphology work again, check scales with kimberly
+    # # make table with morphology
+    # xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
+    # raw_path = get_data_path(xml_raw, return_absolute_path=True)
+    # morpho_out = os.path.join(table_folder, 'morphology.csv')
+    # write_morphology_cells(seg_path, nuc_path,
+    #                        base_out, morpho_out,
+    #                        nuc_mapping_table, region_out,
+    #                        tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     mask_name = 'sbem-6dpf-1-whole-segmented-extrapolated'
@@ -105,22 +85,34 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     extrapolated_intensities(seg_path, k1, extrapol_mask, k2,
                              extrapol_out, tmp_folder, target, max_jobs)
 
-    # update the cell id column of the cilia cell_id_mapping table
-    cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
-    propagate_attributes(os.path.join(folder, 'misc',
-                                      'new_id_lut_sbem-6dpf-1-whole-segmented-cells.json'),
-                         os.path.join(old_folder, 'tables', cilia_name, 'cell_mapping.csv'),
-                         os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv'),
-                         'cell_id')
+    old_ganglia_table = os.path.join(old_folder, 'tables', name, 'ganglia_ids.csv')
+    new_ganglia_table = os.path.join(table_folder, 'ganglia_ids.csv')
+    old_gcluster_table = os.path.join(old_folder, 'tables', name, 'gene_clusters.csv')
+    new_gcluster_table = os.path.join(table_folder, 'gene_clusters.csv')
+    # we only need to trigger the label id propagation if the segmentation was updated
+    if seg_has_changed:
+        id_lut = os.path.join(folder, 'misc',
+                              'new_id_lut_sbem-6dpf-1-whole-segmented-cells.json')
 
-    # TODO
-    # update the ganglia id mapping table
+        # update the cell id column of the cilia cell_id_mapping table
+        cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
+        old_cilia_table = os.path.join(old_folder, 'tables', cilia_name, 'cell_mapping.csv')
+        new_cilia_table = os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv')
+        propagate_attributes(id_lut, old_cilia_table, new_cilia_table, 'cell_id')
+
+        # update the ganglia id mapping table
+        propagate_attributes(id_lut, old_ganglia_table, new_ganglia_table, 'label_id')
+        propagate_attributes(id_lut, old_gcluster_table, new_gcluster_table, 'label_id')
+    else:
+        # otherwise, need to copy the ganglia and gene cluster table
+        make_squashed_link(old_ganglia_table, new_ganglia_table)
+        make_squashed_link(old_gcluster_table, new_gcluster_table)
 
     write_additional_table_file(table_folder)
 
 
 def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
-                       target='slurm', max_jobs=100):
+                       target='slurm', max_jobs=100, seg_has_changed=True):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)
@@ -134,22 +126,23 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
+    # TODO make morphology work again, check scales with kimberly
     # make the morphology attribute table
-    xml_raw = os.path.join(folder, 'images', 'sbem-6dpf-1-whole-raw.xml')
-    raw_path = get_data_path(xml_raw, return_absolute_path=True)
-    cell_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-cells')
-    chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin')
-    morpho_out = os.path.join(table_folder, 'morphology.csv')
-    write_morphology_nuclei(raw_path, seg_path,
-                            cell_seg_path, chromatin_seg_path,
-                            base_out, morpho_out,
-                            tmp_folder, target, max_jobs)
+    # xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
+    # raw_path = get_data_path(xml_raw, return_absolute_path=True)
+    # cell_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-cells')
+    # chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin')
+    # morpho_out = os.path.join(table_folder, 'morphology.csv')
+    # write_morphology_nuclei(raw_path, seg_path,
+    #                         cell_seg_path, chromatin_seg_path,
+    #                         base_out, morpho_out,
+    #                         tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     mask_name = 'sbem-6dpf-1-whole-segmented-extrapolated'
     k1 = get_seg_key(folder, name, 1)
     k2 = get_seg_key(folder, mask_name, 0)
-    extrapol_mask = os.path.join(folder, 'segmentations', '%s.xml' % mask_name)
+    extrapol_mask = os.path.join(folder, 'images', 'local', '%s.xml' % mask_name)
     extrapol_mask = get_data_path(extrapol_mask, return_absolute_path=True)
     extrapol_out = os.path.join(table_folder, 'extrapolated_intensity_correction.csv')
     extrapolated_intensities(seg_path, k1, extrapol_mask, k2,
@@ -159,7 +152,7 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
 
 
 def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
-                      target='slurm', max_jobs=100):
+                      target='slurm', max_jobs=100, seg_has_changed=True):
     # make the table folder
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)
@@ -180,9 +173,13 @@ def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
                      tmp_folder, target=target, max_jobs=max_jobs)
 
     # update the label id column of the cell_id_mapping table
-    propagate_attributes(os.path.join(folder, 'misc',
-                                      'new_id_lut_sbem-6dpf-1-whole-segmented-cilia.json'),
-                         os.path.join(old_folder, 'tables', name, 'cell_mapping.csv'),
-                         os.path.join(table_folder, 'cell_mapping.csv'), 'label_id')
+    old_table_path = os.path.join(old_folder, 'tables', name, 'cell_mapping.csv')
+    new_table_path = os.path.join(table_folder, 'cell_mapping.csv')
+    if seg_has_changed:
+        id_lut = os.path.join(folder, 'misc',
+                              'new_id_lut_sbem-6dpf-1-whole-segmented-cilia.json')
+        propagate_attributes(id_lut, old_table_path, new_table_path, 'label_id')
+    else:
+        make_squashed_link(old_table_path, new_table_path)
 
     write_additional_table_file(table_folder)

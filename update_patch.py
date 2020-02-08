@@ -70,7 +70,9 @@ def update_segmentations(folder, new_folder, names_to_update, target, max_jobs):
             copy_segmentation(folder, new_folder, name, properties)
 
 
-def update_tables(folder, new_folder, names_to_update, target, max_jobs):
+def update_tables(folder, new_folder,
+                  names_to_update, seg_update_names,
+                  target, max_jobs):
     image_dict, update_dict = _load_dicts(folder)
 
     # first copy all tables that just need to be copied
@@ -94,8 +96,10 @@ def update_tables(folder, new_folder, names_to_update, target, max_jobs):
         update_function = getattr(mmpb.attributes, update_function)
         paintera_path, paintera_key = properties['PainteraProject']
         resolution = read_resolution(paintera_path, paintera_key, to_um=True)
+        seg_has_changed = name in seg_update_names
         update_function(folder, new_folder, name, tmp_folder, resolution,
-                        target=target, max_jobs=max_jobs)
+                        target=target, max_jobs=max_jobs,
+                        seg_has_changed=seg_has_changed)
 
 
 def check_requested_updates(names_to_update, folder):
@@ -158,7 +162,7 @@ def update_patch(update_seg_names, update_table_names,
                          target=target, max_jobs=max_jobs)
 
     # generate new attribute tables
-    update_tables(folder, new_folder, table_updates,
+    update_tables(folder, new_folder, table_updates, update_seg_names,
                   target=target, max_jobs=max_jobs)
 
     # copy image dict and check that all image and table files are there

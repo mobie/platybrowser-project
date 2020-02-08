@@ -1,9 +1,9 @@
 import os
 import json
-import h5py
-import z5py
 import numpy as np
 import pandas as pd
+from elf.io import open_file
+from pybdv.util import get_key
 
 import luigi
 import nifty.tools as nt
@@ -48,19 +48,23 @@ def run_correction(input_path, input_key,
     # (corresponds to scale 4 in sbem)
     max_dim_size = 1750
     scale_key = input_key
-    with h5py.File(input_path, 'r') as f:
+    is_h5 = os.path.splitext(input_path)[1].lower() in ('.h5', '.hdf5')
+    with open_file(input_path, 'r') as f:
         while True:
             shape = f[scale_key].shape
             if all(sh <= max_dim_size for sh in shape):
                 break
 
-            scale = int(scale_key.split('/')[2]) + 1
-            next_scale_key = 't00000/s00/%i/cells' % scale
+            try:
+                scale = int(scale_key.split('/')[2]) + 1
+            except ValueError:
+                scale = int(scale_key.split('/')[-1][1:]) + 1
+            next_scale_key = get_key(is_h5, time_point=0, setup_id=0, scale=scale)
             if next_scale_key not in f:
                 break
             scale_key = next_scale_key
 
-    with h5py.File(input_path, 'r') as f:
+    with open_file(input_path, 'r') as f:
         shape1 = f[input_key].shape
         shape2 = f[scale_key].shape
     scale_factor = np.array([float(sh1) / sh2 for sh1, sh2 in zip(shape1, shape2)])
@@ -79,7 +83,7 @@ def run_correction(input_path, input_key,
     if not ret:
         raise RuntimeError("Anchor correction failed")
 
-    with z5py.File(out_path, 'r') as f:
+    with open_file(out_path, 'r') as f:
         anchors = f[out_key][:]
     anchors *= scale_factor
     return anchors
@@ -88,7 +92,7 @@ def run_correction(input_path, input_key,
 def to_csv(input_path, input_key, output_path, resolution,
            anchors=None):
     # load the attributes from n5
-    with z5py.File(input_path, 'r') as f:
+    with open_file(input_path, 'r') as f:
         attributes = f[input_key][:]
     label_ids = attributes[:, 0:1]
 
@@ -156,7 +160,7 @@ def base_attributes(input_path, input_key, output_path, resolution,
     to_csv(tmp_path, tmp_key, output_path, resolution, anchors)
 
     # load and return label_ids
-    with z5py.File(tmp_path, 'r') as f:
+    with open_file(tmp_path, 'r') as f:
         label_ids = f[tmp_key][:, 0]
     return label_ids
 
