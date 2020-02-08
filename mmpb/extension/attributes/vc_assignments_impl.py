@@ -113,10 +113,9 @@ def assign_vc(distances, vc_expression):
     return cells_expr
 
 
-def vc_assignments(segm_volume_file, vc_volume_file, vc_expr_file,
+def vc_assignments(segm_volume_file, em_dset,
+                   vc_volume_file, cm_dset, vc_expr_file,
                    cells_med_expr_table, output_gene_table, n_threads):
-    em_dset = 't00000/s00/4/cells'
-    cm_dset = 't00000/s00/0/cells'
     # volume file for vc's (generated from CellModels_coordinates)
     with h5py.File(vc_volume_file, 'r') as f:
         vc_data = f[cm_dset][:]
@@ -182,5 +181,9 @@ if __name__ == '__main__':
 
     # number of threads hard-coded for now
     n_threads = 8
-    vc_assignments(segment_file_path, vc_volume_file, vc_profile_file,
+    # TODO update to also support bdv.n5
+    em_dset = 't00000/s00/4/cells'
+    cm_dset = 't00000/s00/0/cells'
+    vc_assignments(segment_file_path, em_dset,
+                   vc_volume_file, cm_dset, vc_profile_file,
                    gene_table_file, output_file, n_threads)

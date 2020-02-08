@@ -26,7 +26,9 @@ class VCAssignmentsBase(luigi.Task):
 
     # input volumes and graph
     segmentation_path = luigi.Parameter()
+    segmentation_key = luigi.Parameter()
     vc_volume_path = luigi.Parameter()
+    vc_volume_key = luigi.Parameter()
     vc_expression_path = luigi.Parameter()
     med_expression_path = luigi.Parameter()
     output_path = luigi.Parameter()
@@ -47,7 +49,9 @@ class VCAssignmentsBase(luigi.Task):
         # update the config with input and graph paths and keys
         # as well as block shape
         config.update({'segmentation_path': self.segmentation_path,
+                       'segmentation_key': self.segmentation_key,
                        'vc_volume_path': self.vc_volume_path,
+                       'vc_volume_key': self.vc_volume_key,
                        'vc_expression_path': self.vc_expression_path,
                        'med_expression_path': self.med_expression_path,
                        'output_path': self.output_path})
@@ -87,14 +91,18 @@ def vc_assignments(job_id, config_path):
         config = json.load(f)
 
     segmentation_path = config['segmentation_path']
+    segmentation_key = config['segmentation_key']
     vc_volume_path = config['vc_volume_path']
+    vc_key = config['vc_volume_key']
     vc_expression_path = config['vc_expression_path']
     med_expression_path = config['med_expression_path']
 
     output_path = config['output_path']
     n_threads = config.get('threads_per_job', 1)
 
-    vc_assignments_impl(segmentation_path, vc_volume_path, vc_expression_path,
+    vc_assignments_impl(segmentation_path, segmentation_key,
+                        vc_volume_path, vc_key,
+                        vc_expression_path,
                         med_expression_path, output_path, n_threads)
     fu.log_job_success(job_id)
 
