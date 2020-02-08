@@ -59,7 +59,8 @@ def validate_layer(version, name, layer):
     return True
 
 
-def make_bookmark(position, layers, view=None):
+# TODO add functionality for 3d views
+def make_bookmark(position, layers=None, view=None):
     # validate and add position
     assert isinstance(position, (list, tuple))
     assert len(position) == 3
@@ -67,9 +68,10 @@ def make_bookmark(position, layers, view=None):
     bookmark = {'Position': position}
 
     # validate and add layers if given
-    assert isinstance(layers, dict), type(layers)
-    assert all(validate_layer(version, name, layer) for name, layer in layers.items())
-    bookmark.update({'Layers': layers})
+    if layers is not None:
+        assert isinstance(layers, dict), type(layers)
+        assert all(validate_layer(version, name, layer) for name, layer in layers.items())
+        bookmark.update({'Layers': layers})
 
     # validate and add the view if given
     if view is not None:
@@ -98,6 +100,17 @@ def add_bookmark(version, name, position, layers, view=None):
 
     with open(bookmark_file, 'w') as f:
         json.dump(bookmarks, f, indent=2, sort_keys=True)
+
+
+def update_bookmarks(folder, bookmarks):
+    bookmark_path = os.path.join(folder, 'misc', 'bookmarks.json')
+    with open(bookmark_path) as f:
+        bookmark_dict = json.load(f)
+    for name, bookmark in bookmarks.items():
+        new_bookmark = make_bookmark(**bookmark)
+        bookmark_dict[name] = new_bookmark
+    with open(bookmark_path, 'w') as f:
+        json.dump(bookmark_dict, f)
 
 
 if __name__ == '__main__':

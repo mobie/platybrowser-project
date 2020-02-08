@@ -8,9 +8,9 @@ from paintera_tools import serialize_from_commit, postprocess
 from paintera_tools import set_default_shebang as set_ptools_shebang
 from paintera_tools import set_default_block_shape as set_ptools_block_shape
 from .to_bdv import to_bdv, check_max_id
+from ..util import read_resolution
 from .map_segmentation_ids import map_segmentation_ids
 from ..default_config import write_default_global_config, get_default_shebang, get_default_block_shape
-from ..files import get_postprocess_dict
 
 
 def get_scale_factors(paintera_path, paintera_key):
@@ -55,49 +55,54 @@ def downscale(path, in_key, out_key,
         raise RuntimeError("Downscaling the segmentation failed")
 
 
-def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, resolution,
-                        tmp_folder, target='slurm', max_jobs=200):
+# TODO need to be able to specify output chunks
+def export_segmentation(paintera_path, paintera_key, name,
+                        folder, new_folder, out_path, tmp_folder,
+                        pp_config=None, map_to_background=None,
+                        target='slurm', max_jobs=200):
     """ Export a segmentation from paintera project to bdv file and
     compute segment lut for previous segmentation.
 
     Arguments:
         paintera_path: path to the paintera project corresponding to the new segmentation
         paintera_key: key to the paintera project corresponding to the new segmentation
+        name: name of the segmentation
         folder: folder for old segmentation
         new_folder: folder for new segmentation
-        name: name of segmentation
-        resolution: resolution [z, y, x] in micrometer
+        out_path: output path for the exported segmentation
         tmp_folder: folder for temporary files
+        pp_config: config for segmentation post-processing (default: None)
+        map_to_background: additional ids that shall be mapped to background / 0 (default: None)
+        target: computation target (default: 'slurm')
+        max_jobs: maximal number of jobs used for computation (default: 200)
     """
 
     tmp_path = os.path.join(tmp_folder, 'data.n5')
     tmp_key = 'seg'
     tmp_key0 = os.path.join(tmp_key, 's0')
 
+    # FIXME need to implement variable chunk size for label multiset!
     # we need to have the same processing block shape
     # as the paintera labels chunk size, otherwise we
     # will run into issues for label multisets
-    with z5py.File(paintera_path, 'r') as f:
-        ds = f[os.path.join(paintera_key, 'data', 's0')]
-        chunks = ds.chunks
+    # with z5py.File(paintera_path, 'r') as f:
+    #     ds = f[os.path.join(paintera_key, 'data', 's0')]
 
     # set correct shebang and block shape for paintera tools
     set_ptools_shebang(get_default_shebang())
-    # set_ptools_block_shape(chunks)
     set_ptools_block_shape(get_default_block_shape())
 
+    # TODO need to support writing to correct key of the bdv.n5
+    # output file directly
     # run post-processing if specified for this segmentation name
-    pp_dict = get_postprocess_dict()
-    run_postprocessing = name in pp_dict
-    if run_postprocessing:
-        pp_config = pp_dict[name]
-        boundary_path = pp_config['boundary_path']
-        boundary_key = pp_config['boundary_key']
+    if pp_config is not None:
+        boundary_path = pp_config['BoundaryPath']
+        boundary_key = pp_config['BoundaryKey']
 
-        min_segment_size = pp_config.get('min_segment_size', None)
-        max_segment_number = pp_config.get('max_segment_number', None)
+        min_segment_size = pp_config.get('MinSegmentSize', None)
+        max_segment_number = pp_config.get('MaxSegmentNumber', None)
 
-        label_segmentation = pp_config['label_segmentation']
+        label_segmentation = pp_config['LabelSegmentation']
         tmp_postprocess = os.path.join(tmp_folder, 'postprocess_paintera')
         postprocess(paintera_path, paintera_key,
                     boundary_path, boundary_key,
@@ -109,15 +114,13 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
                     output_path=tmp_path, output_key=tmp_key0)
 
     else:
-        if name == 'sbem-6dpf-1-whole-segmented-cilia-labels':
-            map_to_background = [1]
-        else:
-            map_to_background = None
         # export segmentation from paintera commit for all scales
         serialize_from_commit(paintera_path, paintera_key, tmp_path, tmp_key0, tmp_folder,
                               max_jobs, target, relabel_output=True, map_to_background=map_to_background)
 
     # check for overflow
+    # now that we can export to n5, we don't really need this check any more,
+    # still leaving it here for now to stay consistent with old versions
     print("Check max-id @", tmp_path, tmp_key0)
     check_max_id(tmp_path, tmp_key0)
 
@@ -126,8 +129,9 @@ def export_segmentation(paintera_path, paintera_key, folder, new_folder, name, r
     downscale(tmp_path, tmp_key0, tmp_key, scale_factors, tmp_folder, max_jobs, target)
 
     # convert to bdv
-    out_path = os.path.join(new_folder, 'segmentations', '%s.h5' % name)
     tmp_bdv = os.path.join(tmp_folder, 'tmp_bdv')
+    resolution = read_resolution(paintera_path, paintera_key, to_um=True)
+    # TODO need to adapt this in case we export to n5
     to_bdv(tmp_path, tmp_key, out_path, resolution, tmp_bdv, target)
 
     # compute mapping to old segmentation
