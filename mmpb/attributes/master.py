@@ -1,6 +1,7 @@
 import os
-import h5py
-from pybdv.metadata import get_data_path
+from elf.io import open_file
+from pybdv.metadata import get_data_path, get_bdv_format
+from pybdv.util import get_key
 
 from .base_attributes import (add_cell_criterion_column, base_attributes,
                               propagate_attributes, write_additional_table_file)
@@ -12,13 +13,26 @@ from .cilia_attributes import cilia_morphology
 
 
 def get_seg_path(folder, name, key=None):
-    xml_path = os.path.join(folder, 'segmentations', '%s.xml' % name)
+    xml_path = os.path.join(folder, 'images', 'local', '%s.xml' % name)
     path = get_data_path(xml_path, return_absolute_path=True)
     assert os.path.exists(path), path
     if key is not None:
-        with h5py.File(path, 'r') as f:
-            assert key in f, "%s not in %s" % (key, str(list(f.keys())))
+        with open_file(path, 'r') as f:
+            assert key in f, "%s not in %s" % (key, path)
     return path
+
+
+def get_seg_key(folder, name, scale):
+    xml_path = os.path.join(folder, 'images', 'local', '%s.xml' % name)
+    bdv_format = get_bdv_format(xml_path)
+    print(xml_path)
+    print(bdv_format)
+    if bdv_format == 'bdv.hdf5':
+        return get_key(True, time_point=0, setup_id=0, scale=scale)
+    elif bdv_format == 'bdv.n5':
+        return get_key(False, time_point=0, setup_id=0, scale=scale)
+    else:
+        raise RuntimeError("Invalid bdv format: %s" % bdv_format)
 
 
 def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
@@ -27,7 +41,7 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)
 
-    seg_key = 't00000/s00/0/cells'
+    seg_key = get_seg_key(folder, name, scale=0)
     seg_path = get_seg_path(folder, name, seg_key)
 
     # make the basic attributes table
@@ -107,7 +121,7 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)
 
-    seg_key = 't00000/s00/0/cells'
+    seg_key = get_seg_key(folder, name, scale=0)
     seg_path = get_seg_path(folder, name, seg_key)
 
     # make the basic attributes table
@@ -144,7 +158,7 @@ def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
     table_folder = os.path.join(folder, 'tables', name)
     os.makedirs(table_folder, exist_ok=True)
 
-    seg_key = 't00000/s00/0/cells'
+    seg_key = get_seg_key(folder, name, scale=0)
     seg_path = get_seg_path(folder, name, seg_key)
 
     # make the basic attributes table

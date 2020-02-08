@@ -2,10 +2,11 @@ import os
 import json
 import shutil
 import numpy as np
+import numbers
 
 from elf.io import open_file
 from pybdv.converter import copy_dataset
-from pybdv.metadata import write_n5_metadata, get_data_path
+from pybdv.metadata import write_n5_metadata, get_data_path, get_bdv_format
 from pybdv.util import get_key, get_number_of_scales, get_scale_factors
 
 from .xml_utils import copy_xml_with_newpath
@@ -32,9 +33,11 @@ def make_squashed_link(src_file, dst_file, override=False):
 def copy_file(xml_in, xml_out, storage='local'):
     if storage == 'local':
         data_path = get_data_path(xml_in, return_absolute_path=True)
+        bdv_format = get_bdv_format(xml_in)
         xml_dir = os.path.split(xml_out)[0]
         data_path = os.path.relpath(data_path, start=xml_dir)
-        copy_xml_with_newpath(xml_in, xml_out, data_path, path_type='relative')
+        copy_xml_with_newpath(xml_in, xml_out, data_path,
+                              path_type='relative', data_format=bdv_format)
     # TODO TODO
     elif storage == 'remote':
         pass
@@ -177,6 +180,20 @@ def normalize_scale_factors(scale_factors, start_scale):
     return new_factors
 
 
+def copy_attributes(in_file, in_key, out_file, out_key):
+    with open_file(in_file, 'r') as fin, open_file(out_file) as fout:
+        ds_in = fin[in_key]
+        ds_out = fout[out_key]
+        for k, v in ds_in.attrs.items():
+            if isinstance(v, numbers.Real):
+                v = float(v)
+            elif isinstance(v, numbers.Integral):
+                v = int(v)
+            elif isinstance(v, np.ndarray):
+                v = v.tolist()
+            ds_out.attrs[k] = v
+
+
 def copy_to_bdv_n5(in_file, out_file, chunks, resolution,
                    n_threads=32, start_scale=0):
 
@@ -201,6 +218,7 @@ def copy_to_bdv_n5(in_file, out_file, chunks, resolution,
                      convert_dtype=False,
                      chunks=chunks_,
                      n_threads=n_threads)
+        copy_attributes(in_file, in_key, out_file, out_key)
 
     write_n5_metadata(out_file, scale_factors, resolution, setup_id=0)
 

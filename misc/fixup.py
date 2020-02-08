@@ -1,6 +1,8 @@
 import os
 import json
 from glob import glob
+from mmpb.files.copy_helper import copy_attributes
+from pybdv.util import get_key, get_number_of_scales
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
@@ -28,5 +30,19 @@ def fix_all_dynamic_seg_dicts():
         fix_dynamic_seg_dict(folder)
 
 
+def fix_copy_attributes():
+    copied_path = '/g/kreshuk/pape/copied_to_n5.json'
+    with open(copied_path) as f:
+        copied_files = json.load(f)
+
+    for h5_path in copied_files:
+        n5_path = os.path.splitext(h5_path)[0] + '.n5'
+        n_scales = get_number_of_scales(n5_path, 0, 0)
+        for scale in range(n_scales):
+            copy_attributes(h5_path, get_key(True, 0, 0, scale),
+                            n5_path, get_key(False, 0, 0, scale))
+
+
 if __name__ == '__main__':
-    fix_all_dynamic_seg_dicts()
+    # fix_all_dynamic_seg_dicts()
+    fix_copy_attributes()
