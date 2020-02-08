@@ -92,7 +92,9 @@ def replace_gene_names_h5():
 
         assert len(gene_names) == len(ref_gene_names)
         print(set(gene_names) - set(ref_gene_names))
+        # {'fboxlike', 'ccg5'}
         print(set(ref_gene_names) - set(gene_names))
+        # {'fxl21', 'ccvd'}
         assert len(set(gene_names) - set(ref_gene_names)) == 0
 
         # TODO once all gene names agree
