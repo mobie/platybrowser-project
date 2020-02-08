@@ -128,7 +128,7 @@ def update_patch(update_seg_names, update_table_names,
 
     # check if we have anything to update
     have_seg_updates = len(update_seg_names) > 0
-    have_table_updates = len(update_seg_names) > 0
+    have_table_updates = len(update_table_names) > 0
     if not have_seg_updates and not have_table_updates:
         raise ValueError("No updates where provdied and force_update was not set")
 

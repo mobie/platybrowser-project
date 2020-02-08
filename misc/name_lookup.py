@@ -193,8 +193,8 @@ def get_image_properties(name):
 def get_dynamic_segmentation_properties(name):
     # cell segmentation
     if name == DYNAMIC_SEGMENTATIONS[0]:
-        return {'PainteraProject:': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
-                                     'volumes/paintera/proofread_cells'],
+        return {'PainteraProject': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
+                                    'volumes/paintera/proofread_cells'],
                 'TableUpdateFunction': 'make_cell_tables',
                 'Postprocess': {"BoundaryPath": "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
                                 "BoundaryKey": "volumes/affinities/s1",
@@ -202,13 +202,13 @@ def get_dynamic_segmentation_properties(name):
                                 "LabelSegmentation": False}}
     # cilia segmentation
     elif name == DYNAMIC_SEGMENTATIONS[1]:
-        return {'PainteraProject:': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
-                                     'volumes/paintera/proofread_cilia'],
+        return {'PainteraProject': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
+                                    'volumes/paintera/proofread_cilia'],
                 'TableUpdateFunction': 'make_cilia_tables'}
     # nuclei segmentation
     elif name == DYNAMIC_SEGMENTATIONS[2]:
-        return {'PainteraProject:': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
-                                     'volumes/paintera/nuclei'],
+        return {'PainteraProject': ['/g/kreshuk/data/arendt/platyneris_v1/data.n5',
+                                    'volumes/paintera/nuclei'],
                 'TableUpdateFunction': 'make_nuclei_tables'}
     else:
         return None
