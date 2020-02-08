@@ -237,6 +237,10 @@ def add_cell_criterion_column(base_table_path, nucleus_mapping_path, out_table_p
         Currently the criterion is based on having a unique nucleus id mapped to the cell.
     """
     base_table = pd.read_csv(base_table_path, sep='\t')
+    # skip if we already have the cells column
+    if 'cells' in base_table.columns:
+        return
+
     nucleus_mapping = pd.read_csv(nucleus_mapping_path, sep='\t')
     assert len(base_table) == len(nucleus_mapping)
 
