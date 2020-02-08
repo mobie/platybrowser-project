@@ -43,6 +43,31 @@ def fix_copy_attributes():
                             n5_path, get_key(False, 0, 0, scale))
 
 
+def fix_id_luts(version_folder):
+    id_luts = glob(os.path.join(version_folder, 'misc', 'new_id_lut*'))
+    for id_lut in id_luts:
+
+        # only need to correct if old labels tag is still in the name
+        if 'labels' not in id_lut:
+            continue
+
+        new_id_lut = id_lut.replace('-labels', '')
+        if os.path.islink(id_lut):
+            link_loc = os.readlink(id_lut)
+            new_link_loc = link_loc.replace('-labels', '')
+            os.unlink(id_lut)
+            os.symlink(new_link_loc, new_id_lut)
+        else:
+            os.rename(id_lut, new_id_lut)
+
+
+def fix_all_id_luts():
+    vfolders = glob(os.path.join(ROOT, '0.*'))
+    for folder in vfolders:
+        fix_id_luts(folder)
+
+
 if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
-    fix_copy_attributes()
+    # fix_copy_attributes()
+    fix_all_id_luts()
