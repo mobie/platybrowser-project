@@ -317,10 +317,9 @@ def make_remote_xmls(version):
         data_path = get_data_path(xml, return_absolute_path=True)
         if not data_path.endswith('.n5'):
             continue
-        # TODO check that this is correct
         path_in_bucket = os.path.relpath(data_path, ROOT)
-        if '/local/' in path_in_bucket:
-            path_in_bucket.replace('local', 'remote')
+        if 'local' in path_in_bucket:
+            path_in_bucket = path_in_bucket.replace('local', 'remote')
 
         xml_out = xml.replace('local', 'remote')
         write_s3_xml(xml, xml_out, path_in_bucket)
@@ -374,6 +373,15 @@ def remove_deprecated_data():
         remove_deprecated_im(vfolder, '*meds_all_genes*')
 
 
+def update_all_n5_xmls():
+    version_files = os.path.join(ROOT, 'versions.json')
+    with open(version_files) as f:
+        versions = json.load(f)
+
+    for version in versions:
+        update_n5_xmls(version)
+
+
 if __name__ == '__main__':
     # remove the data we don't want to upload (yet)
     # remove_deprecated_data()
@@ -389,8 +397,10 @@ if __name__ == '__main__':
     # with open('/g/kreshuk/pape/copied_to_n5.json', 'w') as f:
     #     json.dump(copied, f)
 
-    version = '0.6.5'
-    update_n5_xmls(version)
-
     # version = '0.6.5'
-    # make_remote_xmls(version)
+    # update_n5_xmls(version)
+    # update_all_n5_xmls()
+
+    # make the remote xmls
+    version = '0.6.6'
+    make_remote_xmls(version)
