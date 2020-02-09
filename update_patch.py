@@ -153,6 +153,7 @@ def update_patch(update_seg_names, update_table_names,
     copy_image_data(folder, new_folder)
     copy_misc_data(folder, new_folder)
 
+    # TODO the selected ids in bookmarks need to be updated!
     # updated bookmarks if given
     if bookmarks is not None:
         update_bookmarks(new_folder, bookmarks)
