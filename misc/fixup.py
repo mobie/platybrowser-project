@@ -102,8 +102,28 @@ def replace_gene_names_h5():
         # f.create_dataset(names_dset, data=gene_names_ascii, dtype='S40')
 
 
+def add_remote_storage_to_xml():
+    version = '0.6.6'
+    im_dict_path = os.path.join(ROOT, version, 'images', 'images.json')
+    with open(im_dict_path, 'r') as f:
+        im_dict = json.load(f)
+
+    for name, props in im_dict.items():
+        storage = props['Storage']
+        rel_remote = os.path.join('remote', name + '.xml')
+        abs_remote = os.path.join(ROOT, version, 'images', rel_remote)
+        assert os.path.exists(abs_remote)
+        storage['remote'] = rel_remote
+        props['Storage'] = storage
+        im_dict[name] = props
+
+    with open(im_dict_path, 'w') as f:
+        json.dump(im_dict, f)
+
+
 if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
     # fix_copy_attributes()
     # fix_all_id_luts()
-    replace_gene_names_h5()
+    # replace_gene_names_h5()
+    add_remote_storage_to_xml()
