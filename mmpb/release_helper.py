@@ -143,3 +143,11 @@ def get_latest_version():
     with open(VERSION_FILE) as f:
         versions = json.load(f)
     return versions[-1]
+
+
+def make_folder_structure(root):
+    # make all sub-folders
+    os.makedirs(os.path.join(root, 'tables'), exist_ok=True)
+    os.makedirs(os.path.join(root, 'images', 'local'), exist_ok=True)
+    os.makedirs(os.path.join(root, 'images', 'remote'), exist_ok=True)
+    os.makedirs(os.path.join(root, 'misc'), exist_ok=True)

@@ -14,7 +14,10 @@ from ..extension.attributes import VCAssignmentsLocal, VCAssignmentsSlurm
 def gene_assignment_table(segm_file, genes_file, table_file, labels,
                           tmp_folder, target, n_threads=8):
     task = GenesSlurm if target == 'slurm' else GenesLocal
-    seg_dset = 't00000/s00/4/cells'
+    if os.path.splitext(segm_file) == '.n5':
+        seg_dset = 'setup0/timepoint0/s4'
+    else:
+        seg_dset = 't00000/s00/4/cells'
 
     config_folder = os.path.join(tmp_folder, 'configs')
     config = task.default_task_config()
@@ -36,8 +39,8 @@ def gene_assignment_table(segm_file, genes_file, table_file, labels,
         raise RuntimeError("Computing gene expressions failed")
 
 
-def vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
-                        med_expression_path, output_path,
+def vc_assignment_table(seg_path, seg_key, vc_vol_path, vc_vol_key,
+                        vc_expression_path, med_expression_path, output_path,
                         tmp_folder, target, n_threads=8):
     task = VCAssignmentsSlurm if target == 'slurm' else VCAssignmentsLocal
 
@@ -49,7 +52,8 @@ def vc_assignment_table(seg_path, vc_vol_path, vc_expression_path,
         json.dump(config, f)
 
     t = task(tmp_folder=tmp_folder, config_dir=config_folder, max_jobs=1,
-             segmentation_path=seg_path, vc_volume_path=vc_vol_path,
+             segmentation_path=seg_path, segmentation_key=seg_key,
+             vc_volume_path=vc_vol_path, vc_volume_key=vc_vol_key,
              vc_expression_path=vc_expression_path,
              med_expression_path=med_expression_path, output_path=output_path)
     ret = luigi.build([t], local_scheduler=True)
@@ -96,7 +100,8 @@ def create_auxiliary_gene_file(meds_path, out_file, return_result=False):
                 ds = f2[dset]
                 this_shape = ds.shape
                 if this_shape != spatial_shape:
-                    raise RuntimeError("Incompatible shapes %s, %s" % (str(this_shape), str(spatial_shape)))
+                    raise RuntimeError("Incompatible shapes %s, %s" % (str(this_shape),
+                                                                       str(spatial_shape)))
                 data = f2[dset][:]
             out_dset[i] = data
 

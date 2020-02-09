@@ -1,14 +1,15 @@
 import os
+import json
 import shutil
 import numpy as np
+import numbers
 
 from elf.io import open_file
 from pybdv.converter import copy_dataset
-from pybdv.metadata import write_n5_metadata, get_data_path
+from pybdv.metadata import write_n5_metadata, get_data_path, get_bdv_format
 from pybdv.util import get_key, get_number_of_scales, get_scale_factors
 
 from .xml_utils import copy_xml_with_newpath
-from .sources import get_image_names, get_segmentation_names, get_segmentations
 from ..attributes.base_attributes import write_additional_table_file
 
 
@@ -29,16 +30,24 @@ def make_squashed_link(src_file, dst_file, override=False):
     os.symlink(rel_path, dst_file)
 
 
-def copy_file(xml_in, xml_out):
-    h5path = get_data_path(xml_in, return_absolute_path=True)
-    xml_dir = os.path.split(xml_out)[0]
-    h5path = os.path.relpath(h5path, start=xml_dir)
-    copy_xml_with_newpath(xml_in, xml_out, h5path, path_type='relative')
+def copy_file(xml_in, xml_out, storage='local'):
+    if storage == 'local':
+        data_path = get_data_path(xml_in, return_absolute_path=True)
+        bdv_format = get_bdv_format(xml_in)
+        xml_dir = os.path.split(xml_out)[0]
+        data_path = os.path.relpath(data_path, start=xml_dir)
+        copy_xml_with_newpath(xml_in, xml_out, data_path,
+                              path_type='relative', data_format=bdv_format)
+    # TODO TODO
+    elif storage == 'remote':
+        pass
+    else:
+        raise ValueError("Invalid storage spec %s" % storage)
 
 
-def copy_tables(src_folder, dst_folder, name):
-    table_in = os.path.join(src_folder, 'tables', name)
-    table_out = os.path.join(dst_folder, 'tables', name)
+def copy_tables(src_folder, dst_folder, table_folder):
+    table_in = os.path.join(src_folder, table_folder)
+    table_out = os.path.join(dst_folder, table_folder)
     os.makedirs(table_out, exist_ok=True)
 
     table_files = os.listdir(table_in)
@@ -47,22 +56,14 @@ def copy_tables(src_folder, dst_folder, name):
     for ff in table_files:
         src_file = os.path.join(table_in, ff)
         dst_file = os.path.join(table_out, ff)
-
         make_squashed_link(src_file, dst_file)
 
     # write the txt file for additional tables
     write_additional_table_file(table_out)
 
 
-def copy_segmentation(src_folder, dst_folder, name):
-    # copy the segmentation xml
-    name_with_ext = '%s.xml' % name
-    xml_in = os.path.join(src_folder, 'segmentations', name_with_ext)
-    if not os.path.exists(xml_in):
-        raise RuntimeError("Could not find %s in the src folder %s" % (name, src_folder))
-    xml_out = os.path.join(dst_folder, 'segmentations', name_with_ext)
-    copy_file(xml_in, xml_out)
-
+def link_id_lut(src_folder, dst_folder, name):
+    # for local storage:
     # make link to the previous id look-up-table (if present)
     lut_name = 'new_id_lut_%s.json' % name
     lut_in = os.path.join(src_folder, 'misc', lut_name)
@@ -75,24 +76,25 @@ def copy_segmentation(src_folder, dst_folder, name):
 
 
 def copy_image_data(src_folder, dst_folder, exclude_prefixes=[]):
-    # get all image names that need to be copied
-    names = get_image_names()
+    # load all image properties from the image dict
+    image_dict = os.path.join(src_folder, 'images', 'images.json')
+    with open(image_dict, 'r') as f:
+        image_dict = json.load(f)
 
-    for name in names:
-
-        prefix = name.split('-')[:4]
-        prefix = '-'.join(prefix)
-
+    for name, properties in image_dict.items():
+        # don't copy segmentations
+        if 'segmented' in name:
+            continue
+        # check if we exclude this prefix
+        prefix = '-'.join(name.split('-')[:4])
         if prefix in exclude_prefixes:
             continue
-
-        name += '.xml'
-        in_path = os.path.join(src_folder, 'images', name)
-        out_path = os.path.join(dst_folder, 'images', name)
-        if not os.path.exists(in_path):
-            raise RuntimeError("Could not find %s in the src folder %s" % (name, src_folder))
-        # copy the xml
-        copy_file(in_path, out_path)
+        # copy the xmls for the different storages
+        for storage, relative_xml in properties['Storage'].items():
+            in_path = os.path.join(src_folder, 'images', relative_xml)
+            out_path = os.path.join(dst_folder, 'images', relative_xml)
+            # copy the xml
+            copy_file(in_path, out_path, storage)
 
 
 def copy_misc_data(src_folder, dst_folder):
@@ -108,27 +110,49 @@ def copy_misc_data(src_folder, dst_folder):
         shutil.copyfile(bkmrk_in,
                         os.path.join(dst_folder, 'misc', 'bookmarks.json'))
 
+    # copy the dynamic segmentation dict
+    shutil.copyfile(os.path.join(src_folder, 'misc', 'dynamic_segmentations.json'),
+                    os.path.join(dst_folder, 'misc', 'dynamic_segmentations.json'))
+
+
+def copy_segmentation(src_folder, dst_folder, name, properties):
+    # copy the xmls for the different storages
+    for storage, relative_xml in properties['Storage'].items():
+        in_path = os.path.join(src_folder, 'images', relative_xml)
+        out_path = os.path.join(dst_folder, 'images', relative_xml)
+        # copy the xml
+        copy_file(in_path, out_path, storage)
+    # link the id look-up-table
+    link_id_lut(src_folder, dst_folder, name)
+
 
 def copy_segmentations(src_folder, dst_folder, exclude_prefixes=[]):
-    names = get_segmentation_names()
-    for name in names:
+    # load all image properties from the image dict
+    image_dict = os.path.join(src_folder, 'images', 'images.json')
+    with open(image_dict, 'r') as f:
+        image_dict = json.load(f)
 
-        prefix = name.split('-')[:4]
-        prefix = '-'.join(prefix)
-
+    for name, properties in image_dict.items():
+        # only copy segmentations
+        if 'segmented' not in name:
+            continue
+        # check if we exclude this prefix
+        prefix = '-'.join(name.split('-')[:4])
         if prefix in exclude_prefixes:
             continue
-
-        copy_segmentation(src_folder, dst_folder, name)
+        copy_segmentation(src_folder, dst_folder, name, properties)
 
 
 def copy_all_tables(src_folder, dst_folder):
-    segmentations = get_segmentations()
-    for name, seg in segmentations.items():
-        has_table = seg.get('has_tables', False) or 'table_update_function' in seg
-        if not has_table:
+    image_dict = os.path.join(src_folder, 'images', 'images.json')
+    with open(image_dict) as f:
+        image_dict = json.load(f)
+
+    for name, properties in image_dict.items():
+        table_folder = properties.get('TableFolder', None)
+        if table_folder is None:
             continue
-        copy_tables(src_folder, dst_folder, name)
+        copy_tables(src_folder, dst_folder, table_folder)
 
 
 def copy_release_folder(src_folder, dst_folder, exclude_prefixes=[]):
@@ -155,6 +179,20 @@ def normalize_scale_factors(scale_factors, start_scale):
     return new_factors
 
 
+def copy_attributes(in_file, in_key, out_file, out_key):
+    with open_file(in_file, 'r') as fin, open_file(out_file) as fout:
+        ds_in = fin[in_key]
+        ds_out = fout[out_key]
+        for k, v in ds_in.attrs.items():
+            if isinstance(v, numbers.Real):
+                v = float(v)
+            elif isinstance(v, numbers.Integral):
+                v = int(v)
+            elif isinstance(v, np.ndarray):
+                v = v.tolist()
+            ds_out.attrs[k] = v
+
+
 def copy_to_bdv_n5(in_file, out_file, chunks, resolution,
                    n_threads=32, start_scale=0):
 
@@ -175,10 +213,61 @@ def copy_to_bdv_n5(in_file, out_file, chunks, resolution,
         else:
             chunks_ = chunks
 
-        print(chunks_)
         copy_dataset(in_file, in_key, out_file, out_key,
                      convert_dtype=False,
                      chunks=chunks_,
                      n_threads=n_threads)
+        copy_attributes(in_file, in_key, out_file, out_key)
 
     write_n5_metadata(out_file, scale_factors, resolution, setup_id=0)
+
+
+def copy_and_check_image_dict(folder, new_folder):
+    image_dict_in = os.path.join(folder, 'images', 'images.json')
+    image_dict_out = os.path.join(new_folder, 'images', 'images.json')
+    with open(image_dict_in) as f:
+        image_dict = json.load(f)
+
+    for name, properties in image_dict.items():
+        storage = properties['Storage']
+        # validate local xml location
+        xml = storage['local']
+        xml = os.path.join(new_folder, 'images', xml)
+        if not os.path.exists(xml):
+            raise RuntimeError("Validating image dict: could not find %s" % xml)
+
+        # validate data location
+        data_path = get_data_path(xml, return_absolute_path=True)
+        if not os.path.exists(data_path):
+            raise RuntimeError("Validating image dict: could not find %s" % data_path)
+
+        # validate remote xml location
+        if 'remote' in storage:
+            xml = storage['remote']
+            xml = os.path.join(new_folder, 'images', xml)
+            if not os.path.exists(xml):
+                raise RuntimeError("Validating image dict: could not find %s" % xml)
+
+        # validate tables
+        if 'TableFolder' in properties:
+            # check that we have the table folder
+            table_folder = os.path.join(new_folder, properties['TableFolder'])
+            if not os.path.exists(table_folder):
+                raise RuntimeError("Validating image dict: could not find %s" % table_folder)
+            default_table = os.path.join(table_folder, 'default.csv')
+
+            # check that we have the default table
+            if not os.path.exists(default_table):
+                raise RuntimeError("Validating image dict: could not find %s" % default_table)
+
+            # if we have an additional table file, check that the additional tables exist
+            additional_table_file = os.path.join(table_folder, 'additional_tables.txt')
+            if os.path.exists(additional_table_file):
+                with open(additional_table_file, 'r') as f:
+                    for fname in f:
+                        additional_table = os.path.join(table_folder, fname.rstrip('\n'))
+                        if not os.path.exists(additional_table):
+                            raise RuntimeError("Validating image dict: could not find %s" % additional_table)
+
+    with open(image_dict_out, 'w') as f:
+        json.dump(image_dict, f)

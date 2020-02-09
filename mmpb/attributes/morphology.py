@@ -29,10 +29,9 @@ def write_morphology_nuclei(raw_path, nucleus_seg_path, chromatin_seg_path,
     config_folder = os.path.join(tmp_folder, 'configs')
     write_config(config_folder, task.get_config()['morphology'])
 
-    # TODO double check these values
-    scale = 3
-    min_size = 18313  # Kimberly's lower size cutoff for nuclei
-    max_bb = ''  # TODO
+    scale = 3  # TODO double check scale
+    min_size = 18313
+    max_bb = None
     t = task(tmp_folder=tmp_folder, max_jobs=max_jobs,
              config_dir=config_folder, target=target,
              compute_cell_features=False, raw_path=raw_path,
@@ -46,8 +45,7 @@ def write_morphology_nuclei(raw_path, nucleus_seg_path, chromatin_seg_path,
         raise RuntimeError("Nucleus morphology computation failed")
 
 
-# TODO do we pass raw data?
-def write_morphology_cells(cell_seg_path, nucleus_seg_path,
+def write_morphology_cells(raw_path, cell_seg_path, nucleus_seg_path,
                            table_in_path, table_out_path,
                            nucleus_mapping_path, region_path,
                            resolution, tmp_folder, target, max_jobs):
@@ -68,14 +66,13 @@ def write_morphology_cells(cell_seg_path, nucleus_seg_path,
     config_folder = os.path.join(tmp_folder, 'configs')
     write_config(config_folder, task.get_config()['morphology'])
 
-    # TODO check these values
-    scale = 2
+    scale = 2  # TODO double check scale
     min_size = 88741  # Kimberly's lower size cutoff for cells
     max_size = 600000000  # Kimberly's upper size cutoff for cells
-    max_bb = ''
+    max_bb = 454000
     t = task(tmp_folder=tmp_folder, max_jobs=max_jobs,
              config_dir=config_folder, target=target,
-             compute_cell_features=True,
+             compute_cell_features=True, raw_path=raw_path,
              cell_segmentation_path=cell_seg_path,
              nucleus_segmentation_path=nucleus_seg_path,
              in_table_path=table_in_path,

@@ -57,7 +57,6 @@ def write_s3_xml(in_xml, out_xml, path_in_bucket,
                  bucket_name='platybrowser',
                  shape=None, resolution=None):
     nt = 1
-    nz, ny, nx = tuple(shape)
 
     # check if we have an xml already
     tree = ET.parse(in_xml)
@@ -103,6 +102,7 @@ def write_s3_xml(in_xml, out_xml, path_in_bucket,
 
     # write the shape if it is not None
     if shape is not None:
+        nz, ny, nx = tuple(shape)
         vss = vs.find('size')
         vss.text = '{} {} {}'.format(nx, ny, nz)
 
@@ -119,3 +119,11 @@ def write_s3_xml(in_xml, out_xml, path_in_bucket,
     indent_xml(root)
     tree = ET.ElementTree(root)
     tree.write(out_xml)
+
+
+def read_path_in_bucket(xml):
+    root = ET.parse(xml).getroot()
+    seqdesc = root.find('SequenceDescription')
+    imgload = seqdesc.find('ImageLoader')
+    el = imgload.find('Key')
+    return el.text
