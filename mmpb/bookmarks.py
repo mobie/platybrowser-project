@@ -137,6 +137,8 @@ if __name__ == '__main__':
     eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
     layers = {'sbem-6dpf-1-whole-raw': {},
               'sbem-6dpf-1-whole-segmented-cells': {'SelectedIds': eids,
+                                                    'MinValue': 0,
+                                                    'MaxValue': 1000,
                                                     'ShowIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
@@ -151,6 +153,8 @@ if __name__ == '__main__':
             8143, 8144, 8177, 8178, 8885, 10027, 11092]
     layers = {'sbem-6dpf-1-whole-raw': {},
               'sbem-6dpf-1-whole-segmented-cells': {'SelectedIds': mids,
+                                                    'MinValue': 0,
+                                                    'MaxValue': 1000,
                                                     'ShowIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
@@ -165,7 +169,11 @@ if __name__ == '__main__':
     cids = []
     layers = {'sbem-6dpf-1-whole-raw': {},
               'sbem-6dpf-1-whole-segmented-cells': {'SelectedIds': nids,
+                                                    'MinValue': 0,
+                                                    'MaxValue': 1000,
                                                     'ShowIn3d': True},
               'sbem-6dpf-1-whole-segmented-cilia': {'SelectedIds': cids,
+                                                    'MinValue': 0,
+                                                    'MaxValue': 1000,
                                                     'ShowIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
