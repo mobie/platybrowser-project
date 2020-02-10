@@ -6,9 +6,7 @@ import pandas as pd
 from elf.io import open_file
 from pybdv.metadata import get_resolution, get_data_path
 from pybdv.util import get_key
-from mmpb.util import propagate_ids
 
-ROOT_FOLDER = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 LAYER_KEYS = {'Color', 'MinValue', 'MaxValue',
               'SelectedLabelIds', 'ShowImageIn3d', 'ShowSelectedSegmentsIn3d',
               'Tables'}
@@ -43,9 +41,9 @@ def validate_tables(table_dict, table_folder):
     return True
 
 
-def validate_layer(version, name, layer):
+def validate_layer(folder, name, layer):
     # check that the corresponding name exists
-    image_dict = os.path.join(ROOT_FOLDER, version, 'images', 'images.json')
+    image_dict = os.path.join(folder, 'images', 'images.json')
     with open(image_dict) as f:
         image_dict = json.load(f)
 
@@ -70,14 +68,14 @@ def validate_layer(version, name, layer):
             return False
 
     if 'Tables' in keys:
-        table_folder = os.path.join(ROOT_FOLDER, version, image_dict[name]['TableFolder'])
+        table_folder = os.path.join(folder, image_dict[name]['TableFolder'])
         return validate_tables(layer['Tables'], table_folder)
 
     return True
 
 
 # arguments are capitalized to be consistent with the keys in bookmarks dict
-def make_bookmark(Position=None, Layers=None, View=None):
+def make_bookmark(folder, Position=None, Layers=None, View=None):
     # validate and add position
     if Position is not None:
         assert isinstance(Position, (list, tuple))
@@ -88,7 +86,7 @@ def make_bookmark(Position=None, Layers=None, View=None):
     # validate and add Layers if given
     if Layers is not None:
         assert isinstance(Layers, dict), type(Layers)
-        assert all(validate_layer(version, name, layer) for name, layer in Layers.items())
+        assert all(validate_layer(folder, name, layer) for name, layer in Layers.items())
         bookmark.update({'Layers': Layers})
 
     # validate and add the View if given
@@ -98,26 +96,6 @@ def make_bookmark(Position=None, Layers=None, View=None):
         assert all(isinstance(pos, float) for pos in View)
         bookmark.update({'View': View})
     return bookmark
-
-
-# last three arguments are capitalized to be consistent with the keys in bookmarks dict
-def add_bookmark(version, name, Position=None, Layers=None, View=None):
-    bookmark_file = os.path.join(ROOT_FOLDER, version, 'misc', 'bookmarks.json')
-
-    if os.path.exists(bookmark_file):
-        with open(bookmark_file, 'r') as f:
-            bookmarks = json.load(f)
-    else:
-        bookmarks = {}
-
-    if name in bookmarks:
-        print("Overriding bookmark for name", name)
-
-    bookmark = make_bookmark(Position, Layers, View)
-    bookmarks[name] = bookmark
-
-    with open(bookmark_file, 'w') as f:
-        json.dump(bookmarks, f, indent=2, sort_keys=True)
 
 
 def update_bookmarks(folder, bookmarks):
@@ -200,91 +178,8 @@ def check_bookmark(root, version, name,
             # add mask with selected ids if given
             if 'SelectedLabelIds' in props:
                 selected_ids = props['SelectedLabelIds']
-                # TODO make mask for selected ids
+                # make mask for selected ids
                 selected_mask = np.isin(layer, selected_ids)
                 data.append(to_source(selected_mask.astype('uint32'), name='%s-selected' % layer_name))
 
     view(*data)
-
-
-# TODO changes requested by tischi in https://github.com/platybrowser/platybrowser-backend/issues/6
-# - ShowSelectedSegmentsIn3D. ShowImageIn3d
-# - SelectedLabelIds
-if __name__ == '__main__':
-    version = '0.6.6'
-    root = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
-
-    # add the left eye bookmark
-    name = 'Left eye'
-    position = [177.0, 218.0, 67.0]
-    add_bookmark(version, name, position, Layers=None, View=None)
-
-    cell_name = 'sbem-6dpf-1-whole-segmented-cells'
-    cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
-
-    # add bookmark for figure 2,panel b
-    name = 'Figure 2B: Epithelial cell segmentation'
-    position = [123.52869410491485, 149.1222916293258, 54.60245703388086]
-    view = [36.55960993152054, -74.95830868923713, 0.0, 7198.793896571635,
-            74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
-            0.0, 0.0, 83.39875970238346, -4553.7771933283475]
-
-    src_epi = '0.5.5'
-    eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
-    # TODO need to fix label id propagation
-    # eids = propagate_ids(root, src_epi, version, cell_name, eids)
-    layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedLabelIds': eids,
-                          'MinValue': 0,
-                          'MaxValue': 1000,
-                          'ShowSelectedSegmentsIn3d': True}}
-    add_bookmark(version, name, Position=position, Layers=layers, View=view)
-
-    # TODO need to check that ids are propagated correctly
-    # check_bookmark(ROOT_FOLDER, version, name, 1)
-    # quit()
-
-    # add bookmark for figure 2, panel C
-    name = 'Figure 2C: Muscle segmentation'
-    position = [112.4385016688483, 154.89179764379648, 108.0387320192992]
-    view = [162.5205891508259, 0.0, 0.0, -17292.571534457347,
-            0.0, 162.5205891508259, 0.0, -24390.10620770031,
-            0.0, 0.0, 162.5205891508259, -17558.518378884706]
-
-    mids = [1350, 5312, 5525, 5720, 6474, 6962, 7386,
-            8143, 8144, 8177, 8178, 8885, 10027, 11092]
-    src_muscle = '0.3.1'
-    # mids = propagate_ids(root, src_muscle, version, cell_name, mids)
-    layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedLabelIds': mids,
-                          'MinValue': 0,
-                          'MaxValue': 1000,
-                          'ShowSelectedSegmentsIn3d': True}}
-    add_bookmark(version, name, Position=position, Layers=layers, View=view)
-
-    # add bookmark for figure 2, panel d
-    name = 'Figure 2D: Nephridia segmentation'
-    position = [83.30399191428275, 134.014171679122, 196.13224525293464]
-    view = [49.66422153411607, 111.54766791295017, 0.0, -19052.196227198943,
-            -111.54766791295017, 49.66422153411607, 0.0, 3678.656514894519,
-            0.0, 0.0, 122.10412408025985, -23948.556010504282]
-
-    src_neph_cells = '0.3.1'
-    nids = [22925, 22181, 22925, 22182, 22515, 22700, 22699, 24024, 25520, 22370]
-    # nids = propagate_ids(root, src_neph_cells, version, cell_name, nids)
-
-    src_neph_cilia = '0.5.3'
-    cids = []
-    # TODO need to load cilia ids from file
-    # cids = propagate_ids(root, src_neph_cilia, version, cilia_name, cids)
-
-    layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedLabelIds': nids,
-                          'MinValue': 0,
-                          'MaxValue': 1000,
-                          'ShowSelectedSegmentsIn3d': True},
-              cilia_name: {'SelectedLabelIds': cids,
-                           'MinValue': 0,
-                           'MaxValue': 1000,
-                           'ShowSelectedSegmentsIn3d': True}}
-    add_bookmark(version, name, Position=position, Layers=layers, View=view)
