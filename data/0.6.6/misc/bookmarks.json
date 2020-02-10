@@ -5,7 +5,7 @@
       "sbem-6dpf-1-whole-segmented-cells": {
         "MaxValue": 1000,
         "MinValue": 0,
-        "SelectedIds": [
+        "SelectedLabelIds": [
           4136,
           4645,
           4628,
@@ -14,7 +14,7 @@
           3108,
           4298
         ],
-        "ShowIn3d": true
+        "ShowSelectedSegmentsIn3d": true
       }
     },
     "Position": [
@@ -43,7 +43,7 @@
       "sbem-6dpf-1-whole-segmented-cells": {
         "MaxValue": 1000,
         "MinValue": 0,
-        "SelectedIds": [
+        "SelectedLabelIds": [
           1350,
           5312,
           5525,
@@ -59,7 +59,7 @@
           10027,
           11092
         ],
-        "ShowIn3d": true
+        "ShowSelectedSegmentsIn3d": true
       }
     },
     "Position": [
@@ -88,7 +88,7 @@
       "sbem-6dpf-1-whole-segmented-cells": {
         "MaxValue": 1000,
         "MinValue": 0,
-        "SelectedIds": [
+        "SelectedLabelIds": [
           22925,
           22181,
           22925,
@@ -100,13 +100,13 @@
           25520,
           22370
         ],
-        "ShowIn3d": true
+        "ShowSelectedSegmentsIn3d": true
       },
       "sbem-6dpf-1-whole-segmented-cilia": {
         "MaxValue": 1000,
         "MinValue": 0,
-        "SelectedIds": [],
-        "ShowIn3d": true
+        "SelectedLabelIds": [],
+        "ShowSelectedSegmentsIn3d": true
       }
     },
     "Position": [

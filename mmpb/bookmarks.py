@@ -10,7 +10,8 @@ from mmpb.util import propagate_ids
 
 ROOT_FOLDER = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 LAYER_KEYS = {'Color', 'MinValue', 'MaxValue',
-              'SelectedIds', 'Tables', 'ShowIn3d'}
+              'SelectedLabelIds', 'ShowImageIn3d', 'ShowSelectedSegmentsIn3d',
+              'Tables'}
 # TODO add all color maps supported by platybrowser
 COLORMAPS = {'Glasbey', 'Viridis'}
 
@@ -58,8 +59,13 @@ def validate_layer(version, name, layer):
     if len(keys - LAYER_KEYS) > 0:
         return False
 
-    if 'ShowIn3d' in keys:
-        show_in_3d = layer["ShowIn3d"]
+    if 'ShowImageIn3d' in keys:
+        show_in_3d = layer["ShowImageIn3d"]
+        if not isinstance(show_in_3d, bool):
+            return False
+
+    if 'ShowSelectedSegmentsIn3d' in keys:
+        show_in_3d = layer["ShowSelectedSegmentsIn3d"]
         if not isinstance(show_in_3d, bool):
             return False
 
@@ -192,8 +198,8 @@ def check_bookmark(root, version, name,
             data.append(to_source(layer, name=layer_name))
 
             # add mask with selected ids if given
-            if 'SelectedIds' in props:
-                selected_ids = props['SelectedIds']
+            if 'SelectedLabelIds' in props:
+                selected_ids = props['SelectedLabelIds']
                 # TODO make mask for selected ids
                 selected_mask = np.isin(layer, selected_ids)
                 data.append(to_source(selected_mask.astype('uint32'), name='%s-selected' % layer_name))
@@ -225,17 +231,18 @@ if __name__ == '__main__':
 
     src_epi = '0.5.5'
     eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
-    eids = propagate_ids(root, src_epi, version, cell_name, eids)
+    # TODO need to fix label id propagation
+    # eids = propagate_ids(root, src_epi, version, cell_name, eids)
     layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedIds': eids,
+              cell_name: {'SelectedLabelIds': eids,
                           'MinValue': 0,
                           'MaxValue': 1000,
-                          'ShowIn3d': True}}
+                          'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
     # TODO need to check that ids are propagated correctly
-    check_bookmark(ROOT_FOLDER, version, name, 1)
-    quit()
+    # check_bookmark(ROOT_FOLDER, version, name, 1)
+    # quit()
 
     # add bookmark for figure 2, panel C
     name = 'Figure 2C: Muscle segmentation'
@@ -247,12 +254,12 @@ if __name__ == '__main__':
     mids = [1350, 5312, 5525, 5720, 6474, 6962, 7386,
             8143, 8144, 8177, 8178, 8885, 10027, 11092]
     src_muscle = '0.3.1'
-    mids = propagate_ids(root, src_muscle, version, cell_name, mids)
+    # mids = propagate_ids(root, src_muscle, version, cell_name, mids)
     layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedIds': mids,
+              cell_name: {'SelectedLabelIds': mids,
                           'MinValue': 0,
                           'MaxValue': 1000,
-                          'ShowIn3d': True}}
+                          'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
     # add bookmark for figure 2, panel d
@@ -264,20 +271,20 @@ if __name__ == '__main__':
 
     src_neph_cells = '0.3.1'
     nids = [22925, 22181, 22925, 22182, 22515, 22700, 22699, 24024, 25520, 22370]
-    nids = propagate_ids(root, src_neph_cells, version, cell_name, nids)
+    # nids = propagate_ids(root, src_neph_cells, version, cell_name, nids)
 
     src_neph_cilia = '0.5.3'
     cids = []
     # TODO need to load cilia ids from file
-    cids = propagate_ids(root, src_neph_cilia, version, cilia_name, cids)
+    # cids = propagate_ids(root, src_neph_cilia, version, cilia_name, cids)
 
     layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedIds': nids,
+              cell_name: {'SelectedLabelIds': nids,
                           'MinValue': 0,
                           'MaxValue': 1000,
-                          'ShowIn3d': True},
-              cilia_name: {'SelectedIds': cids,
+                          'ShowSelectedSegmentsIn3d': True},
+              cilia_name: {'SelectedLabelIds': cids,
                            'MinValue': 0,
                            'MaxValue': 1000,
-                           'ShowIn3d': True}}
+                           'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
