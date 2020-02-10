@@ -105,32 +105,32 @@ def update_image_dict(version):
         if name.startswith('sbem'):
             # raw data modality
             if 'raw' in name:
-                props['Modality'] = 'Image'
+                props['Type'] = 'Image'
             elif 'cells' in name or\
                     'chromatin' in name or\
                     'cilia' in name or\
                     'ganglia' in name or\
                     'nuclei' in name or\
                     'tissue' in name:
-                props['Modality'] = 'Segmentation'
+                props['Type'] = 'Segmentation'
                 props['MinValue'] = 0
                 props['MaxValue'] = 1000
             else:
-                props['Modality'] = 'Mask'
+                props['Type'] = 'Mask'
                 props['MinValue'] = 0
                 props['MaxValue'] = 1
         # for prospr
         elif name.startswith('prospr'):
             if 'virtual' in name:
-                props['Modality'] = 'Segmentation'
+                props['Type'] = 'Segmentation'
                 props['MinValue'] = 0
                 props['MaxValue'] = 1000
             elif 'segmented' in name:
-                props['Modality'] = 'Mask'
+                props['Type'] = 'Mask'
                 props['MinValue'] = 0
                 props['MaxValue'] = 1
             else:
-                props['Modality'] = 'Image'
+                props['Type'] = 'Image'
         else:
             raise RuntimeError('Unknown name %s' % name)
 
@@ -140,10 +140,22 @@ def update_image_dict(version):
         json.dump(image_dict, f, sort_keys=True, indent=2)
 
 
+def update_all_image_dicts():
+    version_file = '../data/versions.json'
+    with open(version_file) as f:
+        versions = json.load(f)
+
+    for version in versions:
+        if version == '0.6.6':
+            continue
+        update_image_dict(version)
+
+
 if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
     # fix_copy_attributes()
     # fix_all_id_luts()
     # add_remote_storage_to_xml()
     # rewrite_gene_file()
-    update_image_dict('0.6.6')
+    # update_image_dict('0.6.6')
+    update_all_image_dicts()
