@@ -2,8 +2,8 @@
 import csv
 from concurrent import futures
 
-import h5py
 import numpy as np
+from elf.io import open_file
 from vigra.analysis import extractRegionFeatures
 from vigra.sampling import resize
 
@@ -82,12 +82,12 @@ def gene_assignments(segmentation_path, segmentation_key,
         n_threads [int] - number of threads used for the computation
     """
 
-    with h5py.File(segmentation_path, 'r') as f:
+    with open_file(segmentation_path, 'r') as f:
         segmentation = f[segmentation_key][:]
 
     genes_dset = 'genes'
     names_dset = 'gene_names'
-    with h5py.File(genes_path, 'r') as f:
+    with open_file(genes_path, 'r') as f:
         ds = f[genes_dset]
         gene_shape = ds.shape[1:]
         all_genes = ds[:]

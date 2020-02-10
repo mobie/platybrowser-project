@@ -36,16 +36,16 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     # add a column with (somewhat stringent) cell criterion to the default table
     add_cell_criterion_column(base_out, nuc_mapping_table)
 
-    # TODO need to update gene names in aux h5 file and in profile_clust ... table
-    # # make table with gene mapping
-    # aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
-    # aux_gene_path = get_data_path(aux_gene_xml, return_absolute_path=True)
-    # if not os.path.exists(aux_gene_path):
-    #     raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
-    # gene_out = os.path.join(table_folder, 'genes.csv')
-    # gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
-    #                       tmp_folder, target)
+    # make table with gene mapping
+    aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
+    aux_gene_path = get_data_path(aux_gene_xml, return_absolute_path=True)
+    if not os.path.exists(aux_gene_path):
+        raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
+    gene_out = os.path.join(table_folder, 'genes.csv')
+    gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
+                          tmp_folder, target)
 
+    # TODO need to update gene names in profile_clust ... table
     # # make table with gene mapping via VCs
     # vc_name = 'prospr-6dpf-1-whole-virtual-cells'
     # vc_vol_path = get_seg_path(folder, vc_name)

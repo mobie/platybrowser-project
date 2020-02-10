@@ -16,7 +16,7 @@ from ..extension.attributes import VCAssignmentsLocal, VCAssignmentsSlurm
 def gene_assignment_table(segm_file, genes_file, table_file, labels,
                           tmp_folder, target, n_threads=8):
     task = GenesSlurm if target == 'slurm' else GenesLocal
-    if os.path.splitext(segm_file) == '.n5':
+    if os.path.splitext(segm_file)[1] == '.n5':
         seg_dset = 'setup0/timepoint0/s4'
     else:
         seg_dset = 't00000/s00/4/cells'
