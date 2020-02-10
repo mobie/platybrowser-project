@@ -1771,6 +1771,13 @@
       "local": "local/sbem-6dpf-1-whole-segmented-inside.xml"
     }
   },
+  "sbem-6dpf-1-whole-segmented-ganglia": {
+    "ColorMap": "Glasbey",
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-ganglia.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-ganglia"
+  },
   "sbem-6dpf-1-whole-segmented-midgut": {
     "Color": "White",
     "MaxValue": 1,
