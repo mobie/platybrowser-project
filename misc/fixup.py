@@ -68,7 +68,7 @@ def fix_all_id_luts():
         fix_id_luts(folder)
 
 
-def add_remote_storage_to_xml():
+def add_remote_storage_to_image_dict():
     version = '0.6.6'
     im_dict_path = os.path.join(ROOT, version, 'images', 'images.json')
     with open(im_dict_path, 'r') as f:
@@ -78,13 +78,13 @@ def add_remote_storage_to_xml():
         storage = props['Storage']
         rel_remote = os.path.join('remote', name + '.xml')
         abs_remote = os.path.join(ROOT, version, 'images', rel_remote)
-        assert os.path.exists(abs_remote)
+        assert os.path.exists(abs_remote), abs_remote
         storage['remote'] = rel_remote
         props['Storage'] = storage
         im_dict[name] = props
 
     with open(im_dict_path, 'w') as f:
-        json.dump(im_dict, f)
+        json.dump(im_dict, f, indent=2, sort_keys=True)
 
 
 def rewrite_gene_file():
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
     # fix_copy_attributes()
     # fix_all_id_luts()
-    # add_remote_storage_to_xml()
+    # add_remote_storage_to_image_dict()
     # rewrite_gene_file()
     # update_image_dict('0.6.6')
     update_all_image_dicts()
