@@ -1,6 +1,12 @@
 import os
 import json
+import numpy as np
 import pandas as pd
+
+from elf.io import open_file
+from pybdv.metadata import get_resolution, get_data_path
+from pybdv.util import get_key
+from mmpb.util import propagate_ids
 
 ROOT_FOLDER = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 LAYER_KEYS = {'Color', 'MinValue', 'MaxValue',
@@ -119,13 +125,93 @@ def update_bookmarks(folder, bookmarks):
         json.dump(bookmark_dict, f)
 
 
+def scale_raw_resolution(resolution, scale):
+    if scale == 0:
+        return resolution
+    resolution = [resolution[0],
+                  resolution[1] * 2,
+                  resolution[2] * 2]
+    resolution = [re * 2 ** (scale - 1) for re in resolution]
+    return resolution
+
+
+def check_bookmark(root, version, name,
+                   raw_scale, halo=[50, 512, 512],
+                   layer_scale_dict={}):
+    from heimdall import view, to_source
+    bookmark_path = os.path.join(root, version, 'misc', 'bookmarks.json')
+    with open(bookmark_path) as f:
+        bookmarks = json.load(f)
+    bookmark = bookmarks[name]
+    assert 'Position' in bookmark, "Can only load bookmark with position"
+    position = bookmark['Position']
+    # TODO use new elf fancyness to transform the view :)
+    if 'View' in bookmark:
+        pass
+
+    raw_name = 'sbem-6dpf-1-whole-raw'
+    image_folder = os.path.join(root, version, 'images', 'local')
+    # we always load raw
+    xml_raw = os.path.join(image_folder, raw_name + '.xml')
+
+    # make bounding box
+    resolution = get_resolution(xml_raw, setup_id=0)
+    resolution = scale_raw_resolution(resolution, raw_scale)
+    position = [pos / res for pos, res in zip(position, resolution)]
+    bb = tuple(slice(int(pos - ha), int(pos + ha)) for pos, ha in zip(position, halo))
+
+    # load raw
+    raw_path = get_data_path(xml_raw, return_absolute_path=True)
+    is_h5 = os.path.splitext(raw_path)[1] == '.h5'
+    raw_key = get_key(is_h5, time_point=0, setup_id=0, scale=raw_scale)
+    with open_file(raw_path, 'r') as f:
+        ds = f[raw_key]
+        ref_shape = ds.shape
+        raw = ds[bb]
+
+    data = [to_source(raw, name='raw')]
+
+    if 'Layers' in bookmark:
+        for layer_name, props in bookmark['Layers'].items():
+            if layer_name == raw_name:
+                continue
+            layer_scale = layer_scale_dict.get(layer_name, 0)
+            xml_layer = os.path.join(image_folder, layer_name + '.xml')
+            # load layer
+            layer_path = get_data_path(xml_layer, return_absolute_path=True)
+            is_h5 = os.path.splitext(layer_path)[1] == '.h5'
+            layer_key = get_key(is_h5, time_point=0, setup_id=0, scale=layer_scale)
+            with open_file(layer_path, 'r') as f:
+                ds = f[layer_key]
+                shape = ds.shape
+                if shape != ref_shape:
+                    raise RuntimeError("Shape for layer %s = %s does not match the raw scale %s" % (layer_name,
+                                                                                                    str(shape),
+                                                                                                    str(ref_shape)))
+                layer = ds[bb]
+            data.append(to_source(layer, name=layer_name))
+
+            # add mask with selected ids if given
+            if 'SelectedIds' in props:
+                selected_ids = props['SelectedIds']
+                # TODO make mask for selected ids
+                selected_mask = np.isin(layer, selected_ids)
+                data.append(to_source(selected_mask.astype('uint32'), name='%s-selected' % layer_name))
+
+    view(*data)
+
+
 if __name__ == '__main__':
     version = '0.6.6'
+    root = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
     # add the left eye bookmark
     name = 'Left eye'
     position = [177.0, 218.0, 67.0]
     add_bookmark(version, name, position, Layers=None, View=None)
+
+    cell_name = 'sbem-6dpf-1-whole-segmented-cells'
+    cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
 
     # add bookmark for figure 2,panel b
     name = 'Figure 2B: Epithelial cell segmentation'
@@ -133,14 +219,20 @@ if __name__ == '__main__':
     view = [36.55960993152054, -74.95830868923713, 0.0, 7198.793896571635,
             74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
             0.0, 0.0, 83.39875970238346, -4553.7771933283475]
-    # TODO ids need to be propagated
+
+    src_epi = '0.5.5'
     eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
+    eids = propagate_ids(root, src_epi, version, cell_name, eids)
     layers = {'sbem-6dpf-1-whole-raw': {},
-              'sbem-6dpf-1-whole-segmented-cells': {'SelectedIds': eids,
-                                                    'MinValue': 0,
-                                                    'MaxValue': 1000,
-                                                    'ShowIn3d': True}}
+              cell_name: {'SelectedIds': eids,
+                          'MinValue': 0,
+                          'MaxValue': 1000,
+                          'ShowIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+    # TODO need to check that ids are propagated correctly
+    check_bookmark(ROOT_FOLDER, version, name, 1)
+    quit()
 
     # add bookmark for figure 2, panel C
     name = 'Figure 2C: Muscle segmentation'
@@ -148,14 +240,16 @@ if __name__ == '__main__':
     view = [162.5205891508259, 0.0, 0.0, -17292.571534457347,
             0.0, 162.5205891508259, 0.0, -24390.10620770031,
             0.0, 0.0, 162.5205891508259, -17558.518378884706]
-    # TODO ids need to be propagated
+
     mids = [1350, 5312, 5525, 5720, 6474, 6962, 7386,
             8143, 8144, 8177, 8178, 8885, 10027, 11092]
+    src_muscle = '0.3.1'
+    mids = propagate_ids(root, src_muscle, version, cell_name, mids)
     layers = {'sbem-6dpf-1-whole-raw': {},
-              'sbem-6dpf-1-whole-segmented-cells': {'SelectedIds': mids,
-                                                    'MinValue': 0,
-                                                    'MaxValue': 1000,
-                                                    'ShowIn3d': True}}
+              cell_name: {'SelectedIds': mids,
+                          'MinValue': 0,
+                          'MaxValue': 1000,
+                          'ShowIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
     # add bookmark for figure 2, panel d
@@ -164,16 +258,23 @@ if __name__ == '__main__':
     view = [49.66422153411607, 111.54766791295017, 0.0, -19052.196227198943,
             -111.54766791295017, 49.66422153411607, 0.0, 3678.656514894519,
             0.0, 0.0, 122.10412408025985, -23948.556010504282]
-    # TODO ids need to be propagated
+
+    src_neph_cells = '0.3.1'
     nids = [22925, 22181, 22925, 22182, 22515, 22700, 22699, 24024, 25520, 22370]
+    nids = propagate_ids(root, src_neph_cells, version, cell_name, nids)
+
+    src_neph_cilia = '0.5.3'
     cids = []
+    # TODO need to load cilia ids from file
+    cids = propagate_ids(root, src_neph_cilia, version, cilia_name, cids)
+
     layers = {'sbem-6dpf-1-whole-raw': {},
-              'sbem-6dpf-1-whole-segmented-cells': {'SelectedIds': nids,
-                                                    'MinValue': 0,
-                                                    'MaxValue': 1000,
-                                                    'ShowIn3d': True},
-              'sbem-6dpf-1-whole-segmented-cilia': {'SelectedIds': cids,
-                                                    'MinValue': 0,
-                                                    'MaxValue': 1000,
-                                                    'ShowIn3d': True}}
+              cell_name: {'SelectedIds': nids,
+                          'MinValue': 0,
+                          'MaxValue': 1000,
+                          'ShowIn3d': True},
+              cilia_name: {'SelectedIds': cids,
+                           'MinValue': 0,
+                           'MaxValue': 1000,
+                           'ShowIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
