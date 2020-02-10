@@ -93,9 +93,57 @@ def rewrite_gene_file():
     create_auxiliary_gene_file(meds_root, out_file)
 
 
+def update_image_dict(version):
+    """ https://github.com/platybrowser/platybrowser-backend/issues/10
+    """
+    image_dict_path = os.path.join(ROOT, version, 'images', 'images.json')
+    with open(image_dict_path) as f:
+        image_dict = json.load(f)
+
+    for name, props in image_dict.items():
+        # for sbem
+        if name.startswith('sbem'):
+            # raw data modality
+            if 'raw' in name:
+                props['Modality'] = 'Image'
+            elif 'cells' in name or\
+                    'chromatin' in name or\
+                    'cilia' in name or\
+                    'ganglia' in name or\
+                    'nuclei' in name or\
+                    'tissue' in name:
+                props['Modality'] = 'Segmentation'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1000
+            else:
+                props['Modality'] = 'Mask'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1
+        # for prospr
+        elif name.startswith('prospr'):
+            if 'virtual' in name:
+                props['Modality'] = 'Segmentation'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1000
+            elif 'segmented' in name:
+                props['Modality'] = 'Mask'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1
+            else:
+                props['Modality'] = 'Image'
+        else:
+            raise RuntimeError('Unknown name %s' % name)
+
+        image_dict[name] = props
+
+    with open(image_dict_path, 'w') as f:
+        json.dump(image_dict, f, sort_keys=True, indent=2)
+
+
 if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
     # fix_copy_attributes()
     # fix_all_id_luts()
     # add_remote_storage_to_xml()
-    rewrite_gene_file()
+    # rewrite_gene_file()
+    update_image_dict('0.6.6')
