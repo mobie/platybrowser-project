@@ -110,11 +110,14 @@ def update_image_dict(version):
                     'chromatin' in name or\
                     'cilia' in name or\
                     'ganglia' in name or\
+                    'nephridia' in name or\
                     'nuclei' in name or\
                     'tissue' in name:
                 props['Type'] = 'Segmentation'
                 props['MinValue'] = 0
                 props['MaxValue'] = 1000
+                props['ColorMap'] = 'Glasbey'
+                props.pop('Color', None)
             else:
                 props['Type'] = 'Mask'
                 props['MinValue'] = 0
@@ -128,7 +131,7 @@ def update_image_dict(version):
             elif 'segmented' in name:
                 props['Type'] = 'Mask'
                 props['MinValue'] = 0
-                props['MaxValue'] = 1
+                props['MaxValue'] = 1000
             else:
                 props['Type'] = 'Image'
         else:
