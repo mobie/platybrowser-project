@@ -201,6 +201,9 @@ def check_bookmark(root, version, name,
     view(*data)
 
 
+# TODO changes requested by tischi in https://github.com/platybrowser/platybrowser-backend/issues/6
+# - ShowSelectedSegmentsIn3D. ShowImageIn3d
+# - SelectedLabelIds
 if __name__ == '__main__':
     version = '0.6.6'
     root = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
