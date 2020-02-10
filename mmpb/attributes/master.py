@@ -45,17 +45,16 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
                           tmp_folder, target)
 
-    # TODO need to update gene names in profile_clust ... table
-    # # make table with gene mapping via VCs
-    # vc_name = 'prospr-6dpf-1-whole-virtual-cells'
-    # vc_vol_path = get_seg_path(folder, vc_name)
-    # vc_key = get_seg_key(folder, vc_name, scale=0)
-    # vc_expression_path = os.path.join(folder, 'tables', vc_name, 'profile_clust_curated.csv')
-    # med_expression_path = gene_out
-    # vc_out = os.path.join(table_folder, 'vc_assignments.csv')
-    # vc_assignment_table(seg_path, vc_vol_path, vc_key,
-    #                     vc_expression_path, med_expression_path,
-    #                     vc_out, tmp_folder, target)
+    # make table with gene mapping via VCs
+    vc_name = 'prospr-6dpf-1-whole-virtual-cells'
+    vc_vol_path = get_seg_path(folder, vc_name)
+    vc_key = get_seg_key(folder, vc_name, scale=0)
+    vc_expression_path = os.path.join(folder, 'tables', vc_name, 'profile_clust_curated.csv')
+    med_expression_path = gene_out
+    vc_out = os.path.join(table_folder, 'vc_assignments.csv')
+    vc_assignment_table(seg_path, vc_vol_path, vc_key,
+                        vc_expression_path, med_expression_path,
+                        vc_out, tmp_folder, target)
 
     # region and semantic mapping
     region_out = os.path.join(table_folder, 'regions.csv')

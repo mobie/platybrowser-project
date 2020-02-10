@@ -3,9 +3,9 @@ import os
 import csv
 from concurrent import futures
 
-import h5py
 import argparse
 import numpy as np
+from elf.io import open_file
 from vigra.analysis import extractRegionFeatures
 from vigra.sampling import resize
 from vigra.filters import distanceTransform
@@ -117,11 +117,11 @@ def vc_assignments(segm_volume_file, em_dset,
                    vc_volume_file, cm_dset, vc_expr_file,
                    cells_med_expr_table, output_gene_table, n_threads):
     # volume file for vc's (generated from CellModels_coordinates)
-    with h5py.File(vc_volume_file, 'r') as f:
+    with open_file(vc_volume_file, 'r') as f:
         vc_data = f[cm_dset][:]
 
     # downsample segmentation data to the same resolution as gene data
-    with h5py.File(segm_volume_file, 'r') as f:
+    with open_file(segm_volume_file, 'r') as f:
         segm_data = f[em_dset][:]
     downsampled_segm_data = resize(segm_data.astype("float32"), shape=vc_data.shape,
                                    order=0).astype('uint16')

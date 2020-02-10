@@ -4,3 +4,4 @@ ganglia_ids.csv
 gene_clusters.csv
 genes.csv
 regions.csv
+vc_assignments.csv

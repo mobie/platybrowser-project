@@ -41,10 +41,15 @@ def gene_assignment_table(segm_file, genes_file, table_file, labels,
         raise RuntimeError("Computing gene expressions failed")
 
 
-def vc_assignment_table(seg_path, seg_key, vc_vol_path, vc_vol_key,
+def vc_assignment_table(seg_path, vc_vol_path, vc_vol_key,
                         vc_expression_path, med_expression_path, output_path,
                         tmp_folder, target, n_threads=8):
     task = VCAssignmentsSlurm if target == 'slurm' else VCAssignmentsLocal
+
+    if os.path.splitext(seg_path)[1] == '.n5':
+        seg_key = 'setup0/timepoint0/s4'
+    else:
+        seg_key = 't00000/s00/4/cells'
 
     config_folder = os.path.join(tmp_folder, 'configs')
     config = task.default_task_config()
