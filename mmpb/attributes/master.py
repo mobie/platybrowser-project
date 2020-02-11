@@ -36,26 +36,25 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     # add a column with (somewhat stringent) cell criterion to the default table
     add_cell_criterion_column(base_out, nuc_mapping_table)
 
-    # TODO need to update gene names in aux h5 file and in profile_clust ... table
-    # # make table with gene mapping
-    # aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
-    # aux_gene_path = get_data_path(aux_gene_xml, return_absolute_path=True)
-    # if not os.path.exists(aux_gene_path):
-    #     raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
-    # gene_out = os.path.join(table_folder, 'genes.csv')
-    # gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
-    #                       tmp_folder, target)
+    # make table with gene mapping
+    aux_gene_xml = os.path.join(folder, 'misc', 'prospr-6dpf-1-whole_meds_all_genes.xml')
+    aux_gene_path = get_data_path(aux_gene_xml, return_absolute_path=True)
+    if not os.path.exists(aux_gene_path):
+        raise RuntimeError("Can't find auxiliary gene file @ %s" % aux_gene_path)
+    gene_out = os.path.join(table_folder, 'genes.csv')
+    gene_assignment_table(seg_path, aux_gene_path, gene_out, label_ids,
+                          tmp_folder, target)
 
-    # # make table with gene mapping via VCs
-    # vc_name = 'prospr-6dpf-1-whole-virtual-cells'
-    # vc_vol_path = get_seg_path(folder, vc_name)
-    # vc_key = get_seg_key(folder, vc_name, scale=0)
-    # vc_expression_path = os.path.join(folder, 'tables', vc_name, 'profile_clust_curated.csv')
-    # med_expression_path = gene_out
-    # vc_out = os.path.join(table_folder, 'vc_assignments.csv')
-    # vc_assignment_table(seg_path, vc_vol_path, vc_key,
-    #                     vc_expression_path, med_expression_path,
-    #                     vc_out, tmp_folder, target)
+    # make table with gene mapping via VCs
+    vc_name = 'prospr-6dpf-1-whole-virtual-cells'
+    vc_vol_path = get_seg_path(folder, vc_name)
+    vc_key = get_seg_key(folder, vc_name, scale=0)
+    vc_expression_path = os.path.join(folder, 'tables', vc_name, 'profile_clust_curated.csv')
+    med_expression_path = gene_out
+    vc_out = os.path.join(table_folder, 'vc_assignments.csv')
+    vc_assignment_table(seg_path, vc_vol_path, vc_key,
+                        vc_expression_path, med_expression_path,
+                        vc_out, tmp_folder, target)
 
     # region and semantic mapping
     region_out = os.path.join(table_folder, 'regions.csv')
@@ -65,15 +64,14 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     region_attributes(seg_path, region_out, segmentation_folder,
                       label_ids, tmp_folder, target, max_jobs)
 
-    # TODO make morphology work again, check scales with kimberly
-    # # make table with morphology
-    # xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
-    # raw_path = get_data_path(xml_raw, return_absolute_path=True)
-    # morpho_out = os.path.join(table_folder, 'morphology.csv')
-    # write_morphology_cells(seg_path, nuc_path,
-    #                        base_out, morpho_out,
-    #                        nuc_mapping_table, region_out,
-    #                        tmp_folder, target, max_jobs)
+    # make table with morphology
+    xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
+    raw_path = get_data_path(xml_raw, return_absolute_path=True)
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    write_morphology_cells(raw_path, seg_path, nuc_path,
+                           base_out, morpho_out,
+                           nuc_mapping_table, region_out,
+                           tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     mask_name = 'sbem-6dpf-1-whole-segmented-extrapolated'
@@ -126,17 +124,14 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO make morphology work again, check scales with kimberly
     # make the morphology attribute table
-    # xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
-    # raw_path = get_data_path(xml_raw, return_absolute_path=True)
-    # cell_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-cells')
-    # chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin')
-    # morpho_out = os.path.join(table_folder, 'morphology.csv')
-    # write_morphology_nuclei(raw_path, seg_path,
-    #                         cell_seg_path, chromatin_seg_path,
-    #                         base_out, morpho_out,
-    #                         tmp_folder, target, max_jobs)
+    xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
+    raw_path = get_data_path(xml_raw, return_absolute_path=True)
+    chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin')
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    write_morphology_nuclei(raw_path, seg_path, chromatin_seg_path,
+                            base_out, morpho_out,
+                            tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     mask_name = 'sbem-6dpf-1-whole-segmented-extrapolated'

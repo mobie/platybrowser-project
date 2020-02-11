@@ -29,7 +29,7 @@ def write_morphology_nuclei(raw_path, nucleus_seg_path, chromatin_seg_path,
     config_folder = os.path.join(tmp_folder, 'configs')
     write_config(config_folder, task.get_config()['morphology'])
 
-    scale = 3  # TODO double check scale
+    scale = 3  # this is the scale of the raw data
     min_size = 18313
     max_bb = None
     t = task(tmp_folder=tmp_folder, max_jobs=max_jobs,
@@ -48,7 +48,7 @@ def write_morphology_nuclei(raw_path, nucleus_seg_path, chromatin_seg_path,
 def write_morphology_cells(raw_path, cell_seg_path, nucleus_seg_path,
                            table_in_path, table_out_path,
                            nucleus_mapping_path, region_path,
-                           resolution, tmp_folder, target, max_jobs):
+                           tmp_folder, target, max_jobs):
 
     """
     Write csv files of morphology stats for both the nucleus and cell segmentation
@@ -66,7 +66,7 @@ def write_morphology_cells(raw_path, cell_seg_path, nucleus_seg_path,
     config_folder = os.path.join(tmp_folder, 'configs')
     write_config(config_folder, task.get_config()['morphology'])
 
-    scale = 2  # TODO double check scale
+    scale = 3  # this is the scale of the raw data
     min_size = 88741  # Kimberly's lower size cutoff for cells
     max_size = 600000000  # Kimberly's upper size cutoff for cells
     max_bb = 454000

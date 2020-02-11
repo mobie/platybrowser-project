@@ -67,7 +67,8 @@ class MorphologyWorkflow(WorkflowBase):
     output_path = luigi.Parameter()
 
     def requires(self):
-        out_prefix = os.path.join(self.tmp_folder, 'sub_table_%s' % self.prefix)
+        prefix = 'cells' if self.compute_cell_features else 'nuclei'
+        out_prefix = os.path.join(self.tmp_folder, 'sub_table_%s' % prefix)
         morpho_task = getattr(morpho_tasks,
                               self._get_task_name('Morphology'))
         dep = morpho_task(tmp_folder=self.tmp_folder, config_dir=self.config_dir,

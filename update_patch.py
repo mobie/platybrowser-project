@@ -15,6 +15,8 @@ from mmpb.release_helper import add_version, make_folder_structure
 from mmpb.util import read_resolution
 
 
+# we could also read the tags from data/versions.json
+# would be best to do both and check that they are consistent
 def get_tags():
     tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
     new_tag = tag.split('.')

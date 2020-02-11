@@ -4,8 +4,10 @@ from glob import glob
 
 import luigi
 import numpy as np
-import h5py
 from tqdm import tqdm
+from elf.io import open_file
+from pybdv.util import get_key
+from pybdv.metadata import get_data_path
 
 from ..extension.attributes import GenesLocal, GenesSlurm
 from ..extension.attributes import VCAssignmentsLocal, VCAssignmentsSlurm
@@ -14,7 +16,7 @@ from ..extension.attributes import VCAssignmentsLocal, VCAssignmentsSlurm
 def gene_assignment_table(segm_file, genes_file, table_file, labels,
                           tmp_folder, target, n_threads=8):
     task = GenesSlurm if target == 'slurm' else GenesLocal
-    if os.path.splitext(segm_file) == '.n5':
+    if os.path.splitext(segm_file)[1] == '.n5':
         seg_dset = 'setup0/timepoint0/s4'
     else:
         seg_dset = 't00000/s00/4/cells'
@@ -39,10 +41,15 @@ def gene_assignment_table(segm_file, genes_file, table_file, labels,
         raise RuntimeError("Computing gene expressions failed")
 
 
-def vc_assignment_table(seg_path, seg_key, vc_vol_path, vc_vol_key,
+def vc_assignment_table(seg_path, vc_vol_path, vc_vol_key,
                         vc_expression_path, med_expression_path, output_path,
                         tmp_folder, target, n_threads=8):
     task = VCAssignmentsSlurm if target == 'slurm' else VCAssignmentsLocal
+
+    if os.path.splitext(seg_path)[1] == '.n5':
+        seg_key = 'setup0/timepoint0/s4'
+    else:
+        seg_key = 't00000/s00/4/cells'
 
     config_folder = os.path.join(tmp_folder, 'configs')
     config = task.default_task_config()
@@ -61,48 +68,51 @@ def vc_assignment_table(seg_path, seg_key, vc_vol_path, vc_vol_key,
         raise RuntimeError("Computing gene expressions failed")
 
 
-def find_nth(string, substring, n):
-    if (n == 1):
-        return string.find(substring)
-    else:
-        return string.find(substring, find_nth(string, substring, n - 1) + 1)
-
-
-def create_auxiliary_gene_file(meds_path, out_file, return_result=False):
+def create_auxiliary_gene_file(meds_root, out_file, return_result=False):
     all_genes_dset = 'genes'
     names_dset = 'gene_names'
-    dset = 't00000/s00/0/cells'
 
-    # get all the med files in the image folder
-    med_files = glob(os.path.join(meds_path, "*MED.h5"))
-    gene_names = [os.path.splitext(os.path.basename(f))[0][:-4] for f in med_files]
+    # get all the prospr gene xmls in the image folder
+    med_files = glob(os.path.join(meds_root, "prospr*.xml"))
+    # filter out prospr files that are not genes (=semgneted regions and virtual cells)
+    med_files = [name for name in med_files if 'segmented' not in name]
+    med_files = [name for name in med_files if 'virtual' not in name]
 
-    # find out where the gene name actually starts (the 5th dash-separated word)
-    name_start = find_nth(gene_names[0], '-', 4) + 1
-
+    # get the gene names from filenames
+    gene_names = [os.path.splitext(os.path.basename(f))[0] for f in med_files]
     # cut all the preceeding prospr-... part
-    gene_names = [name[name_start:] for name in gene_names]
-    num_genes = len(med_files)
-    assert len(gene_names) == num_genes, "%i, %i" % (len(gene_names), len(num_genes))
+    gene_names = ['-'.join(name.split('-')[4:]) for name in gene_names]
+    num_genes = len(gene_names)
+    assert num_genes == len(med_files)
 
-    with h5py.File(med_files[0], 'r') as f:
-        spatial_shape = f[dset].shape
+    # get the data paths from the xmls
+    med_files = [get_data_path(med_file, return_absolute_path=True)
+                 for med_file in med_files]
+
+    is_h5 = os.path.splitext(med_files[0])[1] == '.h5'
+    med_key = get_key(is_h5, time_point=0, setup_id=0, scale=0)
+    with open_file(med_files[0], 'r') as f:
+        spatial_shape = f[med_key].shape
 
     shape = (num_genes,) + spatial_shape
 
     # iterate through med files and write down binarized into one file
-    with h5py.File(out_file) as f:
+    with open_file(out_file) as f:
         out_dset = f.create_dataset(all_genes_dset, shape=shape, dtype='bool',
                                     chunks=(1, 64, 64, 64), compression='gzip')
+        out_dset.n_threads = 8
 
-        for i, file_name in enumerate(tqdm(med_files)):
-            with h5py.File(file_name, 'r') as f2:
-                ds = f2[dset]
+        for i, med_file in enumerate(tqdm(med_files)):
+            is_h5 = os.path.splitext(med_file)[1] == '.h5'
+            med_key = get_key(is_h5, time_point=0, setup_id=0, scale=0)
+            with open_file(med_file, 'r') as f2:
+                ds = f2[med_key]
                 this_shape = ds.shape
                 if this_shape != spatial_shape:
                     raise RuntimeError("Incompatible shapes %s, %s" % (str(this_shape),
                                                                        str(spatial_shape)))
-                data = f2[dset][:]
+                ds.n_threads = 8
+                data = ds[:]
             out_dset[i] = data
 
         gene_names_ascii = [n.encode('ascii', 'ignore') for n in gene_names]
@@ -110,6 +120,6 @@ def create_auxiliary_gene_file(meds_path, out_file, return_result=False):
 
     if return_result:
         # reload the binarized version
-        with h5py.File(out_file, 'r') as f:
+        with open_file(out_file, 'r') as f:
             all_genes = f[all_genes_dset][:]
         return all_genes

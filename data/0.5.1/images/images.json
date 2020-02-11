@@ -5,7 +5,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ache.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-allcr1": {
     "Color": "Magenta",
@@ -13,7 +14,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-allcr1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-allcr2": {
     "Color": "Magenta",
@@ -21,7 +23,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-allcr2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-anpra": {
     "Color": "Magenta",
@@ -29,7 +32,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-anpra.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-anprb": {
     "Color": "Magenta",
@@ -37,7 +41,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-anprb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ap2": {
     "Color": "Magenta",
@@ -45,7 +50,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ap2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-arx": {
     "Color": "Magenta",
@@ -53,7 +59,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-arx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ascb": {
     "Color": "Magenta",
@@ -61,7 +68,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ascb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-asci": {
     "Color": "Magenta",
@@ -69,7 +77,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-asci.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ascii": {
     "Color": "Magenta",
@@ -77,7 +86,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ascii.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ash": {
     "Color": "Magenta",
@@ -85,7 +95,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ash.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-asicalpha": {
     "Color": "Magenta",
@@ -93,7 +104,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-asicalpha.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-baiap": {
     "Color": "Magenta",
@@ -101,7 +113,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-baiap.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-barh1": {
     "Color": "Magenta",
@@ -109,7 +122,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-barh1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-bca1": {
     "Color": "Magenta",
@@ -117,7 +131,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-bca1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-beta3": {
     "Color": "Magenta",
@@ -125,7 +140,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-beta3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-bmpr1": {
     "Color": "Magenta",
@@ -133,7 +149,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-bmpr1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-boule-like": {
     "Color": "Magenta",
@@ -141,7 +158,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-boule-like.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-brn3a": {
     "Color": "Magenta",
@@ -149,7 +167,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-brn3a.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-bsx": {
     "Color": "Magenta",
@@ -157,7 +176,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-bsx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-cal2": {
     "Color": "Magenta",
@@ -165,7 +185,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-cal2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-calexcitin2": {
     "Color": "Magenta",
@@ -173,7 +194,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-calexcitin2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-calmodulin": {
     "Color": "Magenta",
@@ -181,7 +203,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-calmodulin.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-catl": {
     "Color": "Magenta",
@@ -189,7 +212,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-catl.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ccvd": {
     "Color": "Magenta",
@@ -197,7 +221,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ccvd.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-cepu1": {
     "Color": "Magenta",
@@ -205,7 +230,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-cepu1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-chat": {
     "Color": "Magenta",
@@ -213,7 +239,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-chat.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-chx10": {
     "Color": "Magenta",
@@ -221,7 +248,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-chx10.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-cnga": {
     "Color": "Magenta",
@@ -229,7 +257,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-cnga.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-co1a1": {
     "Color": "Magenta",
@@ -237,7 +266,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-co1a1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-coe": {
     "Color": "Magenta",
@@ -245,7 +275,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-coe.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-dach": {
     "Color": "Magenta",
@@ -253,7 +284,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-dach.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-dbhlike": {
     "Color": "Magenta",
@@ -261,7 +293,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-dbhlike.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-dbx1": {
     "Color": "Magenta",
@@ -269,7 +302,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-dbx1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-delta": {
     "Color": "Magenta",
@@ -277,7 +311,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-delta.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-dlx": {
     "Color": "Magenta",
@@ -285,7 +320,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-dlx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-dopard2": {
     "Color": "Magenta",
@@ -293,7 +329,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-dopard2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-edu3to4at6dpf": {
     "Color": "Magenta",
@@ -301,7 +338,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-edu3to4at6dpf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-edu4to5at6dpf": {
     "Color": "Magenta",
@@ -309,7 +347,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-edu4to5at6dpf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-edu5to6at6dpf": {
     "Color": "Magenta",
@@ -317,7 +356,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-edu5to6at6dpf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-elav": {
     "Color": "Magenta",
@@ -325,7 +365,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-elav.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-eve": {
     "Color": "Magenta",
@@ -333,7 +374,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-eve.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-eya": {
     "Color": "Magenta",
@@ -341,7 +383,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-eya.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-fezf": {
     "Color": "Magenta",
@@ -349,7 +392,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-fezf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-for": {
     "Color": "Magenta",
@@ -357,7 +401,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-for.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-foxd3": {
     "Color": "Magenta",
@@ -365,7 +410,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-foxd3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-foxn4": {
     "Color": "Magenta",
@@ -373,7 +419,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-foxn4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-fvri": {
     "Color": "Magenta",
@@ -381,7 +428,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-fvri.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-fxl21": {
     "Color": "Magenta",
@@ -389,7 +437,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-fxl21.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gad": {
     "Color": "Magenta",
@@ -397,7 +446,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gad.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gata123": {
     "Color": "Magenta",
@@ -405,7 +455,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gata123.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gcb": {
     "Color": "Magenta",
@@ -413,7 +464,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gcb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gcd": {
     "Color": "Magenta",
@@ -421,7 +473,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gcd.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gdpd1": {
     "Color": "Magenta",
@@ -429,7 +482,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gdpd1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-globin-like": {
     "Color": "Magenta",
@@ -437,7 +491,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-globin-like.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-glt1": {
     "Color": "Magenta",
@@ -445,7 +500,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-glt1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-glyt": {
     "Color": "Magenta",
@@ -453,7 +509,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-glyt.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gnrh": {
     "Color": "Magenta",
@@ -461,7 +518,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gnrh.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gnrhr": {
     "Color": "Magenta",
@@ -469,7 +527,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gnrhr.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gpb": {
     "Color": "Magenta",
@@ -477,7 +536,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gpb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gpcr2": {
     "Color": "Magenta",
@@ -485,7 +545,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gpcr203": {
     "Color": "Magenta",
@@ -493,7 +554,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr203.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gpcr209": {
     "Color": "Magenta",
@@ -501,7 +563,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr209.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gpcr210": {
     "Color": "Magenta",
@@ -509,7 +572,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr210.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gpcr32": {
     "Color": "Magenta",
@@ -517,7 +581,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr32.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gppcr21": {
     "Color": "Magenta",
@@ -525,7 +590,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gppcr21.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-grik3": {
     "Color": "Magenta",
@@ -533,7 +599,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-grik3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-grm7": {
     "Color": "Magenta",
@@ -541,7 +608,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-grm7.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gsx": {
     "Color": "Magenta",
@@ -549,7 +617,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gsx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-gucy": {
     "Color": "Magenta",
@@ -557,7 +626,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-gucy.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hand": {
     "Color": "Magenta",
@@ -565,7 +635,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hand.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hb9": {
     "Color": "Magenta",
@@ -573,7 +644,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hb9.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hcn1": {
     "Color": "Magenta",
@@ -581,7 +653,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hcn1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hnf6": {
     "Color": "Magenta",
@@ -589,7 +662,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hnf6.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hox1": {
     "Color": "Magenta",
@@ -597,7 +671,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hox1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hox4": {
     "Color": "Magenta",
@@ -605,7 +680,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hox4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hox7": {
     "Color": "Magenta",
@@ -613,7 +689,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hox7.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-hr38": {
     "Color": "Magenta",
@@ -621,7 +698,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-hr38.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-irx2546": {
     "Color": "Magenta",
@@ -629,7 +707,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-irx2546.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-irx6": {
     "Color": "Magenta",
@@ -637,7 +716,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-irx6.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-isl": {
     "Color": "Magenta",
@@ -645,7 +725,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-isl.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-jkip3": {
     "Color": "Magenta",
@@ -653,7 +734,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-jkip3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-junctophilin1": {
     "Color": "Magenta",
@@ -661,7 +743,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-junctophilin1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-kanl3": {
     "Color": "Magenta",
@@ -669,7 +752,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-kanl3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-kv33b": {
     "Color": "Magenta",
@@ -677,7 +761,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-kv33b.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-kv33e": {
     "Color": "Magenta",
@@ -685,7 +770,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-kv33e.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lbx1b": {
     "Color": "Magenta",
@@ -693,7 +779,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lbx1b.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-leucin-rich": {
     "Color": "Magenta",
@@ -701,7 +788,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-leucin-rich.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lhx15": {
     "Color": "Magenta",
@@ -709,7 +797,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lhx15.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lhx2": {
     "Color": "Magenta",
@@ -717,7 +806,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lhx2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lhx3": {
     "Color": "Magenta",
@@ -725,7 +815,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lhx3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lhx6": {
     "Color": "Magenta",
@@ -733,7 +824,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lhx6.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lmo4": {
     "Color": "Magenta",
@@ -741,7 +833,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lmo4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-lmx1": {
     "Color": "Magenta",
@@ -749,7 +842,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-lmx1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-loc28250": {
     "Color": "Magenta",
@@ -757,7 +851,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-loc28250.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-loc5285ct": {
     "Color": "Magenta",
@@ -765,7 +860,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-loc5285ct.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-loc77859": {
     "Color": "Magenta",
@@ -773,7 +869,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-loc77859.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-loc8913nt": {
     "Color": "Magenta",
@@ -781,7 +878,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-loc8913nt.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-maf": {
     "Color": "Magenta",
@@ -789,7 +887,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-maf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-mecom": {
     "Color": "Magenta",
@@ -797,7 +896,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-mecom.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-mhcl4": {
     "Color": "Magenta",
@@ -805,7 +905,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-mhcl4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-mitf": {
     "Color": "Magenta",
@@ -813,7 +914,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-mitf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-mrlc2": {
     "Color": "Magenta",
@@ -821,7 +923,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-mrlc2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-msx": {
     "Color": "Magenta",
@@ -829,7 +932,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-msx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-mthfsd": {
     "Color": "Magenta",
@@ -837,7 +941,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-mthfsd.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-munc22": {
     "Color": "Magenta",
@@ -845,7 +950,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-munc22.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-muncb": {
     "Color": "Magenta",
@@ -853,7 +959,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-muncb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nachr": {
     "Color": "Magenta",
@@ -861,7 +968,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nachr.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nb5r3": {
     "Color": "Magenta",
@@ -869,7 +977,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nb5r3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ndus1": {
     "Color": "Magenta",
@@ -877,7 +986,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ndus1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-neog": {
     "Color": "Magenta",
@@ -885,7 +995,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-neog.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-netrin": {
     "Color": "Magenta",
@@ -893,7 +1004,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-netrin.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-neurod": {
     "Color": "Magenta",
@@ -901,7 +1013,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-neurod.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ngb": {
     "Color": "Magenta",
@@ -909,7 +1022,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ngb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ngn": {
     "Color": "Magenta",
@@ -917,7 +1031,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ngn.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nk21": {
     "Color": "Magenta",
@@ -925,7 +1040,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nk21.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nk22": {
     "Color": "Magenta",
@@ -933,7 +1049,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nk22.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nk6": {
     "Color": "Magenta",
@@ -941,7 +1058,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nk6.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nmdar": {
     "Color": "Magenta",
@@ -949,7 +1067,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nmdar.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-noe1": {
     "Color": "Magenta",
@@ -957,7 +1076,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-noe1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-non-muscle-mhc": {
     "Color": "Magenta",
@@ -965,7 +1085,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-non-muscle-mhc.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nov2": {
     "Color": "Magenta",
@@ -973,7 +1094,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nov2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nov29": {
     "Color": "Magenta",
@@ -981,7 +1103,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nov29.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-npr1a": {
     "Color": "Magenta",
@@ -989,7 +1112,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-npr1a.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ntrps": {
     "Color": "Magenta",
@@ -997,7 +1121,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ntrps.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-nucleolin": {
     "Color": "Magenta",
@@ -1005,7 +1130,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-nucleolin.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-odo2": {
     "Color": "Magenta",
@@ -1013,7 +1139,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-odo2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-olig": {
     "Color": "Magenta",
@@ -1021,7 +1148,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-olig.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-olm2a": {
     "Color": "Magenta",
@@ -1029,7 +1157,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-olm2a.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-otp": {
     "Color": "Magenta",
@@ -1037,7 +1166,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-otp.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-p56": {
     "Color": "Magenta",
@@ -1045,7 +1175,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-p56.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-paraxis": {
     "Color": "Magenta",
@@ -1053,7 +1184,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-paraxis.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-patched": {
     "Color": "Magenta",
@@ -1061,7 +1193,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-patched.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pax258": {
     "Color": "Magenta",
@@ -1069,7 +1202,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pax258.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pax6": {
     "Color": "Magenta",
@@ -1077,7 +1211,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pax6.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pcdh15": {
     "Color": "Magenta",
@@ -1085,7 +1220,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pcdh15.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pde9": {
     "Color": "Magenta",
@@ -1093,7 +1229,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pde9.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pdf": {
     "Color": "Magenta",
@@ -1101,7 +1238,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pdf.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pea3": {
     "Color": "Magenta",
@@ -1109,7 +1247,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pea3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pgam": {
     "Color": "Magenta",
@@ -1117,7 +1256,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pgam.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-phc2": {
     "Color": "Magenta",
@@ -1125,7 +1265,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-phc2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-phox2b": {
     "Color": "Magenta",
@@ -1133,7 +1274,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-phox2b.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pikachu": {
     "Color": "Magenta",
@@ -1141,7 +1283,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pikachu.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-pitxb": {
     "Color": "Magenta",
@@ -1149,7 +1292,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-pitxb.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-plcg": {
     "Color": "Magenta",
@@ -1157,7 +1301,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-plcg.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ppib": {
     "Color": "Magenta",
@@ -1165,7 +1310,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ppib.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-prdm8": {
     "Color": "Magenta",
@@ -1173,7 +1319,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-prdm8.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-prox": {
     "Color": "Magenta",
@@ -1181,7 +1328,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-prox.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-psmf1": {
     "Color": "Magenta",
@@ -1189,7 +1337,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-psmf1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ptf1": {
     "Color": "Magenta",
@@ -1197,7 +1346,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ptf1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-rab3": {
     "Color": "Magenta",
@@ -1205,7 +1355,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-rab3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-rims": {
     "Color": "Magenta",
@@ -1213,7 +1364,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-rims.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-robo": {
     "Color": "Magenta",
@@ -1221,7 +1373,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-robo.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-rpc2": {
     "Color": "Magenta",
@@ -1229,7 +1382,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-rpc2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-rx": {
     "Color": "Magenta",
@@ -1237,7 +1391,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-rx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-ryr2": {
     "Color": "Magenta",
@@ -1245,7 +1400,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-ryr2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-scn8aa": {
     "Color": "Magenta",
@@ -1253,7 +1409,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-scn8aa.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-segmented-crypticsegment": {
     "Color": "Magenta",
@@ -1261,7 +1418,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-crypticsegment.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-foregut": {
     "Color": "Magenta",
@@ -1269,7 +1427,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-foregut.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-head": {
     "Color": "Magenta",
@@ -1277,7 +1436,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-head.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-lateralectoderm": {
     "Color": "Magenta",
@@ -1285,7 +1445,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-lateralectoderm.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-prospr6-ref": {
     "Color": "Magenta",
@@ -1293,7 +1454,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-prospr6-ref.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-pygidium": {
     "Color": "Magenta",
@@ -1301,7 +1463,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-pygidium.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-restofanimal": {
     "Color": "Magenta",
@@ -1309,7 +1472,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-restofanimal.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-segmented-vnc": {
     "Color": "Magenta",
@@ -1317,7 +1481,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-vnc.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "prospr-6dpf-1-whole-sema2": {
     "Color": "Magenta",
@@ -1325,7 +1490,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-sema2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-sert": {
     "Color": "Magenta",
@@ -1333,7 +1499,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-sert.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-sim1": {
     "Color": "Magenta",
@@ -1341,7 +1508,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-sim1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-six12": {
     "Color": "Magenta",
@@ -1349,7 +1517,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-six12.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-six4": {
     "Color": "Magenta",
@@ -1357,7 +1526,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-six4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-slit": {
     "Color": "Magenta",
@@ -1365,7 +1535,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-slit.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-snd1": {
     "Color": "Magenta",
@@ -1373,7 +1544,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-snd1.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-sox2": {
     "Color": "Magenta",
@@ -1381,7 +1553,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-sox2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-sox4": {
     "Color": "Magenta",
@@ -1389,7 +1562,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-sox4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-soxb12": {
     "Color": "Magenta",
@@ -1397,7 +1571,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-soxb12.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-soxb2": {
     "Color": "Magenta",
@@ -1405,7 +1580,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-soxb2.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-sp8": {
     "Color": "Magenta",
@@ -1413,7 +1589,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-sp8.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-stathmin": {
     "Color": "Magenta",
@@ -1421,7 +1598,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-stathmin.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-synaptopodin": {
     "Color": "Magenta",
@@ -1429,7 +1607,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-synaptopodin.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-syt": {
     "Color": "Magenta",
@@ -1437,7 +1616,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-syt.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-syt12": {
     "Color": "Magenta",
@@ -1445,7 +1625,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-syt12.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-syt7": {
     "Color": "Magenta",
@@ -1453,7 +1634,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-syt7.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-syta": {
     "Color": "Magenta",
@@ -1461,7 +1643,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-syta.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-tal": {
     "Color": "Magenta",
@@ -1469,7 +1652,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-tal.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-tbh": {
     "Color": "Magenta",
@@ -1477,7 +1661,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-tbh.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-tbx20": {
     "Color": "Magenta",
@@ -1485,7 +1670,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-tbx20.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-th": {
     "Color": "Magenta",
@@ -1493,7 +1679,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-th.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-timp": {
     "Color": "Magenta",
@@ -1501,7 +1688,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-timp.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-tlx": {
     "Color": "Magenta",
@@ -1509,7 +1697,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-tlx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-tmtc3": {
     "Color": "Magenta",
@@ -1517,7 +1706,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-tmtc3.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-trk": {
     "Color": "Magenta",
@@ -1525,7 +1715,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-trk.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-trph": {
     "Color": "Magenta",
@@ -1533,7 +1724,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-trph.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-trpv": {
     "Color": "Magenta",
@@ -1541,7 +1733,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-trpv.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-trpv4": {
     "Color": "Magenta",
@@ -1549,7 +1742,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-trpv4.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-trpv5": {
     "Color": "Magenta",
@@ -1557,7 +1751,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-trpv5.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-twist": {
     "Color": "Magenta",
@@ -1565,7 +1760,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-twist.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-unc22": {
     "Color": "Magenta",
@@ -1573,7 +1769,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-unc22.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-uncs": {
     "Color": "Magenta",
@@ -1581,7 +1778,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-uncs.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-uncx": {
     "Color": "Magenta",
@@ -1589,7 +1787,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-uncx.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-upp": {
     "Color": "Magenta",
@@ -1597,7 +1796,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-upp.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-usp9x": {
     "Color": "Magenta",
@@ -1605,7 +1805,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-usp9x.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-vacht": {
     "Color": "Magenta",
@@ -1613,7 +1814,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-vacht.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-vat1l": {
     "Color": "Magenta",
@@ -1621,7 +1823,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-vat1l.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-vegfr": {
     "Color": "Magenta",
@@ -1629,7 +1832,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-vegfr.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-vglut": {
     "Color": "Magenta",
@@ -1637,7 +1841,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-vglut.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-wnt16": {
     "Color": "Magenta",
@@ -1645,7 +1850,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-wnt16.xml"
-    }
+    },
+    "Type": "Image"
   },
   "prospr-6dpf-1-whole-wnt5": {
     "Color": "Magenta",
@@ -1653,7 +1859,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/prospr-6dpf-1-whole-wnt5.xml"
-    }
+    },
+    "Type": "Image"
   },
   "sbem-6dpf-1-whole-raw": {
     "Color": "White",
@@ -1661,28 +1868,38 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-raw.xml"
-    }
+    },
+    "Type": "Image"
   },
   "sbem-6dpf-1-whole-segmented-cells": {
     "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-cells.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cells"
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cells",
+    "Type": "Segmentation"
   },
   "sbem-6dpf-1-whole-segmented-chromatin": {
     "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-chromatin.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-chromatin"
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-chromatin",
+    "Type": "Segmentation"
   },
   "sbem-6dpf-1-whole-segmented-cilia": {
     "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-cilia.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cilia"
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cilia",
+    "Type": "Segmentation"
   },
   "sbem-6dpf-1-whole-segmented-inside": {
     "Color": "White",
@@ -1690,7 +1907,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-inside.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "sbem-6dpf-1-whole-segmented-muscle": {
     "Color": "White",
@@ -1698,7 +1916,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-muscle.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "sbem-6dpf-1-whole-segmented-neuropil": {
     "Color": "White",
@@ -1706,14 +1925,18 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-neuropil.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "sbem-6dpf-1-whole-segmented-nuclei": {
     "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-nuclei.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-nuclei"
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-nuclei",
+    "Type": "Segmentation"
   },
   "sbem-6dpf-1-whole-segmented-outside": {
     "Color": "White",
@@ -1721,7 +1944,8 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-outside.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "sbem-6dpf-1-whole-segmented-resin": {
     "Color": "White",
@@ -1729,13 +1953,17 @@
     "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-resin.xml"
-    }
+    },
+    "Type": "Mask"
   },
   "sbem-6dpf-1-whole-segmented-tissue": {
     "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
     "Storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-tissue.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-tissue"
+    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-tissue",
+    "Type": "Segmentation"
   }
 }

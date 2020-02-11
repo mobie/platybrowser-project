@@ -1,8 +1,8 @@
 import os
 import json
-import h5py
 from glob import glob
 from mmpb.files.copy_helper import copy_attributes
+from mmpb.attributes.genes import create_auxiliary_gene_file
 from pybdv.util import get_key, get_number_of_scales
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
@@ -68,41 +68,7 @@ def fix_all_id_luts():
         fix_id_luts(folder)
 
 
-def replace_gene_names_h5():
-    path = '../data/0.6.3/misc/prospr-6dpf-1-whole_meds_all_genes.h5'
-
-    ref_gene_names = glob('../data/0.6.3/images/local/prospr*.xml')
-    ref_gene_names = [os.path.splitext(os.path.split(name)[1])[0]
-                      for name in ref_gene_names]
-    ref_gene_names = ['-'.join(name.split('-')[4:]) for name in ref_gene_names]
-    ref_gene_names = [name for name in ref_gene_names if 'segmented' not in name]
-    ref_gene_names = [name for name in ref_gene_names if 'virtual' not in name]
-
-    def replace_gene_name(name):
-        new_name = name.split('-')
-        if new_name[0].startswith('ENR') or new_name[0].startswith('NOV'):
-            new_name = new_name[1:]
-        new_name = '-'.join(new_name).lower()
-        return new_name
-
-    with h5py.File(path) as f:
-        ds = f['gene_names']
-        gene_names = [i.decode('utf-8') for i in ds]
-        gene_names = [replace_gene_name(name) for name in gene_names]
-
-        assert len(gene_names) == len(ref_gene_names)
-        print(set(gene_names) - set(ref_gene_names))
-        # {'fboxlike', 'ccg5'}
-        print(set(ref_gene_names) - set(gene_names))
-        # {'fxl21', 'ccvd'}
-        assert len(set(gene_names) - set(ref_gene_names)) == 0
-
-        # TODO once all gene names agree
-        # gene_names_ascii = [n.encode('ascii', 'ignore') for n in gene_names]
-        # f.create_dataset(names_dset, data=gene_names_ascii, dtype='S40')
-
-
-def add_remote_storage_to_xml():
+def add_remote_storage_to_image_dict():
     version = '0.6.6'
     im_dict_path = os.path.join(ROOT, version, 'images', 'images.json')
     with open(im_dict_path, 'r') as f:
@@ -112,18 +78,87 @@ def add_remote_storage_to_xml():
         storage = props['Storage']
         rel_remote = os.path.join('remote', name + '.xml')
         abs_remote = os.path.join(ROOT, version, 'images', rel_remote)
-        assert os.path.exists(abs_remote)
+        assert os.path.exists(abs_remote), abs_remote
         storage['remote'] = rel_remote
         props['Storage'] = storage
         im_dict[name] = props
 
     with open(im_dict_path, 'w') as f:
-        json.dump(im_dict, f)
+        json.dump(im_dict, f, indent=2, sort_keys=True)
+
+
+def rewrite_gene_file():
+    meds_root = '../data/0.6.3/images/local'
+    out_file = '../data/0.6.3/misc/prospr-6dpf-1-whole_meds_all_genes.h5'
+    create_auxiliary_gene_file(meds_root, out_file)
+
+
+def update_image_dict(version):
+    """ https://github.com/platybrowser/platybrowser-backend/issues/10
+    """
+    image_dict_path = os.path.join(ROOT, version, 'images', 'images.json')
+    with open(image_dict_path) as f:
+        image_dict = json.load(f)
+
+    for name, props in image_dict.items():
+        # for sbem
+        if name.startswith('sbem'):
+            # raw data modality
+            if 'raw' in name:
+                props['Type'] = 'Image'
+            elif 'cells' in name or\
+                    'chromatin' in name or\
+                    'cilia' in name or\
+                    'ganglia' in name or\
+                    'nephridia' in name or\
+                    'nuclei' in name or\
+                    'tissue' in name:
+                props['Type'] = 'Segmentation'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1000
+                props['ColorMap'] = 'Glasbey'
+                props.pop('Color', None)
+            else:
+                props['Type'] = 'Mask'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1
+        # for prospr
+        elif name.startswith('prospr'):
+            if 'virtual' in name:
+                props['Type'] = 'Segmentation'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1000
+            elif 'segmented' in name:
+                props['Type'] = 'Mask'
+                props['MinValue'] = 0
+                props['MaxValue'] = 1000
+            else:
+                props['Type'] = 'Image'
+        else:
+            raise RuntimeError('Unknown name %s' % name)
+
+        image_dict[name] = props
+
+    with open(image_dict_path, 'w') as f:
+        json.dump(image_dict, f, sort_keys=True, indent=2)
+
+
+def update_all_image_dicts():
+    version_file = '../data/versions.json'
+    with open(version_file) as f:
+        versions = json.load(f)
+
+    for version in versions:
+        if version == '0.6.6':
+            continue
+        update_image_dict(version)
 
 
 if __name__ == '__main__':
     # fix_all_dynamic_seg_dicts()
     # fix_copy_attributes()
     # fix_all_id_luts()
-    # replace_gene_names_h5()
-    add_remote_storage_to_xml()
+    # add_remote_storage_to_image_dict()
+    # rewrite_gene_file()
+    # update_image_dict('0.6.6')
+    update_all_image_dicts()

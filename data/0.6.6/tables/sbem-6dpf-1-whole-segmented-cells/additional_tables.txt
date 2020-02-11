@@ -2,4 +2,7 @@ cells_to_nuclei.csv
 extrapolated_intensity_correction.csv
 ganglia_ids.csv
 gene_clusters.csv
+genes.csv
+morphology.csv
 regions.csv
+vc_assignments.csv
