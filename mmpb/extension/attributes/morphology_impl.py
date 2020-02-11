@@ -1,29 +1,37 @@
+import os
 from datetime import datetime
 
-# this is a task called by multiple processes,
-# so we need to restrict the number of threads used by numpy
-from elf.util import set_numpy_threads
-set_numpy_threads(1)
-
-import numpy as np
-
 import vigra
-import h5py
 import pandas as pd
+from elf.io import open_file
 from skimage.measure import regionprops, marching_cubes_lewiner, mesh_surface_area
 from skimage.util import pad
 from scipy.ndimage.morphology import distance_transform_edt
 from mahotas.features import haralick
 from skimage.morphology import label, remove_small_objects
+from pybdv.metadata import get_key
+
+# this is a task called by multiple processes,
+# so we need to restrict the number of threads used by numpy
+from elf.util import set_numpy_threads
+set_numpy_threads(1)
+import numpy as np
 
 
 def log(msg):
     print("%s: %s" % (str(datetime.now()), msg))
 
 
+def get_keys(path, scale):
+    is_h5 = os.path.splitext(path)[1].lower() in ('.hdf5', '.h5', '.hdf')
+    key_full = get_key(is_h5, time_point=0, setup_id=0, scale=0)
+    key = get_key(is_h5, time_point=0, setup_id=0, scale=scale)
+    return key_full, key
+
+
 # get shape of full data & downsampling factor
 def get_scale_factor(path, key_full, key, resolution):
-    with h5py.File(path, 'r') as f:
+    with open_file(path, 'r') as f:
         full_shape = f[key_full].shape
         shape = f[key].shape
 
@@ -301,8 +309,8 @@ def morphology_features_for_label_range(table, ds, ds_raw,
     sub_table = table.loc[label_range, :]
     stats = []
     for row in sub_table.itertuples(index=False):
-        log(str(row.label_id))
         label_id = int(row.label_id)
+        log("Processing id %i" % label_id)
 
         # load the segmentation data from the bounding box corresponding
         # to this row
@@ -313,6 +321,7 @@ def morphology_features_for_label_range(table, ds, ds_raw,
         seg_mask = seg == label_id
         if seg_mask.sum() == 0:
             # if the seg mask is empty, we simply skip this label-id
+            log("Skip empty id %i" % label_id)
             continue
 
         # compute the morphology features from the segmentation mask
@@ -392,7 +401,7 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
                             table,
                             min_size, max_size,
                             max_bb,
-                            nucleus_resolution, chromatin_resolution,
+                            nucleus_resolution, chromatin_resolution, raw_resolution,
                             nucleus_seg_scale, raw_scale, chromatin_scale,
                             label_start, label_stop):
     """ Compute morphology features for nucleus segmentation.
@@ -415,6 +424,8 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
                Must be given in [Z, Y, X].
            chromatin_resolution [listlike] - resolution in nanometer.
                Must be given in [Z, Y, X].
+           raw_resolution [listlike] - resolution in nanometer.
+               Must be given in [Z, Y, X].
            nucleus_seg_scale [int] - scale level of the segmentation.
            raw_scale [int] - scale level of the raw data
            chromatin_scale [int] - scale level of the segmentation.
@@ -423,43 +434,38 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
        """
 
     # keys for the different scales
-    nucleus_seg_key_full = 't00000/s00/0/cells'
-    nucleus_seg_key = 't00000/s00/%i/cells' % nucleus_seg_scale
-    raw_key_full = 't00000/s00/0/cells'
-    raw_key = 't00000/s00/%i/cells' % raw_scale
-    chromatin_key_full = 't00000/s00/0/cells'
-    chromatin_key = 't00000/s00/%i/cells' % chromatin_scale
+    nucleus_seg_key_full, nucleus_seg_key = get_keys(nucleus_segmentation_path, nucleus_seg_scale)
+    log("Have nucleus data @ %s:%s" % (nucleus_segmentation_path, nucleus_seg_key))
 
     # filter table
     table = run_all_filters(table, min_size, max_size, max_bb, None, None)
 
     # get scale factors
     if raw_path is not None:
-        log("Have raw path; compute intensity features")
-        # NOTE for now we can hard-code the resolution for the raw data here,
-        # but we might need to change this if we get additional dataset(s)
-        raw_resolution = [0.025, 0.01, 0.01]
+        raw_key_full, raw_key = get_keys(raw_path, raw_scale)
+        log("Have raw data @ %s:%s; compute intensity features" % (raw_path, raw_key))
         scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
-        f_raw = h5py.File(raw_path, 'r')
+        f_raw = open_file(raw_path, 'r')
         ds_raw = f_raw[raw_key]
     else:
         log("Don't have raw path; do not compute intensity features")
         scale_factor_raw = f_raw = ds_raw = None
 
     if chromatin_path is not None:
-        log("Have chromatin path; compute chromatin features")
+        chromatin_key_full, chromatin_key = get_keys(chromatin_path, chromatin_scale)
+        log("Have chromatin data @ %s:%s compute chromatin features" % (chromatin_path, chromatin_key))
         scale_factor_chromatin = get_scale_factor(chromatin_path, chromatin_key_full, chromatin_key,
                                                   chromatin_resolution)
-        f_chromatin = h5py.File(chromatin_path, 'r')
+        f_chromatin = open_file(chromatin_path, 'r')
         ds_chromatin = f_chromatin[chromatin_key]
     else:
         log("Don't have chromatin path; do not compute chromatin features")
         scale_factor_chromatin = f_chromatin = ds_chromatin = None
 
-    log("Computing morphology features")
+    log("Computing nucleus morphology features")
     scale_factor_nucleus_seg = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
                                                 nucleus_resolution)
-    with h5py.File(nucleus_segmentation_path, 'r') as f:
+    with open_file(nucleus_segmentation_path, 'r') as f:
         ds = f[nucleus_seg_key]
 
         stats = []
@@ -478,6 +484,8 @@ def morphology_impl_nucleus(nucleus_segmentation_path, raw_path, chromatin_path,
 
     # convert to pandas table and add column names
     stats = pd.DataFrame(stats)
+    # FIXME in the corner case that we don't have any valid cells for this range,
+    # this will fail
     stats.columns = generate_column_names(raw_path, chromatin_path, None)
 
     return stats
@@ -489,7 +497,7 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
                          region_mapping_path,
                          min_size, max_size,
                          max_bb,
-                         cell_resolution, nucleus_resolution,
+                         cell_resolution, nucleus_resolution, raw_resolution,
                          cell_seg_scale, raw_scale, nucleus_seg_scale,
                          label_start, label_stop):
     """ Compute morphology features for cell segmentation.
@@ -518,6 +526,8 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
                Must be given in [Z, Y, X].
            nucleus_resolution [listlike] - resolution in nanometer.
                Must be given in [Z, Y, X].
+           raw_resolution [listlike] - resolution in nanometer.
+               Must be given in [Z, Y, X].
            cell_seg_scale [int] - scale level of the segmentation
            raw_scale [int] - scale level of the raw data
            nucleus_seg_scale [int] - scale level of the segmentation.
@@ -526,12 +536,8 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
        """
 
     # keys for the different scales
-    cell_seg_key_full = 't00000/s00/0/cells'
-    cell_seg_key = 't00000/s00/%i/cells' % cell_seg_scale
-    raw_key_full = 't00000/s00/0/cells'
-    raw_key = 't00000/s00/%i/cells' % raw_scale
-    nucleus_seg_key_full = 't00000/s00/0/cells'
-    nucleus_seg_key = 't00000/s00/%i/cells' % nucleus_seg_scale
+    cell_seg_key_full, cell_seg_key = get_keys(cell_segmentation_path, cell_seg_scale)
+    nucleus_seg_key_full, nucleus_seg_key = get_keys(nucleus_segmentation_path, nucleus_seg_scale)
 
     # filter table
     table = run_all_filters(table, min_size, max_size, max_bb, mapping_path, region_mapping_path)
@@ -539,11 +545,9 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
     # get scale factors
     if raw_path is not None:
         log("Have raw path; compute intensity features")
-        # NOTE for now we can hard-code the resolution for the raw data here,
-        # but we might need to change this if we get additional dataset(s)
-        raw_resolution = [0.025, 0.01, 0.01]
+        raw_key_full, raw_key = get_keys(raw_path, raw_scale)
         scale_factor_raw = get_scale_factor(raw_path, raw_key_full, raw_key, raw_resolution)
-        f_raw = h5py.File(raw_path, 'r')
+        f_raw = open_file(raw_path, 'r')
         ds_raw = f_raw[raw_key]
     else:
         log("Don't have raw path; do not compute intensity features")
@@ -553,7 +557,7 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
         log("Have nucleus path; exclude nucleus for intensity measures")
         scale_factor_nucleus = get_scale_factor(nucleus_segmentation_path, nucleus_seg_key_full, nucleus_seg_key,
                                                 nucleus_resolution)
-        f_nucleus = h5py.File(nucleus_segmentation_path, 'r')
+        f_nucleus = open_file(nucleus_segmentation_path, 'r')
         ds_nucleus = f_nucleus[nucleus_seg_key]
     else:
         log("Don't have exclude path; don't exclude nucleus area for intensity measures")
@@ -561,7 +565,7 @@ def morphology_impl_cell(cell_segmentation_path, raw_path,
 
     log("Computing morphology features")
     scale_factor_cell_seg = get_scale_factor(cell_segmentation_path, cell_seg_key_full, cell_seg_key, cell_resolution)
-    with h5py.File(cell_segmentation_path, 'r') as f:
+    with open_file(cell_segmentation_path, 'r') as f:
         ds = f[cell_seg_key]
 
         log("Computing features from label-id %i to %i" % (label_start, label_stop))

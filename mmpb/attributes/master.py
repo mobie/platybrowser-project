@@ -125,17 +125,14 @@ def make_nuclei_tables(old_folder, folder, name, tmp_folder, resolution,
                     tmp_folder, target=target, max_jobs=max_jobs,
                     correct_anchors=True)
 
-    # TODO make morphology work again, check scales with kimberly
     # make the morphology attribute table
-    # xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
-    # raw_path = get_data_path(xml_raw, return_absolute_path=True)
-    # cell_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-cells')
-    # chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin')
-    # morpho_out = os.path.join(table_folder, 'morphology.csv')
-    # write_morphology_nuclei(raw_path, seg_path,
-    #                         cell_seg_path, chromatin_seg_path,
-    #                         base_out, morpho_out,
-    #                         tmp_folder, target, max_jobs)
+    xml_raw = os.path.join(folder, 'images', 'local', 'sbem-6dpf-1-whole-raw.xml')
+    raw_path = get_data_path(xml_raw, return_absolute_path=True)
+    chromatin_seg_path = get_seg_path(folder, 'sbem-6dpf-1-whole-segmented-chromatin')
+    morpho_out = os.path.join(table_folder, 'morphology.csv')
+    write_morphology_nuclei(raw_path, seg_path, chromatin_seg_path,
+                            base_out, morpho_out,
+                            tmp_folder, target, max_jobs)
 
     # mapping to extrapolated intensities
     mask_name = 'sbem-6dpf-1-whole-segmented-extrapolated'

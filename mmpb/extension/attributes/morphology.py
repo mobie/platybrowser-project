@@ -15,6 +15,7 @@ from cluster_tools.utils.task_utils import DummyTask
 from cluster_tools.cluster_tasks import SlurmTask, LocalTask
 from mmpb.extension.attributes.morphology_impl import (morphology_impl_cell,
                                                        morphology_impl_nucleus)
+from pybdv.util import get_key
 
 #
 # Morphology Attribute Tasks
@@ -97,7 +98,8 @@ class MorphologyBase(luigi.Task):
     def _get_number_of_labels(self):
         seg_path = self.cell_segmentation_path if self.compute_cell_features else\
             self.nucleus_segmentation_path
-        key = 't00000/s00/0/cells'
+        is_h5 = os.path.splitext(seg_path)[1].lower() in ('.hdf', '.hdf5', '.h5')
+        key = get_key(is_h5, time_point=0, setup_id=0, scale=0)
         with vu.file_reader(seg_path, 'r') as f:
             n_labels = int(f[key].attrs['maxId']) + 1
         return n_labels
@@ -172,14 +174,16 @@ def _morphology_nuclei(config, table, label_start, label_stop):
     # scale for nucleus segmentation, raw data and chromatin segmentation
     raw_scale = config['scale']
     nucleus_scale = raw_scale - 3
-    chromatin_scale = raw_scale - 1  # TODO is this correct?
-    # nucleus and chromatin resolution are hard-coded for now
+    chromatin_scale = raw_scale - 1
+    # all resolutions are hard-coded for now, it would be more clean to get them from the metadata
+    raw_resolution = [0.025, 0.01, 0.01]
     nucleus_resolution = [0.1, 0.08, 0.08]
-    chromatin_resolution = [0.025, 0.02, 0.02]  # TODO is this correct?
+    chromatin_resolution = [0.025, 0.02, 0.02]
     stats = morphology_impl_nucleus(nucleus_segmentation_path, raw_path,
                                     chromatin_segmentation_path,
                                     table, min_size, max_size, max_bb,
                                     nucleus_resolution, chromatin_resolution,
+                                    raw_resolution,
                                     nucleus_scale, raw_scale, chromatin_scale,
                                     label_start, label_stop)
     return stats
@@ -195,10 +199,11 @@ def _morphology_cells(config, table, label_start, label_stop):
     # scale for nucleus segmentation, raw data and chromatin segmentation
     raw_scale = config['scale']
     nucleus_scale = raw_scale - 3
-    cell_scale = raw_scale - 1  # TODO is this correct?
-    # nucleus and chromatin resolution are hard-coded for now
+    cell_scale = raw_scale - 1
+    # all resolutions are hard-coded for now, it would be more clean to get them from the metadata
+    raw_resolution = [0.025, 0.01, 0.01]
     nucleus_resolution = [0.1, 0.08, 0.08]
-    cell_resolution = [0.025, 0.02, 0.02]  # TODO is this correct?
+    cell_resolution = [0.025, 0.02, 0.02]
     # mapping from cells to nuclei and from cells to regions
     nucleus_mapping_path = config['mapping_path']
     region_mapping_path = config['region_mapping_path']
@@ -207,7 +212,7 @@ def _morphology_cells(config, table, label_start, label_stop):
                                  table, nucleus_mapping_path,
                                  region_mapping_path,
                                  min_size, max_size, max_bb,
-                                 cell_resolution, nucleus_resolution,
+                                 cell_resolution, nucleus_resolution, raw_resolution,
                                  cell_scale, raw_scale, nucleus_scale,
                                  label_start, label_stop)
     return stats
@@ -235,7 +240,7 @@ def morphology(job_id, config_path):
     n_labels = table.shape[0]
     blocking = nt.blocking([0], [n_labels], [block_len])
     block = blocking.getBlock(block_list[0])
-    label_start, label_stop = block.begin, block.end
+    label_start, label_stop = block.begin[0], block.end[0]
 
     # do we compute cell or nucleus features ?
     compute_cell_features = config['compute_cell_features']
