@@ -8,7 +8,8 @@ ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
 # last three arguments are capitalized to be consistent with the keys in bookmarks dict
 def add_bookmark(version, name, Position=None, Layers=None, View=None):
-    bookmark_file = os.path.join(ROOT, version, 'misc', 'bookmarks.json')
+    folder = os.path.join(ROOT, version)
+    bookmark_file = os.path.join(folder, 'misc', 'bookmarks.json')
 
     if os.path.exists(bookmark_file):
         with open(bookmark_file, 'r') as f:
@@ -19,7 +20,7 @@ def add_bookmark(version, name, Position=None, Layers=None, View=None):
     if name in bookmarks:
         print("Overriding bookmark for name", name)
 
-    bookmark = make_bookmark(Position, Layers, View)
+    bookmark = make_bookmark(folder, Position=Position, Layers=Layers, View=View)
     bookmarks[name] = bookmark
 
     with open(bookmark_file, 'w') as f:
