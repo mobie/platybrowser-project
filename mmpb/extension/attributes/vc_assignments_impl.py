@@ -15,14 +15,19 @@ def add_path_if_needed(file_path, dir_path):
     return file_path if os.path.exists(file_path) else os.path.join(dir_path, file_path)
 
 
-def get_common_genes(vc_genes_file_path, cells_gene_expression, med_gene_names):
+def get_common_genes(vc_profile_file, ov_expression_file):
+    with open(ov_expression_file) as csv_file:
+        csv_reader = csv.DictReader(csv_file, delimiter='\t')
+        med_gene_names = csv_reader.fieldnames[1:]
+    cells_gene_expression = np.loadtxt(ov_expression_file, delimiter='\t',
+                                       skiprows=1)[:, 1:]
     med_gene_indices = []
     vc_gene_indices = []
     common_gene_names = []
     med_gene_names_lowercase = [i.lower().split('-')[0] for i in med_gene_names]
 
     # get the names of genes used for vc's
-    with open(vc_genes_file_path) as csv_file:
+    with open(vc_profile_file) as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter='\t')
         vc_gene_names = csv_reader.fieldnames
 
@@ -38,7 +43,7 @@ def get_common_genes(vc_genes_file_path, cells_gene_expression, med_gene_names):
     cells_expression_subset = np.take(cells_gene_expression, med_gene_indices,
                                       axis=1)
     # from vcs_expression extract only the subset genes
-    vc_expression_subset = np.loadtxt(vc_genes_file_path, delimiter='\t',
+    vc_expression_subset = np.loadtxt(vc_profile_file, delimiter='\t',
                                       skiprows=1, usecols=vc_gene_indices)
     # add the null vc with no expression
     vc_expression_subset = np.insert(vc_expression_subset, 0,
@@ -126,15 +131,9 @@ def vc_assignments(segm_volume_file, em_dset,
     downsampled_segm_data = resize(segm_data.astype("float32"), shape=vc_data.shape,
                                    order=0).astype('uint16')
 
-    # the table with cell expression by overlap
-    with open(cells_med_expr_table) as csv_file:
-        csv_reader = csv.DictReader(csv_file, delimiter='\t')
-        med_gene_names = csv_reader.fieldnames[1:]
-    cells_expression = np.loadtxt(cells_med_expr_table, delimiter='\t',
-                                  skiprows=1)
     # get the genes that were both used for vcs and are in med files
     cells_expression_subset, vc_expression_subset,  common_gene_names = \
-        get_common_genes(vc_expr_file, cells_expression[:, 1:], med_gene_names)
+        get_common_genes(vc_expr_file, cells_med_expr_table)
 
     # get the genetic distance from cells to surrounding vcs
     dist_matrix = get_distances(downsampled_segm_data, vc_data,
@@ -157,8 +156,8 @@ if __name__ == '__main__':
     # to make life easier for me debugging ;)
     platy_data_path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
     gene_data_path = '/g/kreshuk/zinchenk/cell_match/data/genes'
-    table_path = 'tables/sbem-6dpf-1-whole-segmented-cells-labels/genes.csv'
-    segm_path = 'segmentations/sbem-6dpf-1-whole-segmented-cells-labels.h5'
+    table_path = 'tables/sbem-6dpf-1-whole-segmented-cells/genes.csv'
+    segm_path = 'images/local/sbem-6dpf-1-whole-segmented-cells.h5'
 
     parser = argparse.ArgumentParser(description='Assign cells to genetically closest VCs')
     parser.add_argument('vc_volume_file', type=str,
