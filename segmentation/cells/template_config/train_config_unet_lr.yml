@@ -1,0 +1,19 @@
+# The model arguments
+model_name: UNetAnisotropic
+model_kwargs:
+  in_channels: 1
+  out_channels: 6
+  initial_features: 22
+  gain: 2
+  scale_factors: [2, 2, 2, 2]
+  final_activation: Sigmoid
+
+
+training_optimizer_kwargs:
+  method: Adam
+  lr: 0.0001
+  weight_decay: 0.0005
+
+devices:
+  - 0
+  - 1
