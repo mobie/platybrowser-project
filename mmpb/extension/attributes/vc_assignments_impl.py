@@ -6,6 +6,7 @@ from concurrent import futures
 import argparse
 import numpy as np
 from elf.io import open_file
+from pybdv.util import get_key
 from vigra.analysis import extractRegionFeatures
 from vigra.sampling import resize
 from vigra.filters import distanceTransform
@@ -173,16 +174,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     gene_table_file = os.path.join(platy_data_path, args.ov_expr_version, table_path)
-    segment_file_path = os.path.join(platy_data_path, args.segm_version, segm_path)
+    segment_file = os.path.join(platy_data_path, args.segm_version, segm_path)
     vc_volume_file = add_path_if_needed(args.vc_volume_file, gene_data_path)
     vc_profile_file = add_path_if_needed(args.vc_profile_file, gene_data_path)
     output_file = add_path_if_needed(args.output_file, gene_data_path)
 
     # number of threads hard-coded for now
     n_threads = 8
-    # TODO update to also support bdv.n5
-    em_dset = 't00000/s00/4/cells'
-    cm_dset = 't00000/s00/0/cells'
-    vc_assignments(segment_file_path, em_dset,
+    em_dset = get_key(segment_file.endswith('.h5'), 0, 0, 4)
+    cm_dset = get_key(vc_volume_file.endswith('.h5'), 0, 0, 0)
+    vc_assignments(segment_file, em_dset,
                    vc_volume_file, cm_dset, vc_profile_file,
                    gene_table_file, output_file, n_threads)
