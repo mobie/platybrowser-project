@@ -121,6 +121,68 @@ def add_fig5_bookmarks():
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
 
+def add_fig6_bookmarks():
+    version = '0.6.6'
+    name = "Figure 6A: Assignment by overlap"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "prospr-6dpf-1-whole-msx": {"Color": "green"},
+              "prospr-6dpf-1-whole-patched": {"Color": "blue"},
+              "sbem-6dpf-1-whole-segmented-cells": {
+                "MaxValue": 1000,
+                "MinValue": 0,
+                "SelectedLabelIds": [
+                  32095,
+                  31961
+                ],
+                "ShowSelectedSegmentsIn3d": False}}
+    position = [119.96805985437719,
+                99.19674811104227,
+                263.3359252291697]
+    view = [-13.194629461107638,
+            10.214861012475334,
+            0.30412004228770306,
+            1308.0492653634751,
+            9.677834961769312,
+            12.330343938455595,
+            5.73029230776116,
+            -3359.034760194792,
+            3.2825881491691082,
+            4.706734959124246,
+            -15.671802135929735,
+            3266.795464793777]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+    name = "Figure 6B: Assignment by overlap"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "prospr-6dpf-1-whole-lhx6": {"Color": "green"},
+              "prospr-6dpf-1-whole-wnt5": {"Color": "blue"},
+              "sbem-6dpf-1-whole-segmented-cells": {
+                "MaxValue": 1000,
+                "MinValue": 0,
+                "SelectedLabelIds": [
+                  6766,
+                  6913
+                ],
+                "ShowSelectedSegmentsIn3d": False}}
+    position = [196.76744017557536,
+                178.25856120112738,
+                71.18235953395656]
+    view = [-6.194255640646106,
+            7.933757678523062,
+            0.04504878697308157,
+            629.360918560249,
+            7.898413563957639,
+            6.161063641179686,
+            0.9857490646362296,
+            -2224.580902902456,
+            0.749402073270016,
+            0.6419712954778718,
+            -10.017066068703377,
+            451.14359129392136]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+
 if __name__ == '__main__':
-    # add_fig2_bookmarks()
-    add_fig5_bookmarks()
+    add_fig2_bookmarks()
+    # add_fig5_bookmarks()
+    # add_fig6_bookmarks()
