@@ -16,7 +16,7 @@ def add_path_if_needed(file_path, dir_path):
     return file_path if os.path.exists(file_path) else os.path.join(dir_path, file_path)
 
 
-def get_common_genes(vc_profile_file, ov_expression_file):
+def get_common_genes(profile_file, ov_expression_file):
     with open(ov_expression_file) as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter='\t')
         med_gene_names = csv_reader.fieldnames[1:]
@@ -25,18 +25,16 @@ def get_common_genes(vc_profile_file, ov_expression_file):
     med_gene_indices = []
     vc_gene_indices = []
     common_gene_names = []
-    med_gene_names_lowercase = [i.lower().split('-')[0] for i in med_gene_names]
 
     # get the names of genes used for vc's
-    with open(vc_profile_file) as csv_file:
+    with open(profile_file) as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter='\t')
         vc_gene_names = csv_reader.fieldnames
 
     # find a subset of genes both used for vc's and available as MEDs
-    for i in range(len(vc_gene_names)):
-        name = vc_gene_names[i].split('--')[0]
-        if name.lower() in med_gene_names_lowercase:
-            med_gene_indices.append(med_gene_names_lowercase.index(name.lower()))
+    for i, name in enumerate(vc_gene_names):
+        if name in med_gene_names:
+            med_gene_indices.append(med_gene_names.index(name))
             vc_gene_indices.append(i)
             common_gene_names.append(name)
 
@@ -44,7 +42,7 @@ def get_common_genes(vc_profile_file, ov_expression_file):
     cells_expression_subset = np.take(cells_gene_expression, med_gene_indices,
                                       axis=1)
     # from vcs_expression extract only the subset genes
-    vc_expression_subset = np.loadtxt(vc_profile_file, delimiter='\t',
+    vc_expression_subset = np.loadtxt(profile_file, delimiter='\t',
                                       skiprows=1, usecols=vc_gene_indices)
     # add the null vc with no expression
     vc_expression_subset = np.insert(vc_expression_subset, 0,
@@ -133,7 +131,7 @@ def vc_assignments(segm_volume_file, em_dset,
                                    order=0).astype('uint16')
 
     # get the genes that were both used for vcs and are in med files
-    cells_expression_subset, vc_expression_subset,  common_gene_names = \
+    cells_expression_subset, vc_expression_subset, common_gene_names = \
         get_common_genes(vc_expr_file, cells_med_expr_table)
 
     # get the genetic distance from cells to surrounding vcs
