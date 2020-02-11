@@ -18,9 +18,8 @@ from neurofire.criteria.loss_transforms import (ApplyAndRemoveMask,
                                                 InvertTarget)
 from neurofire.metrics.arand import ArandErrorFromMulticut
 
-# TODO need to add these models to the repo
-import multiscale as models
-from platyneris_loader import get_platyneris_loaders
+import mmmp.segmentation.network.models as models
+from mmpb.segmentation.network.platyneris_loader import get_platyneris_loaders
 
 
 logging.basicConfig(format='[+][%(asctime)-15s][%(name)s %(levelname)s]'
@@ -138,9 +137,8 @@ def training(project_directory,
     trainer.fit()
 
 
-def make_train_config(train_config_file, affinity_config, gpus):
-    # configuration for unet
-    template = './template_config/train_config_unet_lr.yml'
+def make_train_config(template_config, train_config_file, affinity_config, gpus):
+    template = os.path.join(template_config, 'train_config_unet_lr.yml')
     n_out = len(affinity_config['offsets'])
 
     template = yaml2dict(template)
@@ -150,8 +148,9 @@ def make_train_config(train_config_file, affinity_config, gpus):
         yaml.dump(template, f)
 
 
-def make_data_config(data_config_file, affinity_config, n_batches):
-    template = yaml2dict('./template_config/data_config.yml')
+def make_data_config(template_config, data_config_file, affinity_config, n_batches):
+    template = os.path.join(template_config, 'data_config.yml')
+    template = yaml2dict(template)
     template['volume_config']['segmentation']['affinity_config'] = affinity_config
     template['loader_config']['batch_size'] = n_batches
     template['loader_config']['num_workers'] = 8 * n_batches
@@ -159,8 +158,9 @@ def make_data_config(data_config_file, affinity_config, n_batches):
         yaml.dump(template, f)
 
 
-def make_validation_config(validation_config_file, affinity_config):
-    template = yaml2dict('./template_config/validation_config.yml')
+def make_validation_config(template_config, validation_config_file, affinity_config):
+    template = os.path.join(template_config, 'validation_config.yml')
+    template = yaml2dict(template)
     if affinity_config is not None:
         affinity_config.update({'retain_segmentation': True})
     template['volume_config']['segmentation']['affinity_config'] = affinity_config
@@ -175,10 +175,10 @@ def get_offsets():
             [-12, 0, 0], [0, -24, 0], [0, 0, -24]]
 
 
-# TODO need to give path to template_config
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('project_directory', type=str)
+    parser.add_argument('template_config', type=str)
     parser.add_argument('--gpus', nargs='+', default=[0], type=int)
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
@@ -187,6 +187,7 @@ def main():
     args = parser.parse_args()
 
     project_directory = args.project_directory
+    template_config = args.template_config
     if not os.path.exists(project_directory):
         os.mkdir(project_directory)
 
@@ -201,13 +202,13 @@ def main():
     gpus = list(range(len(gpus)))
 
     train_config = os.path.join(project_directory, 'train_config.yml')
-    make_train_config(train_config, affinity_config, gpus)
+    make_train_config(template_config, train_config, affinity_config, gpus)
 
     data_config = os.path.join(project_directory, 'data_config.yml')
-    make_data_config(data_config, affinity_config, len(gpus))
+    make_data_config(template_config, data_config, affinity_config, len(gpus))
 
     validation_config = os.path.join(project_directory, 'validation_config.yml')
-    make_validation_config(validation_config, affinity_config)
+    make_validation_config(template_config, validation_config, affinity_config)
 
     training(project_directory,
              train_config,
