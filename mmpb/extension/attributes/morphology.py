@@ -205,7 +205,7 @@ def _morphology_cells(config, table, label_start, label_stop):
     nucleus_resolution = [0.1, 0.08, 0.08]
     cell_resolution = [0.025, 0.02, 0.02]
     # mapping from cells to nuclei and from cells to regions
-    nucleus_mapping_path = config['mapping_path']
+    nucleus_mapping_path = config['nucleus_mapping_path']
     region_mapping_path = config['region_mapping_path']
     stats = morphology_impl_cell(cell_segmentation_path, raw_path,
                                  nucleus_segmentation_path,

@@ -48,7 +48,7 @@ def write_morphology_nuclei(raw_path, nucleus_seg_path, chromatin_seg_path,
 def write_morphology_cells(raw_path, cell_seg_path, nucleus_seg_path,
                            table_in_path, table_out_path,
                            nucleus_mapping_path, region_path,
-                           resolution, tmp_folder, target, max_jobs):
+                           tmp_folder, target, max_jobs):
 
     """
     Write csv files of morphology stats for both the nucleus and cell segmentation
