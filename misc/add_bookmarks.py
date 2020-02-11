@@ -98,3 +98,29 @@ def add_fig2_bookmarks():
                            'MaxValue': 1000,
                            'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+
+def add_fig5_bookmarks():
+    version = '0.6.6'
+    name = "Figure 5C: Gene clustering full body"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "sbem-6dpf-1-whole-segmented-cells": {"Tables": {"gene_clusters": ["clusters", "glasbey"]}}}
+    position = [34.3200812765686, 282.12761791060416, 105.03347558347836]
+    view = [-0.9529921731518778,
+            1.1849892416847392,
+            0.00814080433223175,
+            376.53351985923825,
+            -0.5079154826309126,
+            -0.4178950423193335,
+            1.3710745617220128,
+            196.32270696996784,
+            1.0706482326644668,
+            0.8565185861315733,
+            0.6576839143510288,
+            -347.4711101247537]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+
+if __name__ == '__main__':
+    # add_fig2_bookmarks()
+    add_fig5_bookmarks()
