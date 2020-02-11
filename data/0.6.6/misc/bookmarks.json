@@ -168,8 +168,8 @@
   "Figure 6A: Assignment by overlap": {
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
-      "prospr-6dpf-1-whole-msx": {},
-      "prospr-6dpf-1-whole-patched": {},
+      "prospr-6dpf-1-whole-msx": {"Color": "green"},
+      "prospr-6dpf-1-whole-patched": {"Color": "blue"},
       "sbem-6dpf-1-whole-segmented-cells": {
         "MaxValue": 1000,
         "MinValue": 0,
