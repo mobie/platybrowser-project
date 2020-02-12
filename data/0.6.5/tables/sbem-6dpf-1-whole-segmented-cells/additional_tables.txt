@@ -6,3 +6,4 @@ regions.csv
 vc_assignments.csv
 ganglia_ids.csv
 gene_clusters.csv
+symmetric_cells.csv
