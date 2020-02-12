@@ -1,33 +1,4 @@
 {
-    "Figure 5C: Gene clustering full body": {
-    "Layers": {
-      "sbem-6dpf-1-whole-raw": {},
-      "sbem-6dpf-1-whole-segmented-cells": {
-        "Tables": {
-          "gene_clusters":["clusters", "glasbey"]
-        }
-       }
-    },
-    "Position": [
-      34.3200812765686,
-      282.12761791060416,
-      105.03347558347836
-    ],
-    "View": [
-      -0.9529921731518778,
-      1.1849892416847392,
-      0.00814080433223175,
-      376.53351985923825,
-      -0.5079154826309126,
-      -0.4178950423193335,
-      1.3710745617220128,
-      196.32270696996784,
-      1.0706482326644668,
-      0.8565185861315733,
-      0.6576839143510288,
-      -347.4711101247537
-    ]
-  },
   "Figure 2B: Epithelial cell segmentation": {
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
@@ -73,20 +44,20 @@
         "MaxValue": 1000,
         "MinValue": 0,
         "SelectedLabelIds": [
-          1350,
-          5312,
-          5525,
-          5720,
-          6474,
-          6962,
-          7386,
-          8143,
-          8144,
-          8177,
-          8178,
-          8885,
-          10027,
-          11092
+          1425,
+          5385,
+          5598,
+          5795,
+          6552,
+          7044,
+          7468,
+          8264,
+          8230,
+          8231,
+          8987,
+          9185,
+          10167,
+          11273
         ],
         "ShowSelectedSegmentsIn3d": true
       }
@@ -158,18 +129,47 @@
       -23948.556010504282
     ]
   },
-  "Left eye": {
+  "Figure 5C: Gene clustering full body": {
+    "Layers": {
+      "sbem-6dpf-1-whole-raw": {},
+      "sbem-6dpf-1-whole-segmented-cells": {
+        "Tables": {
+          "gene_clusters": [
+            "clusters",
+            "glasbey"
+          ]
+        }
+      }
+    },
     "Position": [
-      177.0,
-      218.0,
-      67.0
+      34.3200812765686,
+      282.12761791060416,
+      105.03347558347836
+    ],
+    "View": [
+      -0.9529921731518778,
+      1.1849892416847392,
+      0.00814080433223175,
+      376.53351985923825,
+      -0.5079154826309126,
+      -0.4178950423193335,
+      1.3710745617220128,
+      196.32270696996784,
+      1.0706482326644668,
+      0.8565185861315733,
+      0.6576839143510288,
+      -347.4711101247537
     ]
   },
   "Figure 6A: Assignment by overlap": {
     "Layers": {
+      "prospr-6dpf-1-whole-msx": {
+        "Color": "green"
+      },
+      "prospr-6dpf-1-whole-patched": {
+        "Color": "blue"
+      },
       "sbem-6dpf-1-whole-raw": {},
-      "prospr-6dpf-1-whole-msx": {"Color": "green"},
-      "prospr-6dpf-1-whole-patched": {"Color": "blue"},
       "sbem-6dpf-1-whole-segmented-cells": {
         "MaxValue": 1000,
         "MinValue": 0,
@@ -202,9 +202,13 @@
   },
   "Figure 6B: Assignment by overlap": {
     "Layers": {
+      "prospr-6dpf-1-whole-lhx6": {
+        "Color": "green"
+      },
+      "prospr-6dpf-1-whole-wnt5": {
+        "Color": "blue"
+      },
       "sbem-6dpf-1-whole-raw": {},
-      "prospr-6dpf-1-whole-lhx6": {"Color": "green"},
-      "prospr-6dpf-1-whole-wnt5": {"Color": "blue"},
       "sbem-6dpf-1-whole-segmented-cells": {
         "MaxValue": 1000,
         "MinValue": 0,
@@ -241,7 +245,10 @@
       "sbem-6dpf-1-whole-segmented-outside": {},
       "sbem-6dpf-1-whole-segmented-cells": {
         "Tables": {
-          "vc_assignments":["expression_sum", "glasbey"]
+          "vc_assignments": [
+            "expression_sum",
+            "glasbey"
+          ]
         }
        }
     },
@@ -271,7 +278,10 @@
       "sbem-6dpf-1-whole-segmented-outside": {},
       "sbem-6dpf-1-whole-segmented-cells": {
         "Tables": {
-          "symmetric_cells":["pair_index", "glasbey"]
+          "symmetric_cells": [
+            "pair_index",
+            "glasbey"
+          ]
         }
        }
     },
@@ -293,6 +303,13 @@
        1.5522118029711398,
        1.2409713237596134,
        -720.738885334493
+    ]
+  },
+  "Left eye": {
+    "Position": [
+      177.0,
+      218.0,
+      67.0
     ]
   }
 }
