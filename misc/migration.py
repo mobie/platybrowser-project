@@ -399,8 +399,8 @@ if __name__ == '__main__':
 
     # version = '0.6.5'
     # update_n5_xmls(version)
-    # update_all_n5_xmls()
+    update_all_n5_xmls()
 
     # make the remote xmls
-    version = '0.6.6'
-    make_remote_xmls(version)
+    # version = '0.6.6'
+    # make_remote_xmls(version)
