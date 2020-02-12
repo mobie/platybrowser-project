@@ -27,8 +27,9 @@ def summarise_chunk_stats(path, key):
     percent_filled = float(n_filled) / n_chunks
     with z5py.File(path, 'r') as f:
         ds = f[key]
+        shape = ds.shape
         chunk_shape = ds.chunks
-    print("Checked dataset with chunk shape", chunk_shape)
+    print("Checked dataset with chunk shape", chunk_shape, "and total shape", shape)
     print("Number of existing chunks", n_filled, "/", n_chunks, "(", percent_filled, ")")
     print("Mean chunk size in MB:", np.mean(sizes) / 1.e6, "+-", np.std(sizes) / 1.e6)
     print("Min/max chunk size in MB:", np.min(sizes) / 1.e6, "/", np.max(sizes) / 1.e6)
@@ -55,6 +56,8 @@ def estimate_chunk_sizes():
 
 
 if __name__ == '__main__':
-    p = '../data/0.6.5/images/local/sbem-6dpf-1-whole-segmented-cells.n5'
+    # p = '../data/0.6.5/images/local/sbem-6dpf-1-whole-segmented-cells.n5'
+    # p = '../data/0.6.2/images/local/sbem-6dpf-1-whole-segmented-cilia.n5'
+    p = '../data/rawdata/sbem-6dpf-1-whole-raw.n5'
     k = 'setup0/timepoint0/s0'
     summarise_chunk_stats(p, k)

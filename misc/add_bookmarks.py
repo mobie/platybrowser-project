@@ -33,27 +33,23 @@ def add_fig2_bookmarks():
     cell_name = 'sbem-6dpf-1-whole-segmented-cells'
     cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
 
-    # add bookmark for figure 2,panel b
-    name = 'Figure 2B: Epithelial cell segmentation'
-    position = [123.52869410491485, 149.1222916293258, 54.60245703388086]
-    view = [36.55960993152054, -74.95830868923713, 0.0, 7198.793896571635,
-            74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
-            0.0, 0.0, 83.39875970238346, -4553.7771933283475]
+    # # add bookmark for figure 2,panel b
+    # name = 'Figure 2B: Epithelial cell segmentation'
+    # position = [123.52869410491485, 149.1222916293258, 54.60245703388086]
+    # view = [36.55960993152054, -74.95830868923713, 0.0, 7198.793896571635,
+    #         74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
+    #         0.0, 0.0, 83.39875970238346, -4553.7771933283475]
 
-    src_epi = '0.5.5'
-    eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
-    # TODO need to fix label id propagation
-    eids = propagate_ids(ROOT, src_epi, version, cell_name, eids)
-    layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedLabelIds': eids,
-                          'MinValue': 0,
-                          'MaxValue': 1000,
-                          'ShowSelectedSegmentsIn3d': True}}
-    add_bookmark(version, name, Position=position, Layers=layers, View=view)
-
-    # TODO need to check that ids are propagated correctly
-    check_bookmark(ROOT, version, name, 1)
-    quit()
+    # src_epi = '0.5.5'
+    # eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
+    # # TODO need to fix label id propagation
+    # eids = propagate_ids(ROOT, src_epi, version, cell_name, eids)
+    # layers = {'sbem-6dpf-1-whole-raw': {},
+    #           cell_name: {'SelectedLabelIds': eids,
+    #                       'MinValue': 0,
+    #                       'MaxValue': 1000,
+    #                       'ShowSelectedSegmentsIn3d': True}}
+    # add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
     # add bookmark for figure 2, panel C
     name = 'Figure 2C: Muscle segmentation'
@@ -62,10 +58,8 @@ def add_fig2_bookmarks():
             0.0, 162.5205891508259, 0.0, -24390.10620770031,
             0.0, 0.0, 162.5205891508259, -17558.518378884706]
 
-    mids = [1350, 5312, 5525, 5720, 6474, 6962, 7386,
-            8143, 8144, 8177, 8178, 8885, 10027, 11092]
-    src_muscle = '0.3.1'
-    mids = propagate_ids(ROOT, src_muscle, version, cell_name, mids)
+    mids = [1425, 5385, 5598, 5795, 6552, 7044, 7468, 8264,
+            8230, 8231, 8987, 9185, 10167, 11273]
     layers = {'sbem-6dpf-1-whole-raw': {},
               cell_name: {'SelectedLabelIds': mids,
                           'MinValue': 0,
@@ -100,6 +94,10 @@ def add_fig2_bookmarks():
                            'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
+    # TODO need to check that ids are propagated correctly
+    check_bookmark(ROOT, version, name, 1)
+    quit()
+
 
 def add_fig5_bookmarks():
     version = '0.6.6'
@@ -126,8 +124,8 @@ def add_fig6_bookmarks():
     version = '0.6.6'
     name = "Figure 6A: Assignment by overlap"
     layers = {"sbem-6dpf-1-whole-raw": {},
-              "prospr-6dpf-1-whole-msx": {"Color": "green"},
-              "prospr-6dpf-1-whole-patched": {"Color": "blue"},
+              "prospr-6dpf-1-whole-msx": {"Color": "Green"},
+              "prospr-6dpf-1-whole-patched": {"Color": "Blue"},
               "sbem-6dpf-1-whole-segmented-cells": {
                 "MaxValue": 1000,
                 "MinValue": 0,
@@ -155,8 +153,8 @@ def add_fig6_bookmarks():
 
     name = "Figure 6B: Assignment by overlap"
     layers = {"sbem-6dpf-1-whole-raw": {},
-              "prospr-6dpf-1-whole-lhx6": {"Color": "green"},
-              "prospr-6dpf-1-whole-wnt5": {"Color": "blue"},
+              "prospr-6dpf-1-whole-lhx6": {"Color": "Green"},
+              "prospr-6dpf-1-whole-wnt5": {"Color": "Blue"},
               "sbem-6dpf-1-whole-segmented-cells": {
                 "MaxValue": 1000,
                 "MinValue": 0,
@@ -182,8 +180,59 @@ def add_fig6_bookmarks():
             451.14359129392136]
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
+    name = "Figure 6F: Level of gene expression after VC assignment"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "sbem-6dpf-1-whole-segmented-outside": {},
+              "sbem-6dpf-1-whole-segmented-cells": {
+                "Tables": {
+                  "vc_assignments": ["expression_sum", "glasbey"]
+                }}}
+    position = [151.49356333542673,
+                142.11330737746303,
+                124.51951538415905]
+    view = [-1.6868627317328129,
+            2.5114207685721133,
+            -0.040111647775085676,
+            666.6372173919165,
+            -1.0506500045055518,
+            -0.6616293061174092,
+            2.7591176716716426,
+            356.629046586707,
+            2.2814420415901586,
+            1.5522118029711398,
+            1.2409713237596134,
+            -720.738885334493]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+    name = "Symmetric cell pairs"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "sbem-6dpf-1-whole-segmented-outside": {},
+              "sbem-6dpf-1-whole-segmented-cells": {
+                "Tables": {
+                    "symmetric_cells": ["pair_index", "glasbey"]
+                }}}
+    position = [151.49356333542673,
+                142.11330737746303,
+                124.51951538415905]
+    view = [-1.6868627317328129,
+            2.5114207685721133,
+            -0.040111647775085676,
+            666.6372173919165,
+            -1.0506500045055518,
+            -0.6616293061174092,
+            2.7591176716716426,
+            356.629046586707,
+            2.2814420415901586,
+            1.5522118029711398,
+            1.2409713237596134,
+            -720.738885334493]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
 
 if __name__ == '__main__':
+    # name = 'Figure 2C: Muscle segmentation'
+    # check_bookmark(ROOT, '0.6.6', name, 1)
+
     add_fig2_bookmarks()
     # add_fig5_bookmarks()
     # add_fig6_bookmarks()
