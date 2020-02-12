@@ -113,8 +113,11 @@ def assign_vc(distances, vc_expression):
                    else np.nanargmin(distances[cell])
                    for cell in range(num_cells)]
     cells_expr = vc_expression[assignments]
+    expr_sum = np.sum(cells_expr, axis=1)
+    assign_and_sum = np.column_stack((assignments, expr_sum))
     cells_expr = np.insert(cells_expr, 0, np.arange(num_cells), axis=1)
-    return cells_expr
+    expr_assign_sum = np.hstack((cells_expr, assign_and_sum))
+    return expr_assign_sum
 
 
 def vc_assignments(segm_volume_file, em_dset,
@@ -142,7 +145,7 @@ def vc_assignments(segm_volume_file, em_dset,
     # assign the cells to the genetically closest vcs
     cell_assign = assign_vc(dist_matrix, vc_expression_subset)
     # write down a new table
-    col_names = ['label_id'] + common_gene_names
+    col_names = ['label_id'] + common_gene_names + ['VC', 'expression_sum']
     assert cell_assign.shape[1] == len(col_names)
     with open(output_gene_table, 'w') as f:
         csv_writer = csv.writer(f, delimiter='\t')
