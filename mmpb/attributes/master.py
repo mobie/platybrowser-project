@@ -87,6 +87,8 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     new_ganglia_table = os.path.join(table_folder, 'ganglia_ids.csv')
     old_gcluster_table = os.path.join(old_folder, 'tables', name, 'gene_clusters.csv')
     new_gcluster_table = os.path.join(table_folder, 'gene_clusters.csv')
+    old_symm_pair_table = os.path.join(old_folder, 'tables', name, 'symmetric_cells.csv')
+    new_symm_pair_table = os.path.join(table_folder, 'symmetric_cells.csv')
     # we only need to trigger the label id propagation if the segmentation was updated
     if seg_has_changed:
         id_lut = os.path.join(folder, 'misc',
@@ -98,13 +100,16 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
         new_cilia_table = os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv')
         propagate_attributes(id_lut, old_cilia_table, new_cilia_table, 'cell_id')
 
-        # update the ganglia id mapping table
+        # update the ganglia id mapping table, gene clusters and symmetric pairs
         propagate_attributes(id_lut, old_ganglia_table, new_ganglia_table, 'label_id')
         propagate_attributes(id_lut, old_gcluster_table, new_gcluster_table, 'label_id')
+        propagate_attributes(id_lut, old_symm_pair_table, new_symm_pair_table, 'label_id')
+
     else:
-        # otherwise, need to copy the ganglia and gene cluster table
+        # otherwise, need to copy the ganglia, gene cluster and symmetric pair table
         make_squashed_link(old_ganglia_table, new_ganglia_table)
         make_squashed_link(old_gcluster_table, new_gcluster_table)
+        make_squashed_link(old_symm_pair_table, new_symm_pair_table)
 
     write_additional_table_file(table_folder)
 

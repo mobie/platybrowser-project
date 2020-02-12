@@ -5,4 +5,5 @@ gene_clusters.csv
 genes.csv
 morphology.csv
 regions.csv
+symmetric_cells.csv
 vc_assignments.csv
