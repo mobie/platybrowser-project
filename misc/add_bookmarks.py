@@ -33,25 +33,22 @@ def add_fig2_bookmarks():
     cell_name = 'sbem-6dpf-1-whole-segmented-cells'
     cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
 
-    # # add bookmark for figure 2,panel b
-    # name = 'Figure 2B: Epithelial cell segmentation'
-    # position = [123.52869410491485, 149.1222916293258, 54.60245703388086]
-    # view = [36.55960993152054, -74.95830868923713, 0.0, 7198.793896571635,
-    #         74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
-    #         0.0, 0.0, 83.39875970238346, -4553.7771933283475]
+    # add bookmark for figure 2,panel b
+    name = 'Figure 2B: Epithelial cell segmentation'
+    position = [123.52869410491485, 149.1222916293258, 54.60245703388086]
+    view = [36.55960993152054, -74.95830868923713, 0.0, 7198.793896571635,
+            74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
+            0.0, 0.0, 83.39875970238346, -4553.7771933283475]
 
-    # src_epi = '0.5.5'
-    # eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
-    # # TODO need to fix label id propagation
-    # eids = propagate_ids(ROOT, src_epi, version, cell_name, eids)
-    # layers = {'sbem-6dpf-1-whole-raw': {},
-    #           cell_name: {'SelectedLabelIds': eids,
-    #                       'MinValue': 0,
-    #                       'MaxValue': 1000,
-    #                       'ShowSelectedSegmentsIn3d': True}}
-    # add_bookmark(version, name, Position=position, Layers=layers, View=view)
+    eids = [4211, 4724, 4707, 3031, 4056, 3181, 4373]
+    layers = {'sbem-6dpf-1-whole-raw': {},
+              cell_name: {'SelectedLabelIds': eids,
+                          'MinValue': 0,
+                          'MaxValue': 1000,
+                          'ShowSelectedSegmentsIn3d': True}}
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
-    # add bookmark for figure 2, panel C
+    # add bookmark for figure 2, panel c
     name = 'Figure 2C: Muscle segmentation'
     position = [112.4385016688483, 154.89179764379648, 108.0387320192992]
     view = [162.5205891508259, 0.0, 0.0, -17292.571534457347,
@@ -74,12 +71,15 @@ def add_fig2_bookmarks():
             -111.54766791295017, 49.66422153411607, 0.0, 3678.656514894519,
             0.0, 0.0, 122.10412408025985, -23948.556010504282]
 
+    return
     src_neph_cells = '0.3.1'
     nids = [22925, 22181, 22925, 22182, 22515, 22700, 22699, 24024, 25520, 22370]
     nids = propagate_ids(ROOT, src_neph_cells, version, cell_name, nids)
 
-    src_neph_cilia = '0.5.3'
     # TODO need to load cilia ids from file
+    # TODO need to fix id propagation
+    # TODO need to fix view rotation
+    src_neph_cilia = '0.5.3'
     cids = []
     cids = propagate_ids(ROOT, src_neph_cilia, version, cilia_name, cids)
 
@@ -94,9 +94,8 @@ def add_fig2_bookmarks():
                            'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
-    # TODO need to check that ids are propagated correctly
-    check_bookmark(ROOT, version, name, 1)
-    quit()
+    check_bookmark(ROOT, version, name, 1,
+                   layer_scale_dict={cilia_name: 1})
 
 
 def add_fig5_bookmarks():
