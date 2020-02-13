@@ -1,5 +1,5 @@
-import json
 import os
+import json
 from shutil import copyfile
 from pybdv.metadata import get_data_path
 
@@ -7,65 +7,19 @@ from .checks import check_bdv, check_tables, check_paintera
 from ..check_attributes import check_attributes
 from .xml_utils import copy_xml_with_newpath
 
-RAW_FOLDER = 'data/rawdata'
-SOURCE_FILE = 'data/sources.json'
-SEGMENTATION_FILE = 'data/segmentations.json'
-IMAGE_FILE = 'data/images.json'
-PRIVATE_FILE = 'data/privates.json'
-POSTPROCESS_FILE = 'data/postprocess.json'
 
-# TODO we need additional functionality:
-# - remove images and segmentations
-# - update images and segmentations
+def get_modality_names(root, version):
+    """ Get names of the current data modalities.
 
-
-def get_sources():
-    """ Get names of the current data sources.
-
-    See https://git.embl.de/tischer/platy-browser-tables/README.md#file-naming
+    See https://github.com/platybrowser/platybrowser-backend#file-naming
     for the source naming conventions.
     """
-    if not os.path.exists(SOURCE_FILE):
-        return []
-    with open(SOURCE_FILE) as f:
-        sources = json.load(f)
-    return sources
-
-
-def source_to_prefix(source):
-    return '%s-%s-%s-%s' % (source['modality'],
-                            source['stage'],
-                            source['id'],
-                            source['region'])
-
-
-def get_source_names():
-    """ Get the name prefixes corresponding to all sources.
-    """
-    sources = get_sources()
-    prefixes = [source_to_prefix(source) for source in sources]
-    return prefixes
-
-
-def get_image_names():
-    if not os.path.exists(IMAGE_FILE):
-        return []
-    with open(IMAGE_FILE) as f:
-        names = json.load(f)
-    return names
-
-
-def get_segmentations():
-    if not os.path.exists(SEGMENTATION_FILE):
-        return {}
-    with open(SEGMENTATION_FILE) as f:
-        segmentations = json.load(f)
-    return segmentations
-
-
-def get_segmentation_names():
-    segmentations = get_segmentations()
-    return list(segmentations.keys())
+    image_dict = os.path.join(root, version, 'images', 'images.json')
+    with open(image_dict, 'r') as f:
+        image_dict = json.load(f)
+    names = list(image_dict.keys())
+    names = set('-'.join(name.split('-')[:4]) for name in names)
+    return list(names)
 
 
 def add_source(modality, stage, id=1, region='whole'):

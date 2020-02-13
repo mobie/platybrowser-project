@@ -5,7 +5,7 @@ import json
 import argparse
 from subprocess import check_output
 
-from mmpb.files import copy_release_folder, make_folder_structure, make_bdv_server_file
+from mmpb.files import copy_release_folder, make_folder_structure
 from mmpb.release_helper import add_data, check_inputs, add_version
 
 
@@ -24,8 +24,8 @@ def update_minor(new_data, target='slurm', max_jobs=250):
     The minor version is increased if new derived data is added.
 
     Arguments:
-        new_data [list] - list of new data to add. For details, see
-            https://git.embl.de/tischer/platy-browser-tables#usage.
+        new_data [dict] - dictionary of new data to be added.
+            For details, see https://github.com/platybrowser/platybrowser-backend#table-storage.
         target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
         max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
@@ -44,16 +44,11 @@ def update_minor(new_data, target='slurm', max_jobs=250):
     copy_release_folder(folder, new_folder)
 
     # add the new data
-    for data in new_data:
-        add_data(data, new_folder, target, max_jobs)
+    for name, properties in new_data.items():
+        add_data(name, properties, new_folder, target, max_jobs)
 
-    # make bdv file
-    make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
-                         relative_paths=True)
     add_version(new_tag)
-
-    # TODO auto-release
-    # TODO clean up
+    # TODO print message
 
 
 if __name__ == '__main__':

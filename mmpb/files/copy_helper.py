@@ -82,8 +82,9 @@ def copy_image_data(src_folder, dst_folder, exclude_prefixes=[]):
         image_dict = json.load(f)
 
     for name, properties in image_dict.items():
+        type_ = properties['Type']
         # don't copy segmentations
-        if 'segmented' in name:
+        if type_ != 'Image':
             continue
         # check if we exclude this prefix
         prefix = '-'.join(name.split('-')[:4])
@@ -133,8 +134,9 @@ def copy_segmentations(src_folder, dst_folder, exclude_prefixes=[]):
         image_dict = json.load(f)
 
     for name, properties in image_dict.items():
+        type_ = properties['Type']
         # only copy segmentations
-        if 'segmented' not in name:
+        if type_ not in ('Segmentation', 'Mask'):
             continue
         # check if we exclude this prefix
         prefix = '-'.join(name.split('-')[:4])

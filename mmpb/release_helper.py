@@ -9,59 +9,7 @@ from .files.copy_helper import copy_file
 VERSION_FILE = "data/versions.json"
 
 
-def is_image(data, check_source):
-    if check_source and 'source' not in data:
-        return False
-    if 'name' in data and 'input_path' in data:
-        return True
-    return False
-
-
-def is_static_segmentation(data, check_source):
-    if check_source and 'source' not in data:
-        return False
-    if 'name' in data and 'segmentation_path' in data:
-        return True
-    return False
-
-
-def is_dynamic_segmentation(data, check_source):
-    if check_source and 'source' not in data:
-        return False
-    if 'name' in data and 'paintera_project' in data and 'resolution' in data:
-        if len(data['paintera_project']) != 2 or len(data['resolution']) != 3:
-            return False
-        return True
-    return False
-
-
-def is_rename(data, check_source):
-    if not check_source:
-        # we can only rename in minor update
-        return False
-    if 'source' not in data:
-        return False
-    if 'name' in data and 'new_name' in data:
-        return True
-    return False
-
-
-# TODO check more thoroughly:
-# - check that the paths that are specified exist
-# - check table arguments if present
-def check_inputs(new_data, check_source=True):
-    if not all(isinstance(data, dict) for data in new_data):
-        raise ValueError("Expect list of dicts as input")
-
-    for data in new_data:
-        if not any((is_image(data, check_source),
-                    is_static_segmentation(data, check_source),
-                    is_dynamic_segmentation(data, check_source),
-                    is_rename(data, check_source))):
-            raise ValueError("Could not parse input element %s" % str(data))
-
-
-def add_data(data, folder, target, max_jobs, source=None):
+def add_data(name, properties, folder, target, max_jobs, source=None):
     source = data['source'] if source is None else source
     name = data['name']
     full_name = '%s-%s' % (source, name)
