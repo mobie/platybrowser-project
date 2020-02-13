@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 
 from elf.io import open_file
+from elf.transformation import bdv_trafo_to_affine_matrix
+from elf.wrapper.affine_volume import AffineVolume
 from pybdv.metadata import get_resolution, get_data_path
 from pybdv.util import get_key
 
@@ -78,7 +80,7 @@ def validate_layer(folder, name, layer):
 def make_bookmark(folder, Position=None, Layers=None, View=None):
     # validate and add position
     if Position is not None:
-        assert isinstance(Position, (list, tuple))
+        assert isinstance(Position, (list, tuple)), type(Position)
         assert len(Position) == 3
         assert all(isinstance(pos, float) for pos in Position)
         bookmark = {'Position': Position}
@@ -129,9 +131,18 @@ def check_bookmark(root, version, name,
     bookmark = bookmarks[name]
     assert 'Position' in bookmark, "Can only load bookmark with position"
     position = bookmark['Position']
-    # TODO use new elf fancyness to transform the view :)
+    print("Viewing bookmark", name, "@", position)
+
+    # use new elf fancyness to transform the view :)
     if 'View' in bookmark:
-        pass
+        affine_matrix = bdv_trafo_to_affine_matrix(bookmark['View'])
+        # print("Found view corresponding to affine matrix:")
+        # print(affine_matrix)
+        # FIXME this does not work yet, probably because we need to
+        # define the output coordinate system differently. Need to discuss with Tisch.
+        affine_matrix = None
+    else:
+        affine_matrix = None
 
     raw_name = 'sbem-6dpf-1-whole-raw'
     image_folder = os.path.join(root, version, 'images', 'local')
@@ -143,6 +154,7 @@ def check_bookmark(root, version, name,
     resolution = scale_raw_resolution(resolution, raw_scale)
     position = [pos / res for pos, res in zip(position, resolution)]
     bb = tuple(slice(int(pos - ha), int(pos + ha)) for pos, ha in zip(position, halo))
+    print("Pixel position and bounding box:", position, bb)
 
     # load raw
     raw_path = get_data_path(xml_raw, return_absolute_path=True)
@@ -150,6 +162,9 @@ def check_bookmark(root, version, name,
     raw_key = get_key(is_h5, time_point=0, setup_id=0, scale=raw_scale)
     with open_file(raw_path, 'r') as f:
         ds = f[raw_key]
+        if affine_matrix is not None:
+            # TODO higher order + anti-aliasing once elf supports it
+            ds = AffineVolume(ds, affine_matrix=affine_matrix, order=1)
         ref_shape = ds.shape
         raw = ds[bb]
 
@@ -172,7 +187,12 @@ def check_bookmark(root, version, name,
                     raise RuntimeError("Shape for layer %s = %s does not match the raw scale %s" % (layer_name,
                                                                                                     str(shape),
                                                                                                     str(ref_shape)))
+                if affine_matrix is not None:
+                    ds = AffineVolume(ds, affine_matrix=affine_matrix, order=0)
                 layer = ds[bb]
+                # int16/uint16 files are usually segmentations
+                if layer.dtype in (np.dtype('int16'), np.dtype('uint16')):
+                    layer = layer.astype('uint32')
             data.append(to_source(layer, name=layer_name))
 
             # add mask with selected ids if given

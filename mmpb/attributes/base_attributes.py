@@ -194,6 +194,7 @@ def write_additional_table_file(table_folder):
 
 
 # TODO implement merge rules
+# TODO use propagate_ids from mmpb.util
 def propagate_attributes(id_mapping_path, table_path, output_path,
                          column_name, merge_rule=None, override=False):
     """ Propagate id column to new ids.

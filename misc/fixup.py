@@ -134,6 +134,7 @@ def update_image_dict(version):
                 props['MaxValue'] = 1000
             else:
                 props['Type'] = 'Image'
+                props['Color'] = 'RandomFromGlasbey'
         else:
             raise RuntimeError('Unknown name %s' % name)
 
@@ -160,5 +161,5 @@ if __name__ == '__main__':
     # fix_all_id_luts()
     # add_remote_storage_to_image_dict()
     # rewrite_gene_file()
-    # update_image_dict('0.6.6')
-    update_all_image_dicts()
+    update_image_dict('0.6.6')
+    # update_all_image_dicts()

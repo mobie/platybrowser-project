@@ -13,7 +13,7 @@ from .map_segmentation_ids import map_segmentation_ids
 from ..default_config import write_default_global_config, get_default_shebang, get_default_block_shape
 
 
-def get_scale_factors(paintera_path, paintera_key):
+def get_scale_factors_from_paintera(paintera_path, paintera_key):
     f = z5py.File(paintera_path)
     g = f[paintera_key]['data']
     keys = [int(k[1:]) for k in g.keys()]
@@ -125,7 +125,7 @@ def export_segmentation(paintera_path, paintera_key, name,
     check_max_id(tmp_path, tmp_key0)
 
     # downscale the segemntation
-    scale_factors = get_scale_factors(paintera_path, paintera_key)
+    scale_factors = get_scale_factors_from_paintera(paintera_path, paintera_key)
     downscale(tmp_path, tmp_key0, tmp_key, scale_factors, tmp_folder, max_jobs, target)
 
     # convert to bdv

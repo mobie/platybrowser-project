@@ -1,7 +1,8 @@
 import os
 import json
-from mmpb.bookmarks import make_bookmark, check_bookmark
-from mmpb.util import propagate_ids
+import numpy as np
+import pandas as pd
+from mmpb.bookmarks import make_bookmark
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
@@ -27,6 +28,24 @@ def add_bookmark(version, name, Position=None, Layers=None, View=None):
         json.dump(bookmarks, f, indent=2, sort_keys=True)
 
 
+def get_nephridia_ids(version, side):
+    assert side in (1, 2)
+    table_path = os.path.join(ROOT, version, 'tables', 'sbem-6dpf-1-whole-segmented-cells', 'regions.csv')
+    region_table = pd.read_csv(table_path, sep='\t')
+    label_ids = region_table['label_id'].values.astype('uint32')
+    nephridia_ids = region_table['nephridia'].astype('uint32')
+    return label_ids[nephridia_ids == side]
+
+
+def get_cilia_ids(version, nephridia_ids):
+    table_path = os.path.join(ROOT, version, 'tables', 'sbem-6dpf-1-whole-segmented-cilia', 'cell_mapping.csv')
+    mapping_table = pd.read_csv(table_path, sep='\t')
+    cilia_ids = mapping_table['label_id'].values.astype('uint32')
+    cell_ids = mapping_table['cell_id'].values.astype('uint32')
+    id_mask = np.isin(cell_ids, nephridia_ids)
+    return cilia_ids[id_mask]
+
+
 def add_fig2_bookmarks():
     version = '0.6.6'
 
@@ -40,10 +59,7 @@ def add_fig2_bookmarks():
             74.95830868923713, 36.55960993152054, 0.0, -14710.354798757155,
             0.0, 0.0, 83.39875970238346, -4553.7771933283475]
 
-    src_epi = '0.5.5'
-    eids = [4136, 4645, 4628, 3981, 2958, 3108, 4298]
-    # TODO need to fix label id propagation
-    eids = propagate_ids(ROOT, src_epi, version, cell_name, eids)
+    eids = [4211, 4724, 4707, 3031, 4056, 3181, 4373]
     layers = {'sbem-6dpf-1-whole-raw': {},
               cell_name: {'SelectedLabelIds': eids,
                           'MinValue': 0,
@@ -51,21 +67,15 @@ def add_fig2_bookmarks():
                           'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
-    # TODO need to check that ids are propagated correctly
-    check_bookmark(ROOT, version, name, 1)
-    quit()
-
-    # add bookmark for figure 2, panel C
+    # add bookmark for figure 2, panel c
     name = 'Figure 2C: Muscle segmentation'
     position = [112.4385016688483, 154.89179764379648, 108.0387320192992]
     view = [162.5205891508259, 0.0, 0.0, -17292.571534457347,
             0.0, 162.5205891508259, 0.0, -24390.10620770031,
             0.0, 0.0, 162.5205891508259, -17558.518378884706]
 
-    mids = [1350, 5312, 5525, 5720, 6474, 6962, 7386,
-            8143, 8144, 8177, 8178, 8885, 10027, 11092]
-    src_muscle = '0.3.1'
-    mids = propagate_ids(ROOT, src_muscle, version, cell_name, mids)
+    mids = [1425, 5385, 5598, 5795, 6552, 7044, 7468, 8264,
+            8230, 8231, 8987, 9185, 10167, 11273]
     layers = {'sbem-6dpf-1-whole-raw': {},
               cell_name: {'SelectedLabelIds': mids,
                           'MinValue': 0,
@@ -80,21 +90,17 @@ def add_fig2_bookmarks():
             -111.54766791295017, 49.66422153411607, 0.0, 3678.656514894519,
             0.0, 0.0, 122.10412408025985, -23948.556010504282]
 
-    src_neph_cells = '0.3.1'
-    nids = [22925, 22181, 22925, 22182, 22515, 22700, 22699, 24024, 25520, 22370]
-    nids = propagate_ids(ROOT, src_neph_cells, version, cell_name, nids)
-
-    src_neph_cilia = '0.5.3'
-    # TODO need to load cilia ids from file
-    cids = []
-    cids = propagate_ids(ROOT, src_neph_cilia, version, cilia_name, cids)
+    # nephridia ids: cell ids for left nephridia
+    nids = get_nephridia_ids(version, side=2)
+    # cilia ids: ids for nephridia corresponding to the left cell
+    cids = get_cilia_ids(version, nids)
 
     layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedLabelIds': nids,
+              cell_name: {'SelectedLabelIds': nids.tolist(),
                           'MinValue': 0,
                           'MaxValue': 1000,
                           'ShowSelectedSegmentsIn3d': True},
-              cilia_name: {'SelectedLabelIds': cids,
+              cilia_name: {'SelectedLabelIds': cids.tolist(),
                            'MinValue': 0,
                            'MaxValue': 1000,
                            'ShowSelectedSegmentsIn3d': True}}
@@ -126,8 +132,8 @@ def add_fig6_bookmarks():
     version = '0.6.6'
     name = "Figure 6A: Assignment by overlap"
     layers = {"sbem-6dpf-1-whole-raw": {},
-              "prospr-6dpf-1-whole-msx": {"Color": "green"},
-              "prospr-6dpf-1-whole-patched": {"Color": "blue"},
+              "prospr-6dpf-1-whole-msx": {"Color": "Green"},
+              "prospr-6dpf-1-whole-patched": {"Color": "Blue"},
               "sbem-6dpf-1-whole-segmented-cells": {
                 "MaxValue": 1000,
                 "MinValue": 0,
@@ -155,8 +161,8 @@ def add_fig6_bookmarks():
 
     name = "Figure 6B: Assignment by overlap"
     layers = {"sbem-6dpf-1-whole-raw": {},
-              "prospr-6dpf-1-whole-lhx6": {"Color": "green"},
-              "prospr-6dpf-1-whole-wnt5": {"Color": "blue"},
+              "prospr-6dpf-1-whole-lhx6": {"Color": "Green"},
+              "prospr-6dpf-1-whole-wnt5": {"Color": "Blue"},
               "sbem-6dpf-1-whole-segmented-cells": {
                 "MaxValue": 1000,
                 "MinValue": 0,
@@ -182,8 +188,59 @@ def add_fig6_bookmarks():
             451.14359129392136]
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
 
+    name = "Figure 6F: Level of gene expression after VC assignment"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "sbem-6dpf-1-whole-segmented-outside": {},
+              "sbem-6dpf-1-whole-segmented-cells": {
+                "Tables": {
+                  "vc_assignments": ["expression_sum", "glasbey"]
+                }}}
+    position = [151.49356333542673,
+                142.11330737746303,
+                124.51951538415905]
+    view = [-1.6868627317328129,
+            2.5114207685721133,
+            -0.040111647775085676,
+            666.6372173919165,
+            -1.0506500045055518,
+            -0.6616293061174092,
+            2.7591176716716426,
+            356.629046586707,
+            2.2814420415901586,
+            1.5522118029711398,
+            1.2409713237596134,
+            -720.738885334493]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
+    name = "Symmetric cell pairs"
+    layers = {"sbem-6dpf-1-whole-raw": {},
+              "sbem-6dpf-1-whole-segmented-outside": {},
+              "sbem-6dpf-1-whole-segmented-cells": {
+                "Tables": {
+                    "symmetric_cells": ["pair_index", "glasbey"]
+                }}}
+    position = [151.49356333542673,
+                142.11330737746303,
+                124.51951538415905]
+    view = [-1.6868627317328129,
+            2.5114207685721133,
+            -0.040111647775085676,
+            666.6372173919165,
+            -1.0506500045055518,
+            -0.6616293061174092,
+            2.7591176716716426,
+            356.629046586707,
+            2.2814420415901586,
+            1.5522118029711398,
+            1.2409713237596134,
+            -720.738885334493]
+    add_bookmark(version, name, Position=position, Layers=layers, View=view)
+
 
 if __name__ == '__main__':
+    # name = 'Figure 2C: Muscle segmentation'
+    # check_bookmark(ROOT, '0.6.6', name, 1)
+
     add_fig2_bookmarks()
     # add_fig5_bookmarks()
     # add_fig6_bookmarks()

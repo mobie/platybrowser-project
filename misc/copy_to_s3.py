@@ -8,11 +8,18 @@ import s3fs
 from mmpb.files.xml_utils import read_path_in_bucket
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
-# don't copy raw-data, cilia and cell segmentation for now
-EXCLUDE = ["/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.2/images/local/sbem-6dpf-1-whole-segmented-cilia.n5",
-           "/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.5/images/local/sbem-6dpf-1-whole-segmented-cells.n5"]
+# don't copy raw-data and cell segmentation for now
+EXCLUDE = ["/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.5/images/local/sbem-6dpf-1-whole-segmented-cells.n5"]
 
 
+# command from Josep to parallelize copying:
+# mc --quiet --no-color mb node1/mybucket
+#
+# for (( i = 1; i <= 448; i++ )); do
+#     mc --quiet --no-color cp 10mb/10mb node1/mybucket/10mb-$i &
+# done
+#
+# wait
 def copy_n5_to_s3(path, path_in_bucket):
     full_s3_path = os.path.join('embl', 'platybrowser', path_in_bucket)
     # mc copy is very picky about putting '/' at the end.
@@ -85,5 +92,5 @@ def check_all_xml():
 
 
 if __name__ == '__main__':
-    # copy_all_to_s3()
-    check_all_xml()
+    copy_all_to_s3()
+    # check_all_xml()
