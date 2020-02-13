@@ -5,8 +5,11 @@ import json
 import argparse
 from subprocess import check_output
 
-from mmpb.files import copy_release_folder, make_folder_structure
-from mmpb.release_helper import add_data, check_inputs, add_version
+from mmpb.bookmarks import update_bookmarks
+from mmpb.files import copy_and_check_image_dict, copy_release_folder, make_folder_structure
+from mmpb.release_helper import add_data, add_version
+
+RAW_FOLDER = 'data'
 
 
 def get_tags():
@@ -29,8 +32,6 @@ def update_minor(new_data, target='slurm', max_jobs=250):
         target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
         max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
-    check_inputs(new_data)
-
     # increase the minor (middle digit) release tag
     tag, new_tag = get_tags()
     print("Updating platy browser from", tag, "to", new_tag)
@@ -43,12 +44,21 @@ def update_minor(new_data, target='slurm', max_jobs=250):
     # copy the release folder
     copy_release_folder(folder, new_folder)
 
-    # add the new data
+    # copy image dict and check that all image and table files are there
+    copy_and_check_image_dict(folder, new_folder)
+
+    # updated bookmarks if given
+    if bookmarks is not None:
+        update_bookmarks(new_folder, bookmarks)
+
+    # validate add the new data
     for name, properties in new_data.items():
-        add_data(name, properties, new_folder, target, max_jobs)
+        # TODO validate that the name is in the existing sources
+        add_data(name, properties, new_folder,
+                 target, max_jobs)
 
     add_version(new_tag)
-    # TODO print message
+    print("Updated platybrowser to new release", new_tag)
 
 
 if __name__ == '__main__':
@@ -60,7 +70,9 @@ if __name__ == '__main__':
     parser.add_argument('--max_jobs', type=int, default=250,
                         help="Maximal number of jobs used for computation")
     args = parser.parse_args()
+
     input_path = args.input_path
     with open(input_path) as f:
-        new_data_list = json.load(f)
-    update_minor(new_data_list, target=args.target, max_jobs=args.max_jobs)
+        new_data = json.load(f)
+    bookmarks = new_data.pop('bookmarks', None)
+    update_minor(new_data, bookmarks, target=args.target, max_jobs=args.max_jobs)

@@ -2,79 +2,139 @@ import os
 import json
 from . import attributes
 from .export import export_segmentation
-from .files import add_image, add_segmentation, copy_tables, rename
-from .files.sources import RAW_FOLDER
-from .files.copy_helper import copy_file
+from .files import copy_tables, copy_file
+from .util import read_resolution
 
 VERSION_FILE = "data/versions.json"
 
+IMAGE_FIELD_NAMES = {'Color', 'MaxValue', 'MinValue', 'Type'}
+MASK_FIELD_NAMES = {'Color', 'MaxValue', 'MinValue', 'Type'}
+SEGMENTATION_FIELD_NAMES = {'ColorMap', 'MaxValue', 'MinValue', 'Type'}
 
-def add_data(name, properties, folder, target, max_jobs, source=None):
-    source = data['source'] if source is None else source
-    name = data['name']
-    full_name = '%s-%s' % (source, name)
-    file_name = '%s.xml' % full_name
 
-    is_private = data.get('is_private', False)
-    check_source = source is None
+def make_new_seg_dict(paintera_project, table_update_function,
+                      postprocess, map_to_background):
+    new_seg_dict = {'PainteraProject': paintera_project}
+    if table_update_function is not None:
+        new_seg_dict['TableUpdateFunction'] = table_update_function
+    if postprocess is not None:
+        new_seg_dict['Postprocess'] = postprocess
+    if map_to_background is not None:
+        new_seg_dict['MapToBackground'] = map_to_background
+    return new_seg_dict
 
-    if is_image(data, check_source):
-        # register the image data
-        add_image(source, name, data['input_path'],
-                  is_private=is_private)
 
-        # copy image data from the raw folder to new release folder
-        xml_raw = os.path.join(RAW_FOLDER, file_name)
-        xml_out = os.path.join(folder, 'images', file_name)
-        copy_file(xml_raw, xml_out)
+def add_data(name, properties, folder, target, max_jobs):
 
-    elif is_static_segmentation(data, check_source):
-        # register the static segmentation
-        table_path_dict = data.get('table_path_dict', None)
-        add_segmentation(source, name,
-                         segmentation_path=data['segmentation_path'],
-                         table_path_dict=table_path_dict,
-                         is_private=is_private)
+    type_ = properties['Type']
+    input_path = properties.pop('InputPath', None)
 
-        # copy segmentation data from the raw folder to new release folder
-        xml_raw = os.path.join(RAW_FOLDER, file_name)
-        xml_out = os.path.join(folder, 'segmentations', file_name)
-        copy_file(xml_raw, xml_out)
+    # additional segmentation options
+    input_table_folder = properties.pop('InputTableFolder', None)
 
-        # if we have tables, copy them as well
-        if table_path_dict is not None:
-            copy_tables(RAW_FOLDER, folder, full_name)
+    # options for dynamic segmentation
+    map_to_background = properties.pop('MapToBackground', None)
+    paintera_project = properties.pop('PainteraProject', None)
+    postprocess = properties.pop('Postprocess', None)
+    table_update_function = properties.pop('TableUpdateFunction', None)
 
-    elif is_dynamic_segmentation(data, check_source):
-        # register the dynamic segmentation
-        paintera_project = data['paintera_project']
-        resolution = data['resolution']
-        table_update_function = data.get('table_update_function', None)
-        add_segmentation(source, name,
-                         paintera_project=paintera_project,
-                         resolution=resolution,
-                         table_update_function=table_update_function,
-                         is_private=is_private)
+    image_dict_path = os.path.join(folder, 'images', 'images.json')
+    with open(image_dict_path) as f:
+        image_dict = json.load(f)
+    storage_path = os.path.join(folder, 'images', 'local', name + '.xml')
 
-        # export segmentation data to new release folder
-        paintera_root, paintera_key = paintera_project
-        tmp_folder = 'tmp_export_%s' % full_name
-        export_segmentation(paintera_root, paintera_key,
-                            None, folder, full_name,
-                            resolution=resolution,
-                            tmp_folder=tmp_folder,
-                            target=target, max_jobs=max_jobs)
+    if type_ == 'Image':
+        if paintera_project or postprocess or table_update_function or input_table_folder:
+            raise ValueError("Type: Image does not support segmentation options")
+        if input_path is None:
+            raise ValueError("Need InputPath")
+        if set(properties.keys()) != IMAGE_FIELD_NAMES:
+            raise ValueError("Invalid fields for Type: Image")
+        # TODO check that all values in properties are valid
 
-        # if we have a table update function, call it
+        # copy the file
+        if os.path.splitext(input_path)[1] != '.xml':
+            raise ValueError("Invalid input format, expected xml")
+        copy_file(input_path, storage_path)
+
+    elif type_ == 'Mask':
+        if paintera_project or postprocess or table_update_function or input_table_folder:
+            raise ValueError("Type: Mask does not support segmentation options")
+        if input_path is None:
+            raise ValueError("Need InputPath")
+        if set(properties.keys()) != MASK_FIELD_NAMES:
+            raise ValueError("Invalid fields for Type: Mask")
+        # TODO check that all values in properties are valid
+
+        # copy the file
+        if os.path.splitext(input_path)[1] != '.xml':
+            raise ValueError("Invalid input format, expected xml")
+        storage_path = os.path.join(folder, 'images', 'local', name + '.xml')
+        copy_file(input_path, storage_path)
+
+    # Type = Segmentation and input_path is None -> dynamic segmentation
+    elif type_ == 'Segmentation' and input_path is None:
+        if paintera_project is None:
+            raise ValueError("Need paintera project")
+
+        paintera_path, paintera_key = paintera_project
+        tmp_folder = 'tmp_export_%s' % name
+        export_segmentation(paintera_path, paintera_key, name,
+                            None, folder, storage_path, tmp_folder,
+                            postprocess, map_to_background, target, max_jobs)
+
+        # call the table update function if given
         if table_update_function is not None:
-            tmp_folder = 'tmp_tables_%s' % name
-            update_function = getattr(attributes, table_update_function)
-            update_function(folder, name, tmp_folder, resolution,
-                            target=target, max_jobs=max_jobs)
+            tab_update = getattr(attributes, table_update_function, None)
+            if tab_update is None:
+                raise ValueError("Invalid table update function")
 
-    elif is_rename(data, check_source):
-        new_name = data['new_name']
-        rename(source, name, new_name, folder)
+            out_table_folder = os.path.join(folder, 'tables', name)
+            os.makedirs(out_table_folder, exist_ok=True)
+
+            tmp_folder = 'tmp_table_%s' % name
+            resolution = read_resolution(paintera_path, paintera_key)
+            tab_update(None, folder, name, tmp_folder, resolution,
+                       target=target, max_jobs=max_jobs, seg_has_changed=False)
+            properties.update({'TableFolder': out_table_folder})
+
+        new_seg_dict = make_new_seg_dict(paintera_project,
+                                         table_update_function,
+                                         postprocess,
+                                         map_to_background)
+        seg_dict_path = os.path.join(folder, 'misc', 'dynamic_segmentations.json')
+        with open(seg_dict_path) as f:
+            seg_dict = json.load(f)
+        seg_dict.update({name: new_seg_dict})
+        with open(seg_dict_path, 'w') as f:
+            json.dump(seg_dict, f)
+
+    # Type = Segmentation and input_path is not None -> static segmentation
+    elif type_ == 'Segmentation' and input_path is not None:
+        if paintera_project or postprocess or table_update_function:
+            raise ValueError("Static segmentation not support dynamic segmentation options")
+
+        if set(properties.keys()) != SEGMENTATION_FIELD_NAMES:
+            raise ValueError("Invalid fields for Type: Segmentation")
+
+        # TODO check that all values in properties are valid
+
+        # copy the file
+        if os.path.splitext(input_path)[1] != '.xml':
+            raise ValueError("Invalid input format, expected xml")
+        copy_file(input_path, storage_path)
+
+        # copy tables if given
+        if input_table_folder is not None:
+            out_table_folder = os.path.join(folder, 'tables', name)
+            copy_tables(input_table_folder, out_table_folder)
+            properties.update({'TableFolder': out_table_folder})
+
+    # update the properties and the image dict
+    properties.update({'Storage': {'local': storage_path}})
+    image_dict.update({name: properties})
+    with open(image_dict_path, 'w') as f:
+        json.dump(image_dict, f, indent=2, sort_keys=True)
 
 
 def add_version(tag):
@@ -99,3 +159,17 @@ def make_folder_structure(root):
     os.makedirs(os.path.join(root, 'images', 'local'), exist_ok=True)
     os.makedirs(os.path.join(root, 'images', 'remote'), exist_ok=True)
     os.makedirs(os.path.join(root, 'misc'), exist_ok=True)
+
+
+def get_modality_names(root, version):
+    """ Get names of the current data modalities.
+
+    See https://github.com/platybrowser/platybrowser-backend#file-naming
+    for the source naming conventions.
+    """
+    image_dict = os.path.join(root, version, 'images', 'images.json')
+    with open(image_dict, 'r') as f:
+        image_dict = json.load(f)
+    names = list(image_dict.keys())
+    names = set('-'.join(name.split('-')[:4]) for name in names)
+    return list(names)

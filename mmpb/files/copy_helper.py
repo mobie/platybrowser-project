@@ -45,9 +45,13 @@ def copy_file(xml_in, xml_out, storage='local'):
         raise ValueError("Invalid storage spec %s" % storage)
 
 
-def copy_tables(src_folder, dst_folder, table_folder):
-    table_in = os.path.join(src_folder, table_folder)
-    table_out = os.path.join(dst_folder, table_folder)
+def copy_tables(src_folder, dst_folder, table_folder=None):
+    if table_folder is None:
+        table_in = src_folder
+        table_out = dst_folder
+    else:
+        table_in = os.path.join(src_folder, table_folder)
+        table_out = os.path.join(dst_folder, table_folder)
     os.makedirs(table_out, exist_ok=True)
 
     table_files = os.listdir(table_in)
