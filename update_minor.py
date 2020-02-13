@@ -6,7 +6,8 @@ import argparse
 from subprocess import check_output
 
 from mmpb.bookmarks import update_bookmarks
-from mmpb.files import copy_and_check_image_dict, copy_release_folder, make_folder_structure
+from mmpb.files import (copy_and_check_image_dict, copy_release_folder,
+                        get_modality_names, make_folder_structure)
 from mmpb.release_helper import add_data, add_version
 
 RAW_FOLDER = 'data'
@@ -21,7 +22,7 @@ def get_tags():
     return tag, new_tag
 
 
-def update_minor(new_data, target='slurm', max_jobs=250):
+def update_minor(new_data, bookmarks=None, target='slurm', max_jobs=250):
     """ Update minor version of platy browser.
 
     The minor version is increased if new derived data is added.
@@ -29,6 +30,7 @@ def update_minor(new_data, target='slurm', max_jobs=250):
     Arguments:
         new_data [dict] - dictionary of new data to be added.
             For details, see https://github.com/platybrowser/platybrowser-backend#table-storage.
+        bookmarks [dict] - bookmarks to be added (default: None)
         target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
         max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
@@ -52,10 +54,13 @@ def update_minor(new_data, target='slurm', max_jobs=250):
         update_bookmarks(new_folder, bookmarks)
 
     # validate add the new data
+    modality_names = get_modality_names()
     for name, properties in new_data.items():
-        # TODO validate that the name is in the existing sources
-        add_data(name, properties, new_folder,
-                 target, max_jobs)
+        # validate that the name is in the existing modalities
+        modality = '-'.join(name.split('-')[:4])
+        if modality not in modality_names:
+            raise ValueError("Unknown modality: %s" % modality)
+        add_data(name, properties, new_folder, target, max_jobs)
 
     add_version(new_tag)
     print("Updated platybrowser to new release", new_tag)
