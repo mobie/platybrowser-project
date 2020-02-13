@@ -1,12 +1,14 @@
 import os
 import z5py
 from heimdall import view, to_source
+from heimdall.source_wrappers import ResizeWrapper
 from pybdv.metadata import get_data_path
 from pybdv.util import get_key
 
 ROOT = '../data'
 
 
+# TODO lazy loading
 # TODO try auto-matching the seg scales
 def view_segmentations(version, raw_scale, seg_names=[], seg_scales=[]):
     folder = os.path.join(ROOT, version, 'images', 'local')
@@ -18,6 +20,7 @@ def view_segmentations(version, raw_scale, seg_names=[], seg_scales=[]):
         ds = f[raw_key]
         ds.n_threads = 16
         raw = ds[:]
+        ref_shape = raw.shape
 
     data = [to_source(raw, name='raw')]
 
@@ -29,6 +32,10 @@ def view_segmentations(version, raw_scale, seg_names=[], seg_scales=[]):
             ds = f[seg_key]
             ds.n_threads = 16
             seg = ds[:].astype('uint32')
+            if seg.shape != ref_shape:
+                # TODO !
+                continue
+                seg = ResizeWrapper(seg, ref_shape)
         data.append(to_source(seg, name=seg_name))
 
     view(*data)
@@ -42,5 +49,14 @@ def view_ganglia():
     view_segmentations(version, raw_scale, seg_names, seg_scales)
 
 
+def view_cilia():
+    version = '0.6.6'
+    raw_scale = 4
+    seg_names = ['sbem-6dpf-1-whole-segmented-cilia', 'sbem-6dpf-1-whole-segmented-nephridia']
+    seg_scales = [4, 0]
+    view_segmentations(version, raw_scale, seg_names, seg_scales)
+
+
 if __name__ == '__main__':
-    view_ganglia()
+    # view_ganglia()
+    view_cilia()
