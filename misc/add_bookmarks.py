@@ -1,7 +1,8 @@
 import os
 import json
-from mmpb.bookmarks import make_bookmark, check_bookmark
-from mmpb.util import propagate_ids
+import numpy as np
+import pandas as pd
+from mmpb.bookmarks import make_bookmark
 
 ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
 
@@ -25,6 +26,24 @@ def add_bookmark(version, name, Position=None, Layers=None, View=None):
 
     with open(bookmark_file, 'w') as f:
         json.dump(bookmarks, f, indent=2, sort_keys=True)
+
+
+def get_nephridia_ids(version, side):
+    assert side in (1, 2)
+    table_path = os.path.join(ROOT, version, 'tables', 'sbem-6dpf-1-whole-segmented-cells', 'regions.csv')
+    region_table = pd.read_csv(table_path, sep='\t')
+    label_ids = region_table['label_id'].values.astype('uint32')
+    nephridia_ids = region_table['nephridia'].astype('uint32')
+    return label_ids[nephridia_ids == side]
+
+
+def get_cilia_ids(version, nephridia_ids):
+    table_path = os.path.join(ROOT, version, 'tables', 'sbem-6dpf-1-whole-segmented-cilia', 'cell_mapping.csv')
+    mapping_table = pd.read_csv(table_path, sep='\t')
+    cilia_ids = mapping_table['label_id'].values.astype('uint32')
+    cell_ids = mapping_table['cell_id'].values.astype('uint32')
+    id_mask = np.isin(cell_ids, nephridia_ids)
+    return cilia_ids[id_mask]
 
 
 def add_fig2_bookmarks():
@@ -71,31 +90,21 @@ def add_fig2_bookmarks():
             -111.54766791295017, 49.66422153411607, 0.0, 3678.656514894519,
             0.0, 0.0, 122.10412408025985, -23948.556010504282]
 
-    return
-    src_neph_cells = '0.3.1'
-    nids = [22925, 22181, 22925, 22182, 22515, 22700, 22699, 24024, 25520, 22370]
-    nids = propagate_ids(ROOT, src_neph_cells, version, cell_name, nids)
-
-    # TODO need to load cilia ids from file
-    # TODO need to fix id propagation
-    # TODO need to fix view rotation
-    src_neph_cilia = '0.5.3'
-    cids = []
-    cids = propagate_ids(ROOT, src_neph_cilia, version, cilia_name, cids)
+    # nephridia ids: cell ids for left nephridia
+    nids = get_nephridia_ids(version, side=2)
+    # cilia ids: ids for nephridia corresponding to the left cell
+    cids = get_cilia_ids(version, nids)
 
     layers = {'sbem-6dpf-1-whole-raw': {},
-              cell_name: {'SelectedLabelIds': nids,
+              cell_name: {'SelectedLabelIds': nids.tolist(),
                           'MinValue': 0,
                           'MaxValue': 1000,
                           'ShowSelectedSegmentsIn3d': True},
-              cilia_name: {'SelectedLabelIds': cids,
+              cilia_name: {'SelectedLabelIds': cids.tolist(),
                            'MinValue': 0,
                            'MaxValue': 1000,
                            'ShowSelectedSegmentsIn3d': True}}
     add_bookmark(version, name, Position=position, Layers=layers, View=view)
-
-    check_bookmark(ROOT, version, name, 1,
-                   layer_scale_dict={cilia_name: 1})
 
 
 def add_fig5_bookmarks():
