@@ -26,7 +26,7 @@
       <last>0</last>
     </Timepoints>
     <ImageLoader format="bdv.n5.s3">
-      <Key>rawdata/sbem-6dpf-1-whole-raw-3.n5</Key>
+      <Key>rawdata/sbem-6dpf-1-whole-raw.n5</Key>
       <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
       <BucketName>platybrowser</BucketName>
       <SigningRegion>us-west-2</SigningRegion>
