@@ -12,6 +12,7 @@ dependencies:
     - paintera_tools
     - pandas
     - pybdv
+    - s3fs
     - scikit-image
     - scikit-learn
     - vigra

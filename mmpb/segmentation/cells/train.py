@@ -18,8 +18,8 @@ from neurofire.criteria.loss_transforms import (ApplyAndRemoveMask,
                                                 InvertTarget)
 from neurofire.metrics.arand import ArandErrorFromMulticut
 
-import mmmp.segmentation.network.models as models
-from mmpb.segmentation.network.platyneris_loader import get_platyneris_loaders
+import mmpb.segmentation.network.models as models
+from mmpb.segmentation.network.loader import get_platyneris_loaders
 
 
 logging.basicConfig(format='[+][%(asctime)-15s][%(name)s %(levelname)s]'
@@ -175,10 +175,9 @@ def get_offsets():
             [-12, 0, 0], [0, -24, 0], [0, 0, -24]]
 
 
-def main():
+def main(template_config):
     parser = argparse.ArgumentParser()
     parser.add_argument('project_directory', type=str)
-    parser.add_argument('template_config', type=str)
     parser.add_argument('--gpus', nargs='+', default=[0], type=int)
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
@@ -187,7 +186,6 @@ def main():
     args = parser.parse_args()
 
     project_directory = args.project_directory
-    template_config = args.template_config
     if not os.path.exists(project_directory):
         os.mkdir(project_directory)
 

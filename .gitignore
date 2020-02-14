@@ -11,3 +11,5 @@ software
 *.n5
 data/bkp
 data/rawdata/evaluation
+checkpoints/
+mmpb.egg-info/
