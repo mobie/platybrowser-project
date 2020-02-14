@@ -6,9 +6,8 @@ import argparse
 from subprocess import check_output
 
 from mmpb.bookmarks import update_bookmarks
-from mmpb.files import (copy_and_check_image_dict, copy_release_folder,
-                        get_modality_names, make_folder_structure)
-from mmpb.release_helper import add_data, add_version
+from mmpb.files import copy_and_check_image_dict, copy_release_folder
+from mmpb.release_helper import add_data, add_version, get_modality_names, make_folder_structure
 
 
 def get_tags():
@@ -55,7 +54,7 @@ def update_major(new_data, bookmarks=None, target='slurm', max_jobs=250):
         update_bookmarks(new_folder, bookmarks)
 
     # validate add the new data
-    modality_names = get_modality_names()
+    modality_names = get_modality_names('data', tag)
     for name, properties in new_data.items():
         # validate that the name is in the existing modalities
         modality = '-'.join(name.split('-')[:4])
