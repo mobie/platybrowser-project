@@ -216,12 +216,11 @@
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "Tables": {
-          "gene_clusters": [
-            "clusters",
-            "glasbey"
-          ]
-        }
+        "ColorByColumn": "clusters",
+        "ColorMap": "Glasbey",
+        "Tables": [
+          "gene_clusters"
+        ]
       }
     },
     "Position": [
@@ -247,15 +246,13 @@
   "Figure 6A: Assignment by overlap": {
     "Layers": {
       "prospr-6dpf-1-whole-msx": {
-        "Color": "green"
+        "Color": "Green"
       },
       "prospr-6dpf-1-whole-patched": {
-        "Color": "blue"
+        "Color": "Blue"
       },
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "MaxValue": 1000,
-        "MinValue": 0,
         "SelectedLabelIds": [
           32095,
           31961
@@ -286,15 +283,13 @@
   "Figure 6B: Assignment by overlap": {
     "Layers": {
       "prospr-6dpf-1-whole-lhx6": {
-        "Color": "green"
+        "Color": "Green"
       },
       "prospr-6dpf-1-whole-wnt5": {
-        "Color": "blue"
+        "Color": "Blue"
       },
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "MaxValue": 1000,
-        "MinValue": 0,
         "SelectedLabelIds": [
           6766,
           6913
@@ -329,7 +324,7 @@
         "Tables": {
           "vc_assignments": [
             "expression_sum",
-            "glasbey"
+            "Glasbey"
           ]
         }
       },
@@ -366,12 +361,11 @@
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "Tables": {
-          "symmetric_cells": [
-            "pair_index",
-            "glasbey"
-          ]
-        }
+        "ColorByColumn": "pair_index",
+        "ColorMap": "Glasbey",
+        "Tables": [
+          "symmetric_cells"
+        ]
       },
       "sbem-6dpf-1-whole-segmented-outside": {}
     },

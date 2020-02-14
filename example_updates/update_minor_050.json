@@ -1,5 +1,0 @@
-[{"source": "sbem-6dpf-1-whole",
-  "name": "traces-labels",
-  "segmentation_path": "segmentation/sbem-6dpf-1-whole-traces.xml",
-  "table_path_dict": {"default": "segmentation/sbem-6dpf-1-whole-traces-table-default.xml"},
-  "is_private": true}]

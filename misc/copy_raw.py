@@ -2,7 +2,6 @@ import os
 import json
 import luigi
 from cluster_tools.copy_volume import CopyVolumeSlurm, CopyVolumeLocal
-# TODO need workflow from PR
 from cluster_tools.downscaling import DownscalingWorkflow
 from pybdv.util import get_scale_factors
 
