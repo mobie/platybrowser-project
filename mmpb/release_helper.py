@@ -13,7 +13,7 @@ SEGMENTATION_FIELD_NAMES = {'ColorMap', 'MaxValue', 'MinValue', 'Type'}
 
 
 def make_new_seg_dict(paintera_project, table_update_function,
-                      postprocess, map_to_background):
+                      postprocess, map_to_background, chunks):
     new_seg_dict = {'PainteraProject': paintera_project}
     if table_update_function is not None:
         new_seg_dict['TableUpdateFunction'] = table_update_function
@@ -21,6 +21,8 @@ def make_new_seg_dict(paintera_project, table_update_function,
         new_seg_dict['Postprocess'] = postprocess
     if map_to_background is not None:
         new_seg_dict['MapToBackground'] = map_to_background
+    if chunks is not None:
+        new_seg_dict['Chunks'] = chunks
     return new_seg_dict
 
 
@@ -33,6 +35,7 @@ def add_data(name, properties, folder, target, max_jobs):
     input_table_folder = properties.pop('InputTableFolder', None)
 
     # options for dynamic segmentation
+    chunks = properties.pop('Chunks', None)
     map_to_background = properties.pop('MapToBackground', None)
     paintera_project = properties.pop('PainteraProject', None)
     postprocess = properties.pop('Postprocess', None)
@@ -79,9 +82,12 @@ def add_data(name, properties, folder, target, max_jobs):
 
         paintera_path, paintera_key = paintera_project
         tmp_folder = 'tmp_export_%s' % name
+        seg_output_path = os.path.join(folder, 'images', 'local', name + '.n5')
+        resolution = read_resolution(paintera_path, paintera_key)
         export_segmentation(paintera_path, paintera_key, name,
-                            None, folder, storage_path, tmp_folder,
-                            postprocess, map_to_background, target, max_jobs)
+                            None, folder, seg_output_path, resolution,
+                            tmp_folder, postprocess, map_to_background,
+                            chunks, target, max_jobs)
 
         # call the table update function if given
         if table_update_function is not None:
@@ -93,7 +99,6 @@ def add_data(name, properties, folder, target, max_jobs):
             os.makedirs(out_table_folder, exist_ok=True)
 
             tmp_folder = 'tmp_table_%s' % name
-            resolution = read_resolution(paintera_path, paintera_key)
             tab_update(None, folder, name, tmp_folder, resolution,
                        target=target, max_jobs=max_jobs, seg_has_changed=False)
             properties.update({'TableFolder': out_table_folder})
@@ -101,7 +106,8 @@ def add_data(name, properties, folder, target, max_jobs):
         new_seg_dict = make_new_seg_dict(paintera_project,
                                          table_update_function,
                                          postprocess,
-                                         map_to_background)
+                                         map_to_background,
+                                         chunks)
         seg_dict_path = os.path.join(folder, 'misc', 'dynamic_segmentations.json')
         with open(seg_dict_path) as f:
             seg_dict = json.load(f)
@@ -161,15 +167,20 @@ def make_folder_structure(root):
     os.makedirs(os.path.join(root, 'misc'), exist_ok=True)
 
 
+def get_names(root, version):
+    image_dict = os.path.join(root, version, 'images', 'images.json')
+    with open(image_dict, 'r') as f:
+        image_dict = json.load(f)
+    names = list(image_dict.keys())
+    return names
+
+
 def get_modality_names(root, version):
     """ Get names of the current data modalities.
 
     See https://github.com/platybrowser/platybrowser-backend#file-naming
     for the source naming conventions.
     """
-    image_dict = os.path.join(root, version, 'images', 'images.json')
-    with open(image_dict, 'r') as f:
-        image_dict = json.load(f)
-    names = list(image_dict.keys())
+    names = get_names(root, version)
     names = set('-'.join(name.split('-')[:4]) for name in names)
     return list(names)

@@ -1,0 +1,12 @@
+{"prospr-6dpf-1-whole-ache2": {"Type": "Image", "Color": "White", "MaxValue": 255, "MinValue": 0,
+                               "InputPath": "/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.6/images/local/prospr-6dpf-1-whole-ache.xml"},
+ "sbem-6dpf-1-whole-segmented-outside2": {"Type": "Mask", "Color": "White", "MaxValue": 1000, "MinValue": 0,
+                                          "InputPath": "/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-segmented-outside.xml"},
+ "sbem-6dpf-1-whole-segmented-regions2": {"Type": "Segmentation", "ColorMap": "Glasbey", "MaxValue": 1000, "MinValue": 0,
+                                          "InputPath": "/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-segmented-tissue.xml",
+                                          "InputTableFolder": "/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/tables/sbem-6dpf-1-whole-segmented-tissue"},
+ "sbem-6dpf-1-whole-segmented-nuclei2": {"Type": "Segmentation", "ColorMap": "Glasbey", "MaxValue": 1000, "MinValue": 0,
+                                         "PainteraProject": ["/g/kreshuk/data/arendt/platyneris_v1/data.n5",
+                                                             "volumes/paintera/nuclei"],
+                                         "TableUpdateFunction": "make_nuclei_tables"}
+}
