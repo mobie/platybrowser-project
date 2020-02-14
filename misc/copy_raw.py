@@ -79,11 +79,13 @@ def downsacle_raw(target, max_jobs):
     with open(os.path.join(config_dir, 'downscaling.config'), 'w') as f:
         json.dump(task_conf, f)
 
+    metadata = {'resolution': [0.025, 0.01, 0.01], 'unit': 'micrometer'}
     t = task(tmp_folder=tmp_folder, config_dir=config_dir,
              max_jobs=max_jobs, target=target,
              input_path=path, input_key=in_key,
              output_path=path, scale_factors=scale_factors,
-             halos=halos, metadata_format='bdv.n5')
+             halos=halos, metadata_format='bdv.n5',
+             metadata_dictt=metadata)
     ret = luigi.build([t], local_scheduler=True)
     assert ret
 
