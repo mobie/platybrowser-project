@@ -41,7 +41,6 @@ def update_segmentation(name, properties, update_config,
     paintera_root, paintera_key = update_config['PainteraProject']
     pp_config = update_config.get('Postprocess', None)
     map_to_background = update_config.get('MapToBackground', None)
-    # TODO store the chunk information in the dynamic seg dict for all current segmentations
     chunks = update_config.get('Chunks', None)
 
     # make the output path
