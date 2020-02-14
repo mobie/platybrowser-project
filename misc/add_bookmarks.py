@@ -111,7 +111,9 @@ def add_fig5_bookmarks():
     version = '0.6.6'
     name = "Figure 5C: Gene clustering full body"
     layers = {"sbem-6dpf-1-whole-raw": {},
-              "sbem-6dpf-1-whole-segmented-cells": {"Tables": {"gene_clusters": ["clusters", "glasbey"]}}}
+              "sbem-6dpf-1-whole-segmented-cells": {"Tables": ["gene_clusters"],
+                                                    "ColorByColumn": "clusters",
+                                                    "ColorMap": "Glasbey"}}
     position = [34.3200812765686, 282.12761791060416, 105.03347558347836]
     view = [-0.9529921731518778,
             1.1849892416847392,
@@ -135,8 +137,6 @@ def add_fig6_bookmarks():
               "prospr-6dpf-1-whole-msx": {"Color": "Green"},
               "prospr-6dpf-1-whole-patched": {"Color": "Blue"},
               "sbem-6dpf-1-whole-segmented-cells": {
-                "MaxValue": 1000,
-                "MinValue": 0,
                 "SelectedLabelIds": [
                   32095,
                   31961
@@ -164,8 +164,6 @@ def add_fig6_bookmarks():
               "prospr-6dpf-1-whole-lhx6": {"Color": "Green"},
               "prospr-6dpf-1-whole-wnt5": {"Color": "Blue"},
               "sbem-6dpf-1-whole-segmented-cells": {
-                "MaxValue": 1000,
-                "MinValue": 0,
                 "SelectedLabelIds": [
                   6766,
                   6913
@@ -193,7 +191,7 @@ def add_fig6_bookmarks():
               "sbem-6dpf-1-whole-segmented-outside": {},
               "sbem-6dpf-1-whole-segmented-cells": {
                 "Tables": {
-                  "vc_assignments": ["expression_sum", "glasbey"]
+                  "vc_assignments": ["expression_sum", "Glasbey"]
                 }}}
     position = [151.49356333542673,
                 142.11330737746303,
@@ -215,10 +213,9 @@ def add_fig6_bookmarks():
     name = "Symmetric cell pairs"
     layers = {"sbem-6dpf-1-whole-raw": {},
               "sbem-6dpf-1-whole-segmented-outside": {},
-              "sbem-6dpf-1-whole-segmented-cells": {
-                "Tables": {
-                    "symmetric_cells": ["pair_index", "glasbey"]
-                }}}
+              "sbem-6dpf-1-whole-segmented-cells": {"ColorMap": "Glasbey",
+                                                    "ColorByColumn": "pair_index",
+                                                    "Tables": ["symmetric_cells"]}}
     position = [151.49356333542673,
                 142.11330737746303,
                 124.51951538415905]
@@ -241,6 +238,6 @@ if __name__ == '__main__':
     # name = 'Figure 2C: Muscle segmentation'
     # check_bookmark(ROOT, '0.6.6', name, 1)
 
-    add_fig2_bookmarks()
-    # add_fig5_bookmarks()
-    # add_fig6_bookmarks()
+    # add_fig2_bookmarks()
+    add_fig5_bookmarks()
+    add_fig6_bookmarks()

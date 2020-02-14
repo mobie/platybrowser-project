@@ -9,38 +9,36 @@ from elf.wrapper.affine_volume import AffineVolume
 from pybdv.metadata import get_resolution, get_data_path
 from pybdv.util import get_key
 
-LAYER_KEYS = {'Color', 'MinValue', 'MaxValue',
+LAYER_KEYS = {'Color', 'ColorMap', 'MinValue', 'MaxValue',
               'SelectedLabelIds', 'ShowImageIn3d', 'ShowSelectedSegmentsIn3d',
-              'Tables'}
+              'Tables', 'ColorByColumn'}
 # TODO add all color maps supported by platybrowser
 COLORMAPS = {'Glasbey', 'Viridis'}
 
 
-def validate_tables(table_dict, table_folder):
-    n_color_by = 0
-    for table_name, table_values in table_dict.items():
-        table_file = os.path.join(table_folder, table_name)
-        if not os.path.exists(table_file):
-            return False
-        if table_values:
-            if not len(table_values) == 2:
-                return False
-            table = pd.from_csv(table_file, sep='\t')
-            col, cmap = table_values
+def validate_tables(tables, table_folder, color_col=None):
+    has_col = False
 
-            if col not in table.comlumns:
-                return False
+    # need also check for the column id in the default table
+    if color_col is not None and 'default' not in tables:
+        tables.append('default')
 
-            if cmap not in COLORMAPS:
-                return False
+    for table_name in tables:
 
-            n_color_by += 1
+        table_file = os.path.join(table_folder, table_name + '.csv')
+        assert os.path.exists(table_file), "Can't find table %s" % table_file
 
-    # can color by maximally 1 column
-    if n_color_by > 1:
-        return False
+        if color_col is not None:
+            table = pd.read_csv(table_file, sep='\t')
+            if color_col in table.columns:
+                has_col = True
 
-    return True
+    if color_col is not None:
+        assert has_col, "Can't find color by column %s" % color_col
+
+    # default table is implicit and we don't store it here
+    if 'default' in tables:
+        tables.remove('default')
 
 
 def validate_layer(folder, name, layer):
@@ -49,31 +47,29 @@ def validate_layer(folder, name, layer):
     with open(image_dict) as f:
         image_dict = json.load(f)
 
-    if name not in image_dict:
-        return False
-
-    if not isinstance(layer, dict):
-        return False
+    assert isinstance(layer, dict), "Invalid layer type %s" % type(layer)
+    assert name in image_dict, "Invalid layer name %s" % name
 
     keys = set(layer.keys())
-    if len(keys - LAYER_KEYS) > 0:
-        return False
+    assert len(keys - LAYER_KEYS) == 0, "Invalid layer fields %s" % str(keys)
 
     if 'ShowImageIn3d' in keys:
         show_in_3d = layer["ShowImageIn3d"]
-        if not isinstance(show_in_3d, bool):
-            return False
+        assert isinstance(show_in_3d, bool)
 
     if 'ShowSelectedSegmentsIn3d' in keys:
         show_in_3d = layer["ShowSelectedSegmentsIn3d"]
-        if not isinstance(show_in_3d, bool):
-            return False
+        assert isinstance(show_in_3d, bool)
+
+    if 'ColorByColumn' in keys:
+        assert "Tables" in keys
+        color_col = layer['ColorByColumn']
+    else:
+        color_col = None
 
     if 'Tables' in keys:
         table_folder = os.path.join(folder, image_dict[name]['TableFolder'])
-        return validate_tables(layer['Tables'], table_folder)
-
-    return True
+        validate_tables(layer['Tables'], table_folder, color_col)
 
 
 # arguments are capitalized to be consistent with the keys in bookmarks dict
@@ -88,7 +84,8 @@ def make_bookmark(folder, Position=None, Layers=None, View=None):
     # validate and add Layers if given
     if Layers is not None:
         assert isinstance(Layers, dict), type(Layers)
-        assert all(validate_layer(folder, name, layer) for name, layer in Layers.items())
+        for name, layer in Layers.items():
+            validate_layer(folder, name, layer)
         bookmark.update({'Layers': Layers})
 
     # validate and add the View if given
