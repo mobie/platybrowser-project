@@ -5,8 +5,11 @@ import json
 import argparse
 from subprocess import check_output
 
-from mmpb.files import copy_release_folder, make_folder_structure, make_bdv_server_file
-from mmpb.release_helper import add_data, check_inputs, add_version
+from mmpb.bookmarks import update_bookmarks
+from mmpb.files import copy_and_check_image_dict, copy_release_folder
+from mmpb.release_helper import add_data, add_version, get_modality_names, get_names, make_folder_structure
+
+RAW_FOLDER = 'data'
 
 
 def get_tags():
@@ -18,19 +21,18 @@ def get_tags():
     return tag, new_tag
 
 
-def update_minor(new_data, target='slurm', max_jobs=250):
+def update_minor(new_data, bookmarks=None, target='slurm', max_jobs=250):
     """ Update minor version of platy browser.
 
     The minor version is increased if new derived data is added.
 
     Arguments:
-        new_data [list] - list of new data to add. For details, see
-            https://git.embl.de/tischer/platy-browser-tables#usage.
+        new_data [dict] - dictionary of new data to be added.
+            For details, see https://github.com/platybrowser/platybrowser-backend#table-storage.
+        bookmarks [dict] - bookmarks to be added (default: None)
         target [str] - target for the computation ('local' or 'slurm', default is 'slurm').
         max_jobs [int] - maximal number of jobs used for computation (default: 250).
     """
-    check_inputs(new_data)
-
     # increase the minor (middle digit) release tag
     tag, new_tag = get_tags()
     print("Updating platy browser from", tag, "to", new_tag)
@@ -43,17 +45,27 @@ def update_minor(new_data, target='slurm', max_jobs=250):
     # copy the release folder
     copy_release_folder(folder, new_folder)
 
-    # add the new data
-    for data in new_data:
-        add_data(data, new_folder, target, max_jobs)
+    # copy image dict and check that all image and table files are there
+    copy_and_check_image_dict(folder, new_folder)
 
-    # make bdv file
-    make_bdv_server_file(new_folder, os.path.join(new_folder, 'misc', 'bdv_server.txt'),
-                         relative_paths=True)
+    # updated bookmarks if given
+    if bookmarks is not None:
+        update_bookmarks(new_folder, bookmarks)
+
+    # validate add the new data
+    names = get_names('data', tag)
+    modality_names = get_modality_names('data', tag)
+    for name, properties in new_data.items():
+        # validate that the name is in the existing modalities
+        modality = '-'.join(name.split('-')[:4])
+        if modality not in modality_names:
+            raise ValueError("Unknown modality: %s" % modality)
+        if name in names:
+            raise ValueError("Name %s already exists" % name)
+        add_data(name, properties, new_folder, target, max_jobs)
+
     add_version(new_tag)
-
-    # TODO auto-release
-    # TODO clean up
+    print("Updated platybrowser to new release", new_tag)
 
 
 if __name__ == '__main__':
@@ -65,7 +77,9 @@ if __name__ == '__main__':
     parser.add_argument('--max_jobs', type=int, default=250,
                         help="Maximal number of jobs used for computation")
     args = parser.parse_args()
+
     input_path = args.input_path
     with open(input_path) as f:
-        new_data_list = json.load(f)
-    update_minor(new_data_list, target=args.target, max_jobs=args.max_jobs)
+        new_data = json.load(f)
+    bookmarks = new_data.pop('bookmarks', None)
+    update_minor(new_data, bookmarks, target=args.target, max_jobs=args.max_jobs)

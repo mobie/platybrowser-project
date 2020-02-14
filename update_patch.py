@@ -41,17 +41,18 @@ def update_segmentation(name, properties, update_config,
     paintera_root, paintera_key = update_config['PainteraProject']
     pp_config = update_config.get('Postprocess', None)
     map_to_background = update_config.get('MapToBackground', None)
+    # TODO store the chunk information in the dynamic seg dict for all current segmentations
+    chunks = update_config.get('Chunks', None)
 
     # make the output path
     storage = properties['Storage']
     out_path = os.path.join(new_folder, 'images', storage['local'])
 
-    # FIXME this is currently not working and needs to be adapted to new storage layout
-    # (especially to n5 output data)
+    resolution = read_resolution(paintera_root, paintera_key, to_um=True)
     export_segmentation(paintera_root, paintera_key, name,
-                        folder, new_folder, out_path, tmp_folder,
+                        folder, new_folder, out_path, tmp_folder, resolution,
                         pp_config=pp_config, map_to_background=map_to_background,
-                        target=target, max_jobs=max_jobs)
+                        chunks=chunks, target=target, max_jobs=max_jobs)
     # TODO
     # make the s3 xml if we have remote storage
     if 'remote' in storage:
