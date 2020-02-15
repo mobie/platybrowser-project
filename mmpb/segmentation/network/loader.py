@@ -35,7 +35,7 @@ class PlatynerisDataset(ZipReject):
                                                       **segmentation_volume_kwargs)
 
         rejection_threshold = volume_config.get('rejection_threshold', 0.1)
-        print("reject at", rejection_threshold)
+        # print("reject at", rejection_threshold)
         # Initialize zipreject
         rejecter = RejectNonZeroThreshold(rejection_threshold)
         super(PlatynerisDataset, self).__init__(self.raw_volume,

@@ -1,6 +1,7 @@
 # Specify the names of the datasets
 dataset_names:
-  - '9'
+  - '2'
+  - '4'
 
 # Specify how the data needs to be sliced before feeding to the network.
 # We use a 3D sliding window over the dataset to extract patches, which
@@ -8,34 +9,36 @@ dataset_names:
 slicing_config:
   # Sliding window size
   window_size:
-    '9': [64, 256, 256]
+    [48, 320, 320]
   # Sliding window stride
   stride:
-    '9': [4, 64, 64]
-  # Data slice to iterate over.
+    [4, 32, 32]
   data_slice:
-    '9': ':, 600:, :'
+    "16:-16,32:-32,32:-32"
     
 # Specify paths to volumes
 volume_config:
   # Raw data
   raw:
     path:
-      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_09.n5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_02.h5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_04.h5'
     path_in_file:
-      '9': 'volumes/raw/s1'
+      '2': 'volumes/raw'
+      '4': 'volumes/raw'
     dtype: float32
     sigma: 0.05
-    # if we train with fixed mean and std values:
-    # mean: 156.26283131599428
-    # std: 35.91740546904814
   # Segmentation
   segmentation:
     path:
-      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_09.n5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_02.h5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_04.h5'
     path_in_file:
-      '9': 'volumes/labels/segmentation/s1'
-    dtype: int64
+      '2': 'volumes/labels/nucleus_binary_labels'
+      '4': 'volumes/labels/nucleus_binary_labels'
+    dtype: float32
+    label_volume: False
+  rejection_value: -1
 
 
 # Configuration for the master dataset.
@@ -45,12 +48,6 @@ master_config:
     alpha: 2000.
     sigma: 50.
     order: 0
-  # For now, don't crop after target, invalid affinities are masked anyways
-  # we crop to get rid of the elastic augment reflection padding
-  # and the invalid affinities (that's why we have additional lower z crop)
-  # crop_after_target:
-  #   crop_left: [4, 27, 27]
-  #   crop_right: [0, 27, 27]
 
 
 # Specify configuration for the loader

@@ -1,0 +1,113 @@
+# Specify the names of the datasets
+dataset_names:
+  - '1'
+  # - '2'  used for validation
+  - '3'
+  # - '4'  used for validation
+  # - '5'  something with 5 is off
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '10'
+  - '11'
+  - '12'
+
+# Specify how the data needs to be sliced before feeding to the network.
+# We use a 3D sliding window over the dataset to extract patches, which
+# are then fed to the network as batches.
+slicing_config:
+  # Sliding window size
+  window_size:
+    [48, 256, 256]
+  # Sliding window stride
+  stride:
+    [4, 64, 64]
+  # add data-slice to check if masking is the problem
+  # data_slice:
+  #   "16:-16,32:-32,32:-32"
+    
+# Specify paths to volumes
+volume_config:
+  # Raw data
+  raw:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_01.h5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_02.h5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_03.h5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_04.h5'
+      '5': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_05.h5'
+      '6': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_06.h5'
+      '7': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_07.h5'
+      '8': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_08.h5'
+      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_09.h5'
+      '10': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_10.h5'
+      '11': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_11.h5'
+      '12': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_12.h5'
+    path_in_file:
+      '1': 'volumes/raw'
+      '2': 'volumes/raw'
+      '3': 'volumes/raw'
+      '4': 'volumes/raw'
+      '5': 'volumes/raw'
+      '6': 'volumes/raw'
+      '7': 'volumes/raw'
+      '8': 'volumes/raw'
+      '9': 'volumes/raw'
+      '10': 'volumes/raw'
+      '11': 'volumes/raw'
+      '12': 'volumes/raw'
+    dtype: float32
+    sigma: 0.05
+  # Segmentation
+  segmentation:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_01.h5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_02.h5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_03.h5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_04.h5'
+      '5': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_05.h5'
+      '6': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_06.h5'
+      '7': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_07.h5'
+      '8': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_08.h5'
+      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_09.h5'
+      '10': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_10.h5'
+      '11': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_11.h5'
+      '12': '/g/kreshuk/data/arendt/platyneris_v1/training_data/nuclei/train_data_nuclei_12.h5'
+    path_in_file:
+      '1': 'volumes/labels/nucleus_binary_labels'
+      '2': 'volumes/labels/nucleus_binary_labels'
+      '3': 'volumes/labels/nucleus_binary_labels'
+      '4': 'volumes/labels/nucleus_binary_labels'
+      '5': 'volumes/labels/nucleus_binary_labels'
+      '6': 'volumes/labels/nucleus_binary_labels'
+      '7': 'volumes/labels/nucleus_binary_labels'
+      '8': 'volumes/labels/nucleus_binary_labels'
+      '9': 'volumes/labels/nucleus_binary_labels'
+      '10': 'volumes/labels/nucleus_binary_labels'
+      '11': 'volumes/labels/nucleus_binary_labels'
+      '12': 'volumes/labels/nucleus_binary_labels'
+    dtype: float32
+    label_volume: False
+  rejection_value: -1
+
+
+# Configuration for the master dataset.
+master_config:
+  # We might need order 0 interpolation if we have segmentation in there somewhere.
+  elastic_transform:
+    alpha: 2000.
+    sigma: 50.
+    order: 0
+
+
+# Specify configuration for the loader
+loader_config:
+  # Number of processes to use for loading data. Set to (say) 10 if you wish to
+  # use 10 CPU cores, or to 0 if you wish to use the same process for training and
+  # data-loading (generally not recommended).
+  batch_size: 1
+  num_workers: 5
+  drop_last: True
+  pin_memory: False
+  shuffle: True

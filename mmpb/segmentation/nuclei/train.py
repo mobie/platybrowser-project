@@ -21,9 +21,8 @@ from neurofire.criteria.loss_transforms import (ApplyAndRemoveMask,
                                                 RemoveSegmentationFromTarget)
 from neurofire.metrics.arand import ArandErrorFromMWS
 
-# TODO use implementations from this repo
-import mu_net.models.unet as models
-from mu_net.datasets import get_platyneris_loader
+import mmpb.segmentation.network.models as models
+from mmpb.segmentation.network.loader import get_platyneris_loaders
 
 
 logging.basicConfig(format='[+][%(asctime)-15s][%(name)s %(levelname)s]'
@@ -106,7 +105,8 @@ def training(project_directory,
              validation_configuration_file,
              max_training_iters=int(1e5),
              from_checkpoint=False,
-             load_pretrained_model=False):
+             load_pretrained_model=False,
+             mixed_precision=False):
 
     assert not (from_checkpoint and load_pretrained_model)
 
@@ -114,10 +114,10 @@ def training(project_directory,
     config = yaml2dict(train_configuration_file)
 
     logger.info("Loading training data loader from %s." % data_configuration_file)
-    train_loader = get_platyneris_loader(data_configuration_file)
+    train_loader = get_platyneris_loaders(data_configuration_file)
 
     logger.info("Loading validation data loader from %s." % validation_configuration_file)
-    validation_loader = get_platyneris_loader(validation_configuration_file)
+    validation_loader = get_platyneris_loaders(validation_configuration_file)
 
     # load network and training progress from checkpoint
     if from_checkpoint:
@@ -139,6 +139,11 @@ def training(project_directory,
     if config.get('devices'):
         logger.info("Using devices {}".format(config.get('devices')))
         trainer.cuda(config.get('devices'))
+
+    # Set mixed precision
+    if mixed_precision:
+        logger.info("Training with mixed precision")
+    trainer.mixed_precision = mixed_precision
 
     # Go!
     logger.info("Lift off!")
@@ -211,11 +216,11 @@ def get_offsets():
             [-16, 0, 0], [0, -16, 0], [0, 0, -16]]
 
 
-def main():
+def main(template_config):
     parser = argparse.ArgumentParser()
     parser.add_argument('project_directory', type=str)
-    parser.add_argument('template_config', type=str)
     parser.add_argument('--gpus', nargs='+', default=[0], type=int)
+    parser.add_argument('--mixed_precision', type=int, default=0)
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
     parser.add_argument('--load_network', type=int, default=0)
@@ -223,7 +228,6 @@ def main():
     args = parser.parse_args()
 
     project_directory = args.project_directory
-    template_config = args.template_config
     os.makedirs(project_directory, exist_ok=True)
 
     gpus = list(args.gpus)
@@ -252,4 +256,5 @@ def main():
              validation_config,
              max_training_iters=args.max_train_iters,
              from_checkpoint=bool(args.from_checkpoint),
-             load_pretrained_model=bool(args.load_network))
+             load_pretrained_model=bool(args.load_network),
+             mixed_precision=bool(args.mixed_precision))

@@ -95,7 +95,7 @@ volume_config:
       '7': 'volumes/labels/segmentation/s1'
       '8': 'volumes/labels/segmentation/s1'
       '9': 'volumes/labels/segmentation/s1'
-    dtype: float32
+    dtype: int64
 
 
 # Configuration for the master dataset.

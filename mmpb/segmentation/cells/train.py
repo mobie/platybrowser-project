@@ -8,7 +8,7 @@ from inferno.trainers.basic import Trainer
 from inferno.trainers.callbacks.logging.tensorboard import TensorboardLogger
 from inferno.trainers.callbacks.scheduling import AutoLR
 from inferno.utils.io_utils import yaml2dict
-from inferno.trainers.callbacks.essentials import SaveAtBestValidationScore
+from inferno.trainers.callbacks.essentials import SaveAtBestValidationScore, GarbageCollection
 from inferno.io.transform.base import Compose
 from inferno.extensions.criteria import SorensenDiceLoss
 
@@ -70,7 +70,8 @@ def set_up_training(project_directory,
                                   patience='100 iterations',
                                   monitor_while='validating',
                                   monitor_momentum=smoothness,
-                                  consider_improvement_with_respect_to='previous'))
+                                  consider_improvement_with_respect_to='previous'))\
+        .register_callback(GarbageCollection())
 
     logger.info("Building logger.")
     # Build logger
@@ -98,7 +99,8 @@ def training(project_directory,
              validation_configuration_file,
              max_training_iters=int(1e5),
              from_checkpoint=False,
-             load_pretrained_model=False):
+             load_pretrained_model=False,
+             mixed_precision=False):
 
     assert not (from_checkpoint and load_pretrained_model)
 
@@ -120,7 +122,6 @@ def training(project_directory,
                                   config,
                                   data_config,
                                   load_pretrained_model)
-
     trainer.set_max_num_iterations(max_training_iters)
 
     # Bind loader
@@ -131,6 +132,11 @@ def training(project_directory,
     if config.get('devices'):
         logger.info("Using devices {}".format(config.get('devices')))
         trainer.cuda(config.get('devices'))
+
+    # Set mixed precision
+    if mixed_precision:
+        logger.info("Training with mixed precision")
+    trainer.mixed_precision = mixed_precision
 
     # Go!
     logger.info("Lift off!")
@@ -179,6 +185,7 @@ def main(template_config):
     parser = argparse.ArgumentParser()
     parser.add_argument('project_directory', type=str)
     parser.add_argument('--gpus', nargs='+', default=[0], type=int)
+    parser.add_argument('--mixed_precision', type=int, default=0)
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
     parser.add_argument('--load_network', type=int, default=0)
@@ -214,4 +221,5 @@ def main(template_config):
              validation_config,
              max_training_iters=args.max_train_iters,
              from_checkpoint=bool(args.from_checkpoint),
-             load_pretrained_model=bool(args.load_network))
+             load_pretrained_model=bool(args.load_network),
+             mixed_precision=bool(args.mixed_precision))
