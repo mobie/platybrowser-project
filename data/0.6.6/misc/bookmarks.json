@@ -317,7 +317,7 @@
       451.14359129392136
     ]
   },
-  "Figure 6F: Level of gene expression after VC assignment": {
+  "Figure 6F: Level of gene expression after virtual cell assignment": {
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
