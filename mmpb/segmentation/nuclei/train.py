@@ -10,7 +10,7 @@ from inferno.trainers.basic import Trainer
 from inferno.trainers.callbacks.logging.tensorboard import TensorboardLogger
 from inferno.trainers.callbacks.scheduling import AutoLR
 from inferno.utils.io_utils import yaml2dict
-from inferno.trainers.callbacks.essentials import SaveAtBestValidationScore
+from inferno.trainers.callbacks.essentials import SaveAtBestValidationScore, GarbageCollection
 from inferno.io.transform.base import Compose
 from inferno.extensions.criteria import SorensenDiceLoss
 
@@ -78,6 +78,7 @@ def set_up_training(project_directory,
                                   monitor_while='validating',
                                   monitor_momentum=smoothness,
                                   consider_improvement_with_respect_to='previous'))\
+        .register_callback(GarbageCollection())
 
     logger.info("Building logger.")
     # Build logger
