@@ -34,6 +34,21 @@ class TestIdPropagation(unittest.TestCase):
         self.assertEqual(len(expected_ids), len(mapped_ids))
         self.assertEqual(set(expected_ids), set(mapped_ids))
 
+    # test propagation between a single version: 0.6.4 -> 0.6.5
+    def test_v64_to_v65(self):
+        from mmpb.util import propagate_ids
+        # TODO get some id pairs from platy browser
+        old_ids = []
+        expected_ids = []
+
+        old_version = '0.6.4'
+        new_version = '0.6.5'
+        name = 'sbem-6dpf-1-whole-segmented-cells'
+        mapped_ids = propagate_ids(self.root, old_version, new_version,
+                                   name, old_ids)
+        self.assertEqual(len(expected_ids), len(mapped_ids))
+        self.assertEqual(set(expected_ids), set(mapped_ids))
+
 
 if __name__ == '__main__':
     unittest.main()

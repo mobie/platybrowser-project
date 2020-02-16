@@ -11,6 +11,7 @@ from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.morphology import RegionCentersWorkflow
 from .util import write_csv
 from ..default_config import write_default_global_config
+from ..util import is_h5_file
 
 
 def n5_attributes(input_path, input_key, tmp_folder, target, max_jobs):
@@ -48,7 +49,7 @@ def run_correction(input_path, input_key,
     # (corresponds to scale 4 in sbem)
     max_dim_size = 1750
     scale_key = input_key
-    is_h5 = os.path.splitext(input_path)[1].lower() in ('.h5', '.hdf5')
+    is_h5 = is_h5_file(input_path)
     with open_file(input_path, 'r') as f:
         while True:
             shape = f[scale_key].shape

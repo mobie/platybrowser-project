@@ -13,6 +13,10 @@ def add_max_id(path, key, max_id=None):
         ds.attrs['maxId'] = max_id
 
 
+def is_h5_file(path):
+    return os.path.splitext(path)[1].lower() in ('.h5', '.hdf5', '.hdf')
+
+
 def read_resolution(paintera_path, paintera_key, to_um=True):
     with open_file(paintera_path, 'r') as f:
         g = f[paintera_key]

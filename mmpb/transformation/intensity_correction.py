@@ -8,6 +8,7 @@ from pybdv.util import get_key
 from cluster_tools.transformations import LinearTransformationWorkflow
 from cluster_tools.downscaling import DownscalingWorkflow
 from ..default_config import write_default_global_config
+from ..util import is_h5_file
 
 
 def csv_to_json(trafo_path):
@@ -31,7 +32,7 @@ def validate_trafo(trafo_path, in_path, in_key):
 
 def downsample(ref_path, in_path, in_key, out_path, resolution,
                tmp_folder, target, max_jobs):
-    ref_is_h5 = os.path.splitext(ref_path)[1].lower() in ('hdf5', 'h5')
+    ref_is_h5 = is_h5_file(ref_path)
     gkey = get_key(ref_is_h5, 0, 0)
     with open_file(ref_path, 'r') as f:
         g = f[gkey]
@@ -84,8 +85,8 @@ def intensity_correction(in_path, out_path, mask_path, mask_key,
     elif trafo_ext != '.json':
         raise ValueError("Expect trafo as json.")
 
-    in_is_h5 = os.path.splitext(in_path)[1].lower() in ('.h5', '.hdf5')
-    out_is_h5 = os.path.splitext(in_path)[1].lower() in ('.h5', '.hdf5')
+    in_is_h5 = is_h5_file(in_path)
+    out_is_h5 = is_h5_file(out_path)
 
     key = get_key(in_is_h5, 0, 0, 0)
     out_key = get_key(out_is_h5, 0, 0, 0)
