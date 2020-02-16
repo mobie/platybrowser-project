@@ -95,15 +95,10 @@ def export_segmentation(paintera_path, paintera_key, name,
         max_jobs: maximal number of jobs used for computation (default: 200)
     """
 
-    # TODO need to implement different output chunk size for label multiset!
     with z5py.File(paintera_path, 'r') as f:
         ds = f[os.path.join(paintera_key, 'data', 's0')]
-        is_label_multiset = ds.attrs.get("isLabelMultiset", False)
         if chunks is None:
             chunks = ds.chunks
-        elif chunks is not None and is_label_multiset:
-            raise NotImplementedError("""Chunk size different from the dataset
-                                         chunks is not implemented for label multiset data""")
 
     # set correct shebang and block shape for paintera tools
     set_ptools_shebang(get_default_shebang())
