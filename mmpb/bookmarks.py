@@ -9,11 +9,7 @@ from elf.wrapper.affine_volume import AffineVolume
 from pybdv.metadata import get_resolution, get_data_path
 from pybdv.util import get_key
 
-LAYER_KEYS = {'Color', 'ColorMap', 'MinValue', 'MaxValue',
-              'SelectedLabelIds', 'ShowImageIn3d', 'ShowSelectedSegmentsIn3d',
-              'Tables', 'ColorByColumn'}
-# TODO add all color maps supported by platybrowser
-COLORMAPS = {'Glasbey', 'Viridis'}
+from .format_validation import BOOKMARK_DICT_KEY
 
 
 def validate_tables(tables, table_folder, color_col=None):
@@ -51,7 +47,8 @@ def validate_layer(folder, name, layer):
     assert name in image_dict, "Invalid layer name %s" % name
 
     keys = set(layer.keys())
-    assert len(keys - LAYER_KEYS) == 0, "Invalid layer fields %s" % str(keys)
+    intersection = keys - BOOKMARK_DICT_KEY
+    assert len(intersection) == 0, "Invalid layer fields %s" % str(intersection)
 
     if 'ShowImageIn3d' in keys:
         show_in_3d = layer["ShowImageIn3d"]

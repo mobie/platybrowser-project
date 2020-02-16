@@ -11,6 +11,7 @@ from pybdv.util import get_key, get_number_of_scales, get_scale_factors
 
 from .xml_utils import copy_xml_with_newpath
 from ..attributes.base_attributes import write_additional_table_file
+from ..format_validation import IMAGE_DICT_KEYS
 
 
 def make_squashed_link(src_file, dst_file, override=False):
@@ -235,6 +236,11 @@ def copy_and_check_image_dict(folder, new_folder):
         image_dict = json.load(f)
 
     for name, properties in image_dict.items():
+
+        intersection = set(properties.keys()) - IMAGE_DICT_KEYS
+        if len(intersection) > 0:
+            raise RuntimeError("Validating image dict: invalid keys %s" % str(intersection))
+
         storage = properties['Storage']
         # validate local xml location
         xml = storage['local']
