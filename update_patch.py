@@ -4,21 +4,20 @@ import os
 import json
 import argparse
 from copy import deepcopy
-from subprocess import check_output
 
 import mmpb.attributes
 from mmpb.bookmarks import update_bookmarks
 from mmpb.export import export_segmentation
 from mmpb.files import (copy_and_check_image_dict, copy_image_data,
                         copy_misc_data, copy_segmentation, copy_tables)
-from mmpb.release_helper import add_version, make_folder_structure
+from mmpb.release_helper import add_version, get_version, make_folder_structure
 from mmpb.util import read_resolution
 
 
 # we could also read the tags from data/versions.json
 # would be best to do both and check that they are consistent
 def get_tags():
-    tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
+    tag = get_version()
     new_tag = tag.split('.')
     new_tag[-1] = str(int(new_tag[-1]) + 1)
     new_tag = '.'.join(new_tag)
@@ -49,7 +48,7 @@ def update_segmentation(name, properties, update_config,
 
     resolution = read_resolution(paintera_root, paintera_key, to_um=True)
     export_segmentation(paintera_root, paintera_key, name,
-                        folder, new_folder, out_path, tmp_folder, resolution,
+                        folder, new_folder, out_path, resolution, tmp_folder,
                         pp_config=pp_config, map_to_background=map_to_background,
                         chunks=chunks, target=target, max_jobs=max_jobs)
     # TODO

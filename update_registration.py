@@ -3,7 +3,6 @@
 import os
 import json
 import argparse
-from subprocess import check_output
 from concurrent import futures
 
 import imageio
@@ -14,7 +13,7 @@ from pybdv import make_bdv
 
 from mmpb.files import copy_release_folder, make_folder_structure, make_bdv_server_file, get_source_names
 from mmpb.files.xml_utils import get_h5_path_from_xml, write_simple_xml
-from mmpb.release_helper import add_version
+from mmpb.release_helper import add_version, get_version
 from mmpb.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
 from mmpb.default_config import get_default_shebang
 from mmpb.attributes.base_attributes import base_attributes
@@ -35,7 +34,7 @@ REGION_NAMES = ('AllGlands',
 
 
 def get_tags(new_tag):
-    tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
+    tag = get_version()
     if new_tag is None:
         new_tag = tag.split('.')
         new_tag[-1] = str(int(new_tag[-1]) + 1)
