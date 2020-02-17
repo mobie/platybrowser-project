@@ -52,6 +52,7 @@ class TestIdPropagation(unittest.TestCase):
         name = 'sbem-6dpf-1-whole-segmented-cells'
         mapped_ids = propagate_ids(self.root, old_version, new_version,
                                    name, old_ids)
+        print(expected_ids, mapped_ids)
         self.assertEqual(len(expected_ids), len(mapped_ids))
         self.assertEqual(set(expected_ids), set(mapped_ids))
 

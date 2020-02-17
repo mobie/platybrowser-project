@@ -1,2 +1,2 @@
 from .export_segmentation import export_segmentation
-from .extract_neuron_traces import extract_neuron_traces
+from .export_neuron_traces import extract_neuron_traces_from_nmx, make_traces_table, traces_to_volume
