@@ -382,15 +382,15 @@ def unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, min
     assert ret, "Unmerge nuclei failed"
 
 
-def workflow(use_curated_affs, use_lmc, target):
+# TODO need to accept path + bounding box
+# TODO move insert affinities to it's own function
+def workflow(use_curated_affs, use_lmc, target, max_jobs):
     # number of jobs and threads for target
     assert target in ('slurm', 'local')
     if target == 'local':
-        max_jobs = 64
         max_jobs_mc = 1
         max_threads = 16
     else:
-        max_jobs = 400
         max_jobs_mc = 15
         max_threads = 8
 
@@ -426,11 +426,3 @@ def workflow(use_curated_affs, use_lmc, target):
         map_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, 'filtered_size')
         # 4.) unmerge cells with more than one assigned nucleus
         unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, size_threshold)
-
-
-if __name__ == '__main__':
-    use_curated_affs = True
-    use_lmc = False
-    target = 'slurm'
-    # target = 'local'
-    workflow(use_curated_affs, use_lmc, target)

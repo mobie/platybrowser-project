@@ -18,8 +18,8 @@ def prediction(input_path, input_key,
 
     halo = [(ib - ob) // 2 for ib, ob in zip(input_blocks, output_blocks)]
 
-    # TODO update shebang
-    shebang = "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/torch/bin/python"
+    # TODO get shebang from config
+    shebang = "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/platybrowser-train/bin/python"
     global_config = task.default_global_config()
     global_config.update({'shebang': shebang,
                           'block_shape': output_blocks,
