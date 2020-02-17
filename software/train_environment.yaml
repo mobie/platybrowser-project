@@ -1,0 +1,24 @@
+name:
+    platybrowser-train
+channels:
+    - pytorch
+    - cpape
+    - conda-forge
+dependencies:
+    - affogato>=0.2
+    - cluster_tools
+    - cudatoolkit=10.0  # change this to proper cuda version for your system
+    - elf
+    - h5py
+    - inferno>=v0.4.2
+    - luigi
+    # - neurofire  TODO add neurofire to conda-forge
+    - nifty
+    - pillow<7
+    - python=3.7
+    - pytorch>=1.0
+    - scikit-image
+    - scikit-learn
+    - torchvision
+    - vigra
+    - z5py

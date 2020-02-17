@@ -1,0 +1,65 @@
+# Specify the names of the datasets
+dataset_names:
+  - '9'
+
+# Specify how the data needs to be sliced before feeding to the network.
+# We use a 3D sliding window over the dataset to extract patches, which
+# are then fed to the network as batches.
+slicing_config:
+  # Sliding window size
+  window_size:
+    '9': [64, 256, 256]
+  # Sliding window stride
+  stride:
+    '9': [4, 64, 64]
+  # Data slice to iterate over.
+  data_slice:
+    '9': ':, 600:, :'
+    
+# Specify paths to volumes
+volume_config:
+  # Raw data
+  raw:
+    path:
+      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_09.n5'
+    path_in_file:
+      '9': 'volumes/raw/s1'
+    dtype: float32
+    sigma: 0.05
+    # if we train with fixed mean and std values:
+    # mean: 156.26283131599428
+    # std: 35.91740546904814
+  # Segmentation
+  segmentation:
+    path:
+      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_09.n5'
+    path_in_file:
+      '9': 'volumes/labels/segmentation/s1'
+    dtype: int64
+
+
+# Configuration for the master dataset.
+master_config:
+  # We might need order 0 interpolation if we have segmentation in there somewhere.
+  elastic_transform:
+    alpha: 2000.
+    sigma: 50.
+    order: 0
+  # For now, don't crop after target, invalid affinities are masked anyways
+  # we crop to get rid of the elastic augment reflection padding
+  # and the invalid affinities (that's why we have additional lower z crop)
+  # crop_after_target:
+  #   crop_left: [4, 27, 27]
+  #   crop_right: [0, 27, 27]
+
+
+# Specify configuration for the loader
+loader_config:
+  # Number of processes to use for loading data. Set to (say) 10 if you wish to
+  # use 10 CPU cores, or to 0 if you wish to use the same process for training and
+  # data-loading (generally not recommended).
+  batch_size: 1
+  num_workers: 1
+  drop_last: True
+  pin_memory: False
+  shuffle: True

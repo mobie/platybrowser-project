@@ -1,0 +1,62 @@
+dataset_names:
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+
+slicing_config:
+  window_size:
+    [32, 320, 320]
+  stride:
+    [8, 64, 64]
+
+
+volume_config:
+  raw:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_01.n5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_02.n5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_03.n5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_04.n5'
+      '5': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_05.n5'
+    path_in_file:
+      '1': 'volumes/raw'
+      '2': 'volumes/raw'
+      '3': 'volumes/raw'
+      '4': 'volumes/raw'
+      '5': 'volumes/raw'
+    dtype: float32
+    sigma: 0.05
+    zero_mean_unit_variance: True
+  segmentation:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_01.n5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_02.n5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_03.n5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_04.n5'
+      '5': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cuticle/train_data_05.n5'
+    path_in_file:
+      '1': 'volumes/labels/segmentation'
+      '2': 'volumes/labels/segmentation'
+      '3': 'volumes/labels/segmentation'
+      '4': 'volumes/labels/segmentation'
+      '5': 'volumes/labels/segmentation'
+    dtype: int64
+  rejection_value: -1
+  rejection_threshold: 0.05
+
+
+master_config:
+  elastic_transform:
+    alpha: 2000.
+    sigma: 50.
+    order: 0
+
+
+loader_config:
+  batch_size: 1
+  num_workers: 5
+  drop_last: True
+  pin_memory: False
+  shuffle: True

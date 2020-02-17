@@ -1,0 +1,51 @@
+dataset_names:
+  - '1'
+  - '2'
+  - '3'
+
+slicing_config:
+  window_size:
+    [32, 256, 256]
+  stride:
+    [4, 32, 32]
+    
+volume_config:
+  raw:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cilia/train_data_cilia_01.h5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cilia/train_data_cilia_02.h5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cilia/train_data_cilia_03.h5'
+    path_in_file:
+      '1': 'volumes/raw'
+      '2': 'volumes/raw'
+      '3': 'volumes/raw'
+    dtype: float32
+    sigma: 0.05
+  # Segmentation
+  segmentation:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cilia/train_data_cilia_01.h5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cilia/train_data_cilia_02.h5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/cilia/train_data_cilia_03.h5'
+    path_in_file:
+      '1': 'volumes/labels/segmentation'
+      '2': 'volumes/labels/segmentation'
+      '3': 'volumes/labels/segmentation'
+    dtype: int64
+  rejection_value: 0
+  rejection_threshold: 0.1
+
+
+master_config:
+  elastic_transform:
+    alpha: 2000.
+    sigma: 50.
+    order: 0
+
+
+loader_config:
+  batch_size: 1
+  num_workers: 5
+  drop_last: True
+  pin_memory: False
+  shuffle: True

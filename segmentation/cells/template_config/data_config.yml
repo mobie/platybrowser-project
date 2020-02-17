@@ -1,0 +1,125 @@
+# Specify the names of the datasets
+dataset_names:
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+
+# Specify how the data needs to be sliced before feeding to the network.
+# We use a 3D sliding window over the dataset to extract patches, which
+# are then fed to the network as batches.
+slicing_config:
+  # Sliding window size
+  window_size:
+    '1': [32, 256, 256]
+    '2': [32, 256, 256]
+    '3': [32, 256, 256]
+    '4': [32, 256, 256]
+    '5': [32, 256, 256]
+    '6': [32, 256, 256]
+    '7': [32, 256, 256]
+    '8': [32, 256, 256]
+    '9': [32, 256, 256]
+  # Sliding window stride
+  stride:
+    '1': [4, 64, 64]
+    '2': [4, 64, 64]
+    '3': [4, 64, 64]
+    '4': [4, 64, 64]
+    '5': [4, 64, 64]
+    '6': [4, 64, 64]
+    '7': [4, 64, 64]
+    '8': [4, 64, 64]
+    '9': [4, 64, 64]
+  # Data slice to iterate over.
+  data_slice:
+    '1': ':, :, :'
+    '2': ':, :, :'
+    '3': ':, :, :'
+    '4': ':, :, :'
+    '5': ':, :, :'
+    '6': ':, :, :'
+    '7': ':, :, :'
+    '8': ':, :, :'
+    '9': ':, :600, :'
+    
+# Specify paths to volumes
+volume_config:
+  # Raw data
+  raw:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_01.n5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_02.n5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_03.n5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_04.n5'
+      '5': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_05.n5'
+      '6': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_06.n5'
+      '7': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_07.n5'
+      '8': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_08.n5'
+      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_09.n5'
+    path_in_file:
+      '1': 'volumes/raw/s1'
+      '2': 'volumes/raw/s1'
+      '3': 'volumes/raw/s1'
+      '4': 'volumes/raw/s1'
+      '5': 'volumes/raw/s1'
+      '6': 'volumes/raw/s1'
+      '7': 'volumes/raw/s1'
+      '8': 'volumes/raw/s1'
+      '9': 'volumes/raw/s1'
+    dtype: float32
+    sigma: 0.05
+  # Segmentation
+  segmentation:
+    path:
+      '1': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_01.n5'
+      '2': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_02.n5'
+      '3': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_03.n5'
+      '4': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_04.n5'
+      '5': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_05.n5'
+      '6': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_06.n5'
+      '7': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_07.n5'
+      '8': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_08.n5'
+      '9': '/g/kreshuk/data/arendt/platyneris_v1/training_data/membrane/train_data_membrane_09.n5'
+    path_in_file:
+      '1': 'volumes/labels/segmentation/s1'
+      '2': 'volumes/labels/segmentation/s1'
+      '3': 'volumes/labels/segmentation/s1'
+      '4': 'volumes/labels/segmentation/s1'
+      '5': 'volumes/labels/segmentation/s1'
+      '6': 'volumes/labels/segmentation/s1'
+      '7': 'volumes/labels/segmentation/s1'
+      '8': 'volumes/labels/segmentation/s1'
+      '9': 'volumes/labels/segmentation/s1'
+    dtype: int64
+
+
+# Configuration for the master dataset.
+master_config:
+  # We might need order 0 interpolation if we have segmentation in there somewhere.
+  elastic_transform:
+    alpha: 2000.
+    sigma: 50.
+    order: 0
+  # For now, don't crop after target, invalid affinities are masked anyways
+  # we crop to get rid of the elastic augment reflection padding
+  # and the invalid affinities (that's why we have additional lower z crop)
+  # crop_after_target:
+  #   crop_left: [4, 27, 27]
+  #   crop_right: [0, 27, 27]
+
+
+# Specify configuration for the loader
+loader_config:
+  # Number of processes to use for loading data. Set to (say) 10 if you wish to
+  # use 10 CPU cores, or to 0 if you wish to use the same process for training and
+  # data-loading (generally not recommended).
+  batch_size: 1
+  num_workers: 5
+  drop_last: True
+  pin_memory: False
+  shuffle: True
