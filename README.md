@@ -1,26 +1,26 @@
 # platybrowser-backend
 
-This repository containsdata and scripts for data generation for the [platybrowser](https://github.com/platybrowser/platybrowser-fiji), a viewer for multi-model big image data. The resource at hand is for the 6 day old Platynereis larva, for details see [Whole-body integration of gene expression and single-cell morphology](TODO link), but the viewer can also be used for other data-sets given in the same storage layout.
+This repository contains data and scripts for data generation for the [platybrowser](https://github.com/platybrowser/platybrowser-fiji), a viewer for multi-model big image data. The resource at hand is for the 6 day old Platynereis larva, for details see [Whole-body integration of gene expression and single-cell morphology](TODO link), but the viewer can also be used for other data-sets given in the same storage layout.
 
 ## Data storage
 
-Image meta-data and derived data is stored in the folder `data`. In order to deal with changes to it, we follow a versioning scheme inspired by [semantic versioning](https://semver.org/). Version numbers are given as `MAJOR.MINOR.PATCH` where
+Image meta-data and derived data is stored in the folder `data`. In order to deal with changes to this data, we follow a versioning scheme inspired by [semantic versioning](https://semver.org/). Version numbers are given as `MAJOR.MINOR.PATCH` where
 
 - `PATCH` is increased if the derived data is updated, e.g. due to corrections in a segmentation or new attributes in a table.
 - `MINOR` is increased if new derived data is added, e.g. a new segmentation or a new table is added.
-- `MAJOR` is increased if a new modality is added, e.g. data from a different imaging source or a different individual.
+- `MAJOR` is increased if a new modality is added, e.g. data from a different imaging source or a different specimen.
 
-For a given version `X.Y.Z`, the data is stored in the directory `/data/X.Y.Z/` which contains the subfolders
+For a given version `X.Y.Z`, the data is stored in the directory `data/X.Y.Z` which contains the following subfolders:
 
 - `images`: Contains meta-data for all images in bigdata-viewer xml format. The actual image data (stored either as hdf5 or n5) is not under version control and can either be read from the local file system (subfolder `local`) or a remote object store (subfolder `remote`). In addition, the `images` folder contains a dictionary mapping image names to viewer and storage settings in `images.json`.
 - `misc`: Contains miscellanous data.
-- `tables`: Containse csv tables with additional data derived from the image data.
+- `tables`: Contains csv tables with additional data derived from the image data.
 
 ### File naming
 
 Image names must be prefixed by the header `MODALITY-STAGE-ID-REGION`, where
 - `MODALITY` is a shorthand for the imaging modality used to obtain the data, e.g. `sbem` for serial blockface electron microscopy.
-- `STAGE` is a shorthand for the develpmental stage, e.g. `6dpf` for six day post ferilisation.
+- `STAGE` is a shorthand for the develpmental stage, e.g. `6dpf` for six days post fertilisation.
 - `ID` is a number that distinguishes individual animals of a given modality and stage or distinguishes different set-ups for averaging based modalities.
 - `REGION` is a shorthand for the region covered by the data, e.g. `parapod` for the parapodium or `whole` for the whole animal.
 
@@ -28,7 +28,7 @@ Image names must be prefixed by the header `MODALITY-STAGE-ID-REGION`, where
 
 Derived attributes are stored in csv tables, which must be associated with specific image data.
 The tables associated with a given image name must be stored in the sub-directory `tables/image-name`.
-If this directory exists, it must at least contain the file `default.csv` with spatial attributes of the objects in the image. If tables do not change between versions, they can be stored as soft-links to the old version.
+If this directory exists, it must at least contain the file `default.csv` with spatial attributes of the objects in the image. If tables do not change between versions, they can be stored as relative soft-links to the old version.
 
 ### Version updates
 
@@ -38,22 +38,22 @@ We provide three scripts to update the respective release types:
 - `update_major.py`: Create new version folder and add new modality. 
 All three scripts take the path to a json file as argument, which encodes the data to update or to add.
 
-For `update_patch.py` the json must contain a dictonary with the two keys `segmentations` and `tables`.
-Each key needs to map to a list that contains valid segmentation names. For names listed in `segmentations`,
+For `update_patch.py` the json must contain a dictonary with the two keys `segmentations` and `tables`
+where each key maps to a list containing existing segmentation names. For names listed in `segmentations`,
 the segmentation AND corresponding tables (if present) will be updated. For `tables`, only the tables will be updated.
-The following example would trigger segmentation and table update for the cell segmentation and a table update for the nucleus segmentation:
+The following example would trigger an update of the segmentation and tables for the cell segmentation and a table update for the nucleus segmentation:
 ```
-{"segmentations": ["sbem-6dpf-1-whole-segmented-cells-labels"],
- "tables": ["sbem-6dpf-1-whole-segmented-nuclei-labels"]}
+{"segmentations": ["sbem-6dpf-1-whole-segmented-cells"],
+ "tables": ["sbem-6dpf-1-whole-segmented-nuclei"]}
 ```
 
-For `update_minor.py` and `update_major.py`, the json must contain a dictionar, mapping the names of new image data to their source files and viewer settings.
+For `update_minor.py` and `update_major.py`, the json must contain a dictionary mapping the names of new image data to their source files and viewer settings.
 See `example_updates/` for some example json update files.
 
-In addition `update_registration.py` can be used to update data undergoing registration with a new registration transformation. It creates a new patch version folder and updates all relevant data.
+In addition, `update_registration.py` can be used to update data undergoing registration with a new registration transformation. It creates a new patch version folder and updates all relevant data.
 
 We do not add any files to version control automatically. So after calling one of the update
-scripts add the new version folder to git and make a release via `git tag -a X.Y.Z -m "DESCRIPTION"`.
+scripts, add the new version folder to git and make a release via `git tag -a X.Y.Z -m "DESCRIPTION"`.
 
 
 ## Scripts
