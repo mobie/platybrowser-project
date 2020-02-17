@@ -5,19 +5,16 @@ import z5py
 
 from cluster_tools.node_labels import NodeLabelWorkflow
 from pybdv.metadata import get_data_path
+from pybdv.util import get_key
 from ..default_config import write_default_global_config
+from ..util import is_h5_file
 
 
 def get_seg_path(folder, name):
     # check if we have a data sub folder, if we have it load
     # the segmentation from there
-    data_folder = os.path.join(folder, 'segmentations')
+    data_folder = os.path.join(folder, 'images', 'local')
     data_folder = data_folder if os.path.exists(data_folder) else folder
-
-    # check if we have a h5
-    path = os.path.join(data_folder, '%s.h5' % name)
-    if os.path.exists(path):
-        return path
 
     # check if we have an xml
     path = os.path.join(data_folder, '%s.xml' % name)
@@ -43,13 +40,16 @@ def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
     with open(os.path.join(config_folder, 'merge_node_labels.config'), 'w') as f:
         json.dump(conf, f)
 
-    key = 't00000/s00/0/cells'
+    is_h5 = is_h5_file(path1)
+    key1 = get_key(is_h5, time_point=0, setup_id=0, scale=0)
+    is_h5 = is_h5_file(path2)
+    key2 = get_key(is_h5, time_point=0, setup_id=0, scale=0)
     tmp_path = os.path.join(tmp_folder, 'data.n5')
     tmp_key = prefix
     t = task(tmp_folder=tmp_folder, config_dir=config_folder,
              target=target, max_jobs=max_jobs,
-             ws_path=path1, ws_key=key,
-             input_path=path2, input_key=key,
+             ws_path=path1, ws_key=key1,
+             input_path=path2, input_key=key2,
              output_path=tmp_path, output_key=tmp_key,
              prefix=prefix, max_overlap=True)
     ret = luigi.build([t], local_scheduler=True)
@@ -71,7 +71,7 @@ def map_segmentation_ids(src_folder, dest_folder, name, tmp_folder, max_jobs, ta
         src_path = get_seg_path(src_folder, name)
     except RuntimeError:
         print("Did not find old segmentation dataset for %s in %s" % (src_folder, name))
-        print("Skip mappnig of segmentation ids")
+        print("Skip mapping of segmentation ids")
         return
     dest_path = get_seg_path(dest_folder, name)
 
@@ -79,9 +79,3 @@ def map_segmentation_ids(src_folder, dest_folder, name, tmp_folder, max_jobs, ta
     out_path = os.path.join(dest_folder, 'misc', 'new_id_lut_%s.json' % name)
     map_ids(src_path, dest_path, out_path, tmp_folder, max_jobs, target,
             prefix='to_dest')
-
-    # TODO do we need to do this?
-    # map ids from dest to src via maximal overlap
-    # out_path = os.path.join(dest_folder, 'misc', 'old_id_lut_%s.json' % name)
-    # map_ids(dest_path, src_path, out_path, tmp_folder, max_jobs, target,
-    #         prefix='to_src')

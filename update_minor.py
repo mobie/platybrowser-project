@@ -3,17 +3,17 @@
 import os
 import json
 import argparse
-from subprocess import check_output
 
 from mmpb.bookmarks import update_bookmarks
 from mmpb.files import copy_and_check_image_dict, copy_release_folder
-from mmpb.release_helper import add_data, add_version, get_modality_names, get_names, make_folder_structure
+from mmpb.release_helper import (add_data, add_version, get_modality_names,
+                                 get_names, get_version, make_folder_structure)
 
 RAW_FOLDER = 'data'
 
 
 def get_tags():
-    tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
+    tag = get_version()
     new_tag = tag.split('.')
     new_tag[-1] = '0'  # reset patch
     new_tag[1] = str(int(new_tag[1]) + 1)

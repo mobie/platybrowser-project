@@ -1,5 +1,8 @@
 import os
 import json
+import warnings
+from subprocess import check_output
+
 from . import attributes
 from .export import export_segmentation
 from .files import copy_tables, copy_file
@@ -7,6 +10,7 @@ from .util import read_resolution
 
 VERSION_FILE = "data/versions.json"
 
+# TODO refactor this to format_validation.py
 IMAGE_FIELD_NAMES = {'Color', 'MaxValue', 'MinValue', 'Type'}
 MASK_FIELD_NAMES = {'Color', 'MaxValue', 'MinValue', 'Type'}
 SEGMENTATION_FIELD_NAMES = {'ColorMap', 'MaxValue', 'MinValue', 'Type'}
@@ -153,10 +157,19 @@ def add_version(tag):
         json.dump(versions, f)
 
 
-def get_latest_version():
+def get_version(enforce_version_consistency=False):
+    git_tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
     with open(VERSION_FILE) as f:
         versions = json.load(f)
-    return versions[-1]
+    version = versions[-1]
+
+    msg = "Git version %s and version from versions.json %s do not agree" % (git_tag, version)
+    if version != git_tag and enforce_version_consistency:
+        raise RuntimeError(msg)
+    elif version != git_tag:
+        warnings.warn(msg)
+
+    return version
 
 
 def make_folder_structure(root):

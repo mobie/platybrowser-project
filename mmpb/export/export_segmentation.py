@@ -127,7 +127,8 @@ def export_segmentation(paintera_path, paintera_key, name,
     else:
         # export segmentation from paintera commit for all scales
         serialize_from_commit(paintera_path, paintera_key, out_path, out_key, tmp_folder,
-                              max_jobs, target, relabel_output=True, map_to_background=map_to_background)
+                              max_jobs, target, relabel_output=True,
+                              map_to_background=map_to_background)
 
     # check for overflow
     # now that we can export to n5, we don't really need this check any more,

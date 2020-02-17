@@ -90,7 +90,7 @@ def cells_per_region(root_folder):
 
 
 if __name__ == '__main__':
-    version = '0.6.6'
+    version = '1.0.0'
     number_of_cells(version)
     print()
     cell_sizes(version)
