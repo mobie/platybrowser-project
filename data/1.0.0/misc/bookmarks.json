@@ -427,14 +427,8 @@
       "prospr-6dpf-1-whole-mhcl4": {
         "Color": "Red"
       },
-      "prospr-6dpf-1-whole-glt1": {
-        "Color": "Green"
-      },
-      "prospr-6dpf-1-whole-paraxis": {
-        "Color": "Magenta"
-      },
-      "prospr-6dpf-1-whole-pchd15": {
-        "Color": "Cyan"
+      "prospr-6dpf-1-whole-segmented-prospr6-ref": {
+        "Color": "Blue"
       },
       "sbem-6dpf-1-whole-raw": {}
     },
