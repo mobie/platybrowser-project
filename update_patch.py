@@ -45,6 +45,7 @@ def update_segmentation(name, properties, update_config,
     # make the output path
     storage = properties['Storage']
     out_path = os.path.join(new_folder, 'images', storage['local'])
+    out_path = os.path.splitext(out_path)[0] + '.n5'
 
     resolution = read_resolution(paintera_root, paintera_key, to_um=True)
     export_segmentation(paintera_root, paintera_key, name,

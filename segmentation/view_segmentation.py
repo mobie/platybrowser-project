@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import z5py
+import h5py
 from heimdall import view, to_source
 from heimdall.source_wrappers import ResizeWrapper
 from pybdv.metadata import get_data_path
@@ -88,6 +89,30 @@ def view_cilia():
     view_segmentations(version, raw_scale, seg_names, seg_scales, bb=bb)
 
 
+def get_cell_bb(scale, halo=[50, 512, 512]):
+    path = '../data/0.0.0/images/local/sbem-6dpf-1-whole-segmented-cells.h5'
+    key = 't00000/s00/%i/cells' % scale
+    with h5py.File(path, 'r') as f:
+        ds = f[key]
+        shape = ds.shape
+
+    central = [sh // 2 for sh in shape]
+    bb = tuple(slice(ce - ha, ce + ha) for ce, ha in zip(central, halo))
+    return bb
+
+
+def view_cells():
+    version = '0.6.6'
+    raw_scale = 2
+    seg_names = ['sbem-6dpf-1-whole-segmented-cells']
+    seg_scales = [1]
+
+    bb = get_cell_bb(seg_scales[0])
+
+    view_segmentations(version, raw_scale, seg_names, seg_scales, bb=bb)
+
+
 if __name__ == '__main__':
     # view_ganglia()
-    view_cilia()
+    # view_cilia()
+    view_cells()
