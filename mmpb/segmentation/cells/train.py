@@ -142,6 +142,8 @@ def training(project_directory,
     logger.info("Lift off!")
     trainer.fit()
 
+    models.save_best_model(project_directory)
+
 
 def make_train_config(template_config, train_config_file, affinity_config, gpus):
     template = os.path.join(template_config, 'train_config_unet_lr.yml')

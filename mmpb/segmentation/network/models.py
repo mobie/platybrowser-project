@@ -1,8 +1,11 @@
+import os
+import torch
 import torch.nn as nn
 import inferno.extensions.layers.sampling as sampling
 from inferno.extensions.layers.convolutional import Conv3D
 from inferno.extensions.models.unet import UNetBase
 from inferno.extensions.layers.identity import Identity
+from inferno.trainers import Trainer
 
 
 class GroupNormConv3d(nn.Module):
@@ -136,3 +139,11 @@ class UNetAnisotropic(UNetBase):
         sf = self.scale_factors[index]
         sampler = sampling.Upsample(scale_factor=sf)
         return sampler
+
+
+def save_best_model(project_directory):
+    trainer = Trainer().load(from_directory=os.path.join(project_directory, "Weights"),
+                             best=True, map_location='cpu')
+    model = trainer.model
+    save_path = os.path.join(project_directory, "Weights", "best_model.nn")
+    torch.save(model, save_path)

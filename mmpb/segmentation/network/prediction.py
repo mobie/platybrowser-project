@@ -31,7 +31,7 @@ def prediction(input_path, input_key,
     config = task.default_task_config()
     config.update({'chunks': [ob // 2 for ob in output_blocks],
                    'mem_limit': 32, 'time_limit': 720,
-                   'threads_per_job': 4, 'gpu_mapping': gpu_mapping})
+                   'threads_per_job': 4, 'device_mapping': gpu_mapping})
     with open(os.path.join(config_folder, 'inference.config'), 'w') as f:
         json.dump(config, f)
 
@@ -41,7 +41,7 @@ def prediction(input_path, input_key,
              input_path=input_path, input_key=input_key,
              output_path=output_path, output_key=output_key,
              mask_path=mask_path, mask_key=mask_key,
-             checkpoint_path=ckpt, framework='inferno',
+             checkpoint_path=ckpt, framework='pytorch',
              halo=halo)
     ret = luigi.build([t], local_scheduler=True)
     assert ret, "Inference failed"

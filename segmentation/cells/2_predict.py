@@ -1,7 +1,7 @@
 import os
 import argparse
 from elf.io import open_file
-from mmpb.segmentation.network import prediction
+from mmpb.segmentation.network.prediction import prediction
 
 ROOT = '../../data'
 
@@ -9,7 +9,7 @@ ROOT = '../../data'
 def get_roi(path, key, halo=[200, 2024, 2024]):
     with open_file(path, 'r') as f:
         shape = f[key].shape
-    bb = tuple(slice(sh  // 2 - ha, sh // 2 + ha)
+    bb = tuple(slice(sh // 2 - ha, sh // 2 + ha)
                for sh, ha in zip(shape, halo))
     return bb
 
@@ -17,9 +17,11 @@ def get_roi(path, key, halo=[200, 2024, 2024]):
 def predict_cells(path, ckpt, target, gpus, with_roi=False):
     input_path = os.path.join(ROOT, 'rawdata/sbem-6dpf-1-whole-raw.n5')
     input_key = 'setup0/timepoint0/s1'
+    assert os.path.exists(input_path), input_path
 
     mask_path = os.path.join(ROOT, 'rawdata/sbem-6dpf-1-whole-segmented-inside.n5')
     mask_key = 'setup0/timepoint0/s0'
+    assert os.path.exists(mask_path)
 
     # block-shapes:
     # remove (15, 30, 30) pixels from each side in the output
@@ -27,8 +29,11 @@ def predict_cells(path, ckpt, target, gpus, with_roi=False):
     output_blocks = (60, 210, 210)
     output_key = {'volumes/affinities/s1': (0, 3)}
 
-    # TODO gpus -> gpu mapping
-    gpu_mapping = gpus
+    # TODO need to update this so that it works for slurm
+    if target == 'local':
+        gpu_mapping = {job_id: gpu for job_id, gpu in enumerate(gpus)}
+    else:
+        assert False, "Need to fix device-mapping for slurm"
     tmp_folder = './tmp_predict_cells'
 
     if with_roi:
