@@ -323,7 +323,7 @@
       "sbem-6dpf-1-whole-segmented-cells": {
         "Tables": [ "vc_assignments" ],
         "ColorByColumn": "expression_sum",
-        "ColorMap": "Glasbey"
+        "ColorMap": "Viridis"
       },
       "sbem-6dpf-1-whole-segmented-outside": {}
     },
@@ -359,7 +359,7 @@
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
         "ColorByColumn": "pair_index",
-        "ColorMap": "Glasbey",
+        "ColorMap": "GlasbeyZeroTransparent",
         "Tables": [
           "symmetric_cells"
         ]
