@@ -1,11 +1,15 @@
 import h5py
 import numpy as np
+from pybdv.util import get_key
+from mmpb.util import is_h5_file
 
 
 def number_of_voxels():
-    p = '../data/rawdata/sbem-6dpf-1-whole-raw.h5'
+    p = '../data/rawdata/sbem-6dpf-1-whole-raw.n5'
+    is_h5 = is_h5_file(p)
+    key = get_key(is_h5, setup_id=0, time_point=0, scale=0)
     with h5py.File(p, 'r') as f:
-        ds = f['t00000/s00/0/cells']
+        ds = f[key]
         shape = ds.shape
     n_vox = np.prod(list(shape))
     print("Number of voxel:")
@@ -15,9 +19,11 @@ def number_of_voxels():
 
 
 def animal():
-    p = '../data/rawdata/sbem-6dpf-1-whole-mask-inside.h5'
+    p = '../data/rawdata/sbem-6dpf-1-whole-mask-inside.n5'
+    is_h5 = is_h5_file(p)
+    key = get_key(is_h5, setup_id=0, time_point=0, scale=0)
     with h5py.File(p, 'r') as f:
-        mask = f['t00000/s00/0/cells'][:]
+        mask = f[key][:]
 
     bb = np.where(mask > 0)
     mins = [b.min() for b in bb]

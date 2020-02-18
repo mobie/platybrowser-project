@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from matplotlib import pyplot as plt
 
 
 def get_nephr_ids(version):
-    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cells-labels/regions.csv' % version
+    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cells/regions.csv' % version
     table = pd.read_csv(table_path, sep='\t')
     nephr_ids = table['nephridia'].values
     right_nephr_ids = np.where(nephr_ids == 1)[0]
@@ -13,7 +14,7 @@ def get_nephr_ids(version):
 
 
 def check_cell_ids(version):
-    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cilia-labels/cell_mapping.csv' % version
+    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cilia/cell_mapping.csv' % version
 
     right_nephr_ids, left_nephr_ids = get_nephr_ids(version)
     table = pd.read_csv(table_path, sep='\t')
@@ -44,11 +45,22 @@ def check_cell_ids(version):
     print("With cilia:", len(matched_left))
 
 
+def get_count_data(counts_left, counts_right):
+    n_cells = len(counts_left)
+    cell_id = list(range(n_cells)) + list(range(n_cells))
+    side = n_cells * ["Left"] + n_cells * ["Right"]
+    counts = counts_left + counts_right
+
+    data = np.array([cell_id, side, counts]).T
+    data = pd.DataFrame(data, columns=["Cells", "Side", "Number of Cilia"])
+    return data
+
+
 def plot_cilia_per_cell(version):
     counts_left = []
     counts_right = []
 
-    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cilia-labels/cell_mapping.csv' % version
+    table_path = '../../data/%s/tables/sbem-6dpf-1-whole-segmented-cilia/cell_mapping.csv' % version
     table = pd.read_csv(table_path, sep='\t')
     cell_ids = table['cell_id']
     cell_ids = cell_ids[cell_ids != 0]
@@ -78,23 +90,17 @@ def plot_cilia_per_cell(version):
     print("Left counts:")
     print(sum(counts_left))
 
-    fig, axes = plt.subplots(2)
-    x = np.arange(7)
+    count_data = get_count_data(counts_left, counts_right)
 
-    ax = axes[0]
-    ax.set_title('Right nephridium')
-    ax.bar(x, height=counts_right)
-    ax.set_ylabel('Cilia per cell')
-
-    ax = axes[1]
-    ax.set_title('Left nephridium')
-    ax.bar(x, height=counts_left)
-    ax.set_ylabel('Cilia per cell')
-
+    sns.set(style="whitegrid", font="Arial", font_scale=1.4)
+    ax = sns.barplot(x="Cells", y="Number of Cilia", hue="Side", data=count_data)
+    ax.set_title("Cilia distribution of nephridia cells")
+    ax.set_xlabel('')
+    ax.set_xticks([])
     plt.show()
 
 
 if __name__ == '__main__':
     version = '0.6.5'
-    check_cell_ids(version)
+    # check_cell_ids(version)
     plot_cilia_per_cell(version)

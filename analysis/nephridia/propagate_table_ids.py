@@ -26,7 +26,7 @@ def propagate_table():
     assert (unique_counts == 1).all()
     cell_ids = nt.takeDict(cell_id_mapping, cell_ids)
 
-    cilia_id_mapping = '../../data/0.6.2/misc/new_id_lut_sbem-6dpf-1-whole-segmented-cilia-labels.json'
+    cilia_id_mapping = '../../data/0.6.2/misc/new_id_lut_sbem-6dpf-1-whole-segmented-cilia.json'
     with open(cilia_id_mapping) as f:
         cilia_id_mapping = json.load(f)
     cilia_id_mapping = {int(k): v for k, v in cilia_id_mapping.items()}

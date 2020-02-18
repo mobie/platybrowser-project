@@ -23,7 +23,7 @@ def count_gene_expression(gene_names, threshold, version, query):
             version = get_latest_version()
 
         # TODO enable using vc assignments once we have them on master
-        table_path = 'data/%s/tables/sbem-6dpf-1-whole-segmented-cells-labels/genes.csv' % version
+        table_path = 'data/%s/tables/sbem-6dpf-1-whole-segmented-cells/genes.csv' % version
         ids = get_cells_expressing_genes(table_path, threshold, gene_names)
 
         if query_ids is not None:

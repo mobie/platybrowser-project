@@ -10,16 +10,16 @@ tmp_path = './cilia_ids.npy'
 if os.path.exists(tmp_path):
     cilia_ids = np.load(tmp_path)
 else:
-    cell_table = '../data/0.5.2/tables/sbem-6dpf-1-whole-segmented-cells-labels/default.csv'
-    cilia_path = '../data/0.5.2/segmentations/sbem-6dpf-1-whole-segmented-cilia-labels.h5'
+    cell_table = '../data/0.5.2/tables/sbem-6dpf-1-whole-segmented-cells/default.csv'
+    cilia_path = '../data/0.5.2/segmentations/sbem-6dpf-1-whole-segmented-cilia.h5'
     cilia_key = 't00000/s00/2/cells'
     cilia_res = [0.1, 0.04, 0.04]
     cilia_ids = match_cilia_to_cells(cell_ids, cell_table,
                                      cilia_path, cilia_key, cilia_res)
     np.save(tmp_path, cilia_ids)
 
-table_path = '../data/0.5.2/tables/sbem-6dpf-1-whole-segmented-cilia-labels/default.csv'
-table_path2 = '../data/0.5.2/tables/sbem-6dpf-1-whole-segmented-cilia-labels/cilia.csv'
+table_path = '../data/0.5.2/tables/sbem-6dpf-1-whole-segmented-cilia/default.csv'
+table_path2 = '../data/0.5.2/tables/sbem-6dpf-1-whole-segmented-cilia/cilia.csv'
 
 table1 = pd.read_csv(table_path, sep='\t')
 table2 = pd.read_csv(table_path2, sep='\t')
