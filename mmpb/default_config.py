@@ -1,12 +1,10 @@
 import os
+import sys
 import json
 from cluster_tools.cluster_tasks import BaseClusterTask
 
 DEFAULT_GROUP = os.environ.get('PLATYBROWSER_GROUP', 'kreshuk')
-# DEFAULT_SHEBANG = os.environ.get('PLATYBROWSER_SHEBANG',
-#                                  '#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python')
-DEFAULT_SHEBANG = os.environ.get('PLATYBROWSER_SHEBANG',
-                                 '#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/cluster_env37/bin/python')
+DEFAULT_SHEBANG = os.environ.get('PLATYBROWSER_SHEBANG', os.path.realpath(sys.executable))
 DEFAULT_BLOCK_SHAPE = [64, 512, 512]
 
 

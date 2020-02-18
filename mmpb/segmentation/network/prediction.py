@@ -2,6 +2,7 @@ import os
 import json
 import luigi
 from cluster_tools.inference import InferenceLocal, InferenceSlurm
+from mmpb.default_config import get_default_shebang
 
 
 def prediction(input_path, input_key,
@@ -18,8 +19,7 @@ def prediction(input_path, input_key,
 
     halo = [(ib - ob) // 2 for ib, ob in zip(input_blocks, output_blocks)]
 
-    # TODO get shebang from config
-    shebang = "#! /g/kreshuk/pape/Work/software/conda/miniconda3/envs/platybrowser-train/bin/python"
+    shebang = get_default_shebang()
     global_config = task.default_global_config()
     global_config.update({'shebang': shebang,
                           'block_shape': output_blocks,
