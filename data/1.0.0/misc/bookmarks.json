@@ -258,6 +258,14 @@
           31961
         ],
         "ShowSelectedSegmentsIn3d": false
+      },
+      "prospr-6dpf-1-whole-virtual-cells": {
+        "SelectedLabelIds": [
+          3666,
+          3641,
+          4015
+        ],
+        "ShowSelectedSegmentsIn3d": false
       }
     },
     "Position": [
@@ -293,6 +301,14 @@
         "SelectedLabelIds": [
           6766,
           6913
+        ],
+        "ShowSelectedSegmentsIn3d": false
+      },
+      "prospr-6dpf-1-whole-virtual-cells": {
+        "SelectedLabelIds": [
+          737,
+          739,
+          1880
         ],
         "ShowSelectedSegmentsIn3d": false
       }
