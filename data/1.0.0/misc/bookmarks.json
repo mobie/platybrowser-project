@@ -243,7 +243,7 @@
       -347.4711101247537
     ]
   },
-  "Figure 6A: Assignment by overlap": {
+  "Figure 6A and 6C: Gene expression assignment": {
     "Layers": {
       "prospr-6dpf-1-whole-msx": {
         "Color": "Green"
@@ -288,7 +288,7 @@
       3266.795464793777
     ]
   },
-  "Figure 6B: Assignment by overlap": {
+  "Figure 6B and 6D: Gene expression assignment": {
     "Layers": {
       "prospr-6dpf-1-whole-lhx6": {
         "Color": "Green"
@@ -333,7 +333,7 @@
       451.14359129392136
     ]
   },
-  "Figure 6F: Level of gene expression after virtual cell assignment": {
+  "Figure 6F: Virtual cell assignment: gene expression level": {
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
