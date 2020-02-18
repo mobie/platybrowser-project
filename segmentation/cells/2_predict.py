@@ -51,6 +51,9 @@ def predict_cells(path, ckpt, target, gpus, with_roi=False):
 
 
 if __name__ == '__main__':
+    # oritginal checkpoint
+    # ckpt = '/g/kreshuk/data/arendt/platyneris_v1/trained_networks/unet_lr_v5'
+    # clean retrain
     default_ckpt = './checkpoints/V1/Weights/best_model.nn'
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', type=str, default='../data.n5')
