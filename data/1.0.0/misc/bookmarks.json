@@ -243,7 +243,7 @@
       -347.4711101247537
     ]
   },
-  "Figure 6A: Assignment by overlap": {
+  "Figure 6A and 6C: Gene expression assignment": {
     "Layers": {
       "prospr-6dpf-1-whole-msx": {
         "Color": "Green"
@@ -256,6 +256,14 @@
         "SelectedLabelIds": [
           32095,
           31961
+        ],
+        "ShowSelectedSegmentsIn3d": false
+      },
+      "prospr-6dpf-1-whole-virtual-cells": {
+        "SelectedLabelIds": [
+          3666,
+          3641,
+          4015
         ],
         "ShowSelectedSegmentsIn3d": false
       }
@@ -280,7 +288,7 @@
       3266.795464793777
     ]
   },
-  "Figure 6B: Assignment by overlap": {
+  "Figure 6B and 6D: Gene expression assignment": {
     "Layers": {
       "prospr-6dpf-1-whole-lhx6": {
         "Color": "Green"
@@ -293,6 +301,14 @@
         "SelectedLabelIds": [
           6766,
           6913
+        ],
+        "ShowSelectedSegmentsIn3d": false
+      },
+      "prospr-6dpf-1-whole-virtual-cells": {
+        "SelectedLabelIds": [
+          737,
+          739,
+          1880
         ],
         "ShowSelectedSegmentsIn3d": false
       }
@@ -317,13 +333,15 @@
       451.14359129392136
     ]
   },
-  "Figure 6F: Level of gene expression after virtual cell assignment": {
+  "Figure 6F: Virtual cell assignment: gene expression level": {
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
+        "MaxValue": 40,
+        "MinValue": 0,
         "Tables": [ "vc_assignments" ],
         "ColorByColumn": "expression_sum",
-        "ColorMap": "Glasbey"
+        "ColorMap": "Viridis"
       },
       "sbem-6dpf-1-whole-segmented-outside": {}
     },
@@ -359,7 +377,7 @@
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
         "ColorByColumn": "pair_index",
-        "ColorMap": "Glasbey",
+        "ColorMap": "GlasbeyZeroTransparent",
         "Tables": [
           "symmetric_cells"
         ]
