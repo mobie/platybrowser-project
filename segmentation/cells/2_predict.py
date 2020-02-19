@@ -27,7 +27,7 @@ def predict_cells(path, ckpt, target, gpus, with_roi=False):
     # remove (16, 32, 32) pixels from each side in the output
     input_blocks = (96, 256, 256)
     output_blocks = (64, 192, 192)
-    output_key = {'volumes/affinities/s1': (0, 3)}
+    output_key = {'volumes/cells/affinities/s1': (0, 3)}
 
     # TODO need to update this so that it works for slurm
     if target == 'local':

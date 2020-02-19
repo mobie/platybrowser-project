@@ -1,25 +1,32 @@
 import os
 import argparse
 from elf.io import open_file
-from mmpb.segmentation.network.prediction import prediction
+from mmpb.segmentation.network.prediction import prediction, prefilter_blocks
 
 ROOT = '../../data'
 
 
-def predict_cells(path, ckpt, target, gpus):
+def predict_cilia(path, ckpt, target, gpus):
     input_path = os.path.join(ROOT, 'rawdata/sbem-6dpf-1-whole-raw.n5')
     input_key = 'setup0/timepoint0/s0'
     assert os.path.exists(input_path), input_path
 
     mask_path = os.path.join(ROOT, 'rawdata/sbem-6dpf-1-whole-segmented-nephridia.n5')
     mask_key = 'setup0/timepoint0/s0'
-    assert os.path.exists(mask_path)
+    assert os.path.exists(mask_path), mask_path
 
-    # block-shapes:
-    input_blocks = (96, 288, 288)
-    output_blocks = (76, 228, 228)
+    assert os.path.exists(ckpt), ckpt
+    with open_file(input_path, 'r') as f:
+        shape = f[input_key].shape
+
+    input_blocks = (64, 256, 256)
+    output_blocks = (48, 192, 192)
     out_key = {'volumes/cilia/foreground': (0, 1),
                'volumes/cilia/affinities': (1, 13)}
+
+    save_file = 'nephridia_blocks.json'
+    block_list = prefilter_blocks(mask_path, mask_key, shape, output_blocks, save_file)
+    print("Running prediction for", len(block_list),  "blocks")
 
     # TODO need to update this so that it works for slurm
     if target == 'local':
@@ -28,11 +35,12 @@ def predict_cells(path, ckpt, target, gpus):
         assert False, "Need to fix device-mapping for slurm"
     tmp_folder = './tmp_predict_cilia'
 
+    n_threads = 6
     prediction(input_path, input_key,
-               path, output_key,
+               path, out_key,
                ckpt, tmp_folder, gpu_mapping,
                target, input_blocks, output_blocks,
-               mask_path=mask_path, mask_key=mask_key)
+               n_threads=n_threads, block_list=block_list)
 
 
 if __name__ == '__main__':
@@ -47,4 +55,4 @@ if __name__ == '__main__':
     parser.add_argument('--gpus', type=int, nargs='+', default=[0])
     args = parser.parse_args()
 
-    predict_cells(args.path, args.ckpt, args.target, args.gpus)
+    predict_cilia(args.path, args.ckpt, args.target, args.gpus)
