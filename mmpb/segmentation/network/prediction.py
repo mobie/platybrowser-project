@@ -44,7 +44,7 @@ def prediction(input_path, input_key,
         json.dump(global_config, f)
 
     config = task.default_task_config()
-    config.update({'chunks': [ob // 2 for ob in output_blocks],
+    config.update({'chunks': output_blocks,
                    'mem_limit': 32, 'time_limit': 720,
                    'threads_per_job': n_threads, 'device_mapping': gpu_mapping})
     with open(os.path.join(config_folder, 'inference.config'), 'w') as f:

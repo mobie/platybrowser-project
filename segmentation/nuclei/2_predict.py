@@ -6,7 +6,7 @@ from mmpb.segmentation.network.prediction import prediction
 ROOT = '../../data'
 
 
-def get_roi(path, key, halo=[5, 512, 512]):
+def get_roi(path, key, halo=[50, 512, 512]):
     with open_file(path, 'r') as f:
         shape = f[key].shape
     roi_begin = [sh // 2 - ha for sh, ha in zip(shape, halo)]
@@ -36,7 +36,7 @@ def predict_nuclei(path, ckpt, target, gpus, with_roi=False):
         gpu_mapping = {job_id: gpu for job_id, gpu in enumerate(gpus)}
     else:
         assert False, "Need to fix device-mapping for slurm"
-    tmp_folder = './tmp_predict_cells'
+    tmp_folder = './tmp_predict_nuclei'
 
     if with_roi:
         roi_begin, roi_end = get_roi(input_path, input_key)
@@ -45,7 +45,7 @@ def predict_nuclei(path, ckpt, target, gpus, with_roi=False):
         roi_begin = roi_end = None
 
     prediction(input_path, input_key,
-               path, output_key,
+               path, out_key,
                ckpt, tmp_folder, gpu_mapping,
                target, input_blocks, output_blocks,
                mask_path=mask_path, mask_key=mask_key,

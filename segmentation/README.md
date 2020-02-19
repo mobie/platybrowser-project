@@ -13,9 +13,9 @@ If you use any of the segmentation functionality provided, please cite the [main
 For most of these methods, the scalable implementations in [cluster tools](https://github.com/constantinpape/cluster_tools) were used.
 
 Training data and weights for the 3d U-Nets are available on zenodo:
-- cells: [Training Data](https://zenodo.org/record/3675220/files/membrane.zip?download=1), [Weights]()
-- cilia: [Training Data](https://zenodo.org/record/3675220/files/cilia.zip?download=1), [Weights]()
-- cuticle: [Training Data](https://zenodo.org/record/3675220/files/cuticle.zip?download=1), [Weights]()
-- nuclei: [Training Data](https://zenodo.org/record/3675220/files/nuclei.zip?download=1), [Weights]()
+- cells: [Training Data](https://zenodo.org/record/3675220/files/membrane.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/cilia.nn?download=1)
+- cilia: [Training Data](https://zenodo.org/record/3675220/files/cilia.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/cuticle.nn?download=1)
+- cuticle: [Training Data](https://zenodo.org/record/3675220/files/cuticle.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/membranes.nn?download=1)
+- nuclei: [Training Data](https://zenodo.org/record/3675220/files/nuclei.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/nuclei.nn?download=1)
 
 TODO ilastik projects for chromatin and tissue/regions on zenodo?
