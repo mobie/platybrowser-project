@@ -92,4 +92,5 @@ python setup.py install
 ## Citation
 
 If you use this resource, please cite [Whole-body integration of gene expression and single-cell morphology]().
-If you use the segmentation or registration functionality, please also include the appropriate citations, see [segmentation/README.md]() or [registration/README.md]() for details.
+If you use the segmentation or registration functionality, please also include the appropriate citations, see [segmentation/README.md](https://github.com/platybrowser/platybrowser-backend/blob/master/segmentation/README.md) 
+or [registration/README.md](https://github.com/platybrowser/platybrowser-backend/blob/master/registration/README.md) for details.

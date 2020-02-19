@@ -2305,6 +2305,16 @@
     },
     "Type": "Mask"
   },
+  "sbem-6dpf-1-whole-segmented-shell": {
+    "Color": "White",
+    "MaxValue": 1,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-shell.xml",
+      "remote": "remote/sbem-6dpf-1-whole-segmented-shell.xml"
+    },
+    "Type": "Mask"
+  },
   "sbem-6dpf-1-whole-segmented-tissue": {
     "ColorMap": "Glasbey",
     "MaxValue": 1000,
