@@ -1,6 +1,9 @@
 # platybrowser-backend
 
-This repository contains data and scripts for data generation for the [platybrowser](https://github.com/platybrowser/platybrowser-fiji), a viewer for multi-model big image data. The resource at hand is for the 6 day old Platynereis larva, for details see [Whole-body integration of gene expression and single-cell morphology](TODO link), but the viewer can also be used for other data-sets given in the same storage layout.
+This repository contains the data and scripts for data generation for the PlatyBrowser, a resource for exploring a full EM volume of a 6 day old Platynereis larva and associate data.
+For details see [Whole-body integration of gene expression and single-cell morphology]().
+It is implemented using the [MultiModalBrowser](https://github.com/platybrowser/mmb-fiji) (MMB), a tool for exploring multi-modal big image data.
+The MMB can be usd for other data-sets, provided they follow the storage layout given in the `data` subfolder here.
 
 ## Data storage
 
@@ -58,7 +61,7 @@ scripts, add the new version folder to git and make a release via `git tag -a X.
 
 ## Scripts
 
-This repository also contains scripts that were used to generate most of the data for [Whole-body integration of gene expression and single-cell morphology](TODO link). `mmpb` contains a small python library that bundles most of this functionality as well as helper functions for the version updates.
+This repository also contains scripts that were used to generate most of the data for [Whole-body integration of gene expression and single-cell morphology](). `mmpb` contains a small python library that bundles most of this functionality as well as helper functions for the version updates.
 
 ### Segmentation
 
@@ -84,3 +87,9 @@ conda env create -f software/train_environment.yaml
 conda activate platybrowser-train
 python setup.py install
 ```
+
+
+## Citation
+
+If you use this resource, please cite [Whole-body integration of gene expression and single-cell morphology]().
+If you use the segmentation or registration functionality, please also include the appropriate citations, see [segmentation/README.md]() or [registration/README.md]() for details.
