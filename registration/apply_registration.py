@@ -7,6 +7,7 @@ from shutil import rmtree
 
 import luigi
 from mmpb.extension.registration import ApplyRegistrationLocal, ApplyRegistrationSlurm
+from mmpb.default_config import get_default_shebang
 
 
 def apply_registration(input_path, output_path, transformation_file,
@@ -23,7 +24,7 @@ def apply_registration(input_path, output_path, transformation_file,
 
     os.makedirs(config_dir, exist_ok=True)
 
-    shebang = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python'
+    shebang = get_default_shebang()
     conf = task.default_global_config()
     conf.update({'shebang': shebang})
     with open(os.path.join(config_dir, 'global.config'), 'w') as f:
