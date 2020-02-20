@@ -14,8 +14,6 @@ from mmpb.release_helper import add_version, get_version, make_folder_structure
 from mmpb.util import read_resolution
 
 
-# we could also read the tags from data/versions.json
-# would be best to do both and check that they are consistent
 def get_tags():
     tag = get_version()
     new_tag = tag.split('.')

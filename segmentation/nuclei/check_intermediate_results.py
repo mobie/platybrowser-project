@@ -9,6 +9,7 @@ def view_intermediates():
     path = '../data.n5'
     fg_key = 'volumes/nuclei/foreground'
     aff_key = 'volumes/nuclei/affinities'
+    seg_key = 'volumes/nuclei/segmentation'
 
     fr = z5py.File(raw_path)
     dsr = fr[raw_key]
@@ -31,11 +32,20 @@ def view_intermediates():
     fg = ds[bb]
     affs = dsa[(slice(None),) + bb]
 
+    if seg_key in f:
+        ds_seg = f[seg_key]
+        ds_seg.n_threads = 8
+        seg = ds_seg[bb]
+    else:
+        seg = None
+
     with napari.gui_qt():
         viewer = napari.Viewer()
         viewer.add_image(raw, name='raw')
         viewer.add_image(fg, name='foreground')
         viewer.add_image(affs, name='affinities')
+        if seg is not None:
+            viewer.add_labels(seg, name='mws-segmentation')
 
 
 if __name__ == "__main__":
