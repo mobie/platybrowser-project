@@ -1,15 +1,16 @@
-#! /g/schwab/Kimberly/Programs/anaconda3/bin/python
-# Only works with a linux installation of ilastik atm - as it needs ./run_ilastik.sh
-
+import os
+import logging
 import subprocess
-import h5py
+
 import numpy as np
-import skimage.morphology
 import pandas as pd
 import skimage
-import os
+import skimage.morphology
 import vigra.sampling
-import logging
+
+from elf.io import open_file
+from pybdv.util import get_key
+from mmpb.util import is_h5_file
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -22,8 +23,8 @@ def calculate_slice(scale, minmax, addBorder):
     Args:
         scale [listlike] - resolution given as [x, y, z]
         minmax [listlike] - list of min and max coordinates of bounding box in microns
-            [min_coord_x_microns, min_coord_y_microns, min_coord_z_microns, max_coord_x_microns, max_coord_y_microns,
-            max_coord_z_microns]
+            [min_coord_x_microns, min_coord_y_microns, min_coord_z_microns,
+             max_coord_x_microns, max_coord_y_microns, max_coord_z_microns]
         addBorder [bool] - optionally add a 10 pixel border on each axis
     """
 
@@ -83,14 +84,16 @@ def write_h5_files(table, folder, raw_seg_path):
 
         # slice for raw file
         raw_slice = calculate_slice(raw_scale, minmax_seg, addBorder=True)
-        with h5py.File(raw_seg_path, 'r') as f:
+        is_h5 = is_h5_file(raw_seg_path)
+        raw_key = get_key(is_h5, setup=0, time_point=0, scale=1)
+        with open_file(raw_seg_path, 'r') as f:
             # get 2x downsampled nuclei
-            data = f['t00000/s00/1/cells']
+            data = f[raw_key]
             img_array = data[raw_slice]
 
         # write h5 file for nucleus
         result_path = folder + os.sep + str(row.label_id) + '.h5'
-        with h5py.File(result_path, 'a') as f:
+        with open_file(result_path, 'a') as f:
 
             # check dataset is bigger than 64x64x64
             if img_array.shape[0] >= 64 and img_array.shape[1] >= 64 and img_array.shape[2] >= 64:
@@ -98,8 +101,8 @@ def write_h5_files(table, folder, raw_seg_path):
             else:
                 chunks = img_array.shape
 
-            dataset = f.create_dataset('dataset', chunks=chunks, compression='gzip', shape=img_array.shape,
-                                       dtype=img_array.dtype)
+            f.create_dataset('dataset', chunks=chunks, compression='gzip',
+                             shape=img_array.shape, dtype=img_array.dtype)
             f['dataset'][:] = img_array
 
 
@@ -143,7 +146,7 @@ def process_ilastik_output(table, ilastik_file, nucleus_seg_path, final_output):
 
     # read out ilastik result
     print('Processing Ilastik result...' + str(label_id))
-    with h5py.File(ilastik_file, 'r') as f:
+    with open_file(ilastik_file, 'r') as f:
         dataset = f['exported_data']
         data = dataset[:]
 
@@ -174,10 +177,12 @@ def process_ilastik_output(table, ilastik_file, nucleus_seg_path, final_output):
     # slice for segmentation file
     seg_slice = calculate_slice(seg_scale, minmax_seg, False)
 
+    is_h5 = is_h5_file(nucleus_seg_path)
+    nuc_key = get_key(is_h5, setup=0, time_point=0, scale=0)
     # open the nuclear segmentation for correct nucleus
-    with h5py.File(nucleus_seg_path, 'r') as f:
+    with open_file(nucleus_seg_path, 'r') as f:
         # get full-res dataset
-        dataset = f['t00000/s00/0/cells']
+        dataset = f[nuc_key]
         img_array = dataset[seg_slice]
 
     # binarise so 1 in the relevant nucleus, 0 outside
@@ -200,7 +205,7 @@ def process_ilastik_output(table, ilastik_file, nucleus_seg_path, final_output):
     raw_slice = calculate_slice(raw_scale, minmax_seg, addBorder=False)
 
     # write to the main h5 file
-    with h5py.File(final_output, 'r+') as f:
+    with open_file(final_output, 'r+') as f:
         result = f['dataset']
 
         # read in part covered by the nuclear bounding box
@@ -216,8 +221,9 @@ def process_ilastik_output(table, ilastik_file, nucleus_seg_path, final_output):
     os.remove(ilastik_file)
 
 
-def ilastik_nuclei_prediction(nuclei_table, nucleus_seg_path, ilastik_project, ilastik_directory, tmp_input, tmp_output,
-                              final_output, raw, chunk_size=3000, cores=32, memory=254000):
+def chromatin_segmentation_workflow(nuclei_table, nucleus_seg_path,
+                                    ilastik_project, ilastik_directory, tmp_input, tmp_output,
+                                    final_output, raw, chunk_size=3000, cores=32, memory=254000):
     """
     Processes a table of nuclei, predicting each with the specified ilastik project
 
@@ -262,13 +268,13 @@ def ilastik_nuclei_prediction(nuclei_table, nucleus_seg_path, ilastik_project, i
 
     # produce result h5 with same shape as 2x downsampled raw data (this is what the ilastik project
     # was done on)
-    with h5py.File(final_output, 'a') as f:
+    with open_file(final_output, 'a') as f:
         # create a dataset the same size as constantin's cell
         # segmentation but all 0s
         # chunk / compression options are the same as constantin
         # uses in his bdv converter script
-        dataset = f.create_dataset('dataset', chunks=(64, 64, 64), compression='gzip', shape=(11416, 12958, 13750),
-                                   dtype='uint16')
+        f.create_dataset('dataset', chunks=(64, 64, 64), compression='gzip',
+                         shape=(11416, 12958, 13750), dtype='uint16')
 
     # set up chunks of chunkszie from start of table to end
     nrow = table.shape[0]
@@ -302,7 +308,8 @@ def ilastik_nuclei_prediction(nuclei_table, nucleus_seg_path, ilastik_project, i
 
         # run ilastik
         print(subprocess.check_output(
-            ['./run_ilastik.sh', '--headless', '--project=' + ilastik_project, '--export_source=Simple Segmentation',
+            ['./run_ilastik.sh', '--headless', '--project=' + ilastik_project,
+             '--export_source=Simple Segmentation',
              '--output_filename_format=' + tmp_output + '/{nickname}.h5'] + input_files))
 
         print('removing temporary input files...')
@@ -334,26 +341,3 @@ def ilastik_nuclei_prediction(nuclei_table, nucleus_seg_path, ilastik_project, i
                 continue
 
             process_ilastik_output(cut_table, file, nucleus_seg_path, final_output)
-
-
-if __name__ == '__main__':
-    nuclei_table = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.0/tables/sbem-6dpf-1-whole-segmented-nuclei-labels/default.csv'
-    nucleus_seg_path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.0.0/segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.h5'
-    ilastik_project = '/g/schwab/Kimberly/Projects/SBEM_analysis/Data/Derived/Ilastik_classification/Intensity_corrected_runs/nuclei_classification.ilp'
-    ilastik_directory = "/g/schwab/Kimberly/Programs/ilastik-1.3.2post1-Linux"
-    tmp_input = '/g/schwab/Kimberly/Projects/SBEM_analysis/Data/Derived/Ilastik_classification/ilastik_temp_input'
-    tmp_output = '/g/schwab/Kimberly/Projects/SBEM_analysis/Data/Derived/Ilastik_classification/ilastik_temp_output'
-    final_output = '/g/schwab/Kimberly/Projects/SBEM_analysis/Data/Derived/Ilastik_classification/Intensity_corrected_runs/chromatin_prediction.h5'
-    raw = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/analysis/em-raw-wholecorrected.h5'
-
-    # in general run on cluster - 256GB ram, 32 cores
-    ilastik_nuclei_prediction(nuclei_table, nucleus_seg_path, ilastik_project, ilastik_directory, tmp_input, tmp_output,
-                              final_output, raw, chunk_size=3000, cores=32, memory=254000)
-
-    # all nuclei should be predicted with these settings but the largest can't undergo the final
-    # processing to write the ilastik output h5 file to the main file (memory errors)
-    # for these process them separately with function process_ilastik_output using more memory
-    # 8 cores, 384 GB memory
-
-    # A few label ids near the end failed >> these were tiny fragments of usually 6 pixels or less > could easily add
-    # in a filter for the minimum number of pixels to avoid these causing errors

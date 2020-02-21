@@ -1,18 +1,35 @@
 #! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
-from mmpb.segmentation.cells.multicut import workflow
+import argparse
+from mmpb.segmentation.cuticle import cuticle_segmentation_workflow
 
 
-# TODO need to expose the path options here
+def segment_cuticle(path, target, max_jobs, n_threads):
+    tmp_folder = './tmp_segment_cuticle'
 
+    fg_key = 'volumes/cuticle/foreground'
+    aff_key = 'volumes/cuticle/affinities'
+    mask_out_key = 'volumes/cuticle/foreground_mask'
+    out_key = 'volumes/cuticle/segmentation'
 
-def run_workflow():
-    target = 'slurm'
+    mask_path = '../../data/rawdata/sbem-6dpf-1-whole-segmented-shell.n5'
+    mask_key = 'setup0/timepoint0/s0'
 
-    use_curated_affs = False
-    use_lmc = True
-
-    workflow(use_curated_affs, use_lmc, target)
+    offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1],
+               [-4, 0, 0], [0, -4, 0], [0, 0, -4],
+               [-8, 0, 0], [0, -8, 0], [0, 0, -8],
+               [-16, 0, 0], [0, -16, 0], [0, 0, -16]]
+    cuticle_segmentation_workflow(offsets, path,
+                                  fg_key, aff_key, mask_out_key, out_key,
+                                  mask_path, mask_key,
+                                  tmp_folder=tmp_folder, target=target,
+                                  max_jobs=max_jobs, n_threads=n_threads)
 
 
 if __name__ == '__main__':
-    run_workflow()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--path', type=str, default='../data.n5')
+    parser.add_argument('--target', type=str, default='slurm')
+    parser.add_argument('--max_jobs', type=int, default=125)
+    parser.add_argument('--n_threads', type=int, default=48)
+    args = parser.parse_args()
+    segment_cuticle(args.path, args.target, args.max_jobs, args.n_threads)

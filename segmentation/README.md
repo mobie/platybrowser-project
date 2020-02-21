@@ -18,7 +18,4 @@ Training data and weights for the 3d U-Nets are available on zenodo:
 - cuticle: [Training Data](https://zenodo.org/record/3675220/files/cuticle.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/membranes.nn?download=1)
 - nuclei: [Training Data](https://zenodo.org/record/3675220/files/nuclei.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/nuclei.nn?download=1)
 
-The ilastik project and training data for the chromatin segmentation is also [available on zenodo](https://doi.org/10.5281/zenodo.3676534).
-<!---
-TODO ilastik project for carving on zenodo
--->
+The ilastik project and training data for the chromatin segmentation are also [available on zenodo](https://doi.org/10.5281/zenodo.3676534), as well as the [ilastik projects for carving out tissue/body parts and the animal outline](https://doi.org/10.5281/zenodo.3678793).

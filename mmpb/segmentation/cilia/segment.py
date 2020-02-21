@@ -30,19 +30,19 @@ def make_global_config(mask_path, mask_key, shape, block_shape, tmp_folder, n_th
                    'block_shape': block_shape,
                    'block_list_path': block_list_path})
 
-    with open(os.path.join(config_folder), 'w') as f:
+    with open(os.path.join(config_folder, 'global.config'), 'w') as f:
         json.dump(config, f)
 
 
 def run_mws(offsets, path, fg_key, aff_key, out_key,
-            tmp_folder, target, max_jobs):
+            tmp_folder, target, max_jobs,
+            strides=[6, 6, 6], halo=[16, 32, 32]):
 
     config_folder = os.path.join(tmp_folder, 'configs')
     configs = MwsWorkflow.get_config()
-    halo = [16, 32, 32]
 
     config = configs['mws_blocks']
-    config.update({'strides': [6, 6, 6], 'time_limit': 360, 'mem_limit': 12,
+    config.update({'strides': strides, 'time_limit': 360, 'mem_limit': 12,
                    'randomize_strides': True, 'noise_level': 1e-4})
     with open(os.path.join(config_folder, 'mws_blocks.config'), 'w') as f:
         json.dump(config, f)
@@ -72,7 +72,7 @@ def make_fg_mask(path, fg_key, fg_mask_out_key, tmp_folder, target, max_jobs):
         raise RuntimeError("Threshold failed")
 
 
-def find_bounding_boxes(seg_path, seg_key, n_threads):
+def find_bounding_boxes(seg_path, seg_key, n_threads, scale_factor):
     with open_file(seg_path, 'r') as f:
         ds = f[seg_key]
         ds.n_threads = n_threads
@@ -86,8 +86,8 @@ def find_bounding_boxes(seg_path, seg_key, n_threads):
     # could use more efficient impl from scipy/skimage
     for seg_id in unique_segs:
         where_seg = np.where(seg == seg_id)
-        bb = tuple(slice(int(ws.min()),
-                         int(ws.max()) + 1) for ws in where_seg)
+        bb = tuple(slice(int(ws.min()) * sf,
+                         (int(ws.max()) + 1) * sf) for ws, sf in zip(where_seg, scale_factor))
         bbs.append(bb)
 
     return bbs
@@ -142,17 +142,18 @@ def stitching_multicut(offsets, path, aff_key, ws_key,
 
     t = task(tmp_folder=tmp_folder, config_dir=config_folder,
              max_jobs=max_jobs, target=target,
-             path=path, exp_path=exp_path,
-             input_key=aff_key, ws_key=ws_key,
-             output_path=exp_path,
-             assignment_key=assignment_key, output_key=out_key)
+             input_path=path, input_key=aff_key,
+             labels_path=path, labels_key=ws_key,
+             assignment_path=exp_path, assignment_key=assignment_key,
+             problem_path=exp_path,
+             output_path=exp_path, output_key=out_key)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
         raise RuntimeError("Multicut stitching failed")
 
 
-def run_postprocessing(path, out_key, bb, tmp_folder, config_dir,
-                       target, max_jobs, n_threads, offset, min_size):
+def postprocess_and_write(path, out_key, bb, tmp_folder, config_dir,
+                          target, max_jobs, n_threads, offset, min_size):
     task = SizeFilterWorkflow
 
     exp_path = os.path.join(tmp_folder, 'data.n5')
@@ -169,8 +170,6 @@ def run_postprocessing(path, out_key, bb, tmp_folder, config_dir,
     if not ret:
         raise RuntimeError("Size filtering failed")
 
-    # TODO
-    # - support bounding bpx in elf.parallel
     with open_file(exp_path) as fin, open_file(path) as fout:
         ds_in, ds_out = fin[seg_out_key], fout[out_key]
 
@@ -188,6 +187,14 @@ def run_postprocessing(path, out_key, bb, tmp_folder, config_dir,
     return offset
 
 
+def get_scale_factor(path, key, mask_path, mask_key):
+    with open_file(path, 'r') as f, open_file(mask_path, 'r') as fm:
+        shape = f[key].shape
+        mask_shape = fm[mask_key].shape
+    scale_factor = [int(round(sh / float(ms), 0)) for sh, ms in zip(shape, mask_shape)]
+    return scale_factor
+
+
 def cilia_segmentation_workflow(offsets, path,
                                 fg_key, aff_key, fg_mask_out_key, out_key,
                                 mask_path, mask_key,
@@ -201,19 +208,24 @@ def cilia_segmentation_workflow(offsets, path,
     make_global_config(mask_path, mask_key, shape, block_shape, tmp_folder, n_threads)
 
     # make mask for the foreground
+    print("Make foreground mask ...")
     make_fg_mask(path, fg_key, fg_mask_out_key, tmp_folder, target, max_jobs)
 
     # run block-wise mws
+    print("Run mutex watershed ...")
     run_mws(offsets, path, fg_mask_out_key, aff_key, out_key,
             tmp_folder, target, max_jobs)
 
     # find bounding box(es) of current segments mask and set it
-    bbs, full_bb = find_bounding_boxes(mask_path, mask_key, n_threads)
+    scale_factor = get_scale_factor(path, fg_key, mask_path, mask_key)
+    bbs = find_bounding_boxes(mask_path, mask_key, n_threads, scale_factor)
 
     offset = 0
     # run multicut for the bounding boxes
     config_folder = os.path.join(tmp_folder, 'configs')
+    print("Run stitching multicuts ...")
     for ii, bb in enumerate(bbs):
+        print("for bounding box", ii, ":", bb)
         set_bounding_box(tmp_folder, bb)
         tmp_folder_mc = os.path.join(tmp_folder, 'tmps_mc', 'tmp_%i' % ii)
         os.makedirs(tmp_folder_mc, exist_ok=True)
@@ -221,7 +233,7 @@ def cilia_segmentation_workflow(offsets, path,
                            tmp_folder, config_folder, target, max_jobs)
 
         # run filters and update offset
-        offset = run_postprocessing(path, out_key, bb,
-                                    tmp_folder_mc, config_folder,
-                                    target, max_jobs, n_threads,
-                                    offset, size_threshold)
+        offset = postprocess_and_write(path, out_key, bb,
+                                       tmp_folder_mc, config_folder,
+                                       target, max_jobs, n_threads,
+                                       offset, size_threshold)
