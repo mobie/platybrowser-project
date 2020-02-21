@@ -1,8 +1,7 @@
 import os
 from pybdv.metadata import get_data_path
 
-from .base_attributes import (add_cell_criterion_column, base_attributes,
-                              propagate_attributes, write_additional_table_file)
+from .base_attributes import add_cell_criterion_column, base_attributes, propagate_attributes
 from .cell_nucleus_mapping import map_cells_to_nuclei
 from .genes import gene_assignment_table, vc_assignment_table
 from .morphology import write_morphology_cells, write_morphology_nuclei
@@ -10,6 +9,7 @@ from .region_attributes import region_attributes, extrapolated_intensities
 from .cilia_attributes import cilia_morphology
 from .util import get_seg_path, get_seg_key
 from ..files.copy_helper import make_squashed_link
+from ..util import write_additional_table_file
 
 
 def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,

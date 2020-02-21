@@ -10,8 +10,8 @@ from pybdv.metadata import write_n5_metadata, get_data_path, get_bdv_format
 from pybdv.util import get_key, get_number_of_scales, get_scale_factors
 
 from .xml_utils import copy_xml_with_newpath
-from ..attributes.base_attributes import write_additional_table_file
 from ..format_validation import IMAGE_DICT_KEYS
+from ..util import write_additional_table_file
 
 
 def make_squashed_link(src_file, dst_file, override=False):
