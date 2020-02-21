@@ -651,5 +651,42 @@
       2.7512953324334686,
       -1715.6833616510596
     ]
+  },
+  "Figure 7: MMB - PlatyBrowser": {
+    "Layers": {
+      "sbem-6dpf-1-whole-raw": {},
+      "prospr-6dpf-1-whole-arx": {
+        "Color": "Yellow"
+      },
+      "sbem-6dpf-1-whole-segmented-cells": {
+        "MaxValue": 1000,
+        "MinValue": 0,
+        "SelectedLabelIds": [
+          1714,
+          1715,
+          1728
+        ],
+        "ShowSelectedSegmentsIn3d": true
+      }
+    },
+    "Position": [
+        192.287109928721,
+        141.84396047567907,
+        28.05730262369838
+    ],
+    "View": [
+        6.997610703146002,
+        0.0,
+        0.0,
+        -535.5503385142299,
+        0.0,
+        6.997610703146002,
+        0.0,
+        -528.5688160012303,
+        0.0,
+        0.0,
+        6.997610703146002,
+        -196.33408114099817
+    ]
   }
 }
