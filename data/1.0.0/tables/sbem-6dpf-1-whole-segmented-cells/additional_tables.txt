@@ -4,6 +4,7 @@ ganglia_ids.csv
 gene_clusters.csv
 genes.csv
 morphology.csv
+morphology_clusters.csv
 regions.csv
 symmetric_cells.csv
 vc_assignments.csv
