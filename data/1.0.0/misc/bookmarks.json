@@ -406,7 +406,7 @@
       -720.738885334493
     ]
   },
-  "Figure 4B: Structural-expression overlay": {
+  "Figure 4B: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-mhcl4": {
         "Color": "Red"
@@ -442,7 +442,7 @@
       -913.6542888480263
     ]
   },
-  "Figure 4C: Structural-expression overlay": {
+  "Figure 4C: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-mhcl4": {
         "Color": "Red"
@@ -472,7 +472,7 @@
       -1224.3837858833558
     ]
   },
-  "Figure 4D: Structural-expression overlay": {
+  "Figure 4D: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-calmodulin": {
         "Color": "Cyan"
@@ -502,7 +502,7 @@
       -395.86327963234544
     ]
   },
-  "Figure 4E: Structural-expression overlay": {
+  "Figure 4E: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-glt1": {
         "Color": "Green"
@@ -535,7 +535,7 @@
       1189.7685955241589
     ]
   },
-  "Figure 4F: Structural-expression overlay": {
+  "Figure 4F: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-cal2": {
         "Color": "Magenta"
@@ -565,7 +565,7 @@
       -590.2058423872585
     ]
   },
-  "Figure 4G: Structural-expression overlay": {
+  "Figure 4G: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-segmented-glands": {
         "Color": "Cyan"
@@ -592,7 +592,7 @@
       -771.9238505489849
     ]
   },
-  "Figure 4H left: Structural-expression overlay": {
+  "Figure 4H left: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-glt1": {
         "Color": "Green"
@@ -622,7 +622,7 @@
       -1125.8866432472726
     ]
   },
-  "Figure 4H right: Structural-expression overlay": {
+  "Figure 4H right: Expression overlay": {
     "Layers": {
       "prospr-6dpf-1-whole-glt1": {
         "Color": "Green"
