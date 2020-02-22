@@ -46,8 +46,55 @@ def get_cilia_ids(version, nephridia_ids):
     return cilia_ids[id_mask]
 
 
+def add_fig1_bookmarks():
+    version = '1.0.0'
+
+    name = "Figure 1B: Epithelial cell"
+    pos = (133.10314559345912, 147.86196442469097, 54.51589254469087)
+    view = (35.24583885675167, -75.58494534746872, 0.0, 7386.806479095813,
+            75.58494534746872, 35.24583885675167, 0.0, -14653.112956413184,
+            0.0, 0.0, 83.39875970238356, -4546.557822295637)
+    add_bookmark(version, name, Position=pos, View=view)
+
+    name = "Figure 1C: Adult eye"
+    pos = (233.17061242240516, 155.4613397748416, 75.68242384443185)
+    view = (11.86040032641921, 74.88362052558196, 0.0, -13549.004781783864,
+            -74.88362052558196, 11.86040032641921, 0.0, 16238.825933345837,
+            0.0, 0.0, 75.81705427489416, -5738.018436268833)
+    add_bookmark(version, name, Position=pos, View=view)
+
+    name = "Figure 1D: Muscles"
+    pos = (112.4372783127234, 152.60438747748637, 108.0387320192992)
+    view = (162.5205891508259, 0.0, 0.0, -17374.372713899185,
+            0.0, 162.5205891508259, 0.0, -24134.354959842007,
+            0.0, 0.0, 162.5205891508259, -17558.518378884706)
+    add_bookmark(version, name, Position=pos, View=view)
+
+    name = "Figure 1E: Nephridia"
+    pos = (90.01039441808689, 139.10020328862146, 196.3890269963441)
+    view = (109.74645975191238, 53.526924900739324, 0.0, -16455.928263365946,
+            -53.526924900739324, 109.74645975191238, 0.0, -9818.775239394663,
+            0.0, 0.0, 122.10412408025984, -23979.9101203631)
+    add_bookmark(version, name, Position=pos, View=view)
+
+    # Additional bookmarks for suppl figur
+    name = "Suppl. Fig. 1A: Ciliated support cells"
+    pos = (195.47818432008413, 111.9102705017601, 61.26057745239114)
+    view = (61.05278354186309, 14.095145699490478, 0.0, -12646.878842442213,
+            -14.095145699490478, 61.05278354186309, 0.0, -3432.1400319918653,
+            0.0, 0.0, 62.658722541234816, -3838.509525305202)
+    add_bookmark(version, name, Position=pos, View=view)
+
+    name = "Suppl. Fig. 1B: Nephridia: Clathrin pit"
+    pos = (104.81359439167251, 163.98830048765967, 184.47804817270034)
+    view = (106.7946732435894, 59.19725402586242, 0.0, -20020.190645782226,
+            -59.19725402586242, 106.7946732435894, 0.0, -10661.39999378362,
+            0.0, 0.0, 122.10412408025984, -22525.530484163555)
+    add_bookmark(version, name, Position=pos, View=view)
+
+
 def add_fig2_bookmarks():
-    version = '0.6.6'
+    version = '1.0.0'
 
     cell_name = 'sbem-6dpf-1-whole-segmented-cells'
     cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
@@ -108,7 +155,7 @@ def add_fig2_bookmarks():
 
 
 def add_fig5_bookmarks():
-    version = '0.6.6'
+    version = '1.0.0'
     name = "Figure 5C: Gene clustering full body"
     layers = {"sbem-6dpf-1-whole-raw": {},
               "sbem-6dpf-1-whole-segmented-cells": {"Tables": ["gene_clusters"],
@@ -131,7 +178,7 @@ def add_fig5_bookmarks():
 
 
 def add_fig6_bookmarks():
-    version = '0.6.6'
+    version = '1.0.0'
     name = "Figure 6A: Assignment by overlap"
     layers = {"sbem-6dpf-1-whole-raw": {},
               "prospr-6dpf-1-whole-msx": {"Color": "Green"},
@@ -238,6 +285,7 @@ if __name__ == '__main__':
     # name = 'Figure 2C: Muscle segmentation'
     # check_bookmark(ROOT, '0.6.6', name, 1)
 
+    add_fig1_bookmarks()
     # add_fig2_bookmarks()
-    add_fig5_bookmarks()
-    add_fig6_bookmarks()
+    # add_fig5_bookmarks()
+    # add_fig6_bookmarks()
