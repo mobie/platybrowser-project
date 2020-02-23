@@ -152,6 +152,50 @@ def stitching_multicut(offsets, path, aff_key, ws_key,
         raise RuntimeError("Multicut stitching failed")
 
 
+class CopyAndOffset(luigi.Task):
+    out_path = luigi.Parameter()
+    exp_path = luigi.Parameter()
+    path = luigi.Parameter()
+    seg_out_key = luigi.Parameter()
+    offset = luigi.IntParameter()
+    out_key = luigi.Parameter()
+    n_threads = luigi.IntParameter()
+    bb_start = luigi.ListParameter()
+    bb_stop = luigi.ListParameter()
+
+    @staticmethod
+    def add_non_zero(arr, val):
+        arr[arr != 0] += val
+        return arr
+
+    def run(self):
+        bb = tuple(slice(sta, sto) for sta, sto in zip(self.bb_start, self.bb_stop))
+        with open_file(self.exp_path) as fin, open_file(self.path) as fout:
+            ds_in, ds_out = fin[self.seg_out_key], fout[self.out_key]
+
+            # apply offset to the segmentation if it is not 0
+            if self.offset > 0:
+                print("Add offset ...")
+                elf.parallel.apply_operation(ds_in, self.offset, self.add_non_zero,
+                                             n_threads=self.n_threads, roi=bb)
+
+            # copy to the output
+            print("Copy dataset ...")
+            copy_dataset(self.exp_path, self.path, self.seg_out_key, self.out_key,
+                         n_threads=self.n_threads, roi=bb)
+
+            # find new offset
+            print("Find new offset ...")
+            offset = elf.parallel.max(ds_out, n_threads=self.n_threads, roi=bb)
+
+        with open(self.out_path, 'w') as f:
+            json.dump({'offset': int(offset)}, f)
+        print("Copy and offset done ...")
+
+    def output(self):
+        return luigi.LocalTarget(self.out_path)
+
+
 def postprocess_and_write(path, out_key, bb, tmp_folder, config_dir,
                           target, max_jobs, n_threads, offset, min_size):
     task = SizeFilterWorkflow
@@ -170,19 +214,18 @@ def postprocess_and_write(path, out_key, bb, tmp_folder, config_dir,
     if not ret:
         raise RuntimeError("Size filtering failed")
 
-    with open_file(exp_path) as fin, open_file(path) as fout:
-        ds_in, ds_out = fin[seg_out_key], fout[out_key]
+    out_path = os.path.join(tmp_folder, 'copy_and_offset.json')
+    t = CopyAndOffset(out_path=out_path, exp_path=exp_path, path=path,
+                      seg_out_key=seg_out_key, out_key=out_key, offset=offset,
+                      n_threads=n_threads,
+                      bb_start=[b.start for b in bb],
+                      bb_stop=[b.stop for b in bb])
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Copy anf offset failed")
 
-        # apply offset to the segmentation
-        elf.parallel.add(ds_in, offset, out=ds_in, mask=ds_in,
-                         n_threads=n_threads, roi=bb)
-
-        # copy to the output
-        copy_dataset(exp_path, path, seg_out_key, out_key,
-                     n_threads=n_threads, roi=bb)
-
-        # find new offset
-        offset = elf.parallel.max(ds_out, n_threads=n_threads, roi=bb)
+    with open(out_path) as f:
+        offset = json.load(f)['offset']
 
     return offset
 
@@ -230,8 +273,9 @@ def cilia_segmentation_workflow(offsets, path,
         tmp_folder_mc = os.path.join(tmp_folder, 'tmps_mc', 'tmp_%i' % ii)
         os.makedirs(tmp_folder_mc, exist_ok=True)
         stitching_multicut(offsets, path, aff_key, out_key,
-                           tmp_folder, config_folder, target, max_jobs)
+                           tmp_folder_mc, config_folder, target, max_jobs)
 
+        print("Postprocess and write result ...")
         # run filters and update offset
         offset = postprocess_and_write(path, out_key, bb,
                                        tmp_folder_mc, config_folder,

@@ -4,7 +4,6 @@ import luigi
 
 from cluster_tools import MulticutSegmentationWorkflow, LiftedMulticutSegmentationWorkflow
 from cluster_tools.watershed import WatershedWorkflow
-from cluster_tools.affinities import InsertAffinitiesWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.postprocess import SizeFilterAndGraphWatershedWorkflow
 
@@ -14,61 +13,10 @@ from mmpb.extension.segmentation.nucleus_assignments import NucleusAssignmentWor
 from mmpb.extension.segmentation.unmerge import UnmergeWorkflow
 
 
-# TODO expose this
-# switch between test data and full dataset
-PATH = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
-TMP_ROOT = 'tmp_multicut_cells'
-EXP_ROOT = '/g/kreshuk/data/arendt/platyneris_v1/exp_data'
-
-# PATH = './test_data/data2.n5'
-# TMP_ROOT = './test_data/tmp_folders2'
-# EXP_ROOT = './test_data/exp_data2'
-
-
-def insert_tissue(max_jobs, target):
-    tmp_folder = os.path.join(TMP_ROOT, 'tmp_insert')
-    config_folder = 'configs'
-
-    block_shape = [64, 512, 512]
-    chunks = [1] + [bs // 2 for bs in block_shape]
-    configs = InsertAffinitiesWorkflow.get_config()
-    conf = configs['insert_affinities']
-    # make sure that this is the only cuticle and neuropil label
-    ignore_ids = [1, 2]
-    conf.update({'time_limit': 120, 'mem_limit': 6, 'chunks': chunks,
-                 'zero_objects_list': ignore_ids, 'erode_by': 3, 'dilate_by': 2})
-    with open(os.path.join(config_folder, 'insert_affinities.config'), 'w') as f:
-        json.dump(conf, f)
-
-    path = PATH
-    in_key = 'volumes/affinities/s1'
-    out_key = 'volumes/curated_affinities/s1'
-    obj_key = 'volumes/tissue/for_insert/s3'
-    offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
-
-    t = InsertAffinitiesWorkflow(tmp_folder=tmp_folder, config_dir=config_folder,
-                                 max_jobs=max_jobs, target=target,
-                                 input_path=path, input_key=in_key,
-                                 output_path=path, output_key=out_key,
-                                 objects_path=path, objects_key=obj_key,
-                                 offsets=offsets)
-    ret = luigi.build([t], local_scheduler=True)
-    assert ret
-
-
-def run_watershed(use_curated_affs, max_jobs, max_threads, target):
-    config_folder = './configs'
-    path = PATH
-    mask_key = 'volumes/masks/carved/s5'
-
-    if use_curated_affs:
-        input_key = 'volumes/curated_affinities/s1'
-        output_key = 'volumes/segmentation/curated_watershed'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_ws_curated')
-    else:
-        input_key = 'volumes/affinities/s1'
-        output_key = 'volumes/segmentation/watershed'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_ws')
+def run_watershed(path, aff_path, use_curated_affs,
+                  mask_path, mask_key,
+                  tmp_folder, target, max_jobs):
+    config_folder = os.path.join(tmp_folder, 'configs')
 
     configs = WatershedWorkflow.get_config()
     ws_config = configs['watershed']
@@ -87,14 +35,24 @@ def run_watershed(use_curated_affs, max_jobs, max_threads, target):
     with open(os.path.join(config_folder, 'write.config'), 'w') as f:
         json.dump(write_config, f)
 
-    task = WatershedWorkflow(tmp_folder=tmp_folder, config_dir=config_folder,
+    if use_curated_affs:
+        aff_key = 'volumes/cells/curated_affinities/s1'
+        output_key = 'volumes/cells/curated_watershed'
+        tmp_ws = os.path.join(tmp_folder, 'curated_ws')
+    else:
+        aff_key = 'volumes/cells/affinities/s1'
+        output_key = 'volumes/cells/watershed'
+        tmp_ws = os.path.join(tmp_folder, 'curated_ws')
+
+    task = WatershedWorkflow(tmp_folder=tmp_ws, config_dir=config_folder,
                              max_jobs=max_jobs, target=target,
-                             input_path=path, input_key=input_key,
+                             input_path=aff_path, input_key=aff_key,
                              mask_path=path, mask_key=mask_key,
                              output_path=path, output_key=output_key,
                              two_pass=False)
     ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Watersheds failed"
+    if not ret:
+        raise RuntimeError("Watershed failed")
 
 
 def run_mc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target):
@@ -384,7 +342,11 @@ def unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, min
 
 # TODO need to accept path + bounding box
 # TODO move insert affinities to it's own function
-def workflow(use_curated_affs, use_lmc, target, max_jobs):
+# def cell_segmentation_workflow(use_curated_affs, use_lmc, target, max_jobs):
+def cell_segmentation_workflow(path, aff_path,
+                               mask_path, mask_key,
+                               use_lmc, use_curated_affs,
+                               tmp_folder, target, max_jobs):
     # number of jobs and threads for target
     assert target in ('slurm', 'local')
     if target == 'local':
@@ -394,13 +356,12 @@ def workflow(use_curated_affs, use_lmc, target, max_jobs):
         max_jobs_mc = 15
         max_threads = 8
 
-    config_dir = 'configs'
+    config_dir = os.path.join(tmp_folder, 'configs')
     write_default_global_config(config_dir)
 
-    # curate affinities, run watersheds, and (lifted) multicut
-    if use_curated_affs:
-        insert_tissue(max_jobs, target)
-    run_watershed(use_curated_affs, max_jobs, max_threads, target)
+    run_watershed(path, aff_path, use_curated_affs,
+                  mask_path, mask_key,
+                  tmp_folder, target, max_jobs)
     if use_lmc:
         run_lmc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target)
     else:
@@ -408,17 +369,7 @@ def workflow(use_curated_affs, use_lmc, target, max_jobs):
 
     # postprocessing:
     # 1.) compute sizes for size threshold
-    run_morphology(use_curated_affs, use_lmc, max_jobs, target, 'result')
-
-    # size threshold to fit into uint16
-    # size_threshold = 27020
-    # size threshold to fit into int16
-    size_threshold = 88604
-    if size_threshold is None:
-        return
-
-    # 2.) filter sizes with graph watershed
-    filter_size(size_threshold, use_curated_affs, use_lmc, max_jobs, max_threads, target)
+    run_morphology(use_curated_affs, run_lmc, max_jobs, target, 'result')
 
     # we unmerge only if we also use lmc, because this takes nuclei into account
     if use_lmc:
@@ -426,3 +377,12 @@ def workflow(use_curated_affs, use_lmc, target, max_jobs):
         map_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, 'filtered_size')
         # 4.) unmerge cells with more than one assigned nucleus
         unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, size_threshold)
+
+    # TODO use num segment size threshold
+    # size threshold to fit into uint16
+    # size_threshold = 27020
+    # size threshold to fit into int16
+    size_threshold = 88604
+
+    # 5.) filter sizes with graph watershed
+    filter_size(size_threshold, use_curated_affs, use_lmc, max_jobs, max_threads, target)

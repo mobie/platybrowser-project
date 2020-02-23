@@ -1,20 +1,14 @@
 name:
     platybrowser
 channels:
-    - cpape
     - conda-forge
+    - cpape
 dependencies:
-    - affogato
-    - cluster_tools
-    - h5py
-    - luigi
-    - nifty
-    - paintera_tools
-    - pandas
-    - pybdv
-    - s3fs
-    - scikit-image
-    - scikit-learn
-    - vigra
-    - z5py
+    - affogato >=0.2.0,<0.3.0
+    - cluster_tools >=0.3.1<0.4.0
+    - elf >=0.2.2,<0.3.0
     - mahotas
+    - paintera_tools >=0.2.1,<0.3.0
+    - pandas
+    - s3fs
+    - scikit-learn
