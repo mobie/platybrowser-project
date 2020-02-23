@@ -95,12 +95,12 @@ def plot_cilia_per_cell(version):
     sns.set(style="whitegrid", font="Arial", font_scale=1.4)
     ax = sns.barplot(x="Cells", y="Number of Cilia", hue="Side", data=count_data)
     ax.set_title("Cilia distribution of nephridia cells")
-    ax.set_xlabel('')
+    ax.set_xlabel("Nephridia Cells")
     ax.set_xticks([])
     plt.show()
 
 
 if __name__ == '__main__':
-    version = '0.6.5'
+    version = '1.0.0'
     # check_cell_ids(version)
     plot_cilia_per_cell(version)

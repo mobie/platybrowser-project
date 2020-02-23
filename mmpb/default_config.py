@@ -47,11 +47,13 @@ def get_default_block_shape():
     return DEFAULT_BLOCK_SHAPE
 
 
-def write_default_global_config(config_folder):
+def write_default_global_config(config_folder, roi_begin=None, roi_end=None):
     os.makedirs(config_folder, exist_ok=True)
     global_config = BaseClusterTask.default_global_config()
     global_config['shebang'] = get_default_shebang()
     global_config['block_shape'] = get_default_block_shape()
     global_config['group'] = get_default_group()
+    global_config['roi_begin'] = roi_begin
+    global_config['roi_end'] = roi_end
     with open(os.path.join(config_folder, 'global.config'), 'w') as f:
         json.dump(global_config, f)
