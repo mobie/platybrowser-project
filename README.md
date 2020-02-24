@@ -72,6 +72,10 @@ The folder `segmentation` contains the scripts used to generate segmentations fo
 The folder `registration` contains the transformations for different registration versions as well as the scripts
 to generate the transformations for a given version. You can use the script `registration/apply_registration.py` to apply a registration transformation to a new input file.
 
+### Analysis
+
+The folder `analysis` contains several scripts used for further data analyss, most notabbly cluster analysis based gene expression and cellular morphology.
+
 ### Installation
 
 We provide conda environments to run the python scripts. In order to install the main environment used to run the segmentation scripts and perform version updates, run
