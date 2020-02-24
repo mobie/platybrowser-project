@@ -65,8 +65,8 @@ louvain:
 All files for the final clustering (many different combinations of parameters are tried) - the final clusters are saved
 in the file chosen_clusters.csv & the image of this overlaid on the UMAP is saved as chosen_louvain.png  
 
-morph_heatmap: 
-Heatmaps of morphology per morphology cluster.
+morph_heatmap:   
+Heatmaps of morphology per morphology cluster.  
 
 morph_per_gene:  
 Heatmaps of morphology vs expression of particular genes.  
