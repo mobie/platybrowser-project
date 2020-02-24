@@ -2244,6 +2244,16 @@
     },
     "Type": "Mask"
   },
+  "sbem-6dpf-1-whole-segmented-midline": {
+    "Color": "White",
+    "MaxValue": 1,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-segmented-midline.xml",
+      "remote": "remote/sbem-6dpf-1-whole-segmented-midline.xml"
+    },
+    "Type": "Mask"
+  },
   "sbem-6dpf-1-whole-segmented-muscle": {
     "Color": "White",
     "MaxValue": 1,
