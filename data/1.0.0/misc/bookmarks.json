@@ -909,6 +909,37 @@
       -22525.530484163555
     ]
   },
+  "Suppl. Fig. 2F: Morphology Clustering Full Body": {
+	"Layers": {
+      "sbem-6dpf-1-whole-raw": {},
+      "sbem-6dpf-1-whole-segmented-cells": {
+        "ColorByColumn": "clusters",
+        "ColorMap": "Glasbey",
+        "Tables": [
+          "morphology_clusters"
+        ]
+      }
+    },
+    "Position": [
+      14.336284436072049,
+      231.01765825291784,
+      217.09553489633
+    ],
+    "View": [
+      -1.907526694743768,
+      2.3355679099972035,
+      0.06360617842372362,
+      915.9807986794217,
+      -0.9742931264238693,
+      -0.8697764801652066,
+      2.718790738114475,
+      367.6641394736041,
+      2.1235998003262138,
+      1.698879840260972,
+      1.3044970202003874,
+      -706.1162514871149
+    ]
+  },
   "Symmetric cell pairs": {
     "Layers": {
       "sbem-6dpf-1-whole-raw": {},
