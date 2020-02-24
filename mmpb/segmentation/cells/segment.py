@@ -46,12 +46,51 @@ def run_watershed(path, aff_path, use_curated_affs,
     task = WatershedWorkflow(tmp_folder=tmp_ws, config_dir=config_folder,
                              max_jobs=max_jobs, target=target,
                              input_path=aff_path, input_key=aff_key,
-                             mask_path=path, mask_key=mask_key,
+                             mask_path=mask_path, mask_key=mask_key,
                              output_path=path, output_key=output_key,
                              two_pass=False)
     ret = luigi.build([task], local_scheduler=True)
     if not ret:
         raise RuntimeError("Watershed failed")
+
+
+def set_mc_config(configs, config_folder, max_threads,
+                  subproblem_task_name, workflow_task_names,
+                  solver_name):
+    subprob_config = configs[subproblem_task_name]
+    subprob_config.update({'threads_per_job': max_threads,
+                           'time_limit': 1200,
+                           'mem_limit': 384,
+                           'time_limit_solver': 60*60*6})
+    with open(os.path.join(config_folder, '%s.config' % subproblem_task_name), 'w') as f:
+        json.dump(subprob_config, f)
+
+    feat_config = configs['block_edge_features']
+    feat_config.update({'offsets': [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]})
+    with open(os.path.join(config_folder, 'block_edge_features.config'), 'w') as f:
+        json.dump(feat_config, f)
+
+    exponent = 1.
+    weight_edges = True
+    costs_config = configs['probs_to_costs']
+    costs_config.update({'weight_edges': weight_edges,
+                         'weighting_exponent': exponent,
+                         'mem_limit': 16})
+    with open(os.path.join(config_folder, 'probs_to_costs.config'), 'w') as f:
+        json.dump(costs_config, f)
+
+    # set number of threads for sum jobs
+    tasks = ['merge_sub_graphs', 'merge_edge_features', 'map_edge_ids'] + workflow_task_names
+    for tt in tasks:
+        config = configs[tt]
+        config.update({'threads_per_job': max_threads if tt != 'reduce_problem' else 8,
+                       'mem_limit': 256,
+                       'time_limit': 1440,
+                       'qos': 'normal',
+                       'agglomerator': solver_name,
+                       'time_limit_solver': 60*60*15})
+        with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
+            json.dump(config, f)
 
 
 def run_mc(path, aff_path, use_curated_affs,
@@ -75,45 +114,12 @@ def run_mc(path, aff_path, use_curated_affs,
     exp_path = os.path.join(tmp_mc, 'problem.n5')
 
     configs = task.get_config()
-    subprob_config = configs['solve_subproblems']
-    subprob_config.update({'threads_per_job': max_threads,
-                           'time_limit': 720,
-                           'mem_limit': 64,
-                           'time_limit_solver': 60*60*6})
-    with open(os.path.join(config_folder, 'solve_subproblems.config'), 'w') as f:
-        json.dump(subprob_config, f)
-
-    feat_config = configs['block_edge_features']
-    feat_config.update({'offsets': [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]})
-    with open(os.path.join(config_folder, 'block_edge_features.config'), 'w') as f:
-        json.dump(feat_config, f)
-
-    exponent = 1.
-    weight_edges = True
-    costs_config = configs['probs_to_costs']
-    costs_config.update({'weight_edges': weight_edges,
-                         'weighting_exponent': exponent,
-                         'mem_limit': 16})
-    with open(os.path.join(config_folder, 'probs_to_costs.config'), 'w') as f:
-        json.dump(costs_config, f)
-
-    # set number of threads for sum jobs
-    tasks = ['merge_sub_graphs', 'merge_edge_features', 'map_edge_ids',
-             'reduce_problem', 'solve_global']
-    for tt in tasks:
-        config = configs[tt]
-        config.update({'threads_per_job': max_threads if tt != 'reduce_problem' else 8,
-                       'mem_limit': 128,
-                       'time_limit': 1440,
-                       'qos': 'normal',
-                       'agglomerator': 'decomposition-gaec',
-                       'time_limit_solver': 60*60*15})
-        with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
-            json.dump(config, f)
-
+    set_mc_config(configs, config_folder, max_threads,
+                  'solve_subproblems', ['reduce_problem', 'solve_global'],
+                  'decomposition-gaec')
     t = task(tmp_folder=tmp_mc, config_dir=config_folder, target=target,
              max_jobs=max_jobs, max_jobs_multicut=max_jobs_mc,
-             input_path=path, input_key=input_key,
+             input_path=aff_path, input_key=input_key,
              ws_path=path, ws_key=ws_key,
              problem_path=exp_path,
              node_labels_key=assignment_key,
@@ -140,7 +146,7 @@ def run_lmc(path, aff_path, use_curated_affs,
         tmp_lmc = os.path.join(tmp_folder, 'tmp_lmc_curated')
 
         clear_path, clear_key = region_path, region_key
-        node_label_dict = {'ignore_transition': (path, clear_key)}
+        node_label_dict = {'ignore_transition': (clear_path, clear_key)}
     else:
         input_key = 'volumes/cells/affinities/s1'
         ws_key = 'volumes/cells/watershed'
@@ -153,26 +159,11 @@ def run_lmc(path, aff_path, use_curated_affs,
     exp_path = os.path.join(tmp_lmc, 'problem.n5')
 
     configs = task.get_config()
-    subprob_config = configs['solve_lifted_subproblems']
-    subprob_config.update({'threads_per_job': max_threads,
-                           'time_limit': 1200,
-                           'mem_limit': 384,
-                           'time_limit_solver': 60*60*4})
-    with open(os.path.join(config_folder,
-                           'solve_lifted_subproblems.config'), 'w') as f:
-        json.dump(subprob_config, f)
-
-    tasks = ['reduce_lifted_problem', 'solve_lifted_global', 'clear_lifted_edges_from_labels']
-    for tt in tasks:
-        config = configs[tt]
-        config.update({'threads_per_job': max_threads,
-                       'mem_limit': 256,
-                       'time_limit': 2160,
-                       # 'agglomerator': 'greedy-additive',
-                       'agglomerator': 'kernighan-lin',
-                       'time_limit_solver': 60*60*15})
-        with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
-            json.dump(config, f)
+    set_mc_config(configs, config_folder, max_threads,
+                  'solve_lifted_subproblems',
+                  ['reduce_lifted_problem', 'solve_lifted_global',
+                   'clear_lifted_edges_from_labels', 'sparse_lifted_neighborhood'],
+                  'kernighan-lin')
 
     tasks = ['block_node_labels', 'merge_node_labels']
     for tt in tasks:
@@ -181,14 +172,9 @@ def run_lmc(path, aff_path, use_curated_affs,
         with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
             json.dump(config, f)
 
-    conf = configs['sparse_lifted_neighborhood']
-    conf.update({'time_limit': 180, 'mem_limit': 256, 'threads_per_job': max_threads})
-    with open(os.path.join(config_folder, 'sparse_lifted_neighborhood.config'), 'w') as f:
-        json.dump(conf, f)
-
     t = task(tmp_folder=tmp_lmc, config_dir=config_folder, target=target,
              max_jobs=max_jobs, max_jobs_multicut=max_jobs_mc,
-             input_path=path, input_key=input_key,
+             input_path=aff_path, input_key=input_key,
              ws_path=path, ws_key=ws_key,
              problem_path=exp_path, node_labels_key=assignment_key,
              output_path=path, output_key=out_key,
