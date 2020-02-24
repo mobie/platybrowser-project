@@ -83,10 +83,9 @@ def find_merges(job_id, config_path):
 
     # load the overlap dictionary
     n_chunks = z5py.File(path)[key].number_of_chunks
-    ovlp_path = os.path.join(path, key)
     overlaps = {}
     for chunk_id in range(n_chunks):
-        cdict, _ = ndist.deserializeOverlapChunk(ovlp_path, (chunk_id,))
+        cdict, _ = ndist.deserializeOverlapChunk(path, key, (chunk_id,))
         overlaps.update(cdict)
 
     # find objects with merges according to the min overlap

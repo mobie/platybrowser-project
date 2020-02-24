@@ -6,7 +6,7 @@ from pybdv.util import get_key
 
 
 def make_midgut_volume():
-    table_path = './corrected_regions_1.csv'
+    table_path = 'midgut_table.csv'
     table = pd.read_csv(table_path, sep='\t')
     label_ids = table['label_id'].values
     midgut = table['midgut'].values
@@ -24,7 +24,7 @@ def make_midgut_volume():
         seg = ds[:]
         chunks = ds.chunks
 
-    midgut_seg = 255 * np.isin(seg, midgut_ids).astype('int8')
+    midgut_seg = 255 * np.isin(seg, midgut_ids).astype('uint8')
     out_path = './sbem-6dpf-1-whole-segmented-midgut.n5'
     factors = 3 * [[2, 2, 2]]
     make_bdv(midgut_seg, out_path, factors, resolution=res, unit='micrometer',

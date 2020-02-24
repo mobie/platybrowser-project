@@ -8,7 +8,6 @@ from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.postprocess import SizeFilterAndGraphWatershedWorkflow
 
 from mmpb.default_config import write_default_global_config
-from mmpb.extension.segmentation.nucleus_assignments import NucleusAssignmentWorkflow
 from mmpb.extension.segmentation.unmerge import UnmergeWorkflow
 
 
@@ -104,7 +103,7 @@ def run_mc(path, aff_path, use_curated_affs,
         ws_key = 'volumes/cells/curated_watershed'
         assignment_key = 'node_labels/cells/curated_mc/result'
         out_key = 'volumes/cells/curated_mc/result'
-        tmp_mc = os.path.join(tmp_folder, 'tmp_mc_curated')
+        tmp_mc = os.path.join(tmp_folder, 'tmp_curated_mc')
     else:
         input_key = 'volumes/cells/affinities/s1'
         ws_key = 'volumes/cells/watershed'
@@ -141,16 +140,16 @@ def run_lmc(path, aff_path, use_curated_affs,
     if use_curated_affs:
         input_key = 'volumes/cells/curated_affinities/s1'
         ws_key = 'volumes/cells/curated_watershed'
-        assignment_key = 'node_labels/curated_lmc/result'
+        assignment_key = 'node_labels/cells/curated_lmc/result'
         out_key = 'volumes/cells/curated_lmc/result'
-        tmp_lmc = os.path.join(tmp_folder, 'tmp_lmc_curated')
+        tmp_lmc = os.path.join(tmp_folder, 'tmp_curated_lmc')
 
         clear_path, clear_key = region_path, region_key
         node_label_dict = {'ignore_transition': (clear_path, clear_key)}
     else:
         input_key = 'volumes/cells/affinities/s1'
         ws_key = 'volumes/cells/watershed'
-        assignment_key = 'node_labels/lmc/result'
+        assignment_key = 'node_labels/cells/lmc/result'
         out_key = 'volumes/cells/lmc/result'
         tmp_lmc = os.path.join(tmp_folder, 'tmp_lmc')
         clear_path = clear_key = node_label_dict = None
@@ -196,7 +195,7 @@ def run_morphology(path, use_curated_affs, use_lmc, tmp_folder, target, max_jobs
     prefix = 'lmc' if use_lmc else 'mc'
 
     if use_curated_affs:
-        this_tmp = os.path.join(tmp_folder, 'tmp_%s_curated' % prefix)
+        this_tmp = os.path.join(tmp_folder, 'tmp_curated_%s' % prefix)
         input_key = 'volumes/cells/curated_%s/%s' % (prefix, stage)
         task_prefix = 'curated_%s_%s' % (prefix, stage)
         prefix = 'curated_%s' % prefix
@@ -215,33 +214,6 @@ def run_morphology(path, use_curated_affs, use_lmc, tmp_folder, target, max_jobs
         raise RuntimeError("Morphology failed")
 
 
-def map_nuclei(path, use_curated_affs,
-               tmp_folder, target, max_jobs,
-               max_overlap=False):
-    task = NucleusAssignmentWorkflow
-    config_folder = os.path.join(tmp_folder, 'configs')
-
-    prefix = 'lmc'
-    identifier = 'result'
-    nucleus_seg_key = 'volumes/nuclei/segmentation'
-
-    if use_curated_affs:
-        prefix = 'curated_%s' % prefix
-
-    out_key = None
-    this_tmp = os.path.join(tmp_folder, 'tmp_%s' % prefix)
-    seg_key = 'volumes/cells/%s/%s' % (prefix, identifier)
-    t = task(tmp_folder=this_tmp, max_jobs=max_jobs,
-             target=target, config_dir=config_folder,
-             path=path, seg_key=seg_key,
-             nucleus_seg_key=nucleus_seg_key,
-             output_key=out_key, prefix='%s_%s' % (prefix, identifier),
-             max_overlap=max_overlap)
-    ret = luigi.build([t], local_scheduler=True)
-    if not ret:
-        raise RuntimeError("Map nuclei failed")
-
-
 def unmerge_nuclei(path, use_curated_affs,
                    tmp_folder, target, max_jobs, max_threads):
     task = UnmergeWorkflow
@@ -253,10 +225,11 @@ def unmerge_nuclei(path, use_curated_affs,
 
     tmp_unmerge = os.path.join(tmp_folder, 'tmp_%s' % prefix)
     exp_path = os.path.join(tmp_unmerge, 'problem.n5')
-    assignment_key = 'node_labels/cells/%s/result' % prefix
 
+    seg_key = 'volumes/cells/%s/result' % prefix
+    assignment_key = 'node_labels/cells/%s/result' % prefix
     node_label_key = 'node_overlaps/nuclei'
-    nucleus_mapping_key = 'nuclei_overlaps/%s_filtered_size' % prefix
+    nucleus_seg_key = 'volumes/nuclei/segmentation'
 
     ws_key = 'volumes/cells/curated_watershed' if use_curated_affs else 'volumes/cells/watershed'
     out_key = 'volumes/cells/%s/filtered_unmerge' % prefix
@@ -265,11 +238,11 @@ def unmerge_nuclei(path, use_curated_affs,
     configs = task.get_config()
     config = configs['fix_merges']
     config.update({'threads_per_job': max_threads, 'mem_limit': 256, 'time_limit': 240})
-    with open('./configs/fix_merges.config', 'w') as f:
+    with open(os.path.join(config_folder, 'fix_merges.config'), 'w') as f:
         json.dump(config, f)
     config = configs['find_merges']
     config.update({'mem_limit': 32})
-    with open('./configs/find_merges.config', 'w') as f:
+    with open(os.path.join(config_folder, 'find_merges.config'), 'w') as f:
         json.dump(config, f)
 
     # clear the ids of the objects mapped to npil / cuticle
@@ -278,10 +251,12 @@ def unmerge_nuclei(path, use_curated_affs,
     # we set the min nucleus overlap to ~ quarter of the median nucleus size
     min_nucleus_overlap = 25000
 
-    t = task(tmp_folder=tmp_folder, max_jobs=max_jobs,
+    t = task(tmp_folder=tmp_unmerge, max_jobs=max_jobs,
              target=target, config_dir=config_folder,
-             path=path, problem_path=exp_path, ws_key=ws_key,
-             assignment_key=assignment_key, nucleus_mapping_key=nucleus_mapping_key,
+             path=path, problem_path=exp_path,
+             ws_key=ws_key, seg_key=seg_key,
+             nucleus_seg_key=nucleus_seg_key,
+             assignment_key=assignment_key,
              graph_key='s0/graph', features_key='s0/costs', node_label_key=node_label_key,
              ass_out_key=ass_out_key, out_key=out_key, clear_ids=clear_ids,
              min_overlap=min_nucleus_overlap)
@@ -370,14 +345,11 @@ def cell_segmentation_workflow(path, aff_path,
     identifier = 'result'
     # we unmerge only if we also use lmc, because this takes nuclei into account
     if use_lmc:
-        # 2.) map nuclei to cells
-        map_nuclei(path, use_curated_affs,
-                   tmp_folder, target, max_jobs)
-        # 3.) unmerge cells with more than one assigned nucleus
+        # 2.) unmerge cells with more than one assigned nucleus
         unmerge_nuclei(path, use_curated_affs,
                        tmp_folder, target, max_jobs, max_threads)
         identifier = 'filtered_unmerge'
 
-    # 4.) filter sizes with graph watershed
+    # 3.) filter sizes with graph watershed
     filter_size(path, use_curated_affs, use_lmc, identifier,
                 target, tmp_folder, max_jobs, max_threads)

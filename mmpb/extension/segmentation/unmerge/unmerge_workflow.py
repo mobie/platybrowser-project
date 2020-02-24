@@ -4,6 +4,7 @@ import luigi
 from cluster_tools.cluster_tasks import WorkflowBase
 from cluster_tools import write as write_tasks
 from cluster_tools.postprocess import SizeFilterAndGraphWatershedWorkflow
+from cluster_tools.node_labels import NodeLabelWorkflow
 
 from . import fix_merges as fix_tasks
 from . import find_merges as find_tasks
@@ -14,8 +15,9 @@ class UnmergeWorkflow(WorkflowBase):
     problem_path = luigi.Parameter()
 
     ws_key = luigi.Parameter()
+    nucleus_seg_key = luigi.Parameter()
+    seg_key = luigi.Parameter()
     assignment_key = luigi.Parameter()
-    nucleus_mapping_key = luigi.Parameter()
 
     graph_key = luigi.Parameter()
     features_key = luigi.Parameter()
@@ -28,11 +30,23 @@ class UnmergeWorkflow(WorkflowBase):
     min_overlap = luigi.IntParameter()
     from_costs = luigi.BoolParameter(default=True)
     relabel = luigi.BoolParameter(default=True)
+
     # clear ids that will not be fixed (for cuticle and neuropil objs)
     clear_ids = luigi.ListParameter(default=[])
     min_size = luigi.IntParameter(default=None)
 
-    def filter_sizes(self, dep, ):
+    def nucleus_labels(self, dep, out_key):
+        dep = NodeLabelWorkflow(tmp_folder=self.tmp_folder, max_jobs=self.max_jobs,
+                                target=self.target, config_dir=self.config_dir,
+                                input_path=self.path, input_key=self.nucleus_seg_key,
+                                ws_path=self.path, ws_key=self.seg_key,
+                                output_path=self.path, output_key=out_key,
+                                prefix='nuclei-node-labels', max_overlap=False,
+                                ignore_label=0, serialize_counts=True,
+                                dependency=dep)
+        return dep
+
+    def filter_sizes(self, dep):
         write_task = getattr(write_tasks, self._get_task_name('Write'))
         tmp_out_key = self.out_key + '_tmp'
         tmp_ass_key = self.ass_out_key + '_tmp'
@@ -69,16 +83,21 @@ class UnmergeWorkflow(WorkflowBase):
 
     def requires(self):
         dep = self.dependency
-        # 1.) find the objects that have more than one nucleus assigned (according to the overlap threshold)
+
+        # 1.) get nucleus node labels
+        nucleus_mapping_key = 'unmerge/nucleus_mapping'
+        dep = self.nucleus_labels(dep, nucleus_mapping_key)
+
+        # 2.) find the objects that have more than one nucleus assigned (according to the overlap threshold)
         merge_object_path = os.path.join(self.tmp_folder, 'merge_objects.json')
         find_task = getattr(find_tasks, self._get_task_name('FindMerges'))
         dep = find_task(tmp_folder=self.tmp_folder, config_dir=self.config_dir,
                         dependency=dep, max_jobs=1,
-                        path=self.path, key=self.nucleus_mapping_key,
+                        path=self.path, key=nucleus_mapping_key,
                         min_overlap=self.min_overlap,
                         out_path=merge_object_path, clear_ids=self.clear_ids)
 
-        # 2.) resolve the objects with merges using graph watershed
+        # 3.) resolve the objects with merges using graph watershed
         fix_task = getattr(fix_tasks, self._get_task_name('FixMerges'))
 
         # check if we need to write to tempory (if we filter sizes later)
@@ -94,7 +113,7 @@ class UnmergeWorkflow(WorkflowBase):
                        out_key=ass_out_key, from_costs=self.from_costs, relabel=self.relabel,
                        merge_object_path=merge_object_path)
 
-        # 3.) filter sizes if specified
+        # 4.) filter sizes if specified
         if self.min_size is not None:
             dep = self.filter_sizes(dep)
         elif self.out_key is not None:
@@ -120,5 +139,6 @@ class UnmergeWorkflow(WorkflowBase):
                         'find_merges':
                         find_tasks.FindMergesLocal.default_task_config(),
                         'write':
-                        write_tasks.WriteLocal.default_task_config()})
+                        write_tasks.WriteLocal.default_task_config(),
+                        **NodeLabelWorkflow.get_config()})
         return configs

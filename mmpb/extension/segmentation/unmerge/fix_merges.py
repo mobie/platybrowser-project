@@ -214,8 +214,7 @@ def fix_merges(job_id, config_path):
 
     # load the graph
     fu.log("reading graph from path in problem: %s" % graph_key)
-    graph = ndist.Graph(os.path.join(problem_path, graph_key),
-                        numberOfThreads=n_threads)
+    graph = ndist.Graph(problem_path, graph_key, numberOfThreads=n_threads)
 
     # load the assignments
     ds = f[assignment_key]
