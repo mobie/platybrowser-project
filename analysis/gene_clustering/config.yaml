@@ -1,0 +1,87 @@
+segmentation_paths:
+  cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/images/local/sbem-6dpf-1-whole-segmented-cells.xml'
+
+raw_paths:
+  full: 'W:/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.xml'
+
+table_paths:
+  cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/default.csv'
+  genes_overlap: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/genes.csv'
+  genes_vc: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/vc_assignments.csv'
+  cell_nuc_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/cells_to_nuclei.csv'
+  cell_region_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/regions.csv'
+  cell_ganglia_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/ganglia_ids.csv'
+  morph_nuclei: 'Z:/Kimberly/Projects/SBEM_analysis/src/platybrowser-backend/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-nuclei/morphology.csv'
+  morph_cells: 'Z:/Kimberly/Projects/SBEM_analysis/src/platybrowser-backend/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/morphology.csv'
+  # leave as '' to not exclude intensity regions
+#  extrapolated_intensity_cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/extrapolated_intensity_correction.csv'
+  extrapolated_intensity_cell: ''
+
+dataset_id: '1-0-0'
+workdir: 'Z:/Kimberly/Projects/SBEM_analysis/Data/Derived/snakemake_genes/1-0-0'
+
+# only keep cells within filtered_regions e.g. ['head', 'vnc'], leave as [] to do whole animal
+filtered_regions: []
+# genes to exclude from clusterings
+exclude_genes: ['edu3to4at6dpf', 'edu4to5at6dpf', 'edu5to6at6dpf', 'edu42to48']
+min_size_cell_px: 88741.0
+max_size_cell_px: 600000000.0
+max_bounding_box_size_cell: 454000
+
+cluster_parameters:
+
+#  vc:
+#    chosen_umap_k: 20
+#    chosen_umap_mindist: 0.1
+#    chosen_louvain_k: 20
+#    chosen_louvain_res: 1.2
+
+  overlap:
+    chosen_umap_k: 20
+    chosen_umap_mindist: 0.1
+    chosen_louvain_k: 20
+    chosen_louvain_res: 1.2
+
+  vc_unique:
+    chosen_umap_k: 10
+    chosen_umap_mindist: 0.1
+    chosen_louvain_k: 10
+    chosen_louvain_res: 1.4
+
+cluster_parameters_binary:
+
+  vc_binary_unique:
+    chosen_umap_k: 20
+    chosen_umap_mindist: 0.01
+    chosen_louvain_k: 10
+    chosen_louvain_res: 1.2
+
+  overlap_binary_unique:
+    chosen_umap_k: 20
+    chosen_umap_mindist: 0.1
+    chosen_louvain_k: 20
+    chosen_louvain_res: 1.2
+
+#  vc_binary:
+#    chosen_umap_k: 0
+#    chosen_umap_mindist: 0
+#    chosen_louvain_k: 0
+#    chosen_louvain_res: 0
+
+#  overlap_binary:
+#    chosen_umap_k: 0
+#    chosen_umap_mindist: 0
+#    chosen_louvain_k: 0
+#    chosen_louvain_res: 0
+
+gene_assignment_types: ['overlap', 'vc']
+gene_overlap_threshold: 0.5
+gene_vc_threshold: 0
+
+UMAP:
+  ks: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+  mindist: [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+
+louvain:
+  ks: [5, 10, 15, 20]
+  resolution: [0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]

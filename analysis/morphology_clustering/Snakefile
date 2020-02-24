@@ -1,0 +1,249 @@
+configfile: 'config.yaml'
+workdir: config['workdir']
+
+rule all:
+    input:
+        # QC plots / any stats before subsetting of morphology data
+        directory("QC"),
+        directory("xyz_gradient"),
+        directory(expand("morph_vs_genes/morph_genes_{gene_assignment}", gene_assignment=config['gene_assignment_types'])),
+        directory(expand("morph_vs_genes/morph_genes_binary_{gene_assignment}", gene_assignment=config['gene_assignment_types'])),
+        expand("stat_tests/morph_genes_{gene_assignment}_wilcox.csv", gene_assignment=config['gene_assignment_types']),
+        expand("stat_tests/morph_genes_{gene_assignment}_wilcox_bonferroni.csv", gene_assignment=config['gene_assignment_types']),
+        expand("stat_tests/percent_expressing_{gene_assignment}.png", gene_assignment=config['gene_assignment_types']),
+
+        # UMAP
+        expand("subsets/{subset}/UMAP/default_mindist_k_{k}.png", subset=config['column_subsets'], k=config['UMAP']['ks']),
+        expand("subsets/{subset}/UMAP/mindist_{mindist}.png", subset=config['column_subsets'], mindist=config['UMAP']['mindist']),
+        expand("subsets/{subset}/UMAP/chosen_umap.png", subset=config['column_subsets']),
+        expand("subsets/{subset}/UMAP/umap.csv", subset=config['column_subsets']),
+
+        # louvain clusters
+        expand("subsets/{subset}/louvain/louvain_{k}_res_{res}.txt", subset = config['column_subsets'], k=config['louvain']['ks'], res=config['louvain']['resolution']),
+        expand("subsets/{subset}/louvain/louvain_{k}_res_{res}.png", subset = config['column_subsets'], k=config['louvain']['ks'], res=config['louvain']['resolution']),
+        expand("subsets/{subset}/louvain/chosen_louvain.png", subset = config['column_subsets']),
+        expand("subsets/{subset}/louvain/chosen_clusters.csv", subset = config['column_subsets']),
+        expand("subsets/{subset}/viz_tables/louvain_clusters_nuc.csv", subset = config['column_subsets']),
+        expand("subsets/{subset}/viz_tables/louvain_clusters_cell.csv", subset = config['column_subsets']),
+
+        # features plotted on UMAP
+        directory(expand("subsets/{subset}/features_plotted_on_umap/gene_{gene_assignment}_umap", subset = config['column_subsets'], gene_assignment=['overlap', 'vc', 'overlap_binary', 'vc_binary'])),
+        directory(expand("subsets/{subset}/features_plotted_on_umap/regions_umap", subset = config['column_subsets'])),
+        directory(expand("subsets/{subset}/features_plotted_on_umap/xyz_umap", subset = config['column_subsets'])),
+        directory(expand("subsets/{subset}/features_plotted_on_umap/morph_umap", subset = config['column_subsets'])),
+
+        # outlier detection
+        expand("subsets/{subset}/viz_tables/outlier_detection_nuc.csv", subset = config['column_subsets']),
+        expand("subsets/{subset}/viz_tables/outlier_detection_cell.csv", subset = config['column_subsets']),
+
+        # stats per morph cluster
+        directory(expand("subsets/{subset}/genes_per_morph_cluster/genes_{gene_assignment}_heatmap", subset = config['column_subsets'], gene_assignment=['overlap', 'vc', 'overlap_binary', 'vc_binary'])),
+        directory(expand("subsets/{subset}/morph_heatmap", subset = config['column_subsets'])),
+
+        # starts per gene
+#        directory(expand("subsets/{subset}/morph_per_gene/umap_per_gene_{gene_assignment}", subset = config['column_subsets'], gene_assignment=config['gene_assignment_types'])),
+        directory(expand("subsets/{subset}/morph_per_gene/heatmap_per_gene_{gene_assignment}", subset = config['column_subsets'], gene_assignment=config['gene_assignment_types']))
+
+# filter rows that don't meet QC
+# saves a bunch of tables for visualisation / merges to various datasets
+rule filter_rows_QC:
+    input:
+        nuclei_root = config['table_paths']['nucleus'],
+        cell_root = config['table_paths']['cell'],
+        intensity = config['raw_paths']['full'],
+        nuclei_seg = config['segmentation_paths']['nucleus'],
+        cell_seg = config['segmentation_paths']['cell'],
+        chromatin_seg = config['segmentation_paths']['chromatin'],
+        morph_stats_nuclei = config['table_paths']['raw_morphology_nuclei_stats'],
+        morph_stats_cells = config['table_paths']['raw_morphology_cell_stats'],
+        genes_overlap = config['table_paths']['genes_overlap'],
+        genes_vc = config['table_paths']['genes_vc'],
+        cell_nuc_mapping = config['table_paths']['cell_nuc_mapping'],
+        cell_region_mapping = config['table_paths']['cell_region_mapping'],
+        transformed_nuc_coords = config['transformed_nuc_coords'],
+        midline_distance_nuc = config['midline_distance_nuc'],
+        extrapolated_intensity_cell = config['table_paths']['extrapolated_intensity_cell'],
+        extrapolated_intensity_nuc = config['table_paths']['extrapolated_intensity_nuc']
+
+    log:
+        "logs/filter_rows_QC.log"
+
+    params:
+        gene_overlap_threshold = config['gene_overlap_threshold'],
+        gene_vc_threshold = config['gene_vc_threshold'],
+        texture_fails = config['filter_texture_fails'],
+        filter_region = config['filter_region']
+
+    output:
+        # initial cell and nuclei tables with nones / nans removed
+        nuclei_nonans_viz = "viz_tables/nuclei_nonans_viz.csv",
+        cell_nonans_viz = "viz_tables/cell_nonans_viz.csv",
+        # merged table of cells and nuclei (only one to one mappings retained) after QC
+        after_QC = "tables/after_QC.csv",
+        # merged table with viz columns and nuclei coordinates
+        after_QC_nuc_viz = 'viz_tables/after_QC_nuc_viz.csv',
+        # merged table with viz columns and cell coordinates
+        after_QC_cell_viz = 'viz_tables/after_QC_cell_viz.csv',
+        # chromatin table with viz columns after QC
+        after_QC_chromatin_viz = "viz_tables/after_QC_chromatin_viz.csv",
+        # all below are tables of stats with only cells/nuclei in the main merged table retained. Order of rows is
+        # equal to order in the main merged table (after_QC)
+        QC_genes_overlap = 'tables/QC_genes_overlap.csv',
+        QC_genes_overlap_binary = 'tables/QC_genes_overlap_binary.csv',
+        QC_genes_vc = 'tables/QC_genes_vc.csv',
+        QC_genes_vc_binary = 'tables/QC_genes_vc_binary.csv',
+        QC_region = 'tables/QC_region.csv',
+        QC_xyz = 'tables/QC_xyz.csv'
+
+    script:
+        "scripts/filter_rows_QC.py"
+
+# produce QC plots from merged table of cells and nuclei
+rule QC_graphs:
+    input:
+        QC_stats = "tables/after_QC.csv",
+
+    output:
+        QC = directory("QC")
+
+    log:
+        "logs/QC_graphs.log"
+
+    threads: 8
+
+    script:
+        "scripts/QC_graphs.py"
+
+# selects columns of interest, saves raw version, then normalised version
+rule column_selection:
+    input:
+        table = "tables/after_QC.csv"
+
+    params:
+        sub = "{subset}",
+        components = "subsets/{subset}/components.csv"
+
+    log:
+        "logs/{subset}_subset_cols.log"
+
+    output:
+        filtered = "subsets/{subset}/filtered_cols.csv",
+        normalise = "subsets/{subset}/normalised.csv"
+
+    script:
+        "scripts/subset_cols.py"
+
+# scatter plots of genes vs morphology, & correlation matrices
+rule gene_vs_morph_plots:
+    input:
+        morph = "tables/after_QC.csv",
+        gene = "tables/QC_genes_{gene_assignment}.csv"
+
+    log:
+        "logs/genes_vs_morph_{gene_assignment}.log"
+
+    output:
+        dir = directory("morph_vs_genes/morph_genes_{gene_assignment}")
+
+    threads: 8
+
+    script:
+        "scripts/morph_vs_genes.py"
+
+# violin plots with values from wilcox test for morphology of cells expressing a gene (in binary tables)
+# vs those that don't express
+rule gene_vs_morph_plots_binary:
+    input:
+        morph = 'tables/after_QC.csv',
+        gene = 'tables/QC_genes_{gene_assignment}_binary.csv',
+        wilcox_corrected = 'stat_tests/morph_genes_{gene_assignment}_wilcox_bonferroni.csv'
+
+    log:
+        "logs/genes_vs_morph_binary_{gene_assignment}.log"
+
+    output:
+        dir = directory("morph_vs_genes/morph_genes_binary_{gene_assignment}")
+
+    threads: 8
+
+    script:
+        "scripts/morph_vs_genes_binary.py"
+
+# gives graphs of number of cells expressing each gene (under binary tables)
+rule percent_cells_expressing:
+    input:
+        gene = 'tables/QC_genes_{gene_assignment}_binary.csv'
+
+    log:
+        "logs/cell_expressing_{gene_assignment}.log"
+
+    output:
+        expressing = "stat_tests/percent_expressing_{gene_assignment}.png",
+
+    script:
+        "scripts/percent_expressing.py"
+
+# Does a wilcox test (bonferonni corrected in each col?) to see if distribution of the morphology feature is significantly
+# different between cells that express the gene vs cells that don't
+# result table is one column per gene & one row per morphological feature. Order of rows = order of columns in original
+# morphology table (tables/after_QC.csv)
+rule gene_vs_morph_binary_stats_test:
+    input:
+        morph = 'tables/after_QC.csv',
+        gene = 'tables/QC_genes_{gene_assignment}_binary.csv'
+
+    log:
+        "logs/genes_vs_morph_binary_{gene_assignment}_stats.log"
+
+    output:
+        wilcox = "stat_tests/morph_genes_{gene_assignment}_wilcox.csv",
+        wilcox_bon = "stat_tests/morph_genes_{gene_assignment}_wilcox_bonferroni.csv"
+
+
+    threads: 8
+
+    script:
+        "scripts/morph_vs_genes_binary_test.R"
+
+
+
+# outlier detection based on morphology - saves a plot to visualise - good for picking up segmentation errors
+rule outlier_detection:
+    input:
+        morph = 'subsets/{subset}/normalised.csv',
+        viz_table_nuc = "viz_tables/after_QC_nuc_viz.csv",
+        viz_table_cell = "viz_tables/after_QC_cell_viz.csv"
+
+    log:
+        "logs/{subset}/outlier_detection.log"
+
+    output:
+        table_nuc = "subsets/{subset}/viz_tables/outlier_detection_nuc.csv",
+        table_cell = "subsets/{subset}/viz_tables/outlier_detection_cell.csv"
+
+    script:
+        "scripts/outlier_detection.py"
+
+# scatter plots of morphological features - see if any gradients anterior-posterior or dorsal-ventral (just in the
+# VNC to minimise points)
+rule xyz_gradient:
+    input:
+        region_table = 'tables/QC_region.csv',
+        xyz_table = 'tables/QC_xyz.csv',
+        stats_table = 'tables/after_QC.csv'
+
+    log:
+        "logs/xyz_gradient.log"
+
+    output:
+        xyz_dir = directory("xyz_gradient")
+
+    script:
+        "scripts/xyz_gradient.py"
+
+# load rules
+include: 'rules/calculate_umap.smk'
+include: 'rules/calculate_louvain.smk'
+include: 'rules/calcs_per_morph_cluster.smk'
+include: 'rules/calcs_per_gene.smk'
+include: 'rules/features_on_umap.smk'

@@ -1,0 +1,199 @@
+configfile: 'config.yaml'
+workdir: config['workdir']
+
+
+wildcard_constraints:
+    metric="euclidean|jaccard",
+    gene_assignment="overlap|vc|overlap_binary|vc_binary|overlap_binary_unique|vc_unique|vc_binary_unique"
+
+rule all:
+    input:
+        # QC plots and any stats
+        directory(expand("QC_{gene_assignment}", gene_assignment=config['gene_assignment_types'])),
+        expand("stat_tests/percent_expressing_{gene_assignment}.png", gene_assignment=config['gene_assignment_types']),
+
+        # UMAPs
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_euclidean_default_mindist_k_{k}.png", gene_assignment=config['cluster_parameters'], k=config['UMAP']['ks']),
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_euclidean_mindist_{mindist}.png", gene_assignment=config['cluster_parameters'], mindist=config['UMAP']['mindist']),
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_euclidean_chosen_umap.png", gene_assignment=config['cluster_parameters']),
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_euclidean_umap.csv", gene_assignment=config['cluster_parameters']),
+
+        # UMAPs for binary
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_jaccard_default_mindist_k_{k}.png", gene_assignment=config['cluster_parameters_binary'], k=config['UMAP']['ks']),
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_jaccard_mindist_{mindist}.png", gene_assignment=config['cluster_parameters_binary'], mindist=config['UMAP']['mindist']),
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_jaccard_chosen_umap.png", gene_assignment=config['cluster_parameters_binary']),
+        expand("subsets/{gene_assignment}/UMAP/{gene_assignment}_jaccard_umap.csv", gene_assignment=config['cluster_parameters_binary']),
+
+        # louvain clusters
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_euclidean_louvain_{k}_res_{res}.txt", gene_assignment=config['cluster_parameters'], k=config['louvain']['ks'], res=config['louvain']['resolution']),
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_euclidean_louvain_{k}_res_{res}.png", gene_assignment=config['cluster_parameters'], k=config['louvain']['ks'], res=config['louvain']['resolution']),
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_euclidean_chosen_louvain.png", gene_assignment=config['cluster_parameters']),
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_euclidean_chosen_clusters.csv", gene_assignment=config['cluster_parameters']),
+        expand("subsets/{gene_assignment}/viz_tables/{gene_assignment}_euclidean_louvain_clusters_cell.csv", gene_assignment=config['cluster_parameters']),
+        expand("subsets/{gene_assignment}/tables/{gene_assignment}_euclidean_morphology.csv", gene_assignment=config['cluster_parameters']),
+        expand("subsets/{gene_assignment}/tables/{gene_assignment}_euclidean_morphology_normalised.csv", gene_assignment=config['cluster_parameters']),
+
+        # louvain clusters for binary
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_jaccard_louvain_{k}_res_{res}.txt", gene_assignment=config['cluster_parameters_binary'], k=config['louvain']['ks'], res=config['louvain']['resolution']),
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_jaccard_louvain_{k}_res_{res}.png", gene_assignment=config['cluster_parameters_binary'], k=config['louvain']['ks'], res=config['louvain']['resolution']),
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_jaccard_chosen_louvain.png", gene_assignment=config['cluster_parameters_binary']),
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_jaccard_chosen_clusters.csv", gene_assignment=config['cluster_parameters_binary']),
+        expand("subsets/{gene_assignment}/viz_tables/{gene_assignment}_jaccard_louvain_clusters_cell.csv", gene_assignment=config['cluster_parameters_binary']),
+        expand("subsets/{gene_assignment}/tables/{gene_assignment}_jaccard_morphology.csv", gene_assignment=config['cluster_parameters_binary']),
+        expand("subsets/{gene_assignment}/tables/{gene_assignment}_jaccard_morphology_normalised.csv", gene_assignment=config['cluster_parameters_binary']),
+
+        # Plot genes on UMAP
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/gene_{gene_assignment}_euclidean", gene_assignment=config['cluster_parameters'])),
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/gene_{gene_assignment}_jaccard", gene_assignment=config['cluster_parameters_binary'])),
+
+        # Plot regions on UMAP
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/region_{gene_assignment}_euclidean", gene_assignment=config['cluster_parameters'])),
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/region_{gene_assignment}_jaccard", gene_assignment=config['cluster_parameters_binary'])),
+
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/ganglia_{gene_assignment}_euclidean", gene_assignment=config['cluster_parameters'])),
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/ganglia_{gene_assignment}_jaccard", gene_assignment=config['cluster_parameters_binary'])),
+
+        # Plot morphology on UMAP
+        # exclude the 'unique' ones here as plotting morphology on these umaps doesn't make sense - each row could represent multiple cells with multiple morphologies
+        directory(expand("subsets/{gene_assignment}/features_plotted_on_umap/morph_{gene_assignment}_euclidean", gene_assignment=['overlap'])),
+
+        # Gene heatmaps
+        directory(expand("subsets/{gene_assignment}/stats_per_gene_cluster/heatmap_genes_{gene_assignment}_euclidean", gene_assignment=config['cluster_parameters'])),
+        directory(expand("subsets/{gene_assignment}/stats_per_gene_cluster/heatmap_genes_{gene_assignment}_jaccard", gene_assignment=config['cluster_parameters_binary'])),
+
+        # Morphology heatmaps
+        directory(expand("subsets/{gene_assignment}/stats_per_gene_cluster/heatmap_morph_{gene_assignment}_euclidean", gene_assignment=config['cluster_parameters'])),
+        directory(expand("subsets/{gene_assignment}/stats_per_gene_cluster/heatmap_morph_{gene_assignment}_jaccard", gene_assignment=config['cluster_parameters_binary'])),
+
+        # Specificity scores for ganglia
+        directory(expand("subsets/{gene_assignment}/stats_per_gene_cluster/specificty_ganglia_{gene_assignment}_euclidean", gene_assignment=config['cluster_parameters'])),
+        directory(expand("subsets/{gene_assignment}/stats_per_gene_cluster/specificty_ganglia_{gene_assignment}_jaccard", gene_assignment=config['cluster_parameters_binary'])),
+
+        # cluster summary and metric tables
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_euclidean_summary_table_clusters.csv", gene_assignment=config['cluster_parameters']),
+        expand("subsets/{gene_assignment}/louvain/metrics/{gene_assignment}_euclidean_metric_table.csv", gene_assignment=config['cluster_parameters']),
+        directory(expand("subsets/{gene_assignment}/louvain/metrics/euclidean_plots", gene_assignment=config['cluster_parameters'])),
+
+        # cluster summary and metric tables binary
+        expand("subsets/{gene_assignment}/louvain/{gene_assignment}_jaccard_summary_table_clusters.csv", gene_assignment=config['cluster_parameters_binary']),
+        expand("subsets/{gene_assignment}/louvain/metrics/{gene_assignment}_jaccard_metric_table.csv", gene_assignment=config['cluster_parameters_binary']),
+        directory(expand("subsets/{gene_assignment}/louvain/metrics/jaccard_plots", gene_assignment=config['cluster_parameters_binary']))
+
+def get_gene_filename (gene_assignment):
+    selection = 'genes_%s' % gene_assignment
+    return config['table_paths'][selection]
+
+def get_gene_threshold (gene_assignment):
+    selection = 'gene_%s_threshold' % gene_assignment
+    return config[selection]
+
+# Filter rows from cell table that don't meet QC - filter based on number of pixels in object, size of bounding box,
+# presence of a corresponding nucleus, region
+# Also removes genes with zero expression, and edu markers
+rule filter_rows_QC:
+    input:
+        cell_root = config['table_paths']['cell'],
+        intensity = config['raw_paths']['full'],
+        cell_seg = config['segmentation_paths']['cell'],
+        genes = lambda wildcards: get_gene_filename(wildcards.gene_assignment),
+        cell_nuc_mapping = config['table_paths']['cell_nuc_mapping'],
+        cell_region_mapping = config['table_paths']['cell_region_mapping']
+
+    log:
+        "logs/filter_rows_QC_{gene_assignment}.log"
+
+    wildcard_constraints:
+        gene_assignment="vc|overlap"
+
+    params:
+        gene_threshold = lambda wildcards: get_gene_threshold(wildcards.gene_assignment),
+        extrapolated_intensity_cell = config['table_paths']['extrapolated_intensity_cell'],
+        filter_regions = config['filtered_regions'],
+        genes_to_exclude = config['exclude_genes'],
+        min_size_cell_px = config['min_size_cell_px'],
+        max_size_cell_px = config['max_size_cell_px'],
+        max_bounding_box_size_cell = config['max_bounding_box_size_cell']
+
+    output:
+        # initial table with nones / nans removed (+ explore viz columns)
+        gene_nonans_viz = "viz_tables/gene_{gene_assignment}_nonans_viz.csv",
+        # initial table after nones / nans removed & any further QC
+        after_QC = "tables/after_QC_{gene_assignment}.csv",
+        # same as above but with explore viz columns
+        after_QC_viz = 'viz_tables/after_QC_{gene_assignment}_viz.csv',
+        # table with nones / nans removed & QC & binarised
+        after_QC_binary = "tables/after_QC_{gene_assignment}_binary.csv",
+        # same as above but with explore viz columns
+        after_QC_binary_viz = 'viz_tables/after_QC_{gene_assignment}_binary_viz.csv',
+
+    script:
+        "scripts/filter_rows_QC.py"
+
+# Give unique id to each unique row in the input table. Produce a cut down table with just the unique rows.
+# Necessary as duplicate rows will have a distance of 0 in the KNN > this gets confused as zero weight edges often mean
+# no connection, not a zero weight connection.
+# Removing duplicates removes this issue in clustering
+rule unique_ids:
+    input:
+        table = 'tables/after_QC_{gene_assignment}.csv'
+
+    output:
+        unique_table = 'tables/after_QC_{gene_assignment}_unique.csv'
+
+    log:
+        "logs/unique_ids_{gene_assignment}.log"
+
+    script:
+        "scripts/assign_unique_ids.py"
+
+# merge tables of morphology stats for cells and nuclei into one where each row == one cell & label id is the cell
+# id
+rule merge_morph_cells_nuclei:
+    input:
+        morph_cells = config['table_paths']['morph_cells'],
+        morph_nuclei = config['table_paths']['morph_nuclei'],
+        cell_nuc_mapping = config['table_paths']['cell_nuc_mapping']
+
+    output:
+        merged_morph = "tables/merged_morph.csv"
+
+    log:
+        "logs/merge_morph_cells_nuclei.log"
+
+    script:
+        "scripts/merge_morph.py"
+
+# produce QC plots - all by all correlation of all genes
+rule QC_graphs:
+    input:
+        QC_stats = "tables/after_QC_{gene_assignment}.csv"
+
+    output:
+        QC = directory("QC_{gene_assignment}")
+
+    log:
+        "logs/QC_graphs_{gene_assignment}.log"
+
+    script:
+        "scripts/QC_graphs.py"
+
+
+# gives graphs of number of cells expressing each gene
+rule percent_cells_expressing:
+    input:
+        gene = 'tables/after_QC_{gene_assignment}_binary.csv'
+
+    log:
+        "logs/cell_expressing_{gene_assignment}.log"
+
+    output:
+        expressing = "stat_tests/percent_expressing_{gene_assignment}.png"
+
+    script:
+        "scripts/percent_expressing.py"
+
+# load rules
+include: 'rules/calculate_umap.smk'
+include: 'rules/calculate_louvain.smk'
+include: 'rules/calcs_per_gene_cluster.smk'
+include: 'rules/features_on_umap.smk'
