@@ -175,9 +175,11 @@ class CopyAndOffset(luigi.Task):
 
             # apply offset to the segmentation if it is not 0
             if self.offset > 0:
-                print("Add offset ...")
+                print("Add offsets ...")
+                # FIXME something with parallel chunk access is off and leads to segfaults,
+                # so for now we just run this single threaded
                 elf.parallel.apply_operation(ds_in, self.offset, self.add_non_zero,
-                                             n_threads=self.n_threads, roi=bb)
+                                             n_threads=1, roi=bb, verbose=True)
 
             # copy to the output
             print("Copy dataset ...")
@@ -186,7 +188,8 @@ class CopyAndOffset(luigi.Task):
 
             # find new offset
             print("Find new offset ...")
-            offset = elf.parallel.max(ds_out, n_threads=self.n_threads, roi=bb)
+            offset = elf.parallel.max(ds_out, n_threads=self.n_threads, roi=bb,
+                                      verbose=True)
 
         with open(self.out_path, 'w') as f:
             json.dump({'offset': int(offset)}, f)
