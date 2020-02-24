@@ -2,8 +2,8 @@ name:
     platybrowser-train
 channels:
     - pytorch
-    - cpape
     - conda-forge
+    - cpape
 dependencies:
     - affogato>=0.2
     - cluster_tools
@@ -12,8 +12,8 @@ dependencies:
     - h5py
     - inferno>=v0.4.2
     - luigi
-    # - neurofire  TODO add neurofire to conda-forge
-    - nifty
+    - neurofire
+    - nifty>=v1.0.7
     - pillow<7
     - python=3.7
     - pytorch>=1.0

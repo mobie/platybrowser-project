@@ -4,71 +4,18 @@ import luigi
 
 from cluster_tools import MulticutSegmentationWorkflow, LiftedMulticutSegmentationWorkflow
 from cluster_tools.watershed import WatershedWorkflow
-from cluster_tools.affinities import InsertAffinitiesWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.postprocess import SizeFilterAndGraphWatershedWorkflow
 
 from mmpb.default_config import write_default_global_config
-# special workflows
 from mmpb.extension.segmentation.nucleus_assignments import NucleusAssignmentWorkflow
 from mmpb.extension.segmentation.unmerge import UnmergeWorkflow
 
 
-# TODO expose this
-# switch between test data and full dataset
-PATH = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
-TMP_ROOT = 'tmp_multicut_cells'
-EXP_ROOT = '/g/kreshuk/data/arendt/platyneris_v1/exp_data'
-
-# PATH = './test_data/data2.n5'
-# TMP_ROOT = './test_data/tmp_folders2'
-# EXP_ROOT = './test_data/exp_data2'
-
-
-def insert_tissue(max_jobs, target):
-    tmp_folder = os.path.join(TMP_ROOT, 'tmp_insert')
-    config_folder = 'configs'
-
-    block_shape = [64, 512, 512]
-    chunks = [1] + [bs // 2 for bs in block_shape]
-    configs = InsertAffinitiesWorkflow.get_config()
-    conf = configs['insert_affinities']
-    # make sure that this is the only cuticle and neuropil label
-    ignore_ids = [1, 2]
-    conf.update({'time_limit': 120, 'mem_limit': 6, 'chunks': chunks,
-                 'zero_objects_list': ignore_ids, 'erode_by': 3, 'dilate_by': 2})
-    with open(os.path.join(config_folder, 'insert_affinities.config'), 'w') as f:
-        json.dump(conf, f)
-
-    path = PATH
-    in_key = 'volumes/affinities/s1'
-    out_key = 'volumes/curated_affinities/s1'
-    obj_key = 'volumes/tissue/for_insert/s3'
-    offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
-
-    t = InsertAffinitiesWorkflow(tmp_folder=tmp_folder, config_dir=config_folder,
-                                 max_jobs=max_jobs, target=target,
-                                 input_path=path, input_key=in_key,
-                                 output_path=path, output_key=out_key,
-                                 objects_path=path, objects_key=obj_key,
-                                 offsets=offsets)
-    ret = luigi.build([t], local_scheduler=True)
-    assert ret
-
-
-def run_watershed(use_curated_affs, max_jobs, max_threads, target):
-    config_folder = './configs'
-    path = PATH
-    mask_key = 'volumes/masks/carved/s5'
-
-    if use_curated_affs:
-        input_key = 'volumes/curated_affinities/s1'
-        output_key = 'volumes/segmentation/curated_watershed'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_ws_curated')
-    else:
-        input_key = 'volumes/affinities/s1'
-        output_key = 'volumes/segmentation/watershed'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_ws')
+def run_watershed(path, aff_path, use_curated_affs,
+                  mask_path, mask_key,
+                  tmp_folder, target, max_jobs):
+    config_folder = os.path.join(tmp_folder, 'configs')
 
     configs = WatershedWorkflow.get_config()
     ws_config = configs['watershed']
@@ -87,41 +34,35 @@ def run_watershed(use_curated_affs, max_jobs, max_threads, target):
     with open(os.path.join(config_folder, 'write.config'), 'w') as f:
         json.dump(write_config, f)
 
-    task = WatershedWorkflow(tmp_folder=tmp_folder, config_dir=config_folder,
+    if use_curated_affs:
+        aff_key = 'volumes/cells/curated_affinities/s1'
+        output_key = 'volumes/cells/curated_watershed'
+        tmp_ws = os.path.join(tmp_folder, 'tmp_curated_ws')
+    else:
+        aff_key = 'volumes/cells/affinities/s1'
+        output_key = 'volumes/cells/watershed'
+        tmp_ws = os.path.join(tmp_folder, 'tmp_ws')
+
+    task = WatershedWorkflow(tmp_folder=tmp_ws, config_dir=config_folder,
                              max_jobs=max_jobs, target=target,
-                             input_path=path, input_key=input_key,
-                             mask_path=path, mask_key=mask_key,
+                             input_path=aff_path, input_key=aff_key,
+                             mask_path=mask_path, mask_key=mask_key,
                              output_path=path, output_key=output_key,
                              two_pass=False)
     ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Watersheds failed"
+    if not ret:
+        raise RuntimeError("Watershed failed")
 
 
-def run_mc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target):
-    config_folder = './configs'
-    path = PATH
-    if use_curated_affs:
-        input_key = 'volumes/curated_affinities/s1'
-        ws_key = 'volumes/segmentation/curated_watershed'
-        assignment_key = 'node_labels/curated_mc/result'
-        out_key = 'volumes/segmentation/curated_mc/result'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_mc_curated')
-        exp_path = os.path.join(EXP_ROOT, 'mc_curated.n5')
-    else:
-        input_key = 'volumes/affinities/s1'
-        ws_key = 'volumes/segmentation/watershed'
-        assignment_key = 'node_labels/mc/result'
-        out_key = 'volumes/segmentation/mc/result'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_mc')
-        exp_path = os.path.join(EXP_ROOT, 'mc.n5')
-
-    configs = MulticutSegmentationWorkflow.get_config()
-    subprob_config = configs['solve_subproblems']
+def set_mc_config(configs, config_folder, max_threads,
+                  subproblem_task_name, workflow_task_names,
+                  solver_name):
+    subprob_config = configs[subproblem_task_name]
     subprob_config.update({'threads_per_job': max_threads,
-                           'time_limit': 720,
-                           'mem_limit': 64,
+                           'time_limit': 1200,
+                           'mem_limit': 384,
                            'time_limit_solver': 60*60*6})
-    with open(os.path.join(config_folder, 'solve_subproblems.config'), 'w') as f:
+    with open(os.path.join(config_folder, '%s.config' % subproblem_task_name), 'w') as f:
         json.dump(subprob_config, f)
 
     feat_config = configs['block_edge_features']
@@ -139,79 +80,90 @@ def run_mc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target):
         json.dump(costs_config, f)
 
     # set number of threads for sum jobs
-    tasks = ['merge_sub_graphs', 'merge_edge_features', 'map_edge_ids',
-             'reduce_problem', 'solve_global']
+    tasks = ['merge_sub_graphs', 'merge_edge_features', 'map_edge_ids'] + workflow_task_names
     for tt in tasks:
         config = configs[tt]
         config.update({'threads_per_job': max_threads if tt != 'reduce_problem' else 8,
-                       'mem_limit': 128,
+                       'mem_limit': 256,
                        'time_limit': 1440,
                        'qos': 'normal',
-                       'agglomerator': 'decomposition-gaec',
+                       'agglomerator': solver_name,
                        'time_limit_solver': 60*60*15})
         with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
             json.dump(config, f)
 
-    task = MulticutSegmentationWorkflow(tmp_folder=tmp_folder, config_dir=config_folder, target=target,
-                                        max_jobs=max_jobs, max_jobs_multicut=max_jobs_mc,
-                                        input_path=path, input_key=input_key,
-                                        ws_path=path, ws_key=ws_key,
-                                        problem_path=exp_path,
-                                        node_labels_key=assignment_key,
-                                        output_path=path, output_key=out_key,
-                                        n_scales=1,
-                                        sanity_checks=False,
-                                        skip_ws=True)
-    ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Multicut failed"
 
+def run_mc(path, aff_path, use_curated_affs,
+           tmp_folder, target,
+           max_threads, max_jobs, max_jobs_mc):
+    task = MulticutSegmentationWorkflow
 
-def run_lmc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target):
-    config_folder = './configs'
-    path = PATH
-    nucleus_seg_key = 'volumes/nuclei/mws_mc_biased_filtered'
+    config_folder = os.path.join(tmp_folder, 'configs')
     if use_curated_affs:
-        input_key = 'volumes/curated_affinities/s1'
-        ws_key = 'volumes/segmentation/curated_watershed'
-        assignment_key = 'node_labels/curated_lmc/result'
-        out_key = 'volumes/segmentation/curated_lmc/result'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_lmc_curated')
-        exp_path = os.path.join(EXP_ROOT, 'lmc_curated.n5')
-
-        clear_path = path
-        clear_key = 'volumes/tissue/for_insert/s3'
-        node_label_dict = {'ignore_transition': (path, clear_key)}
+        input_key = 'volumes/cells/curated_affinities/s1'
+        ws_key = 'volumes/cells/curated_watershed'
+        assignment_key = 'node_labels/cells/curated_mc/result'
+        out_key = 'volumes/cells/curated_mc/result'
+        tmp_mc = os.path.join(tmp_folder, 'tmp_mc_curated')
     else:
-        input_key = 'volumes/affinities/s1'
-        ws_key = 'volumes/segmentation/watershed'
-        assignment_key = 'node_labels/lmc/result'
-        out_key = 'volumes/segmentation/lmc/result'
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_lmc')
-        exp_path = os.path.join(EXP_ROOT, 'lmc.n5')
+        input_key = 'volumes/cells/affinities/s1'
+        ws_key = 'volumes/cells/watershed'
+        assignment_key = 'node_labels/cells/mc/result'
+        out_key = 'volumes/cells/mc/result'
+        tmp_mc = os.path.join(tmp_folder, 'tmp_mc')
+    exp_path = os.path.join(tmp_mc, 'problem.n5')
 
+    configs = task.get_config()
+    set_mc_config(configs, config_folder, max_threads,
+                  'solve_subproblems', ['reduce_problem', 'solve_global'],
+                  'decomposition-gaec')
+    t = task(tmp_folder=tmp_mc, config_dir=config_folder, target=target,
+             max_jobs=max_jobs, max_jobs_multicut=max_jobs_mc,
+             input_path=aff_path, input_key=input_key,
+             ws_path=path, ws_key=ws_key,
+             problem_path=exp_path,
+             node_labels_key=assignment_key,
+             output_path=path, output_key=out_key,
+             n_scales=1, sanity_checks=False, skip_ws=True)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Multicut failed")
+
+
+def run_lmc(path, aff_path, use_curated_affs,
+            region_path, region_key,
+            tmp_folder, target,
+            max_threads, max_jobs, max_jobs_mc):
+    task = LiftedMulticutSegmentationWorkflow
+    config_folder = os.path.join(tmp_folder, 'configs')
+    nucleus_seg_key = 'volumes/nuclei/segmentation'
+
+    if use_curated_affs:
+        input_key = 'volumes/cells/curated_affinities/s1'
+        ws_key = 'volumes/cells/curated_watershed'
+        assignment_key = 'node_labels/curated_lmc/result'
+        out_key = 'volumes/cells/curated_lmc/result'
+        tmp_lmc = os.path.join(tmp_folder, 'tmp_lmc_curated')
+
+        clear_path, clear_key = region_path, region_key
+        node_label_dict = {'ignore_transition': (clear_path, clear_key)}
+    else:
+        input_key = 'volumes/cells/affinities/s1'
+        ws_key = 'volumes/cells/watershed'
+        assignment_key = 'node_labels/lmc/result'
+        out_key = 'volumes/cells/lmc/result'
+        tmp_lmc = os.path.join(tmp_folder, 'tmp_lmc')
         clear_path = clear_key = node_label_dict = None
 
-    configs = LiftedMulticutSegmentationWorkflow.get_config()
-    subprob_config = configs['solve_lifted_subproblems']
-    subprob_config.update({'threads_per_job': max_threads,
-                           'time_limit': 1200,
-                           'mem_limit': 384,
-                           'time_limit_solver': 60*60*4})
-    with open(os.path.join(config_folder,
-                           'solve_lifted_subproblems.config'), 'w') as f:
-        json.dump(subprob_config, f)
+    # exp path
+    exp_path = os.path.join(tmp_lmc, 'problem.n5')
 
-    tasks = ['reduce_lifted_problem', 'solve_lifted_global', 'clear_lifted_edges_from_labels']
-    for tt in tasks:
-        config = configs[tt]
-        config.update({'threads_per_job': max_threads,
-                       'mem_limit': 256,
-                       'time_limit': 2160,
-                       # 'agglomerator': 'greedy-additive',
-                       'agglomerator': 'kernighan-lin',
-                       'time_limit_solver': 60*60*15})
-        with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
-            json.dump(config, f)
+    configs = task.get_config()
+    set_mc_config(configs, config_folder, max_threads,
+                  'solve_lifted_subproblems',
+                  ['reduce_lifted_problem', 'solve_lifted_global',
+                   'clear_lifted_edges_from_labels', 'sparse_lifted_neighborhood'],
+                  'kernighan-lin')
 
     tasks = ['block_node_labels', 'merge_node_labels']
     for tt in tasks:
@@ -220,142 +172,97 @@ def run_lmc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target):
         with open(os.path.join(config_folder, '%s.config' % tt), 'w') as f:
             json.dump(config, f)
 
-    conf = configs['sparse_lifted_neighborhood']
-    conf.update({'time_limit': 180, 'mem_limit': 256, 'threads_per_job': max_threads})
-    with open(os.path.join(config_folder, 'sparse_lifted_neighborhood.config'), 'w') as f:
-        json.dump(conf, f)
-
-    task = LiftedMulticutSegmentationWorkflow(tmp_folder=tmp_folder, config_dir=config_folder, target=target,
-                                              max_jobs=max_jobs, max_jobs_multicut=max_jobs_mc,
-                                              input_path=path, input_key=input_key,
-                                              ws_path=path, ws_key=ws_key,
-                                              problem_path=exp_path, node_labels_key=assignment_key,
-                                              output_path=path, output_key=out_key,
-                                              lifted_labels_path=path, lifted_labels_key=nucleus_seg_key,
-                                              clear_labels_path=clear_path, clear_labels_key=clear_key,
-                                              node_label_dict=node_label_dict,
-                                              n_scales=1, lifted_prefix='nuclei', nh_graph_depth=3,
-                                              sanity_checks=False, skip_ws=True)
-    ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Lifted Multicut failed"
+    t = task(tmp_folder=tmp_lmc, config_dir=config_folder, target=target,
+             max_jobs=max_jobs, max_jobs_multicut=max_jobs_mc,
+             input_path=aff_path, input_key=input_key,
+             ws_path=path, ws_key=ws_key,
+             problem_path=exp_path, node_labels_key=assignment_key,
+             output_path=path, output_key=out_key,
+             lifted_labels_path=path, lifted_labels_key=nucleus_seg_key,
+             clear_labels_path=clear_path, clear_labels_key=clear_key,
+             node_label_dict=node_label_dict,
+             n_scales=1, lifted_prefix='nuclei', nh_graph_depth=3,
+             sanity_checks=False, skip_ws=True)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Lifted Multicut failed")
 
 
-def run_morphology(use_curated_affs, use_lmc, max_jobs, target, stage):
-    path = PATH
-    config_folder = './configs'
+def run_morphology(path, use_curated_affs, use_lmc, tmp_folder, target, max_jobs):
+
+    task = MorphologyWorkflow
+    stage = 'result'
+    config_folder = os.path.join(tmp_folder, 'configs')
     prefix = 'lmc' if use_lmc else 'mc'
+
     if use_curated_affs:
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_curated' % prefix)
-        input_key = 'volumes/segmentation/curated_%s/%s' % (prefix, stage)
+        this_tmp = os.path.join(tmp_folder, 'tmp_%s_curated' % prefix)
+        input_key = 'volumes/cells/curated_%s/%s' % (prefix, stage)
         task_prefix = 'curated_%s_%s' % (prefix, stage)
         prefix = 'curated_%s' % prefix
     else:
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s' % prefix)
+        this_tmp = os.path.join(tmp_folder, 'tmp_%s' % prefix)
         input_key = 'volumes/segmentation/%s/%s' % (prefix, stage)
         task_prefix = '%s_%s' % (prefix, stage)
-    task = MorphologyWorkflow(tmp_folder=tmp_folder, max_jobs=max_jobs, target=target,
-                              config_dir=config_folder,
-                              input_path=path, input_key=input_key,
-                              output_path=path, output_key='morphology/%s/%s' % (prefix, stage),
-                              prefix=task_prefix, max_jobs_merge=32)
-    ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Morphology failed"
 
-
-def filter_size(size_threshold, use_curated_affs, use_lmc,
-                max_jobs, max_threads, target):
-    path = PATH
-    config_folder = './configs'
-    prefix = 'lmc' if use_lmc else 'mc'
-    if use_curated_affs:
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_curated_size_filter' % prefix)
-        exp_path = os.path.join(EXP_ROOT, '%s_curated.n5' % prefix)
-
-        seg_key = 'volumes/segmentation/curated_%s/result' % prefix
-        frag_key = 'volumes/segmentation/curated_watershed'
-        assignment_key = 'node_labels/curated_%s/result' % prefix
-
-        out_key = 'volumes/segmentation/curated_%s/filtered_size' % prefix
-        ass_out_key = 'node_labels/curated_%s/filtered_size' % prefix
-    else:
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_size_filter' % prefix)
-        exp_path = os.path.join(EXP_ROOT, '%s.n5' % prefix)
-
-        seg_key = 'volumes/segmentation/%s/result' % prefix
-        frag_key = 'volumes/segmentation/watershed'
-        assignment_key = 'node_labels/%s/result' % prefix
-
-        out_key = 'volumes/segmentation/%s/filtered_size' % prefix
-        ass_out_key = 'node_labels/%s/filtered_size' % prefix
-
-    task = SizeFilterAndGraphWatershedWorkflow
-    config = task.get_config()['graph_watershed_assignments']
-    config.update({'threads_per_job': max_threads, 'mem_limit': 256, 'time_limit': 180, 'qoc': 'high'})
-    with open(os.path.join(config_folder, 'graph_watershed_assignments.config'), 'w') as f:
-        json.dump(config, f)
-
-    t = task(tmp_folder=tmp_folder, max_jobs=max_jobs,
-             target=target, config_dir=config_folder,
-             problem_path=exp_path, graph_key='s0/graph', features_key='s0/costs',
-             path=path, segmentation_key=seg_key, fragments_key=frag_key,
-             assignment_key=assignment_key,
-             output_path=path, output_key=out_key,
-             assignment_out_key=ass_out_key,
-             size_threshold=size_threshold, relabel=True,
-             from_costs=True)
+    t = task(tmp_folder=this_tmp, max_jobs=max_jobs, target=target,
+             config_dir=config_folder,
+             input_path=path, input_key=input_key,
+             output_path=path, output_key='morphology/%s/%s' % (prefix, stage),
+             prefix=task_prefix, max_jobs_merge=32)
     ret = luigi.build([t], local_scheduler=True)
-    assert ret, "Filter sizes failed"
+    if not ret:
+        raise RuntimeError("Morphology failed")
 
 
-def map_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, identifier,
+def map_nuclei(path, use_curated_affs,
+               tmp_folder, target, max_jobs,
                max_overlap=False):
-    path = PATH
-    config_folder = './configs'
-    prefix = 'lmc' if use_lmc else 'mc'
-    nucleus_seg_key = 'volumes/nuclei/mws_mc_biased_filtered'
+    task = NucleusAssignmentWorkflow
+    config_folder = os.path.join(tmp_folder, 'configs')
 
-    if use_curated_affs:
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_curated_map_%s' % (prefix, identifier))
-        seg_key = 'volumes/segmentation/curated_%s/%s' % (prefix, identifier)
-        # out_key = 'volumes/segmentation/curated_%s_filtered' % prefix
-        out_key = None
-        prefix = 'curated_%s' % prefix
-    else:
-        tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_map' % prefix)
-        seg_key = 'volumes/segmentation/%s/%s' % (prefix, identifier)
-        # out_key = 'volumes/segmentation/%s_filtered' % prefix
-        out_key = None
+    prefix = 'lmc'
+    identifier = 'result'
+    nucleus_seg_key = 'volumes/nuclei/segmentation'
 
-    task = NucleusAssignmentWorkflow(tmp_folder=tmp_folder, max_jobs=max_jobs,
-                                     target=target, config_dir=config_folder,
-                                     path=path, seg_key=seg_key,
-                                     nucleus_seg_key=nucleus_seg_key,
-                                     output_key=out_key, prefix='%s_%s' % (prefix, identifier),
-                                     max_overlap=max_overlap)
-    ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Map nuclei failed"
-
-
-def unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, min_size):
-    path = PATH
-    config_folder = './configs'
-    prefix = 'lmc' if use_lmc else 'mc'
     if use_curated_affs:
         prefix = 'curated_%s' % prefix
 
-    tmp_folder = os.path.join(TMP_ROOT, 'tmp_%s_unmerge' % prefix)
-    exp_path = os.path.join(EXP_ROOT, '%s.n5' % prefix)
-    assignment_key = 'node_labels/%s/filtered_size' % prefix
+    out_key = None
+    this_tmp = os.path.join(tmp_folder, 'tmp_%s' % prefix)
+    seg_key = 'volumes/cells/%s/%s' % (prefix, identifier)
+    t = task(tmp_folder=this_tmp, max_jobs=max_jobs,
+             target=target, config_dir=config_folder,
+             path=path, seg_key=seg_key,
+             nucleus_seg_key=nucleus_seg_key,
+             output_key=out_key, prefix='%s_%s' % (prefix, identifier),
+             max_overlap=max_overlap)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Map nuclei failed")
+
+
+def unmerge_nuclei(path, use_curated_affs,
+                   tmp_folder, target, max_jobs, max_threads):
+    task = UnmergeWorkflow
+
+    config_folder = os.path.join(tmp_folder, 'configs')
+    prefix = 'lmc'
+    if use_curated_affs:
+        prefix = 'curated_%s' % prefix
+
+    tmp_unmerge = os.path.join(tmp_folder, 'tmp_%s' % prefix)
+    exp_path = os.path.join(tmp_unmerge, 'problem.n5')
+    assignment_key = 'node_labels/cells/%s/result' % prefix
 
     node_label_key = 'node_overlaps/nuclei'
     nucleus_mapping_key = 'nuclei_overlaps/%s_filtered_size' % prefix
 
-    ws_key = 'volumes/segmentation/curated_watershed' if use_curated_affs\
-        else 'volumes/segmentation/watershed'
-    out_key = 'volumes/segmentation/%s/filtered_unmerge' % prefix
-    ass_out_key = 'node_labels/%s/filtered_unmerge' % prefix
+    ws_key = 'volumes/cells/curated_watershed' if use_curated_affs else 'volumes/cells/watershed'
+    out_key = 'volumes/cells/%s/filtered_unmerge' % prefix
+    ass_out_key = 'node_labels/cells/%s/filtered_unmerge' % prefix
 
-    configs = UnmergeWorkflow.get_config()
+    configs = task.get_config()
     config = configs['fix_merges']
     config.update({'threads_per_job': max_threads, 'mem_limit': 256, 'time_limit': 240})
     with open('./configs/fix_merges.config', 'w') as f:
@@ -371,20 +278,65 @@ def unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, min
     # we set the min nucleus overlap to ~ quarter of the median nucleus size
     min_nucleus_overlap = 25000
 
-    task = UnmergeWorkflow(tmp_folder=tmp_folder, max_jobs=max_jobs,
-                           target=target, config_dir=config_folder,
-                           path=path, problem_path=exp_path, ws_key=ws_key,
-                           assignment_key=assignment_key, nucleus_mapping_key=nucleus_mapping_key,
-                           graph_key='s0/graph', features_key='s0/costs', node_label_key=node_label_key,
-                           ass_out_key=ass_out_key, out_key=out_key, clear_ids=clear_ids,
-                           min_overlap=min_nucleus_overlap, min_size=min_size)
-    ret = luigi.build([task], local_scheduler=True)
-    assert ret, "Unmerge nuclei failed"
+    t = task(tmp_folder=tmp_folder, max_jobs=max_jobs,
+             target=target, config_dir=config_folder,
+             path=path, problem_path=exp_path, ws_key=ws_key,
+             assignment_key=assignment_key, nucleus_mapping_key=nucleus_mapping_key,
+             graph_key='s0/graph', features_key='s0/costs', node_label_key=node_label_key,
+             ass_out_key=ass_out_key, out_key=out_key, clear_ids=clear_ids,
+             min_overlap=min_nucleus_overlap)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Unmerge nuclei failed")
 
 
-# TODO need to accept path + bounding box
-# TODO move insert affinities to it's own function
-def workflow(use_curated_affs, use_lmc, target, max_jobs):
+def filter_size(path, use_curated_affs, use_lmc, identifier,
+                target, tmp_folder, max_jobs, max_threads):
+    task = SizeFilterAndGraphWatershedWorkflow
+
+    config_folder = os.path.join(tmp_folder, 'configs')
+    prefix = 'lmc' if use_lmc else 'mc'
+    if use_curated_affs:
+        frag_key = 'volumes/cells/curated_watershed'
+        prefix = 'curated_%s' % prefix
+    else:
+        frag_key = 'volumes/cells/watershed'
+
+    seg_key = 'volumes/cells/%s/%s' % (prefix, identifier)
+    assignment_key = 'node_labels/cells/%s/%s' % (prefix, identifier)
+
+    out_key = 'volumes/cells/%s/filtered_size' % prefix
+    ass_out_key = 'node_labels/cells/%s/filtered_size' % prefix
+
+    this_tmp = os.path.join(tmp_folder, 'tmp_%s' % prefix)
+    exp_path = os.path.join(this_tmp, 'problem.n5')
+
+    config = task.get_config()['graph_watershed_assignments']
+    config.update({'threads_per_job': max_threads, 'mem_limit': 256, 'time_limit': 180})
+    with open(os.path.join(config_folder, 'graph_watershed_assignments.config'), 'w') as f:
+        json.dump(config, f)
+
+    # number of cells should be smaller than int16 max
+    target_number = 32000
+    t = task(tmp_folder=this_tmp, max_jobs=max_jobs,
+             target=target, config_dir=config_folder,
+             problem_path=exp_path, graph_key='s0/graph', features_key='s0/costs',
+             path=path, segmentation_key=seg_key, fragments_key=frag_key,
+             assignment_key=assignment_key,
+             output_path=path, output_key=out_key,
+             assignment_out_key=ass_out_key,
+             relabel=True, from_costs=True, target_number=target_number)
+    ret = luigi.build([t], local_scheduler=True)
+    if not ret:
+        raise RuntimeError("Filter sizes failed")
+
+
+def cell_segmentation_workflow(path, aff_path,
+                               mask_path, mask_key,
+                               region_path, region_key,
+                               use_curated_affs, use_lmc,
+                               tmp_folder, target, max_jobs,
+                               roi_begin=None, roi_end=None):
     # number of jobs and threads for target
     assert target in ('slurm', 'local')
     if target == 'local':
@@ -394,35 +346,38 @@ def workflow(use_curated_affs, use_lmc, target, max_jobs):
         max_jobs_mc = 15
         max_threads = 8
 
-    config_dir = 'configs'
-    write_default_global_config(config_dir)
+    config_dir = os.path.join(tmp_folder, 'configs')
+    write_default_global_config(config_dir, roi_begin, roi_end)
 
-    # curate affinities, run watersheds, and (lifted) multicut
-    if use_curated_affs:
-        insert_tissue(max_jobs, target)
-    run_watershed(use_curated_affs, max_jobs, max_threads, target)
+    run_watershed(path, aff_path, use_curated_affs,
+                  mask_path, mask_key,
+                  tmp_folder, target, max_jobs)
     if use_lmc:
-        run_lmc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target)
+        run_lmc(path, aff_path, use_curated_affs,
+                region_path, region_key,
+                tmp_folder, target,
+                max_threads, max_jobs, max_jobs_mc)
     else:
-        run_mc(use_curated_affs, max_jobs, max_jobs_mc, max_threads, target)
+        run_mc(path, aff_path, use_curated_affs,
+               tmp_folder, target,
+               max_threads, max_jobs, max_jobs_mc)
 
     # postprocessing:
     # 1.) compute sizes for size threshold
-    run_morphology(use_curated_affs, use_lmc, max_jobs, target, 'result')
+    run_morphology(path, use_curated_affs, use_lmc,
+                   tmp_folder, target, max_jobs)
 
-    # size threshold to fit into uint16
-    # size_threshold = 27020
-    # size threshold to fit into int16
-    size_threshold = 88604
-    if size_threshold is None:
-        return
-
-    # 2.) filter sizes with graph watershed
-    filter_size(size_threshold, use_curated_affs, use_lmc, max_jobs, max_threads, target)
-
+    identifier = 'result'
     # we unmerge only if we also use lmc, because this takes nuclei into account
     if use_lmc:
-        # 3.) map nuclei to cells
-        map_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, 'filtered_size')
-        # 4.) unmerge cells with more than one assigned nucleus
-        unmerge_nuclei(use_curated_affs, use_lmc, max_jobs, max_threads, target, size_threshold)
+        # 2.) map nuclei to cells
+        map_nuclei(path, use_curated_affs,
+                   tmp_folder, target, max_jobs)
+        # 3.) unmerge cells with more than one assigned nucleus
+        unmerge_nuclei(path, use_curated_affs,
+                       tmp_folder, target, max_jobs, max_threads)
+        identifier = 'filtered_unmerge'
+
+    # 4.) filter sizes with graph watershed
+    filter_size(path, use_curated_affs, use_lmc, identifier,
+                target, tmp_folder, max_jobs, max_threads)

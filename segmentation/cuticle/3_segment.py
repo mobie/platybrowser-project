@@ -16,8 +16,7 @@ def segment_cuticle(path, target, max_jobs, n_threads):
 
     offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1],
                [-4, 0, 0], [0, -4, 0], [0, 0, -4],
-               [-8, 0, 0], [0, -8, 0], [0, 0, -8],
-               [-16, 0, 0], [0, -16, 0], [0, 0, -16]]
+               [-8, 0, 0], [0, -8, 0], [0, 0, -8]]
     cuticle_segmentation_workflow(offsets, path,
                                   fg_key, aff_key, mask_out_key, out_key,
                                   mask_path, mask_key,

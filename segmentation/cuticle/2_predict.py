@@ -22,7 +22,7 @@ def predict_cuticle(path, ckpt, target, gpus):
     input_blocks = (96, 256, 256)
     output_blocks = (64, 192, 192)
     out_key = {'volumes/cuticle/foreground': (0, 1),
-               'volumes/cuticle/affinities': (1, 4)}
+               'volumes/cuticle/affinities': (1, 10)}
 
     save_file = 'shell_blocks.json'
     block_list = prefilter_blocks(mask_path, mask_key, shape, output_blocks, save_file)
