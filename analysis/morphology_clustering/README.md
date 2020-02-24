@@ -10,9 +10,9 @@ modifying the file in scripts/subset_cols.py
 
 ### Installation and running
 To run Snakemake - install as specified here: https://snakemake.readthedocs.io/en/stable/getting_started/installation.html
-Then run the command: snakemake -k -j from the terminal, while in the folder containig the Snakefile.
--k lets the workflow continue with jobs that don't depend on failed jobs
--j allows the workflow to parallelise over all available cores
+Then run the command: snakemake -k -j from the terminal, while in the folder containig the Snakefile.  
+-k lets the workflow continue with jobs that don't depend on failed jobs  
+-j allows the workflow to parallelise over all available cores  
 
 You can do a dry run to check everything is working with: snakemake -n
 
