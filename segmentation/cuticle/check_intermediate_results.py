@@ -9,6 +9,7 @@ def view_intermediates():
     path = '../data.n5'
     fg_key = 'volumes/cuticle/foreground'
     aff_key = 'volumes/cuticle/affinities'
+    fg_mask_key = 'volumes/cuticle/foreground_mask'
     seg_key = 'volumes/cuticle/segmentation'
 
     fr = z5py.File(raw_path)
@@ -33,6 +34,13 @@ def view_intermediates():
     fg = ds[bb]
     affs = dsa[(slice(None),) + bb]
 
+    if fg_mask_key in f:
+        ds_mask = f[fg_mask_key]
+        ds_mask.n_threads = 8
+        mask = ds_mask[bb]
+    else:
+        mask = None
+
     if seg_key in f:
         ds_seg = f[seg_key]
         ds_seg.n_threads = 8
@@ -45,6 +53,8 @@ def view_intermediates():
         viewer.add_image(raw, name='raw')
         viewer.add_image(fg, name='foreground')
         viewer.add_image(affs, name='affinities')
+        if mask is not None:
+            viewer.add_labels(mask, name='foreground-mask')
         if seg is not None:
             viewer.add_labels(seg, name='mws-segmentation')
 
