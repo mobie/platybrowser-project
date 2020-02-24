@@ -3,7 +3,7 @@
     "Chunks": [128, 128, 128],
     "PainteraProject": [
       "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
-      "volumes/paintera/proofread_cells"
+      "volumes/paintera/proofread_cells_multiset"
     ],
     "Postprocess": {
       "BoundaryKey": "volumes/affinities/s1",
@@ -20,7 +20,7 @@
     ],
     "PainteraProject": [
       "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
-      "volumes/paintera/proofread_cilia"
+      "volumes/paintera/proofread_cilia_multiset"
     ],
     "TableUpdateFunction": "make_cilia_tables"
   },
