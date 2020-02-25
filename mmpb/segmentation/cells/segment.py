@@ -201,7 +201,7 @@ def run_morphology(path, use_curated_affs, use_lmc, tmp_folder, target, max_jobs
         prefix = 'curated_%s' % prefix
     else:
         this_tmp = os.path.join(tmp_folder, 'tmp_%s' % prefix)
-        input_key = 'volumes/segmentation/%s/%s' % (prefix, stage)
+        input_key = 'volumes/cells/%s/%s' % (prefix, stage)
         task_prefix = '%s_%s' % (prefix, stage)
 
     t = task(tmp_folder=this_tmp, max_jobs=max_jobs, target=target,
