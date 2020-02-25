@@ -24,7 +24,7 @@ The Snakefile is the main file with commands - rule all contains lines to calcul
 If you only wish to run a subset of these, you can comment out lines under input: to only leave the desired results.
 
 ### Results
-The Snakemake workflow runs the clustering shown in the main paper, but also many other analyses. Here I summarise the output
+The Snakemake workflow runs the clustering shown in the main paper (output in subsets > all), but also many other analyses. Here I summarise the output
 (but each of the rules are commented to describe what results they produce):  
 
 morph_vs_genes:  
