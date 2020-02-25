@@ -7,13 +7,15 @@ import argparse
 import numpy as np
 from elf.io import open_file
 from pybdv.util import get_key
+from pybdv.metadata import get_data_path
 from vigra.analysis import extractRegionFeatures
 from vigra.sampling import resize
 from vigra.filters import distanceTransform
 
 
-def add_path_if_needed(file_path, dir_path):
-    return file_path if os.path.exists(file_path) else os.path.join(dir_path, file_path)
+def get_n5(path):
+    xml_file = os.path.splitext(path)[0] + '.xml'
+    return get_data_path(xml_file, return_absolute_path=True)
 
 
 def get_common_genes(profile_file, ov_expression_file):
@@ -155,30 +157,31 @@ def vc_assignments(segm_volume_file, em_dset,
 
 if __name__ == '__main__':
 
-    # to make life easier for me debugging ;)
     platy_data_path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
-    gene_data_path = '/g/kreshuk/zinchenk/cell_match/data/genes'
-    table_path = 'tables/sbem-6dpf-1-whole-segmented-cells/genes.csv'
-    segm_path = 'images/local/sbem-6dpf-1-whole-segmented-cells.h5'
+    ov_table_path = 'tables/sbem-6dpf-1-whole-segmented-cells/genes.csv'
+    vc_volume_path = 'images/local/prospr-6dpf-1-whole-virtual-cells.n5'
+    vc_profile_path = 'tables/prospr-6dpf-1-whole-virtual-cells/profile_clust_curated.csv'
+    segm_path = 'images/local/sbem-6dpf-1-whole-segmented-cells.n5'
 
     parser = argparse.ArgumentParser(description='Assign cells to genetically closest VCs')
-    parser.add_argument('vc_volume_file', type=str,
-                        help='the h5 file with VC labels')
-    parser.add_argument('vc_profile_file', type=str,
-                        help='table of expression by VC')
+
+    parser.add_argument('version', type=str,
+                        help='the version of platy data')
     parser.add_argument('output_file', type=str,
                         help='the files with cell expression assigned by VC')
-    parser.add_argument('--ov_expr_version', type=str, default='0.5.4',
-                        help='the version of platy data to take expression by overlap from')
-    parser.add_argument('--segm_version', type=str, default='0.3.1',
-                        help='the version of platy data to take segmentation from')
+    parser.add_argument('--vc_volume_file', type=str, default=None,
+                        help='the h5 file with VC labels')
+    parser.add_argument('--vc_profile_file', type=str, default=None,
+                        help='table of expression by VC')
     args = parser.parse_args()
 
-    gene_table_file = os.path.join(platy_data_path, args.ov_expr_version, table_path)
-    segment_file = os.path.join(platy_data_path, args.segm_version, segm_path)
-    vc_volume_file = add_path_if_needed(args.vc_volume_file, gene_data_path)
-    vc_profile_file = add_path_if_needed(args.vc_profile_file, gene_data_path)
-    output_file = add_path_if_needed(args.output_file, gene_data_path)
+    gene_table_file = os.path.join(platy_data_path, args.version, ov_table_path)
+    segment_file = get_n5(os.path.join(platy_data_path, args.version, segm_path))
+    vc_volume_file = get_n5(os.path.join(platy_data_path, args.version, vc_volume_path)) \
+                     if args.vc_volume_file == None else args.vc_volume_file
+    vc_profile_file = os.path.join(platy_data_path, args.version, vc_profile_path) \
+                      if args.vc_profile_file == None else args.vc_profile_file
+    output_file = args.output_file
 
     # number of threads hard-coded for now
     n_threads = 8
