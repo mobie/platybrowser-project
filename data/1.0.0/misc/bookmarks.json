@@ -928,6 +928,31 @@
       -22525.530484163555
     ]
   },
+  "Suppl. Fig. 2E: Chromatin segmentation": {
+	"Layers": {
+      "sbem-6dpf-1-whole-raw": {},
+      "sbem-6dpf-1-whole-segmented-chromatin": {}
+    },
+    "Position": [
+      182.82227621231259,
+      166.4643272001219,
+      117.2710494132358
+    ],
+    "View": [
+      18.44692536537881,
+      0.0,
+      0.0,
+      -2766.5088844171983,
+      0.0,
+      18.44692536537881,
+      0.0,
+       -2571.7550198586464,
+      0.0,
+      0.0,
+      18.44692536537881,
+      -2163.2902960456113
+    ]
+  },
   "Suppl. Fig. 2F: Morphology Clustering Full Body": {
 	"Layers": {
       "sbem-6dpf-1-whole-raw": {},
