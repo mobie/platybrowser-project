@@ -9,11 +9,9 @@ from mmpb.files import copy_and_check_image_dict, copy_release_folder
 from mmpb.release_helper import (add_data, add_version, get_modality_names,
                                  get_names, get_version, make_folder_structure)
 
-RAW_FOLDER = 'data'
-
 
 def get_tags():
-    tag = get_version()
+    tag = get_version('data')
     new_tag = tag.split('.')
     new_tag[-1] = '0'  # reset patch
     new_tag[1] = str(int(new_tag[1]) + 1)
@@ -64,7 +62,7 @@ def update_minor(new_data, bookmarks=None, target='slurm', max_jobs=250):
             raise ValueError("Name %s already exists" % name)
         add_data(name, properties, new_folder, target, max_jobs)
 
-    add_version(new_tag)
+    add_version(new_tag, 'data')
     print("Updated platybrowser to new release", new_tag)
 
 

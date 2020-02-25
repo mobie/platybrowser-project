@@ -8,8 +8,6 @@ from .export import export_segmentation
 from .files import copy_tables, copy_file
 from .util import read_resolution
 
-VERSION_FILE = "data/versions.json"
-
 # TODO refactor this to format_validation.py
 IMAGE_FIELD_NAMES = {'Color', 'MaxValue', 'MinValue', 'Type'}
 MASK_FIELD_NAMES = {'Color', 'MaxValue', 'MinValue', 'Type'}
@@ -147,19 +145,21 @@ def add_data(name, properties, folder, target, max_jobs):
         json.dump(image_dict, f, indent=2, sort_keys=True)
 
 
-def add_version(tag):
-    if not os.path.exists(VERSION_FILE):
+def add_version(tag, root):
+    version_file = os.path.join(root, 'versions.json')
+    if not os.path.exists(version_file):
         versions = []
-    with open(VERSION_FILE) as f:
+    with open(version_file) as f:
         versions = json.load(f)
     versions.append(tag)
-    with open(VERSION_FILE, 'w') as f:
+    with open(version_file, 'w') as f:
         json.dump(versions, f)
 
 
-def get_version(enforce_version_consistency=False):
+def get_version(root, enforce_version_consistency=False):
+    version_file = os.path.join(root, 'versions.json')
     git_tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
-    with open(VERSION_FILE) as f:
+    with open(version_file) as f:
         versions = json.load(f)
     version = versions[-1]
 

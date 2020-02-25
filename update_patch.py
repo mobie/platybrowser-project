@@ -10,12 +10,13 @@ from mmpb.bookmarks import update_bookmarks
 from mmpb.export import export_segmentation
 from mmpb.files import (copy_and_check_image_dict, copy_image_data,
                         copy_misc_data, copy_segmentation, copy_tables)
+from mmpb.files.xml_utils import write_s3_xml
 from mmpb.release_helper import add_version, get_version, make_folder_structure
 from mmpb.util import read_resolution
 
 
 def get_tags():
-    tag = get_version()
+    tag = get_version('data')
     new_tag = tag.split('.')
     new_tag[-1] = str(int(new_tag[-1]) + 1)
     new_tag = '.'.join(new_tag)
@@ -50,24 +51,33 @@ def update_segmentation(name, properties, update_config,
                         folder, new_folder, out_path, resolution, tmp_folder,
                         pp_config=pp_config, map_to_background=map_to_background,
                         chunks=chunks, target=target, max_jobs=max_jobs)
-    # TODO
+
     # make the s3 xml if we have remote storage
     if 'remote' in storage:
-        pass
+        xml_in = os.path.join(folder, 'images', storage['remote'])
+        xml_out = os.path.join(new_folder, 'images', storage['remote'])
+        version = os.path.split(new_folder)[1]
+        path_in_bucket = os.path.join(version, 'images', 'remote', name + '.xml')
+        write_s3_xml(xml_in, xml_out, path_in_bucket)
+        return out_path
 
 
 def update_segmentations(folder, new_folder, names_to_update, target, max_jobs):
     image_dict, update_dict = _load_dicts(folder)
+    for_s3 = []
     for name, properties in image_dict.items():
         # only update or copy for segmentations, which have
         # 'segmented' in their name
         if 'segmented' not in name:
             continue
         if name in names_to_update:
-            update_segmentation(name, properties, update_dict[name],
-                                folder, new_folder, target, max_jobs)
+            out_path = update_segmentation(name, properties, update_dict[name],
+                                           folder, new_folder, target, max_jobs)
+            if out_path is not None:
+                for_s3.append(out_path)
         else:
             copy_segmentation(folder, new_folder, name, properties)
+    return for_s3
 
 
 def update_tables(folder, new_folder,
@@ -153,14 +163,9 @@ def update_patch(update_seg_names, update_table_names,
     copy_image_data(folder, new_folder)
     copy_misc_data(folder, new_folder)
 
-    # TODO the selected ids in bookmarks need to be updated!
-    # updated bookmarks if given
-    if bookmarks is not None:
-        update_bookmarks(new_folder, bookmarks)
-
     # export new segmentations
-    update_segmentations(folder, new_folder, update_seg_names,
-                         target=target, max_jobs=max_jobs)
+    upload_s3 = update_segmentations(folder, new_folder, update_seg_names,
+                                     target=target, max_jobs=max_jobs)
 
     # generate new attribute tables
     update_tables(folder, new_folder, table_updates, update_seg_names,
@@ -169,11 +174,15 @@ def update_patch(update_seg_names, update_table_names,
     # copy image dict and check that all image and table files are there
     copy_and_check_image_dict(folder, new_folder)
 
-    add_version(new_tag)
+    # TODO the selected ids in bookmarks need to be updated!
+    # updated bookmarks if given
+    if bookmarks is not None:
+        update_bookmarks(new_folder, bookmarks)
+
+    add_version(new_tag, 'data')
     print("Updated platybrowser to new release", new_tag)
-    # TODO
-    # print instructions on how to make release, upload to embl.s3/platybrowser
-    # and how to clean up
+    for upl in upload_s3:
+        print("The following file needis to be uploaded to s3:", upl)
 
 
 if __name__ == '__main__':

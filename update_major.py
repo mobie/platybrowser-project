@@ -11,7 +11,7 @@ from mmpb.release_helper import (add_data, add_version, get_modality_names,
 
 
 def get_tags():
-    tag = get_version()
+    tag = get_version('data')
     new_tag = tag.split('.')
     new_tag[-1] = '0'  # reset patch
     new_tag[1] = '0'  # reset minor
@@ -62,7 +62,7 @@ def update_major(new_data, bookmarks=None, target='slurm', max_jobs=250):
             raise ValueError("Expect new modality but got existing one: %s" % modality)
         add_data(name, properties, new_folder, target, max_jobs)
 
-    add_version(new_tag)
+    add_version(new_tag, 'data')
     print("Updated platybrowser to new release", new_tag)
 
 
