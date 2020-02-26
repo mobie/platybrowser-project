@@ -25,7 +25,7 @@ The Snakefile is the main file with commands - rule all at the top is currently 
 If you only wish to run a subset of these, you can comment out lines under input: to only leave the desired results.
 
 ### Results
-The Snakemake workflow runs the clustering shown in the main paper, but also many other analyses. Here I summarise the output:  
+The Snakemake workflow runs the clustering shown in the main paper (output in subsets > overlap), but also many other analyses. Here I summarise the output:  
 
 QC_overlap folder:  
 For overlap gene assignment, this contains graphs of the pearson & spearman correlation of all genes vs all genes.  
