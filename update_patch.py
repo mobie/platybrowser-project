@@ -6,7 +6,7 @@ import argparse
 from copy import deepcopy
 
 import mmpb.attributes
-from mmpb.bookmarks import update_bookmarks
+from mmpb.bookmarks import add_bookmarks, update_bookmarks
 from mmpb.export import export_segmentation
 from mmpb.files import (copy_and_check_image_dict, copy_image_data,
                         copy_misc_data, copy_segmentation, copy_tables)
@@ -66,9 +66,9 @@ def update_segmentations(folder, new_folder, names_to_update, target, max_jobs):
     image_dict, update_dict = _load_dicts(folder)
     for_s3 = []
     for name, properties in image_dict.items():
-        # only update or copy for segmentations, which have
-        # 'segmented' in their name
-        if 'segmented' not in name:
+        type_ = properties['Type']
+        # only update or copy for segmentations
+        if type_ != 'Segmentation':
             continue
         if name in names_to_update:
             out_path = update_segmentation(name, properties, update_dict[name],
@@ -117,7 +117,8 @@ def check_requested_updates(names_to_update, folder):
     for name in names_to_update:
         if name not in image_dict:
             raise ValueError("Requested update for %s, which does not exist" % name)
-        if 'segmented' not in name:
+        properties = image_dict[name]
+        if properties['Type'] != 'Segmentation':
             raise ValueError("Requested update for %s, which is not a segmentation" % name)
         if name not in update_dict:
             raise ValueError("Requested update for %s, which is a static segmentation" % name)
@@ -174,10 +175,15 @@ def update_patch(update_seg_names, update_table_names,
     # copy image dict and check that all image and table files are there
     copy_and_check_image_dict(folder, new_folder)
 
-    # TODO the selected ids in bookmarks need to be updated!
-    # updated bookmarks if given
+    # updated bookmarks if any segmentation was updated
+    if update_seg_names is not None:
+        update_bookmarks(new_folder, folder, update_seg_names)
+
+    # add new bookmarks if given
     if bookmarks is not None:
-        update_bookmarks(new_folder, bookmarks)
+        add_bookmarks(new_folder, bookmarks,
+                      prev_version_folder=folder,
+                      updated_seg_names=update_seg_names)
 
     add_version(new_tag, 'data')
     print("Updated platybrowser to new release", new_tag)

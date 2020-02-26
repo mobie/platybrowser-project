@@ -39,9 +39,8 @@ def copy_file(xml_in, xml_out, storage='local'):
         data_path = os.path.relpath(data_path, start=xml_dir)
         copy_xml_with_newpath(xml_in, xml_out, data_path,
                               path_type='relative', data_format=bdv_format)
-    # TODO TODO
     elif storage == 'remote':
-        pass
+        shutil.copyfile(xml_in, xml_out)
     else:
         raise ValueError("Invalid storage spec %s" % storage)
 
@@ -89,7 +88,7 @@ def copy_image_data(src_folder, dst_folder, exclude_prefixes=[]):
     for name, properties in image_dict.items():
         type_ = properties['Type']
         # don't copy segmentations
-        if type_ != 'Image':
+        if type_ not in ('Image', 'Mask'):
             continue
         # check if we exclude this prefix
         prefix = '-'.join(name.split('-')[:4])

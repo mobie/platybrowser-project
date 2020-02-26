@@ -10,6 +10,7 @@ from pybdv.metadata import get_resolution, get_data_path
 from pybdv.util import get_key
 
 from .format_validation import BOOKMARK_DICT_KEY
+from .util import propagate_lut
 
 
 def validate_tables(tables, table_folder, color_col=None):
@@ -70,19 +71,31 @@ def validate_layer(folder, name, layer):
 
 
 # arguments are capitalized to be consistent with the keys in bookmarks dict
-def make_bookmark(folder, Position=None, Layers=None, View=None):
+def make_bookmark(folder, Position=None, Layers=None, View=None,
+                  id_update_dicts=None):
+
+    bookmark = {}
+
     # validate and add position
     if Position is not None:
         assert isinstance(Position, (list, tuple)), type(Position)
         assert len(Position) == 3
         assert all(isinstance(pos, float) for pos in Position)
-        bookmark = {'Position': Position}
+        bookmark.update({'Position': Position})
 
     # validate and add Layers if given
     if Layers is not None:
         assert isinstance(Layers, dict), type(Layers)
         for name, layer in Layers.items():
             validate_layer(folder, name, layer)
+            if id_update_dicts is not None and name in id_update_dicts:
+                ids = layer.get('SelectedLabelIds', None)
+                if ids is None:
+                    continue
+                ids = propagate_lut(id_update_dicts[name], ids)
+                layer['SelectedLabelIds'] = ids
+                Layers[name] = layer
+
         bookmark.update({'Layers': Layers})
 
     # validate and add the View if given
@@ -94,15 +107,48 @@ def make_bookmark(folder, Position=None, Layers=None, View=None):
     return bookmark
 
 
-def update_bookmarks(folder, bookmarks):
+def add_bookmarks(folder, bookmarks, prev_version_folder=None,
+                  updated_seg_names=None):
+    # load the previous bookmarks
     bookmark_path = os.path.join(folder, 'misc', 'bookmarks.json')
     with open(bookmark_path) as f:
         bookmark_dict = json.load(f)
+
+    # load id update dicts (if given)
+    if updated_seg_names is None:
+        id_update_dicts = None
+    else:
+        assert prev_version_folder is not None
+        id_update_dicts = {name: os.path.join(prev_version_folder,
+                                              'misc',
+                                              'new_id_lut_%s.json' % name)
+                           for name in updated_seg_names}
+
+    # update the bookmarks
     for name, bookmark in bookmarks.items():
-        new_bookmark = make_bookmark(**bookmark)
+        new_bookmark = make_bookmark(folder, id_update_dicts=id_update_dicts, **bookmark)
         bookmark_dict[name] = new_bookmark
     with open(bookmark_path, 'w') as f:
-        json.dump(bookmark_dict, f)
+        json.dump(bookmark_dict, f, indent=2, sort_keys=True)
+
+
+def update_bookmarks(folder, prev_version_folder, updated_seg_names):
+    # load the previous bookmarks
+    bookmark_path = os.path.join(folder, 'misc', 'bookmarks.json')
+    with open(bookmark_path) as f:
+        bookmarks = json.load(f)
+
+    id_update_dicts = {name: os.path.join(prev_version_folder,
+                                          'misc',
+                                          'new_id_lut_%s.json' % name)
+                       for name in updated_seg_names}
+
+    # update the bookmarks
+    for name, bookmark in bookmarks.items():
+        new_bookmark = make_bookmark(folder, id_update_dicts=id_update_dicts, **bookmark)
+        bookmarks[name] = new_bookmark
+    with open(bookmark_path, 'w') as f:
+        json.dump(bookmarks, f, indent=2, sort_keys=True)
 
 
 def scale_raw_resolution(resolution, scale):

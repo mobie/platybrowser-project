@@ -34,6 +34,13 @@ def read_resolution(paintera_path, paintera_key, to_um=True):
     return resolution
 
 
+def propagate_lut(lut_path, ids):
+    with open(lut_path) as f:
+        lut = json.load(f)
+    lut = {int(k): v for k, v in lut.items()}
+    return nt.takeDict(lut, np.array(ids, dtype='uint32')).tolist()
+
+
 def propagate_ids(root, src_version, trgt_version, seg_name, ids):
     """ Propagate list of ids from source version to target version.
     """

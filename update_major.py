@@ -4,7 +4,7 @@ import os
 import json
 import argparse
 
-from mmpb.bookmarks import update_bookmarks
+from mmpb.bookmarks import add_bookmarks
 from mmpb.files import copy_and_check_image_dict, copy_release_folder
 from mmpb.release_helper import (add_data, add_version, get_modality_names,
                                  get_version, make_folder_structure)
@@ -51,7 +51,7 @@ def update_major(new_data, bookmarks=None, target='slurm', max_jobs=250):
 
     # updated bookmarks if given
     if bookmarks is not None:
-        update_bookmarks(new_folder, bookmarks)
+        add_bookmarks(new_folder, bookmarks)
 
     # validate add the new data
     modality_names = get_modality_names('data', tag)

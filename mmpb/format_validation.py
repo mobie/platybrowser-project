@@ -1,7 +1,9 @@
 # valid field names
 
 # common valid field names for 'images.json' entry and 'bookmarks.json' entry
-COMMON_KEYS = {'Color', 'ColorMap', 'MinValue', 'MaxValue'}
+COMMON_KEYS = {'Color', 'ColorMap',
+               'ColorMapMinValue', 'ColorMapMaxValue',
+               'MinValue', 'MaxValue'}
 # valid field names in 'images.json' entry
 IMAGE_DICT_KEYS = COMMON_KEYS.union({'Storage', 'TableFolder', 'Type'})
 # valid field names in 'bookmarks.json' entry
