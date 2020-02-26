@@ -1,6 +1,8 @@
 import os
 import json
-from copy import deepcopy
+
+import numpy as np
+import nifty.tools as nt
 from elf.io import open_file
 
 
@@ -49,24 +51,20 @@ def propagate_ids(root, src_version, trgt_version, seg_name, ids):
         raise ValueError("Target lut %s does not exist." % trgt_lut_file)
 
     def get_abs_lut(lut):
-        if os.path.isfile(lut):
-            abs_lut = lut
-        elif os.path.islink(lut):
-            abs_lut = os.path.realpath(lut)
-        else:
-            raise RuntimeError("Invalid lut type.")
-        return abs_lut
+        return os.path.abspath(os.path.realpath(lut))
 
     # follow links from src-lut to target lut and pick up
     # all existing luts on the way.
     luts = []
+    exclude_luts = [get_abs_lut(src_lut_file)]
     lut = src_lut_file
     version = src_version
     while True:
 
         abs_lut = get_abs_lut(lut)
-        if abs_lut not in luts:
+        if abs_lut not in exclude_luts:
             luts.append(abs_lut)
+            exclude_luts.append(abs_lut)
 
         version_index = versions.index(version)
         version = versions[version_index + 1]
@@ -86,10 +84,10 @@ def propagate_ids(root, src_version, trgt_version, seg_name, ids):
     luts = [load_lut(lut) for lut in luts]
 
     # propagate ids through all luts
-    propagated = deepcopy(ids)
+    propagated = np.array(ids, dtype='uint64')
     for lut in luts:
-        propagated = [lut[prop] for prop in propagated]
-    return propagated
+        propagated = nt.takeDict(lut, propagated)
+    return propagated.tolist()
 
 
 def write_additional_table_file(table_folder):

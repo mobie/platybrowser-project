@@ -167,7 +167,6 @@ def base_attributes(input_path, input_key, output_path, resolution,
 
 
 # TODO implement merge rules
-# TODO use propagate_ids from mmpb.util
 def propagate_attributes(id_mapping_path, table_path, output_path,
                          column_name, merge_rule=None, override=False):
     """ Propagate id column to new ids.
@@ -182,7 +181,6 @@ def propagate_attributes(id_mapping_path, table_path, output_path,
     elif os.path.exists(output_path) and not override:
         return
 
-    print(id_mapping_path)
     with open(id_mapping_path, 'r') as f:
         id_mapping = json.load(f)
     id_mapping = {int(k): v for k, v in id_mapping.items()}
