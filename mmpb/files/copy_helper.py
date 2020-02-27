@@ -140,7 +140,7 @@ def copy_segmentations(src_folder, dst_folder, exclude_prefixes=[]):
     for name, properties in image_dict.items():
         type_ = properties['Type']
         # only copy segmentations
-        if type_ not in ('Segmentation', 'Mask'):
+        if type_ != 'Segmentation':
             continue
         # check if we exclude this prefix
         prefix = '-'.join(name.split('-')[:4])
