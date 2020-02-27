@@ -1,45 +1,58 @@
 import argparse
 import os
 import numpy as np
-import h5py
-from mmpb.segmentation.validation import eval_cells, get_ignore_seg_ids
+from elf.io import open_file
 from mmpb.attributes.region_attributes import region_attributes
 from mmpb.default_config import write_default_global_config
+from mmpb.release_helper import get_version
+from mmpb.segmentation.validation import eval_cells, get_ignore_seg_ids
+from pybdv.metadata import get_data_path
 
-ANNOTATIONS = '../../data/rawdata/evaluation/validation_annotations.h5'
-BASELINES = '../../data/rawdata/evaluation/baseline_cell_segmentations.h5'
+ROOT = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data'
+ANNOTATIONS = os.path.join(ROOT, 'rawdata/evaluation/validation_annotations.h5')
+BASELINE_ROOT = '../data.n5'
+BASELINE_NAMES = ['lmc', 'mc', 'curated_lmc', 'curated_mc']
+NAME = 'sbem-6dpf-1-whole-segmented-cells'
 
 
 def get_label_ids(path, key):
-    with h5py.File(path, 'r') as f:
+    with open_file(path, 'r') as f:
         ds = f[key]
         max_id = ds.attrs['maxId']
     label_ids = np.arange(max_id + 1)
     return label_ids
 
 
-def compute_baseline_tables():
-    names = ['lmc', 'mc', 'curated_lmc', 'curated_mc']
-    path = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation',
-                        'baseline_cell_segmentations.h5')
-    table_prefix = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation'
-    im_folder = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.0/images'
-    seg_folder = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/0.6.0/segmentations'
-    for name in names:
-        key = name
-        out_path = os.path.join(table_prefix, '%s.csv' % name)
+def compute_baseline_tables(version):
+    path = BASELINE_ROOT
+    folder = os.path.join(ROOT, version, 'images', 'local')
+    for name in BASELINE_NAMES:
+        key = 'volumes/cells/%s/filtered_size' % name
+        out_path = '%s.csv' % name
+
+        if os.path.exists(out_path):
+            continue
+
         tmp_folder = './tmp_regions_%s' % name
         config_folder = os.path.join(tmp_folder, 'configs')
         write_default_global_config(config_folder)
         label_ids = get_label_ids(path, key)
-        region_attributes(path, out_path, im_folder, seg_folder,
-                          label_ids, tmp_folder, target='local', max_jobs=64,
+        region_attributes(path, out_path, folder, label_ids,
+                          tmp_folder, target='local', max_jobs=48,
                           key_seg=key)
 
 
-def eval_seg(path, key, table):
-    ignore_ids = get_ignore_seg_ids(table)
-    fm, fs, tot = eval_cells(path, key, ANNOTATIONS,
+def eval_seg(version):
+    seg_path = os.path.join(ROOT, version, 'images', 'local', NAME + '.xml')
+    seg_path = get_data_path(seg_path, return_absolute_path=True)
+    table_path = os.path.join(ROOT, version, 'tables', NAME, 'regions.csv')
+    if seg_path.endswith('.n5'):
+        key = 'setup0/timepoint0/s0'
+    else:
+        key = 't00000/s00/0/cells'
+
+    ignore_ids = get_ignore_seg_ids(table_path)
+    fm, fs, tot = eval_cells(seg_path, key, ANNOTATIONS,
                              ignore_seg_ids=ignore_ids)
     print("Evaluation yields:")
     print("False merges:", fm)
@@ -47,49 +60,48 @@ def eval_seg(path, key, table):
     print("Total number of annotations:", tot)
 
 
-# TODO check the baseline segmentations; right now all results are the same !
-def eval_baselines():
-    path = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation',
-                        'baseline_cell_segmentations.h5')
-    names = ['lmc', 'mc', 'curated_lmc', 'curated_mc']
-    table_prefix = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/evaluation'
+def eval_baselines(version):
+    print("Computing region tables ...")
+    compute_baseline_tables(version)
+
+    path = BASELINE_ROOT
     results = {}
-    for name in names:
+    for name in BASELINE_NAMES:
+        key = 'volumes/cells/%s/filtered_size' % name
         print("Run evaluation for %s ..." % name)
-        table = os.path.join(table_prefix, '%s.csv' % name)
+        table = '%s.csv' % name
         ignore_ids = get_ignore_seg_ids(table)
-        key = name
         fm, fs, tot = eval_cells(path, key, ANNOTATIONS,
                                  ignore_seg_ids=ignore_ids)
         results[name] = (fm, fs, tot)
 
-    for name in names:
+    for name in BASELINE_NAMES:
         print("Evaluation of", name, "yields:")
         print("False merges:", fm)
         print("False splits:", fs)
         print("Total number of annotations:", tot)
+        print()
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", type=str, help="Path to segmentation that should be validated.")
-    parser.add_argument("table", type=str, help="Path to table with region/semantic assignments")
-    parser.add_argument("--key", type=str, default="t00000/s00/0/cells", help="Segmentation key")
+    parser.add_argument("--version", type=str, default='', help="Version to evaluate.")
     parser.add_argument("--baselines", type=int, default=0,
-                        help="Whether to evaluate the baseline segmentations (overrides path)")
+                        help="Whether to evaluate the baseline segmentations")
     args = parser.parse_args()
+
+    version = args.version
+    if version == '':
+        version = get_version(ROOT)
 
     baselines = bool(args.baselines)
     if baselines:
-        eval_baselines()
+        print("Evaluatiing baselines")
+        eval_baselines(version)
     else:
-        path = args.path
-        table = args.table
-        key = args.key
-        assert os.path.exists(path), path
-        eval_seg(path, key, table)
+        print("Evaluating segmentation for version", version)
+        eval_seg(version)
 
 
 if __name__ == '__main__':
-    # compute_baseline_tables()
     main()

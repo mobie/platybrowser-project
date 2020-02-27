@@ -57,10 +57,11 @@ def muscle_attributes(muscle_path, key_muscle,
 
 
 def region_attributes(seg_path, region_out, segmentation_folder,
-                      label_ids, tmp_folder, target, max_jobs):
-    if seg_path.endswith('.n5'):
+                      label_ids, tmp_folder, target, max_jobs,
+                      key_seg=None):
+    if seg_path.endswith('.n5') and key_seg is None:
         key_seg = 'setup0/timepoint0/s2'
-    else:
+    elif key_seg is None:
         key_seg = 't00000/s00/2/cells'
 
     # 1.) compute the mapping to carved regions
