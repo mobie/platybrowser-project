@@ -23,7 +23,7 @@ def get_label_ids(path, key):
     return label_ids
 
 
-def compute_baseline_tables(version):
+def compute_baseline_tables(version, target, max_jobs):
     path = BASELINE_ROOT
     folder = os.path.join(ROOT, version, 'images', 'local')
     for name in BASELINE_NAMES:
@@ -38,7 +38,7 @@ def compute_baseline_tables(version):
         write_default_global_config(config_folder)
         label_ids = get_label_ids(path, key)
         region_attributes(path, out_path, folder, label_ids,
-                          tmp_folder, target='local', max_jobs=48,
+                          tmp_folder, target=target, max_jobs=max_jobs,
                           key_seg=key)
 
 
@@ -60,9 +60,9 @@ def eval_seg(version):
     print("Total number of annotations:", tot)
 
 
-def eval_baselines(version):
+def eval_baselines(version, target, max_jobs):
     print("Computing region tables ...")
-    compute_baseline_tables(version)
+    compute_baseline_tables(version, target, max_jobs)
 
     path = BASELINE_ROOT
     results = {}
@@ -88,6 +88,8 @@ def main():
     parser.add_argument("--version", type=str, default='', help="Version to evaluate.")
     parser.add_argument("--baselines", type=int, default=0,
                         help="Whether to evaluate the baseline segmentations")
+    parser.add_argument('--target', type=str, default='local')
+    parser.add_argument('--max_jobs', type=int, default=48)
     args = parser.parse_args()
 
     version = args.version
@@ -97,7 +99,7 @@ def main():
     baselines = bool(args.baselines)
     if baselines:
         print("Evaluatiing baselines")
-        eval_baselines(version)
+        eval_baselines(version, args.target, args.max_jobs)
     else:
         print("Evaluating segmentation for version", version)
         eval_seg(version)

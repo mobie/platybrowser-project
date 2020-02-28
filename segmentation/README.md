@@ -19,3 +19,5 @@ Training data and weights for the 3d U-Nets are available on zenodo:
 - nuclei: [Training Data](https://zenodo.org/record/3675220/files/nuclei.zip?download=1), [Weights](https://zenodo.org/record/3675288/files/nuclei.nn?download=1)
 
 The ilastik project and training data for the chromatin segmentation are also [available on zenodo](https://doi.org/10.5281/zenodo.3676534), as well as the [ilastik projects for carving out tissue/body parts and the animal outline](https://doi.org/10.5281/zenodo.3678793).
+
+In addition, we provide scripts to validate cell and nucleus segmentations. The validation data, which consists of annotations for nuclei and cell soma from 8 domain experts, [is available on zenodo](https://doi.org/10.5281/zenodo.3690727).
