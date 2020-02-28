@@ -42,7 +42,12 @@ def compute_baseline_tables(version, target, max_jobs):
                           key_seg=key)
 
 
-def eval_seg(version):
+# TODO
+def load_semantic_mapping(table_path):
+    pass
+
+
+def eval_seg(version, semantic_eval):
     seg_path = os.path.join(ROOT, version, 'images', 'local', NAME + '.xml')
     seg_path = get_data_path(seg_path, return_absolute_path=True)
     table_path = os.path.join(ROOT, version, 'tables', NAME, 'regions.csv')
@@ -51,16 +56,22 @@ def eval_seg(version):
     else:
         key = 't00000/s00/0/cells'
 
+    if semantic_eval:
+        semantic_mapping = load_semantic_mapping(table_path)
+    else:
+        semantic_mapping = None
+
     ignore_ids = get_ignore_seg_ids(table_path)
     fm, fs, tot = eval_cells(seg_path, key, ANNOTATIONS,
-                             ignore_seg_ids=ignore_ids)
+                             ignore_seg_ids=ignore_ids,
+                             semantic_mapping=semantic_mapping)
     print("Evaluation yields:")
     print("False merges:", fm)
     print("False splits:", fs)
     print("Total number of annotations:", tot)
 
 
-def eval_baselines(version, target, max_jobs):
+def eval_baselines(version, semantic_eval, target, max_jobs):
     print("Computing region tables ...")
     compute_baseline_tables(version, target, max_jobs)
 
@@ -71,8 +82,15 @@ def eval_baselines(version, target, max_jobs):
         print("Run evaluation for %s ..." % name)
         table = '%s.csv' % name
         ignore_ids = get_ignore_seg_ids(table)
+
+        if semantic_eval:
+            semantic_mapping = load_semantic_mapping(table)
+        else:
+            semantic_mapping = None
+
         fm, fs, tot = eval_cells(path, key, ANNOTATIONS,
-                                 ignore_seg_ids=ignore_ids)
+                                 ignore_seg_ids=ignore_ids,
+                                 semantic_mapping=semantic_mapping)
         results[name] = (fm, fs, tot)
 
     for name in BASELINE_NAMES:
@@ -88,6 +106,8 @@ def main():
     parser.add_argument("--version", type=str, default='', help="Version to evaluate.")
     parser.add_argument("--baselines", type=int, default=0,
                         help="Whether to evaluate the baseline segmentations")
+    parser.add_argument("--semantic_eval", type=int, default=0,
+                        help="Whether to evaluate per region/tissue.")
     parser.add_argument('--target', type=str, default='local')
     parser.add_argument('--max_jobs', type=int, default=48)
     args = parser.parse_args()
@@ -99,10 +119,10 @@ def main():
     baselines = bool(args.baselines)
     if baselines:
         print("Evaluatiing baselines")
-        eval_baselines(version, args.target, args.max_jobs)
+        eval_baselines(version, bool(args.semantic_eval), args.target, args.max_jobs)
     else:
         print("Evaluating segmentation for version", version)
-        eval_seg(version)
+        eval_seg(version, bool(args.semantic_eval))
 
 
 if __name__ == '__main__':

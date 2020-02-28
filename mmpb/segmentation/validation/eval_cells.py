@@ -55,30 +55,44 @@ def to_scores(eval_res):
     return n_merges / n, n_splits / n, n
 
 
+def normal_eval(g, ds_seg, ignore_seg_ids, min_radius):
+    eval_res = {}
+
+    def visit_annotation(name, node):
+        nonlocal eval_res
+        if is_dataset(node):
+            print("Evaluating:", name)
+            res = eval_slice(ds_seg, node, ignore_seg_ids, min_radius)
+            eval_res = merge_evaluations(res, eval_res)
+            # for debugging
+            # print("current eval:", eval_res)
+        else:
+            print("Group:", name)
+
+    g.visititems(visit_annotation)
+    return to_scores(eval_res)
+
+
+# TODO
+def semantic_eval(g, ds_seg, ignore_seg_ids, min_radius, semantic_mapping):
+    pass
+
+
 def eval_cells(seg_path, seg_key,
                annotation_path, annotation_key=None,
-               ignore_seg_ids=None, min_radius=16):
+               ignore_seg_ids=None, min_radius=16,
+               semantic_mapping=None):
     """ Evaluate the cell segmentation by computing
     the percentage of falsely merged and split cell annotations
     in manually annotated validation slices.
     """
 
-    eval_res = {}
     with open_file(seg_path, 'r') as f_seg, open_file(annotation_path, 'r') as f_ann:
         ds_seg = f_seg[seg_key]
         g = f_ann if annotation_key is None else f_ann[annotation_key]
 
-        def visit_annotation(name, node):
-            nonlocal eval_res
-            if is_dataset(node):
-                print("Evaluating:", name)
-                res = eval_slice(ds_seg, node, ignore_seg_ids, min_radius)
-                eval_res = merge_evaluations(res, eval_res)
-                # for debugging
-                # print("current eval:", eval_res)
-            else:
-                print("Group:", name)
-
-        g.visititems(visit_annotation)
-
-    return to_scores(eval_res)
+        if semantic_mapping is None:
+            return normal_eval(g, ds_seg, ignore_seg_ids, min_radius)
+        else:
+            return semantic_eval(g, ds_seg, ignore_seg_ids, min_radius,
+                                 semantic_mapping)
