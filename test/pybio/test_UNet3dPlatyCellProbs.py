@@ -36,11 +36,15 @@ def test_dummy_input(cache_path):
     ipt_npz.close()
 
     assert len(ipt) == len(pybio_model.spec.inputs)
-    for ip, spec in zip(ipt, pybio_model.spec.inputs):
-        assert ip.dtype == spec.data_type
-        assert ip.shape == spec.shape
 
-    ipt = apply_transformations(pre_transformations, *ipt)
+    assert isinstance(ipt, list)
+    assert len(ipt) == 1
+    ipt = ipt[0]
+    assert ipt.shape == pybio_model.spec.inputs[0].shape
+
+    test_roi = (slice(None), slice(None), slice(0, 32), slice(0, 32), slice(0, 32))  # to lower test mem consumption
+    ipt = ipt[test_roi]
+    ipt = apply_transformations(pre_transformations, ipt)
     assert isinstance(ipt, list)
     assert len(ipt) == 1
     out = model.forward(*ipt)
