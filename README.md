@@ -100,4 +100,4 @@ or [registration/README.md](https://github.com/platybrowser/platybrowser-backend
 
 ## Contributing data
 
-If you want to contribute data to this resource, please raise an issue about this in this repository or contact TODO.
+If you want to contribute data to this resource, please raise an issue about this in this repository or contact us at mmplatyb@gmail.com.
