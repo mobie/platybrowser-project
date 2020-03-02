@@ -28,7 +28,7 @@ def test_forward(cache_path):
     pre_transformations = [get_instance(trf) for trf in pybio_model.spec.prediction.preprocess]
     post_transformations = [get_instance(trf) for trf in pybio_model.spec.prediction.postprocess]
     ipt_npz = numpy.load(str(pybio_model.spec.test_input))
-    # npz to npy
+    # npz to ndarray
     ipt = [ipt_npz[ipt_npz.files[0]]]
     ipt_npz.close()
     assert len(ipt) == len(pybio_model.spec.inputs)
@@ -40,7 +40,8 @@ def test_forward(cache_path):
     # Don't test with the real test io, but a smaller test_roi.
     # Because the results differ due to edge effects, load the small test output instead
     # (this one is not linked to in the model.yaml)
-    test_roi = (slice(None), slice(None), slice(0, 32), slice(0, 32), slice(0, 32))  # to lower test mem consumption
+    assert len(ipt.shape) == 5, ipt.shape
+    test_roi = (slice(0, 1), slice(0, 1), slice(0, 32), slice(0, 32), slice(0, 32))  # to lower test mem consumption
     ipt = ipt[test_roi]
     expected_npz = numpy.load(str(pybio_model.spec.test_output).replace("test_output.npz", "test_output_small.npz"))
     # npz to npy
