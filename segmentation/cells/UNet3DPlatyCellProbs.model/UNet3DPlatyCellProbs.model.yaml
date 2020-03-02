@@ -1,0 +1,62 @@
+name: 3D UNet Platynereis Cell Segmentation (Probabilities)
+description: A 3d U-Net trained to predict the cell boundaries in a EM volume of a 6 day old Platynereis.
+cite:
+  - text: Vergara, Hernando M. et al. Whole-body integration of gene expression and single-cell morphology. BioRxiv 2020."
+    doi: https://doi.org/10.1101/2020.02.26.961037
+authors:
+  - Constantin Pape;@bioimage-io
+documentation: ../../README.md
+tags: [unet3d, pytorch, platynereis, cell membrane, segmentation, EM]
+license: MIT
+
+format_version: 0.1.0
+language: python
+framework: pytorch
+
+source: mmpb.segmentation.network.models.UNetAnisotropic
+optional_kwargs:
+  in_channels: 1
+  out_channels: 12
+  initial_features: 22
+  gain: 2
+  scale_factors: [2, 2, 2, 2]
+  final_activation: Sigmoid
+
+test_input: test_input.npz
+test_output: test_output.npz
+covers: [ilastik_raw.png, ilastik_pred.png]
+
+inputs:
+  - name: raw
+    axes: bczyx
+    data_type: float32
+    data_range: [-inf, inf]
+    shape: [1, 1, 80, 160, 160]
+
+outputs:
+  - name: cell_boundaries
+    axes: bczyx
+    data_type: float32
+    data_range: [0, 1]
+    halo: [0, 0, 8, 16, 16]
+    shape:
+        reference_input: raw
+        scale: [1, 1, 1, 1, 1]
+        offset: [0, 0, 0, 0, 0]
+
+prediction:
+  preprocess:
+    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/EnsureTorch.transformation.yaml
+    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/Cast.transformation.yaml
+      kwargs: {dtype: float32}
+    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
+      kwargs: {apply_to: [0]}
+  weights:
+    source: https://zenodo.org/record/3691092/files/cells.state
+    hash: {md5: c7027b44cbaa334105248397c43de6fe}
+  postprocess:
+    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/AverageChannels.transformation.yaml
+      kwargs: {start_channel: 0, stop_channel: 3}
+    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/EnsureNumpy.transformation.yaml
+
+  dependencies: conda:environment.yaml
