@@ -20,8 +20,8 @@ def get_resolution(scale, use_nm=True):
 def export_traces():
     folder = '/g/kreshuk/data/arendt/platyneris_v1/tracings/kevin'
     ref_path = '../../data/rawdata/sbem-6dpf-1-whole-raw.n5'
-    seg_out_path = './sbem-6dpf-1-whole-traces.n5'
-    table_out_path = './default.csv'
+    seg_out_path = '../../data/rawdata/sbem-6dpf-1-whole-traces.n5'
+    table_out_path = '../../data/rawdata/tables/default.csv'
 
     ref_scale = 3
     cell_seg_info = {'path': '../../data/1.0.0/images/local/sbem-6dpf-1-whole-segmented-cells.xml',
@@ -37,7 +37,7 @@ def export_traces():
     n_scales = 4
     scale_factors = n_scales * [[2, 2, 2]]
     print("Write trace volume ...")
-    # traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
+    traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
 
     print("Make table for traces ...")
     make_traces_table(traces, ref_scale, resolution, table_out_path,
@@ -74,6 +74,7 @@ def check_extraction():
         print(v)
 
 
+# FIXME result is not correct yet
 if __name__ == '__main__':
     export_traces()
     # get_cell_ids()
