@@ -29,8 +29,8 @@ def check_cell_segmentation(version, scale=1):
     prepare_vol(ws_path, ws_key_root)
     ws_key = ws_key = os.path.join(ws_key_root, 's%i' % scale)
 
-    target = 'local'
-    max_jobs = 48
+    target = 'slurm'
+    max_jobs = 200
     passed = check_connected_components(ws_path, ws_key, seg_path, seg_key,
                                         'tmp_check_cc', target, max_jobs)
 

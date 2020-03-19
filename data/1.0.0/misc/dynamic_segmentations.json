@@ -8,7 +8,7 @@
     "Postprocess": {
       "BoundaryKey": "volumes/affinities/s1",
       "BoundaryPath": "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
-      "LabelSegmentation": false,
+      "LabelSegmentation": true,
       "MaxSegmentNumber": 32700
     },
     "TableUpdateFunction": "make_cell_tables"
