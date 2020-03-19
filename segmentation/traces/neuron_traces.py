@@ -1,4 +1,5 @@
 #! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
+
 import json
 import numpy as np
 import pandas as pd
@@ -23,9 +24,9 @@ def export_traces():
     table_out_path = './default.csv'
 
     ref_scale = 3
-    cell_seg_info = {'path': '../../data/0.6.5/images/local/sbem-6dpf-1-whole-segmented-cells.n5',
+    cell_seg_info = {'path': '../../data/1.0.0/images/local/sbem-6dpf-1-whole-segmented-cells.xml',
                      'scale': 2}
-    nucleus_seg_info = {'path': '../../data/0.0.0/images/local/sbem-6dpf-1-whole-segmented-nuclei.n5',
+    nucleus_seg_info = {'path': '../../data/0.0.0/images/local/sbem-6dpf-1-whole-segmented-nuclei.xml',
                         'scale': 0}
 
     print("Extracting traces ...")
@@ -36,11 +37,11 @@ def export_traces():
     n_scales = 4
     scale_factors = n_scales * [[2, 2, 2]]
     print("Write trace volume ...")
-    traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
+    # traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
 
     print("Make table for traces ...")
     make_traces_table(traces, ref_scale, resolution, table_out_path,
-                      cell_seg_info, nucleus_seg_info)
+                      {'cell': cell_seg_info, 'nucleus': nucleus_seg_info})
 
 
 def get_cell_ids():
