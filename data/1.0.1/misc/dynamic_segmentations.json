@@ -1,0 +1,35 @@
+{
+  "sbem-6dpf-1-whole-segmented-cells": {
+    "Chunks": [128, 128, 128],
+    "PainteraProject": [
+      "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
+      "volumes/paintera/proofread_cells_multiset"
+    ],
+    "Postprocess": {
+      "BoundaryKey": "volumes/affinities/s1",
+      "BoundaryPath": "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
+      "LabelSegmentation": true,
+      "MaxSegmentNumber": 32700
+    },
+    "TableUpdateFunction": "make_cell_tables"
+  },
+  "sbem-6dpf-1-whole-segmented-cilia": {
+    "Chunks": [128, 128, 128],
+    "MapToBackground": [
+      1
+    ],
+    "PainteraProject": [
+      "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
+      "volumes/paintera/proofread_cilia_multiset"
+    ],
+    "TableUpdateFunction": "make_cilia_tables"
+  },
+  "sbem-6dpf-1-whole-segmented-nuclei": {
+    "Chunks": [128, 128, 128],
+    "PainteraProject": [
+      "/g/kreshuk/data/arendt/platyneris_v1/data.n5",
+      "volumes/paintera/nuclei"
+    ],
+    "TableUpdateFunction": "make_nuclei_tables"
+  }
+}
