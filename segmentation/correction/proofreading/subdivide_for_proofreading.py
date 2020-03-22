@@ -200,6 +200,9 @@ def make_proofreading_project(project_folder, tmp_folder,
                               target, max_jobs):
     from mmpb.default_config import write_default_global_config
 
+    if len(block_labels) == 0:
+        return
+
     os.makedirs(project_folder, exist_ok=True)
     config_dir = os.path.join(tmp_folder, 'configs')
 
@@ -233,7 +236,7 @@ def make_proofreading_project(project_folder, tmp_folder,
     print("Copy the assignments")
     g_out = f.require_group('volumes/paintera')
     save_assignments = block_assignments.T
-    ds_ass = g_out.require_dataset('fragment_segment_assignment', shape=save_assignments.shape,
+    ds_ass = g_out.require_dataset('fragment-segment-assignment', shape=save_assignments.shape,
                                    chunks=save_assignments.shape, compression='gzip',
                                    dtype='uint64')
     ds_ass[:] = save_assignments
@@ -272,7 +275,7 @@ def make_proofreading_projects(labels_to_blocks, rois_to_blocks, target, max_job
 
     n_blocks = len(labels_to_blocks)
     block_ids = range(1, n_blocks + 1)
-    block_ids = [8]
+    # block_ids = [8]
 
     for block_id in block_ids:
         print("Make project", block_id, "/", n_blocks + 1)
@@ -345,8 +348,6 @@ def make_subdivision(target, max_jobs):
 
 if __name__ == '__main__':
     # preprocess()
-
-    # fixup()
 
     target = 'local'
     max_jobs = 48
