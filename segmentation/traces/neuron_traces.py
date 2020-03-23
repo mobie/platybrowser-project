@@ -51,13 +51,13 @@ def export_traces():
     n_scales = 4
     scale_factors = n_scales * [[2, 2, 2]]
     print("Write trace volume ...")
-    # traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
+    traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
 
     print("Make table for traces ...")
     make_traces_table(traces, ref_scale, resolution, table_out_path,
                       {'cell': cell_seg_info, 'nucleus': nucleus_seg_info})
 
-    
+
 
 if __name__ == '__main__':
     export_traces()

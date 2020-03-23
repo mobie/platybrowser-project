@@ -50,21 +50,34 @@ def extract_neuron_traces_from_nmx(trace_folder):
     return coords
 
 
-def write_vol_from_traces(traces, out_path, key, shape, resolution, chunks, radius):
+def write_vol_from_traces(traces, out_path, key, shape, resolution, chunks,
+                          radius, n_threads, crop_overhanging=True):
     # write temporary h5 dataset
     # and write coordinates (with some radius) to it
     with open_file(out_path) as f:
         ds = f.require_dataset(key, shape=shape, dtype='int16', compression='gzip',
                                chunks=chunks)
+        ds.n_threads = n_threads
         for nid, vals in tqdm(traces.items()):
             coords = vals_to_coords(vals, resolution)
             bb_min = coords.min(axis=0)
             bb_max = coords.max(axis=0) + 1
             assert all(bmi < bma for bmi, bma in zip(bb_min, bb_max))
-            assert all(b < sh for b, sh in zip(bb_max, shape))
-
-            bb = tuple(slice(bmi, bma) for bmi, bma in zip(bb_min, bb_max))
             this_trace = coords_to_vol(coords, nid, radius=radius)
+
+            if any(b > sh for b, sh in zip(bb_max, shape)):
+                if crop_overhanging:
+                    crop = [max(int(b - sh), 0) for b, sh in zip(bb_max, shape)]
+                    print("Cropping by", crop)
+                    vol_bb = tuple(slice(0, sh - cr)
+                                   for sh, cr in zip(this_trace.shape, crop))
+                    this_trace = this_trace[vol_bb]
+                    bb_max = [b - crp for b, crp in zip(bb_max, crop)]
+                else:
+                    raise RuntimeError("Invalid bounding box: %s, %s" % (str(bb_max),
+                                                                         str(shape)))
+
+            bb = tuple(slice(int(bmi), int(bma)) for bmi, bma in zip(bb_min, bb_max))
 
             sub_vol = ds[bb]
             trace_mask = this_trace != 0
@@ -94,7 +107,8 @@ def traces_to_volume(traces, reference_vol_path, reference_scale, out_path,
     is_h5 = is_h5_file(out_path)
     key0 = get_key(is_h5, time_point=0, setup_id=0, scale=0)
     print("Writing traces ...")
-    write_vol_from_traces(traces, out_path, key0, shape, resolution, chunks, radius)
+    write_vol_from_traces(traces, out_path, key0, shape, resolution, chunks, radius,
+                          n_threads)
 
     print("Downscaling traces ...")
     make_scales(out_path, scale_factors, downscale_mode='max',
