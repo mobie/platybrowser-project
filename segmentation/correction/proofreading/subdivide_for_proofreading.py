@@ -202,6 +202,9 @@ def make_proofreading_project(project_folder, tmp_folder,
 
     if len(block_labels) == 0:
         return
+    # don't do anything if we have a paintera project already
+    if os.path.exists(os.path.join(project_folder, 'attributes.json')):
+        return
 
     os.makedirs(project_folder, exist_ok=True)
     config_dir = os.path.join(tmp_folder, 'configs')
