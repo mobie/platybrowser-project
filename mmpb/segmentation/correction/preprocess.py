@@ -88,6 +88,69 @@ def copy_tissue_labels(in_path, out_path, out_key):
         ds.attrs['semantics'] = semantics
 
 
+def preprocess_from_paintera_project(project_path, raw_path, raw_key,
+                                     affinities_path, affinities_key,
+                                     out_path, out_key, scale,
+                                     tmp_folder, target, max_jobs):
+    """ Run all pre-processing necessary for the correction tool
+    based on segemntation in a paintera project.
+    """
+
+    raw_scale = scale
+    seg_scale = scale - 1
+
+    # TODO there are two different names for this now, this is the one from the older version,
+    # still need to add one from the earlier version
+    seg_source_names = {'org.janelia.saalfeldlab.paintera.state.LabelSourceState'}
+
+    # parse the paintera attribues.json to extract the relevant paths + locked ids
+    attrs_path = os.path.join(project_path, 'attributes.json')
+    with open(attrs_path, 'r') as f:
+        attrs = json.load(f)
+
+    # get the segmentation path
+    sources = attrs['paintera']['sourceInfo']['sources']
+    have_seg_source = False
+    for source in sources.values():
+        type_ = source['type']
+        if type_ in seg_source_names:
+            assert not have_seg_source, "Only support a single segmentation source!"
+            source_state = source['state']['source']['source']
+
+            # make sure that there are no un-commited actions
+            actions = source_state['assignment']['data']['actions']
+            assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
+
+            # TODO load the flagged ids instead once this is implemented
+            locked_ids = source_state['lockedSegments']
+
+            seg_path = source_state['meta']['n5']
+            seg_root_key = source_state['meta']['dataset']
+            have_seg_source = True
+
+    # TODO need to set the proper roi for the serialization and graph / weights!
+
+    # serialize the current segmentation
+    # ass_key = os.path.join(seg_root_key, 'fragment-segment-assignment')
+    serialize_from_commit(seg_path, seg_root_key, out_path, out_key, tmp_folder,
+                          max_jobs=max_jobs, target=target, relabel_output=False,
+                          scale=seg_scale)
+
+    # compute graph and edge weights
+    seg_key = os.path.join(seg_root_key, 'data', 's%i' % seg_scale)
+    compute_graph_and_weights(affinities_path, affinities_key,
+                              seg_path, seg_root_key, out_path,
+                              tmp_folder, target=target, max_jobs=max_jobs,
+                              offsets=[[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
+                              with_costs=False)
+
+    # TODO use flagged ids instead once implemented
+    # compute the ids to consider for splitting from the locked ids
+    # TODO load unique ids for this block
+    unique_ids = ''
+    flagged_ids = list(set(unique_ids) - set(locked_ids))
+
+
 # preprocess:
 # - export current paintera segmentation
 # - build graph and compute weights for current superpixels
