@@ -3,7 +3,7 @@ import json
 import luigi
 from elf.io import open_file
 
-from paintera_tools import serialize_from_commit
+from paintera_tools import serialize_from_commit, set_default_roi
 from paintera_tools.util import compute_graph_and_weights
 from cluster_tools.node_labels import NodeLabelWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
@@ -91,7 +91,8 @@ def copy_tissue_labels(in_path, out_path, out_key):
 def preprocess_from_paintera_project(project_path, raw_path, raw_key,
                                      affinities_path, affinities_key,
                                      out_path, out_key, scale,
-                                     tmp_folder, target, max_jobs):
+                                     tmp_folder, target, max_jobs,
+                                     roi_begin=None, roi_end=None):
     """ Run all pre-processing necessary for the correction tool
     based on segemntation in a paintera project.
     """
@@ -100,7 +101,7 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
     seg_scale = scale - 1
 
     # TODO there are two different names for this now, this is the one from the older version,
-    # still need to add one from the earlier version
+    # still need to add one from the earlier version 'ConnectomicsLabelSourceState' I think?
     seg_source_names = {'org.janelia.saalfeldlab.paintera.state.LabelSourceState'}
 
     # parse the paintera attribues.json to extract the relevant paths + locked ids
@@ -128,10 +129,12 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
             seg_root_key = source_state['meta']['dataset']
             have_seg_source = True
 
-    # TODO need to set the proper roi for the serialization and graph / weights!
+    assert have_seg_source, "Did not find any segmentation source"
 
+    # need to set the proper roi for the serialization and graph / weights
+    set_default_roi(roi_begin, roi_end)
+    # NOTE serialize_from_commit calls the function that writes all the configs
     # serialize the current segmentation
-    # ass_key = os.path.join(seg_root_key, 'fragment-segment-assignment')
     serialize_from_commit(seg_path, seg_root_key, out_path, out_key, tmp_folder,
                           max_jobs=max_jobs, target=target, relabel_output=False,
                           scale=seg_scale)
@@ -146,8 +149,15 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
 
     # TODO use flagged ids instead once implemented
     # compute the ids to consider for splitting from the locked ids
-    # TODO load unique ids for this block
-    unique_ids = ''
+
+    # load unique ids for this block
+    ass_key = os.path.join(seg_root_key, 'fragment-segment-assignment')
+    with open_file(seg_path, 'r') as f:
+        assignments = f[ass_key][:].T
+        seg_ids = assignments[:, 1]
+    unique_ids = np.unique(seg_ids)
+    if unique_ids[0] == 0:
+        unique_ids = unique_ids[1:]
     flagged_ids = list(set(unique_ids) - set(locked_ids))
 
 
