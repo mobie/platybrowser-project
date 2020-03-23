@@ -1,6 +1,8 @@
 import os
 import json
 import luigi
+import numpy as np
+import z5py
 from elf.io import open_file
 
 from paintera_tools import serialize_from_commit, set_default_roi
@@ -36,14 +38,13 @@ def accumulate_node_labels(ws_path, ws_key, seg_path, seg_key,
     assert ret
 
 
-def compute_bounding_boxes(path, key):
+def compute_bounding_boxes(path, key, out_key,
+                           tmp_folder, target, max_jobs):
     task = MorphologyWorkflow
-    tmp_folder = './tmp_preprocess'
     config_dir = os.path.join(tmp_folder, 'configs')
 
-    out_key = 'morphology'
     t = task(tmp_folder=tmp_folder, config_dir=config_dir,
-             target='slurm', max_jobs=250,
+             target=target, max_jobs=max_jobs,
              input_path=path, input_key=key,
              output_path=path, output_key=out_key)
     ret = luigi.build([t], local_scheduler=True)
@@ -88,9 +89,51 @@ def copy_tissue_labels(in_path, out_path, out_key):
         ds.attrs['semantics'] = semantics
 
 
-def preprocess_from_paintera_project(project_path, raw_path, raw_key,
+def write_flagged_ids(out_folder, flagged_ids):
+    assert isinstance(flagged_ids, list)
+    os.makedirs(out_folder, exist_ok=True)
+    out_path = os.path.join(out_folder, 'flagged_ids.json')
+    with open(out_path, 'w') as f:
+        json.dump(flagged_ids, f)
+    return out_path
+
+
+def write_out_file(out_folder, flagged_ids,
+                   raw_path, raw_key,
+                   ws_path, ws_key,
+                   node_label_path, node_label_key,
+                   table_path, table_key,
+                   problem_path, graph_key, feat_key,
+                   scale_factor, flagged_id_path):
+    os.makedirs(out_folder, exist_ok=True)
+    conf_path = os.path.join(out_folder, 'correct_false_merges_config.json')
+    conf = {'raw_path': raw_path, 'raw_key': raw_key,
+            'ws_path': ws_path, 'ws_key': ws_key,
+            'node_label_path': node_label_path, 'node_label_key': node_label_key,
+            'table_path': table_path, 'table_key': table_key,
+            'problem_path': problem_path, 'graph_key': graph_key, 'feat_key': feat_key,
+            'scale_factor': scale_factor, 'false_merge_id_path': flagged_id_path}
+    with open(conf_path, 'w') as f:
+        json.dump(conf, f)
+
+
+def resave_assignements(assignments, path, out_key):
+    node_ids = assignments[:, 0]
+    node_labels = assignments[:, 1]
+    n_nodes = int(node_ids.max()) + 1
+    full_node_labels = np.zeros(n_nodes, dtype='uint64')
+    full_node_labels[node_ids] = node_labels
+
+    with z5py.File(path) as f:
+        ds = f.require_dataset(out_key, shape=full_node_labels.shape, compression='gzip',
+                               chunks=full_node_labels.shape, dtype='uint64')
+        ds[:] = full_node_labels
+
+
+def preprocess_from_paintera_project(project_path, out_folder,
+                                     raw_path, raw_root_key,
                                      affinities_path, affinities_key,
-                                     out_path, out_key, scale,
+                                     out_key, scale,
                                      tmp_folder, target, max_jobs,
                                      roi_begin=None, roi_end=None):
     """ Run all pre-processing necessary for the correction tool
@@ -100,9 +143,8 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
     raw_scale = scale
     seg_scale = scale - 1
 
-    # TODO there are two different names for this now, this is the one from the older version,
-    # still need to add one from the earlier version 'ConnectomicsLabelSourceState' I think?
-    seg_source_names = {'org.janelia.saalfeldlab.paintera.state.LabelSourceState'}
+    # paintera has two diffe
+    source_name = 'org.janelia.saalfeldlab.paintera.state.label.ConnectomicsLabelState'
 
     # parse the paintera attribues.json to extract the relevant paths + locked ids
     attrs_path = os.path.join(project_path, 'attributes.json')
@@ -112,21 +154,23 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
     # get the segmentation path
     sources = attrs['paintera']['sourceInfo']['sources']
     have_seg_source = False
-    for source in sources.values():
+    for source in sources:
         type_ = source['type']
-        if type_ in seg_source_names:
+        if type_ == source_name:
             assert not have_seg_source, "Only support a single segmentation source!"
-            source_state = source['state']['source']['source']
+            source_state = source['state']
+
+            seg_data = source_state['backend']['data']
+            seg_path = seg_data['container']['data']['basePath']
+            seg_root_key = seg_data['dataset']
 
             # make sure that there are no un-commited actions
-            actions = source_state['assignment']['data']['actions']
+            actions = seg_data['fragmentSegmentAssignment']['actions']
             assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
 
             # TODO load the flagged ids instead once this is implemented
             locked_ids = source_state['lockedSegments']
 
-            seg_path = source_state['meta']['n5']
-            seg_root_key = source_state['meta']['dataset']
             have_seg_source = True
 
     assert have_seg_source, "Did not find any segmentation source"
@@ -135,14 +179,13 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
     set_default_roi(roi_begin, roi_end)
     # NOTE serialize_from_commit calls the function that writes all the configs
     # serialize the current segmentation
-    serialize_from_commit(seg_path, seg_root_key, out_path, out_key, tmp_folder,
-                          max_jobs=max_jobs, target=target, relabel_output=False,
-                          scale=seg_scale)
+    serialize_from_commit(seg_path, seg_root_key, seg_path, out_key, tmp_folder,
+                          max_jobs=max_jobs, target=target, relabel_output=False, scale=0)
 
     # compute graph and edge weights
-    seg_key = os.path.join(seg_root_key, 'data', 's%i' % seg_scale)
+    seg_key = os.path.join(seg_root_key, 'data', 's0')
     compute_graph_and_weights(affinities_path, affinities_key,
-                              seg_path, seg_root_key, out_path,
+                              seg_path, seg_key, seg_path,
                               tmp_folder, target=target, max_jobs=max_jobs,
                               offsets=[[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
                               with_costs=False)
@@ -158,7 +201,31 @@ def preprocess_from_paintera_project(project_path, raw_path, raw_key,
     unique_ids = np.unique(seg_ids)
     if unique_ids[0] == 0:
         unique_ids = unique_ids[1:]
+    unique_ids = unique_ids.tolist()
     flagged_ids = list(set(unique_ids) - set(locked_ids))
+
+    # save fragment segment assignment in the format the splitting tool can parse
+    node_label_key = 'node_labels/labels_before_splitting'
+    resave_assignements(assignments, seg_path, node_label_key)
+
+    # compute the morphology table for bounding boxes
+    table_key = 'morphology'
+    compute_bounding_boxes(seg_path, out_key, table_key,
+                           tmp_folder, target, max_jobs)
+
+    scale_factor = 2 ** seg_scale
+    raw_key = os.path.join(raw_root_key, 's%i' % raw_scale)
+    seg_key = os.path.join(seg_root_key, 'data', 's%i' % seg_scale)
+    graph_key = 's0/graph'
+    feat_key = 'features'
+    flagged_id_path = write_flagged_ids(out_folder, flagged_ids)
+    write_out_file(out_folder, flagged_ids,
+                   raw_path, raw_key,
+                   seg_path, seg_key,
+                   seg_path, node_label_key,
+                   seg_path, table_key,
+                   seg_path, graph_key, feat_key,
+                   scale_factor, flagged_id_path)
 
 
 # preprocess:
@@ -186,5 +253,8 @@ def preprocess(path, key, aff_key,
                            out_path, 'tissue_labels', prefix='tissue')
     copy_tissue_labels(tissue_path, out_path, 'tissue_labels')
 
-    compute_bounding_boxes(out_path, out_key0)
+    target = 'slurm'
+    max_jobs = 200
+    compute_bounding_boxes(path, out_key0, 'morphology',
+                           tmp_folder, target, max_jobs)
     downscale_segmentation(out_path, out_key)

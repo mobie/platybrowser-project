@@ -1,7 +1,6 @@
 from .annotation_tool import AnnotationTool
 from .correction_tool import CorrectionTool
 from .cillia_correction_tool import CiliaCorrectionTool
-from .marker_tool import MarkerTool
 
 from .preprocess import preprocess
 from .export_node_labels import export_node_labels, to_paintera_format
