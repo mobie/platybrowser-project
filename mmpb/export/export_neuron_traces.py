@@ -9,6 +9,7 @@ from skimage.draw import circle
 from pybdv.converter import make_scales
 from pybdv.metadata import write_xml_metadata, write_h5_metadata, write_n5_metadata, get_data_path
 from pybdv.util import get_key
+from tqdm import tqdm
 from ..util import is_h5_file
 
 
@@ -55,21 +56,24 @@ def write_vol_from_traces(traces, out_path, key, shape, resolution, chunks, radi
     with open_file(out_path) as f:
         ds = f.require_dataset(key, shape=shape, dtype='int16', compression='gzip',
                                chunks=chunks)
-        for nid, vals in traces.items():
+        for nid, vals in tqdm(traces.items()):
             coords = vals_to_coords(vals, resolution)
             bb_min = coords.min(axis=0)
             bb_max = coords.max(axis=0) + 1
             assert all(bmi < bma for bmi, bma in zip(bb_min, bb_max))
             assert all(b < sh for b, sh in zip(bb_max, shape))
 
-            sub_vol = coords_to_vol(coords, nid, radius=radius)
             bb = tuple(slice(bmi, bma) for bmi, bma in zip(bb_min, bb_max))
-            ds[bb] += sub_vol
+            this_trace = coords_to_vol(coords, nid, radius=radius)
+
+            sub_vol = ds[bb]
+            trace_mask = this_trace != 0
+            sub_vol[trace_mask] = this_trace[trace_mask]
+            ds[bb] = sub_vol
 
 
-# TODO this takes ages, somehow parallelize ! (need to lock somehow though)
 def traces_to_volume(traces, reference_vol_path, reference_scale, out_path,
-                     resolution, scale_factors, radius=5, chunks=None, n_threads=8):
+                     resolution, scale_factors, radius=2, chunks=None, n_threads=8):
     """ Export traces as segmentation compatible with the platy-browser.
     """
 
@@ -89,8 +93,10 @@ def traces_to_volume(traces, reference_vol_path, reference_scale, out_path,
 
     is_h5 = is_h5_file(out_path)
     key0 = get_key(is_h5, time_point=0, setup_id=0, scale=0)
+    print("Writing traces ...")
     write_vol_from_traces(traces, out_path, key0, shape, resolution, chunks, radius)
 
+    print("Downscaling traces ...")
     make_scales(out_path, scale_factors, downscale_mode='max',
                 ndim=3, setup_id=0, is_h5=is_h5,
                 chunks=chunks, n_threads=n_threads)
@@ -100,15 +106,13 @@ def traces_to_volume(traces, reference_vol_path, reference_scale, out_path,
     bdv_res = [res / 1000. for res in resolution]
     unit = 'micrometer'
     write_xml_metadata(xml_path, out_path, unit, bdv_res, is_h5)
+    bdv_scale_factors = [[1, 1, 1]] + scale_factors
     if is_h5:
-        write_h5_metadata(out_path, scale_factors)
+        write_h5_metadata(out_path, bdv_scale_factors)
     else:
-        write_n5_metadata(out_path, scale_factors, bdv_res)
+        write_n5_metadata(out_path, bdv_scale_factors, bdv_res)
 
 
-# FIXME currently not working properly
-# TODO parallelize
-# TODO support passing a dict of seg-infos instead of hard-coding it to cell and nucleus seg
 def make_traces_table(traces, reference_scale, resolution, out_path, seg_infos={}):
     """ Make table from traces compatible with the platy browser.
     """
@@ -135,7 +139,7 @@ def make_traces_table(traces, reference_scale, resolution, out_path, seg_infos={
         datasets[seg_name] = ds
 
     table = []
-    for nid, vals in traces.items():
+    for nid, vals in tqdm(traces.items()):
         coords = vals_to_coords(vals, resolution)
         bb_min = coords.min(axis=0)
         bb_max = coords.max(axis=0) + 1
