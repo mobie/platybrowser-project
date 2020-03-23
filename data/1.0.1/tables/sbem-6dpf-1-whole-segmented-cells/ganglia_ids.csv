@@ -922,7 +922,6 @@ label_id	ganglion_id	merged_bilateral_ganglion_id
 1058	10.0	5.0
 1059	8.0	4.0
 1060	8.0	4.0
-791	19.0	
 1061	11.0	6.0
 1062	17.0	9.0
 1063	17.0	9.0
@@ -2493,7 +2492,6 @@ label_id	ganglion_id	merged_bilateral_ganglion_id
 2730	19.0	
 2731	19.0	
 2732	19.0	
-2733	11.0	6.0
 2733	11.0	6.0
 2734	2.0	1.0
 2735	2.0	1.0
@@ -5838,10 +5836,7 @@ label_id	ganglion_id	merged_bilateral_ganglion_id
 8396	19.0	
 8397	19.0	
 8398	19.0	
-7432	19.0	
-7432	19.0	
 8399	19.0	
-7432	19.0	
 8400	19.0	
 8401	19.0	
 8415	13.0	

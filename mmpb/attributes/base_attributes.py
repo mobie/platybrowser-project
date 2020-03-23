@@ -166,7 +166,6 @@ def base_attributes(input_path, input_key, output_path, resolution,
     return label_ids
 
 
-# TODO implement merge rules
 def propagate_attributes(id_mapping_path, table_path, output_path,
                          column_name, merge_rule=None, override=False):
     """ Propagate id column to new ids.
@@ -177,13 +176,24 @@ def propagate_attributes(id_mapping_path, table_path, output_path,
         if os.path.islink(output_path):
             os.unlink(output_path)
         else:
-            raise RuntimeError("Cannot override file.")
+            os.remove(output_path)
     elif os.path.exists(output_path) and not override:
         return
 
     with open(id_mapping_path, 'r') as f:
         id_mapping = json.load(f)
+
+    # we have two different versions of the id mapping:
+    # the old one that only saves the mapped ids
+    # and the new one that also saves the mapped counts
+    # in the second case, we use the counts to decide the labeling for
+    # mapping ids that result from several merged previous ids
     id_mapping = {int(k): v for k, v in id_mapping.items()}
+    if isinstance(id_mapping[0], list):
+        mapping_counts = np.array([v[1] for v in id_mapping.values()])
+        id_mapping = {k: v[0] for k, v in id_mapping.items()}
+    else:
+        mapping_counts = None
 
     assert os.path.exists(table_path), table_path
     table = pd.read_csv(table_path, sep='\t')
@@ -191,16 +201,37 @@ def propagate_attributes(id_mapping_path, table_path, output_path,
     id_col[np.isnan(id_col)] = 0
     id_col = id_col.astype('uint32')
 
-    # keys = list(id_mapping.keys())
+    # use mapping counts to decide the mapped ids for merges
+    if mapping_counts is not None:
+
+        mapping_keys = np.array([int(key) for key in id_mapping.keys()])
+        mapping_values = np.array([int(val) for val in id_mapping.values()])
+        unique_vals, val_counts = np.unique(mapping_values, return_counts=True)
+        merged_ids = unique_vals[val_counts > 1]
+        if merged_ids[0] == 0:
+            merged_ids = merged_ids[1:]
+
+        # this could be sped up with np.unique tricks, but I don't expect there to be many merged ids
+        # between versions, so this should not matter for now
+        keep_mask = np.ones(len(id_col), dtype='bool')
+        for merged_id in merged_ids:
+            id_mask = mapping_values == merged_id
+            source_ids = mapping_keys[id_mask]
+            ids_sorted = np.argsort(mapping_counts[id_mask])[::-1]
+            drop_ids = source_ids[ids_sorted[1:]]
+            keep_mask[np.isin(id_col, drop_ids)] = False
+
+        columns = table.columns
+        table = table.values
+        table = table[keep_mask]
+        table = pd.DataFrame(table, columns=columns)
+        id_col = id_col[keep_mask]
+        assert len(table) == len(id_col)
+
+    # map values for the id col
     id_col = nt.takeDict(id_mapping, id_col)
-
-    # TODO need to implement merge rules
-    # to update values for multiple ids that were mapped to the same value
-    # (this is necessary if we update a label_id column, for which the values should be unique)
-    # new_ids, new_id_counts = np.unique(id_col, return_counts=True)
-    # merge_ids = new_ids[]
-
     table[column_name] = id_col
+
     table.to_csv(output_path, index=False, sep='\t')
 
 
