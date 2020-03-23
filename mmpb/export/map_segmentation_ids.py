@@ -51,14 +51,14 @@ def map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix):
              ws_path=path1, ws_key=key1,
              input_path=path2, input_key=key2,
              output_path=tmp_path, output_key=tmp_key,
-             prefix=prefix, max_overlap=True)
+             prefix=prefix, max_overlap=True, serialize_counts=True)
     ret = luigi.build([t], local_scheduler=True)
     if not ret:
         raise RuntimeError("Id-mapping failed")
 
     ds = z5py.File(tmp_path)[tmp_key]
     lut = ds[:]
-    assert lut.ndim == 1
+    assert lut.ndim == 2
     lut = dict(zip(range(len(lut)), lut.tolist()))
 
     with open(out_path, 'w') as f:

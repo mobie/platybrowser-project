@@ -140,6 +140,7 @@ def make_traces_table(traces, reference_scale, resolution, out_path, seg_infos={
 
     table = []
     for nid, vals in tqdm(traces.items()):
+
         coords = vals_to_coords(vals, resolution)
         bb_min = coords.min(axis=0)
         bb_max = coords.max(axis=0) + 1

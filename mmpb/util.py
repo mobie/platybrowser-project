@@ -38,6 +38,8 @@ def propagate_lut(lut_path, ids):
     with open(lut_path) as f:
         lut = json.load(f)
     lut = {int(k): v for k, v in lut.items()}
+    if isinstance(lut[0], list):
+        lut = {k: v[0] for k, v in lut.items()}
     return nt.takeDict(lut, np.array(ids, dtype='uint32')).tolist()
 
 

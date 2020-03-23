@@ -6,6 +6,7 @@ from cluster_tools.cluster_tasks import BaseClusterTask
 DEFAULT_GROUP = os.environ.get('PLATYBROWSER_GROUP', 'kreshuk')
 DEFAULT_SHEBANG = os.environ.get('PLATYBROWSER_SHEBANG', os.path.realpath(sys.executable))
 DEFAULT_BLOCK_SHAPE = [64, 512, 512]
+DEFAULT_QOS = os.environ.get('PLATYBROWSER_QOS', 'normal')
 
 
 #
@@ -35,6 +36,19 @@ def get_default_shebang():
 
 
 #
+# default qos parameter
+#
+
+def set_default_qos(qos):
+    global DEFAULT_QOS
+    DEFAULT_QOS = qos
+
+
+def get_default_qos():
+    return DEFAULT_QOS
+
+
+#
 # default block_shape parameter
 #
 
@@ -55,5 +69,6 @@ def write_default_global_config(config_folder, roi_begin=None, roi_end=None):
     global_config['group'] = get_default_group()
     global_config['roi_begin'] = roi_begin
     global_config['roi_end'] = roi_end
+    global_config['qos'] = get_default_qos()
     with open(os.path.join(config_folder, 'global.config'), 'w') as f:
         json.dump(global_config, f)

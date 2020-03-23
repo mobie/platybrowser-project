@@ -24,7 +24,7 @@ def gene_assignment_table(segm_file, genes_file, table_file, labels,
     config_folder = os.path.join(tmp_folder, 'configs')
     config = task.default_task_config()
     # this is very ram hungry because we load all the genes at once
-    config.update({'threads_per_job': n_threads, 'mem_limit': 256})
+    config.update({'threads_per_job': n_threads, 'mem_limit': 128})
     with open(os.path.join(config_folder, 'genes.config'), 'w') as f:
         json.dump(config, f)
 
@@ -54,7 +54,7 @@ def vc_assignment_table(seg_path, vc_vol_path, vc_vol_key,
     config_folder = os.path.join(tmp_folder, 'configs')
     config = task.default_task_config()
     # this is very ram hungry because we load all the genes at once
-    config.update({'threads_per_job': n_threads, 'mem_limit': 256})
+    config.update({'threads_per_job': n_threads, 'mem_limit': 128})
     with open(os.path.join(config_folder, 'vc_assignments.config'), 'w') as f:
         json.dump(config, f)
 

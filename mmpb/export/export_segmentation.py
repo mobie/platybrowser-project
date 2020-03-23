@@ -7,9 +7,10 @@ import z5py
 from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools import serialize_from_commit, postprocess
 from paintera_tools import set_default_shebang as set_ptools_shebang
+from paintera_tools import set_default_qos as set_ptools_qos
 from paintera_tools import set_default_block_shape as set_ptools_block_shape
 from .map_segmentation_ids import map_segmentation_ids
-from ..default_config import write_default_global_config, get_default_shebang, get_default_block_shape
+from ..default_config import write_default_global_config, get_default_shebang, get_default_block_shape, get_default_qos
 from ..util import add_max_id
 
 
@@ -103,6 +104,7 @@ def export_segmentation(paintera_path, paintera_key, name,
     # set correct shebang and block shape for paintera tools
     set_ptools_shebang(get_default_shebang())
     set_ptools_block_shape(get_default_block_shape())
+    set_ptools_qos(get_default_qos())
 
     out_key = 'setup0/timepoint0/s0'
     # run post-processing if specified for this segmentation name
@@ -115,11 +117,20 @@ def export_segmentation(paintera_path, paintera_key, name,
 
         label_segmentation = pp_config['LabelSegmentation']
         tmp_postprocess = os.path.join(tmp_folder, 'postprocess_paintera')
+
+        print("Run postprocessing:")
+        if label_segmentation:
+            print("with connected components")
+        if max_segment_number is not None:
+            print("With max segment number:", max_segment_number)
+        if min_segment_size is not None:
+            print("With min segment size:", min_segment_size)
+
         postprocess(paintera_path, paintera_key,
                     boundary_path, boundary_key,
                     tmp_folder=tmp_postprocess,
                     target=target, max_jobs=max_jobs,
-                    n_threads=16, size_threshold=min_segment_size,
+                    n_threads=8, size_threshold=min_segment_size,
                     target_number=max_segment_number,
                     label=label_segmentation,
                     output_path=out_path, output_key=out_key)
