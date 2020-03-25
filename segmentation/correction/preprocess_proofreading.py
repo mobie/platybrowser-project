@@ -4,12 +4,19 @@ import luigi
 from concurrent import futures
 
 import numpy as np
-import nifty.tools as nt
+import nifty
 import vigra
 import z5py
+
+from cluster_tools.edge_features import EdgeFeaturesWorkflow
+from cluster_tools.graph import GraphWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
+from cluster_tools.write import WriteLocal, WriteSlurm
+from elf.segmentation.clustering import agglomerative_clustering
+
 from mmpb.attributes.util import node_labels
-from paintera_tools.serialize.serialize_from_commit import serialize_assignments, serialize_merged_segmentation
+from paintera_tools.serialize.serialize_from_commit import (serialize_assignments,
+                                                            serialize_merged_segmentation)
 from paintera_tools.util import find_uniques
 
 from common import (PAINTERA_PATH, PAINTERA_KEY,
@@ -19,6 +26,7 @@ from common import (PAINTERA_PATH, PAINTERA_KEY,
 
 #
 # make label division for subprojects
+# by assigning labels to blocks
 #
 
 
@@ -26,7 +34,7 @@ def get_blocking(scale, block_shape):
     g = z5py.File(PAINTERA_PATH)[PAINTERA_KEY]
     ds = g['data/s%i' % scale]
     shape = ds.shape
-    blocking = nt.blocking([0, 0, 0], shape, block_shape)
+    blocking = nifty.tools.blocking([0, 0, 0], shape, block_shape)
     return shape, blocking
 
 
@@ -101,6 +109,139 @@ def divide_labels_by_blocking(scale, n_target_projects,
     block_shape = tentative_block_shape(scale, n_target_projects)
     n_blocks = make_subdivision_vol(scale, block_shape)
     labels_to_blocks = map_labels_to_blocks(n_blocks, tmp_folder, target, max_jobs)
+    return labels_to_blocks
+
+
+#
+# make label division for subprojects
+# by graph clustering
+#
+
+def compute_graph(scale, tmp_folder, target, max_jobs):
+    task = GraphWorkflow
+    config_dir = os.path.join(tmp_folder, 'configs')
+
+    in_path = SEG_PATH
+    in_key = os.path.join(SEG_KEY, 's%i' % scale)
+    out_path = os.path.join(tmp_folder, 'data.n5')
+    out_key = 'graph'
+
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir,
+             target=target, max_jobs=max_jobs,
+             input_path=in_path, input_key=in_key,
+             graph_path=out_path, output_key=out_key)
+    ret = luigi.build([t], local_scheduler=True)
+    assert ret, "Graph extraction failed"
+
+    with z5py.File(out_path, 'r') as f:
+        ds = f[out_key]
+        edges = ds[:]
+    n_nodes = int(edges.max()) + 1
+    graph = nifty.graph.undirectedGraph(n_nodes)
+    graph.insertEdges(edges)
+
+    return graph
+
+
+# we use the following features:
+# nodes: the center of mass
+# edges: the edge size
+def compute_node_and_edge_features(uv_ids, scale, tmp_folder, target, max_jobs):
+    task = EdgeFeaturesWorkflow
+    config_dir = os.path.join(tmp_folder, 'configs')
+
+    seg_path = SEG_PATH
+    seg_key = os.path.join(SEG_KEY, 's%i' % scale)
+    path = os.path.join(tmp_folder, 'data.n5')
+    graph_key = 'graph'
+    node_feat_key = 'node_features'
+    edge_feat_key = 'features'
+
+    # TODO
+    in_path = ''
+    in_key = ''
+
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir,
+             max_jobs=max_jobs, target=target,
+             input_path=in_path, input_key=in_key,
+             labels_path=seg_path, labels_key=seg_key,
+             graph_path=path, graph_key=graph_key,
+             output_path=path, output_key=edge_feat_key)
+    ret = luigi.build([t], local_scheduler=True)
+    assert ret, "Edge feature computation failed"
+
+    with z5py.File(path, 'r') as f:
+        ds = f[edge_feat_key]
+        edge_sizes = ds[:, -1]
+    assert len(edge_sizes) == len(uv_ids)
+
+    task = MorphologyWorkflow
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir,
+             max_jobs=max_jobs, target=target,
+             input_path=seg_path, input_key=seg_key,
+             output_path=path, output_key=node_feat_key,
+             prefix='feats')
+    ret = luigi.build([t], local_scheduler=True)
+    assert ret, "Node feature computation failed"
+
+    with z5py.File(path, 'r') as f:
+        ds = f[node_feat_key]
+        node_sizes = ds[:, 1]
+        com = ds[:, 2:5]
+
+    com_u = com[uv_ids[:, 0], :]
+    com_v = com[uv_ids[:, 1], :]
+
+    edge_features = np.sqrt(np.power(com_u - com_v, 2).sum(axis=1))
+    assert len(edge_features) == len(edge_sizes)
+    return edge_features, node_sizes, edge_sizes
+
+
+def serialize_blocks(node_labels, tmp_folder, target, max_jobs):
+    task = WriteLocal if target == 'local' else WriteSlurm
+    config_dir = os.path.join(tmp_folder, 'configs')
+
+    path = TMP_PATH
+    seg_path = SEG_PATH
+    seg_key = os.path.join(SEG_KEY, 's4')
+
+    node_label_key = 'node_labels/clustering'
+    out_key = 'volumes/clustering'
+    with z5py.File(path) as f:
+        ds = f.require_dataset(node_label_key, shape=node_labels.shape, chunks=node_labels.shape,
+                               compression='gzip', dtype=node_labels.dtype)
+        ds[:] = node_labels
+
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir, max_jobs=max_jobs,
+             input_path=seg_path, input_key=seg_key,
+             output_path=path, output_key=out_key,
+             assignment_path=path, assignment_key=node_label_key,
+             identifier='cluster-labels')
+    ret = luigi.build([t], local_scheduler=True)
+    assert ret, "Write failed"
+
+
+def divide_labels_by_clustering(scale, n_target_projects,
+                                tmp_folder, target, max_jobs):
+    graph = compute_graph(scale, tmp_folder, target, max_jobs)
+    uv_ids = graph.uvIds()
+    edge_features, node_sizes, edge_sizes = compute_node_and_edge_features(uv_ids, scale,
+                                                                           tmp_folder,
+                                                                           target, max_jobs)
+
+    node_labels = agglomerative_clustering(graph, edge_features,
+                                           node_sizes, edge_sizes,
+                                           n_target_projects, size_regularizer=2.5)
+    # make sure node label 0 is mapped to 0 and the rest is not
+    assert node_labels[0] == 0
+    assert (node_labels[1:] != 0).all()
+
+    assert np.array_equal(np.unique(node_labels), np.arange(n_target_projects))
+    labels_to_blocks = {ii: np.where(node_labels == ii)[0].tolist()
+                        for ii in range(1, n_target_projects)}
+
+    # serialize resulting segmentation for debugging
+    serialize_blocks(node_labels, tmp_folder, target, max_jobs)
     return labels_to_blocks
 
 
@@ -213,15 +354,13 @@ def compute_spatial_id_mapping(labels_to_blocks, tmp_folder, target, max_jobs):
 
 
 def preprocess(n_target_projects, tmp_folder,
-               use_graph_clustering=False,
+               use_graph_clustering=False, scale=2,
                target='slurm', max_jobs=200):
 
-    # TODO it would be cleaner to get the mapping of ids to
-    # target blocks by some means of graph clustering instead of mapping to blocks
     if use_graph_clustering:
-        raise NotImplementedError("TODO")
+        labels_to_blocks = divide_labels_by_clustering(scale, n_target_projects,
+                                                       tmp_folder, target, max_jobs)
     else:
-        scale = 2
         labels_to_blocks = divide_labels_by_blocking(scale, n_target_projects,
                                                      tmp_folder, target, max_jobs)
 
