@@ -13,12 +13,6 @@ In the terminal, enter
 cd /g/arendt/EM_6dpf_segmentation/corrections_and_proofreading
 ```
 
-If this is the first time you are using paintera on this VM, you need to install it via
-```sh
-./install_paintera.sh
-```
-You need to do this once per VM.
-
 ## Step 1: Proof-reading with paintera
 
 Open paintera for the proofreading project you want to work on
@@ -29,5 +23,6 @@ where `<ID>` is the id of your project, e.g. `07` if you are working on project 
 
 
 ## Step 2: Split falsely merged objects with seeds
+
 
 ## Step 3: Proof-reading with paintera
