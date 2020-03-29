@@ -8,20 +8,23 @@ import nifty
 import vigra
 import z5py
 
-from cluster_tools.edge_features import EdgeFeaturesWorkflow
+from cluster_tools.features import EdgeFeaturesWorkflow
 from cluster_tools.graph import GraphWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.write import WriteLocal, WriteSlurm
 from elf.segmentation.clustering import agglomerative_clustering
 
 from mmpb.attributes.util import node_labels
+from mmpb.default_config import write_default_global_config
+
 from paintera_tools.serialize.serialize_from_commit import (serialize_assignments,
                                                             serialize_merged_segmentation)
 from paintera_tools.util import find_uniques
 
 from common import (PAINTERA_PATH, PAINTERA_KEY,
                     SEG_PATH, SEG_KEY, TMP_PATH,
-                    LABEL_MAPPING_PATH, ROIS_PATH)
+                    LABEL_MAPPING_PATH, ROI_PATH,
+                    BOUNDARY_PATH, BOUNDARY_KEY)
 
 
 #
@@ -135,7 +138,7 @@ def compute_graph(scale, tmp_folder, target, max_jobs):
 
     with z5py.File(out_path, 'r') as f:
         ds = f[out_key]
-        edges = ds[:]
+        edges = ds['edges'][:]
     n_nodes = int(edges.max()) + 1
     graph = nifty.graph.undirectedGraph(n_nodes)
     graph.insertEdges(edges)
@@ -157,9 +160,13 @@ def compute_node_and_edge_features(uv_ids, scale, tmp_folder, target, max_jobs):
     node_feat_key = 'node_features'
     edge_feat_key = 'features'
 
-    # TODO
-    in_path = ''
-    in_key = ''
+    in_path = BOUNDARY_PATH
+    in_key = BOUNDARY_KEY + '/s%i' % scale
+
+    with z5py.File(in_path, 'r') as f:
+        shape = f[in_key].shape
+    with z5py.File(seg_path, 'r') as f:
+        assert f[seg_key].shape == shape
 
     t = task(tmp_folder=tmp_folder, config_dir=config_dir,
              max_jobs=max_jobs, target=target,
@@ -232,16 +239,21 @@ def divide_labels_by_clustering(scale, n_target_projects,
     node_labels = agglomerative_clustering(graph, edge_features,
                                            node_sizes, edge_sizes,
                                            n_target_projects, size_regularizer=2.5)
+    vigra.analysis.relabelConsecutive(node_labels, start_label=1, keep_zeros=True, out=node_labels)
     # make sure node label 0 is mapped to 0 and the rest is not
     assert node_labels[0] == 0
     assert (node_labels[1:] != 0).all()
+    n_projects = int(node_labels.max()) + 1
 
-    assert np.array_equal(np.unique(node_labels), np.arange(n_target_projects))
+    # print(np.unique(node_labels))
+    # assert np.array_equal(np.unique(node_labels), np.arange(n_target_projects))
     labels_to_blocks = {ii: np.where(node_labels == ii)[0].tolist()
-                        for ii in range(1, n_target_projects)}
+                        for ii in range(1, n_projects)}
 
     # serialize resulting segmentation for debugging
     serialize_blocks(node_labels, tmp_folder, target, max_jobs)
+    # TODO make work until here and then debug
+    quit()
     return labels_to_blocks
 
 
@@ -251,9 +263,6 @@ def divide_labels_by_clustering(scale, n_target_projects,
 
 
 def make_root_seg(tmp_folder, target, max_jobs):
-    from mmpb.attributes.util import node_labels
-    from mmpb.default_config import write_default_global_config
-
     in_path = SEG_PATH
     in_key = SEG_KEY + '/s0'
     ws_path = PAINTERA_PATH
@@ -349,27 +358,69 @@ def compute_spatial_id_mapping(labels_to_blocks, tmp_folder, target, max_jobs):
         rois_to_blocks[block_id] = (roi_start.tolist(),
                                     roi_stop.tolist())
 
-    with open(ROIS_PATH, 'w') as f:
+    with open(ROI_PATH, 'w') as f:
         json.dump(rois_to_blocks, f)
 
 
 def preprocess(n_target_projects, tmp_folder,
-               use_graph_clustering=False, scale=2,
+               use_graph_clustering=True, scale=2,
                target='slurm', max_jobs=200):
 
     if use_graph_clustering:
         labels_to_blocks = divide_labels_by_clustering(scale, n_target_projects,
                                                        tmp_folder, target, max_jobs)
     else:
+        make_root_seg(tmp_folder, target, max_jobs)
         labels_to_blocks = divide_labels_by_blocking(scale, n_target_projects,
                                                      tmp_folder, target, max_jobs)
 
     # serialize the current paintera segmentation and map the ids to blocks spatially
-    make_root_seg(tmp_folder, target, max_jobs)
     compute_spatial_id_mapping(labels_to_blocks, tmp_folder, target, max_jobs)
 
 
+def copy_boundaries():
+    from elf.parallel.operations import apply_operation_single
+    # from elf.wrapper.resized_volume import ResizedVolume
+
+    n_threads = 48
+    in_path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
+    out_path = BOUNDARY_PATH
+    # mask_key = 'volumes/masks/carved/s5'
+
+    def _copy_scale(scale):
+        print("Copy volumes for scale", scale)
+
+        in_key = 'volumes/affinities/s%i' % (scale + 1,)
+        out_key = BOUNDARY_KEY + '/s%i' % scale
+
+        f_in = z5py.File(in_path, 'r')
+        ds_in = f_in[in_key]
+        shape = ds_in.shape[1:]
+        chunks = ds_in.chunks[1:]
+        print("Have shape", shape)
+
+        # ds_mask = f_in[mask_key]
+        # ds_mask = ResizedVolume(ds_mask, shape=shape)
+        ds_mask = None
+
+        f_out = z5py.File(out_path)
+        if out_key in f_out:
+            print("Have copied scale", scale, "already")
+            return
+
+        ds_out = f_out.require_dataset(out_key, shape=shape, dtype=ds_in.dtype,
+                                       chunks=chunks, compression='gzip')
+
+        apply_operation_single(ds_in, np.mean, out=ds_out, axis=0,
+                               n_threads=n_threads, mask=ds_mask, verbose=True)
+
+    for scale in range(0, 5):
+        _copy_scale(scale)
+
+
 if __name__ == '__main__':
+    # copy_boundaries()
+
     n_projects = 50
     tmp_folder = './tmp_subdivision_labels'
-    preprocess(n_projects, tmp_folder)
+    preprocess(n_projects, tmp_folder, target='local', max_jobs=48)

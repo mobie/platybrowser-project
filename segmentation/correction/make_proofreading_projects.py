@@ -4,27 +4,37 @@ import json
 import luigi
 import numpy as np
 import z5py
+
 from cluster_tools.copy_volume import CopyVolumeLocal, CopyVolumeSlurm
 from paintera_tools import convert_to_paintera_format, set_default_roi, set_default_block_shape
-
+from mmpb.default_config import write_default_global_config
 from common import RAW_PATH, RAW_KEY, PAINTERA_PATH, PAINTERA_KEY, TMP_PATH, ROI_PATH, LABEL_MAPPING_PATH
 
 
-def write_max_id(path, key, copy_ids):
+def write_max_id(path, key, max_id):
     with z5py.File(path) as f:
         ds = f[key]
-        ds.attrs['maxId'] = int(copy_ids.max())
+        ds.attrs['maxId'] = max_id
 
 
 def copy_watersheds(input_path, input_key,
                     output_path, output_key,
-                    copy_ids, tmp_folder, target, max_jobs):
+                    copy_ids, tmp_folder, target, max_jobs,
+                    offset=None, insert_mode=False):
     task = CopyVolumeLocal if target == 'local' else CopyVolumeSlurm
     config_dir = os.path.join(tmp_folder, 'configs')
-    print(tmp_folder)
+    os.makedirs(config_dir, exist_ok=True)
 
     config = task.default_task_config()
-    config.update({'value_list': copy_ids.tolist()})
+    config.update({'insert_mode': insert_mode, 'offset': offset})
+
+    if copy_ids is None:
+        with z5py.File(PAINTERA_PATH, 'r') as f:
+            max_id = f[PAINTERA_KEY].attrs['maxId']
+    else:
+        config.update({'value_list': copy_ids.tolist()})
+        max_id = int(copy_ids.max())
+
     with open(os.path.join(config_dir, 'copy_volume.config'), 'w') as f:
         json.dump(config, f)
 
@@ -35,13 +45,12 @@ def copy_watersheds(input_path, input_key,
     ret = luigi.build([t], local_scheduler=True)
     assert ret, "Copy failed"
 
-    write_max_id(output_path, output_key, copy_ids)
+    write_max_id(output_path, output_key, max_id)
 
 
 def make_proofreading_project(project_folder, tmp_folder,
                               assignments, block_labels, block_roi,
                               target, max_jobs):
-    from mmpb.default_config import write_default_global_config
 
     if len(block_labels) == 0:
         return

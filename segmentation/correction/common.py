@@ -1,5 +1,8 @@
 # import os
 
+BOUNDARY_PATH = '/g/arendt/EM_6dpf_segmentation/corrections_and_proofreading/data.n5'
+BOUNDARY_KEY = 'boundaries'
+
 PAINTERA_PATH = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
 PAINTERA_KEY = 'volumes/paintera/proofread_cells_multiset'
 

@@ -176,24 +176,42 @@ def export_all_projects():
 
 def check_exported(scale=3):
     from heimdall import view, to_source
+    from elf.wrapper.resized_volume import ResizedVolume
+
     path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.n5'
     key = 'setup0/timepoint0/s%i' % (scale + 1,)
 
     f = z5py.File(path, 'r')
     ds = f[key]
     ds.n_threads = 8
-    print(ds.shape)
     raw = ds[:]
+    shape = raw.shape
 
     path = './data.n5'
     key = 'volumes/segmentation2/s%i' % scale
     f = z5py.File(path, 'r')
+
     ds = f[key]
-    print(ds.shape)
     ds.n_threads = 8
     seg = ds[:].astype('uint32')
 
+    key = 'volumes/clustering'
+    ds = f[key]
+    ds.n_threads = 8
+    clustered = ResizedVolume(ds[:], shape=shape)[:]
+
+    path = '/g/arendt/EM_6dpf_segmentation/corrections_and_proofreading/data.n5'
+    key = 'boundaries/s%i' % scale
+    # path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
+    # key = 'volumes/affinities/s%i' % (scale + 1,)
+    f = z5py.File(path, 'r')
+    ds = f[key]
+    ds.n_threads = 8
+    bd = ds[:]
+
     view(to_source(raw, name='raw'),
+         to_source(bd, name='boundaries'),
+         to_source(clustered, name='clustered'),
          to_source(seg, name='segmentation'))
 
 
