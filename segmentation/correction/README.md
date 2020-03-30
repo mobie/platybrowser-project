@@ -40,8 +40,8 @@ Once all the cells assigned to your project are hidden because you have marked t
 move to [Step2](https://github.com/platybrowser/platybrowser/tree/more-validation/segmentation/correction#step-2-split-falsely-merged-objects-with-seeds).
 For details on paintera usage, see [the paintera Readme](https://github.com/saalfeldlab/paintera#usage).
 
-**IMPORTANT:** when you quit paintera, either to take a break or to move on to [Step2](https://github.com/platybrowser/platybrowser/tree/more-validation/segmentation/correction#step-2-split-falsely-merged-objects-with-seeds), always safe your project.
-
+**IMPORTANT:** when you quit paintera, either to take a break or to move on to [Step2](https://github.com/platybrowser/platybrowser/tree/more-validation/segmentation/correction#step-2-split-falsely-merged-objects-with-seeds), always safe your project by pressing `Save and quit` after pressing the `x` button. If another window pops up after this, press `Commit`.
+ 
 
 ## Step 2: Split falsely merged objects with seeds
 
