@@ -6,5 +6,5 @@ setup(
     packages=find_packages(exclude=["test"]),
     version='1.0.0',
     author="Constantin Pape",
-    url="https://github.com/platybrowser/platybrowser-backend"
+    url="https://github.com/platybrowser/platybrowser"
 )

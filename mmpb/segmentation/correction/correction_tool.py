@@ -13,6 +13,7 @@ import vigra
 
 from heimdall import view, to_source
 from elf.io import open_file
+from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 
 
 # correct false merges via lifted multicut (or watershed)
@@ -29,7 +30,6 @@ class CorrectionTool:
                  false_merge_id_path=None,
                  table_path=None, table_key=None, scale_factor=None,
                  raw_path=None, raw_key=None,
-                 seg_path=None, seg_key=None,
                  ws_path=None, ws_key=None,
                  node_label_path=None, node_label_key=None,
                  problem_path=None, graph_key=None, feat_key=None,
@@ -58,11 +58,6 @@ class CorrectionTool:
             self.raw_path = raw_path
             assert raw_key is not None
             self.raw_key = raw_key
-
-            assert seg_path is not None
-            self.seg_path = seg_path
-            assert seg_key is not None
-            self.seg_key = seg_key
 
             assert ws_path is not None
             self.ws_path = ws_path
@@ -107,7 +102,6 @@ class CorrectionTool:
         self.scale_factor = conf['scale_factor']
 
         self.raw_path, self.raw_key = conf['raw_path'], conf['raw_key']
-        self.seg_path, self.seg_key = conf['seg_path'], conf['seg_key']
         self.ws_path, self.ws_key = conf['ws_path'], conf['ws_key']
         self.node_label_path, self.node_label_key = conf['node_label_path'], conf['node_label_key']
 
@@ -121,7 +115,6 @@ class CorrectionTool:
                 'table_path': self.table_path, 'table_key': self.table_key,
                 'scale_factor': self.scale_factor,
                 'raw_path': self.raw_path, 'raw_key': self.raw_key,
-                'seg_path': self.seg_path, 'seg_key': self.seg_key,
                 'ws_path': self.ws_path, 'ws_key': self.ws_key,
                 'node_label_path': self.node_label_path, 'node_label_key': self.node_label_key,
                 'problem_path': self.problem_path, 'graph_key': self.graph_key,
@@ -131,8 +124,10 @@ class CorrectionTool:
 
     def load_all_data(self):
         self.ds_raw = open_file(self.raw_path)[self.raw_key]
-        self.ds_seg = open_file(self.seg_path)[self.seg_key]
         self.ds_ws = open_file(self.ws_path)[self.ws_key]
+        if self.ds_ws.attrs.get('isLabelMultiset', False):
+            self.ds_ws = LabelMultisetWrapper(self.ds_ws)
+
         self.shape = self.ds_raw.shape
         assert self.ds_ws.shape == self.shape
 
@@ -178,7 +173,7 @@ class CorrectionTool:
         with open_file(self.table_path, 'r') as f:
             table = f[self.table_key][:]
         self.bb_starts = table[:, 5:8]
-        self.bb_stops = table[:, 8:]
+        self.bb_stops = table[:, 8:11]
         self.bb_starts /= self.scale_factor
         self.bb_stops /= self.scale_factor
 
@@ -213,18 +208,11 @@ class CorrectionTool:
 
         # load raw and watershed
         raw = self.ds_raw[bb]
-        try:
-            seg = self.ds_seg[bb]
-        except RuntimeError:
-            seg = None
         ws = self.ds_ws[bb]
 
         # make the segment mask
         ws[~np.isin(ws, node_ids)] = 0
-        if seg is None:
-            seg_mask = ws > 0
-        else:
-            seg_mask = seg == seg_id
+        seg_mask = ws > 0
 
         return raw, ws, seg_mask.astype('uint32'), graph, probs, mapping
 

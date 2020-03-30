@@ -100,13 +100,13 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
         cilia_name = 'sbem-6dpf-1-whole-segmented-cilia'
         old_cilia_table = os.path.join(old_folder, 'tables', cilia_name, 'cell_mapping.csv')
         new_cilia_table = os.path.join(folder, 'tables', cilia_name, 'cell_mapping.csv')
-        propagate_attributes(id_lut, old_cilia_table, new_cilia_table, 'cell_id')
+        propagate_attributes(id_lut, old_cilia_table, new_cilia_table, 'cell_id', override=True)
 
         # update the ganglia id mapping table, gene clusters and symmetric pairs
-        propagate_attributes(id_lut, old_ganglia_table, new_ganglia_table, 'label_id')
-        propagate_attributes(id_lut, old_gcluster_table, new_gcluster_table, 'label_id')
-        propagate_attributes(id_lut, old_symm_pair_table, new_symm_pair_table, 'label_id')
-        propagate_attributes(id_lut, old_mcluster_table, new_mcluster_table, 'label_id')
+        propagate_attributes(id_lut, old_ganglia_table, new_ganglia_table, 'label_id', override=True)
+        propagate_attributes(id_lut, old_gcluster_table, new_gcluster_table, 'label_id', override=True)
+        propagate_attributes(id_lut, old_symm_pair_table, new_symm_pair_table, 'label_id', override=True)
+        propagate_attributes(id_lut, old_mcluster_table, new_mcluster_table, 'label_id', override=True)
 
     else:
         # otherwise, need to copy the ganglia, gene cluster and symmetric pair table
@@ -182,7 +182,7 @@ def make_cilia_tables(old_folder, folder, name, tmp_folder, resolution,
     if seg_has_changed:
         id_lut = os.path.join(folder, 'misc',
                               'new_id_lut_sbem-6dpf-1-whole-segmented-cilia.json')
-        propagate_attributes(id_lut, old_table_path, new_table_path, 'label_id')
+        propagate_attributes(id_lut, old_table_path, new_table_path, 'label_id', override=True)
     else:
         make_squashed_link(old_table_path, new_table_path)
 

@@ -144,6 +144,12 @@ class UNetAnisotropic(UNetBase):
 def save_best_model(project_directory):
     trainer = Trainer().load(from_directory=os.path.join(project_directory, "Weights"),
                              best=True, map_location='cpu')
+
+    # save the model
     model = trainer.model
     save_path = os.path.join(project_directory, "Weights", "best_model.nn")
     torch.save(model, save_path)
+
+    # save the state dict
+    save_path = os.path.join(project_directory, "Weights", "best_model.state")
+    torch.save(model.state_dict(), save_path)
