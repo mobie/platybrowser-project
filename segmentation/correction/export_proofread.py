@@ -8,8 +8,12 @@ from cluster_tools.downscaling import DownscalingWorkflow
 from paintera_tools.serialize.serialize_from_commit import (serialize_assignments,
                                                             serialize_merged_segmentation)
 from paintera_tools.util import find_uniques
-from mmpb.default_config import write_default_global_config, set_default_block_shape
+
+from mmpb.default_config import write_default_global_config, set_default_block_shape, set_default_qos
+from mmpb.export.map_segmentation_ids import map_ids
 from mmpb.util import add_max_id
+from mmpb.attributes.util import node_labels
+
 from common import PAINTERA_PATH, PAINTERA_KEY, TMP_PATH, ROI_PATH
 from make_proofreading_projects import copy_watersheds
 
@@ -174,7 +178,7 @@ def export_all_projects():
     """
 
 
-def check_exported(scale=3):
+def check_exported(with_seg=False, with_boundaries=False, scale=3):
     from heimdall import view, to_source
     from elf.wrapper.resized_volume import ResizedVolume
 
@@ -186,33 +190,34 @@ def check_exported(scale=3):
     ds.n_threads = 8
     raw = ds[:]
     shape = raw.shape
+    data = [to_source(raw, name='raw')]
 
     path = './data.n5'
     key = 'volumes/segmentation2/s%i' % scale
     f = z5py.File(path, 'r')
 
-    ds = f[key]
-    ds.n_threads = 8
-    seg = ds[:].astype('uint32')
+    if with_seg:
+        ds = f[key]
+        ds.n_threads = 8
+        seg = ds[:].astype('uint32')
+        data.append(to_source(seg, name='segmentation'))
 
     key = 'volumes/clustering'
     ds = f[key]
     ds.n_threads = 8
     clustered = ResizedVolume(ds[:], shape=shape)[:]
+    data.append(to_source(clustered, name='clustered'))
 
     path = '/g/arendt/EM_6dpf_segmentation/corrections_and_proofreading/data.n5'
     key = 'boundaries/s%i' % scale
-    # path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
-    # key = 'volumes/affinities/s%i' % (scale + 1,)
     f = z5py.File(path, 'r')
-    ds = f[key]
-    ds.n_threads = 8
-    bd = ds[:]
+    if with_boundaries:
+        ds = f[key]
+        ds.n_threads = 8
+        bd = ds[:]
+        data = to_source(bd, name='boundaries')
 
-    view(to_source(raw, name='raw'),
-         to_source(bd, name='boundaries'),
-         to_source(clustered, name='clustered'),
-         to_source(seg, name='segmentation'))
+    view(*data)
 
 
 def first_export():
@@ -225,5 +230,67 @@ def first_export():
     export_selected_projects([8], rois_to_blocks, target, max_jobs)
 
 
+def make_id_mapping():
+    path1 = os.path.join('/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/images/local',
+                         'sbem-6dpf-1-whole-segmented-cells.n5')
+    path2 = './data.n5'
+    key2 = 'volumes/segmentation2/s2'
+
+    out_path = './configs/id_mapping.json'
+    tmp_folder = './tmp_subdivision_labels'
+    max_jobs = 200
+    target = 'slurm'
+    prefix = 'mapping'
+
+    map_ids(path1, path2, out_path, tmp_folder, max_jobs, target, prefix,
+            scale=2, key2=key2)
+
+
+def map_id_to_project(cell_id):
+    mapping_path = './configs/id_mapping.json'
+    with open(mapping_path) as f:
+        mapping = json.load(f)
+    mapping = {int(k): v[0] for k, v in mapping.items()}
+
+    mapped_cell_id = mapping[cell_id]
+
+    block_label_path = './configs/label_mapping.json'
+    with open(block_label_path) as f:
+        block_labels = json.load(f)
+
+    for block_id, labels in block_labels.items():
+        if mapped_cell_id in labels:
+            print("Found cell", cell_id, "in project", block_id, "with new id", mapped_cell_id)
+
+
+def make_new_fragment_segment_assignment():
+    path1 = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
+    k1 = 'volumes/paintera/proofread_cells_multiset/data/s0'
+    path2 = './data.n5'
+    k2 = 'volumes/segmentation2/s0'
+
+    tmp_folder = './tmp_subdivision_labels'
+    config_folder = os.path.join(tmp_folder, 'configs')
+    set_default_qos('high')
+    write_default_global_config(config_folder)
+
+    target = 'slurm'
+    max_jobs = 200
+    assignments = node_labels(path1, k1, path2, k2,
+                              'new-frag-seg', tmp_folder, target, max_jobs)
+    assert assignments.ndim == 1
+    assignments = np.concatenate([np.arange(len(assignments), dtype='uint64')[:, None],
+                                  assignments[:, None]], axis=1)
+
+    with z5py.File(path2) as f:
+        f.create_dataset('node_labels/fragment-segment-assignment2', data=assignments,
+                         compression='gzip', chunks=assignments.shape)
+
+
 if __name__ == '__main__':
-    check_exported()
+    # check_exported()
+    # make_id_mapping()
+    # make_new_fragment_segment_assignment()
+
+    cell_id = 4402
+    map_id_to_project(cell_id)

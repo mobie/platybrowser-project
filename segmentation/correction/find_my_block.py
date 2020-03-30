@@ -47,14 +47,14 @@ def find_my_block(block_id):
     ds.n_thread = 8
     raw = ds[:]
 
-    scale_blocks = scale - 3
     path = './data.n5'
-    k = 'labels_for_subdivision_mip/s%i' % scale_blocks
+    k = 'volumes/clustering'
     f = z5py.File(path)
     ds = f[k]
     ds.n_threads = 8
-    block = ds[:]
-    block = (block == block_id).astype('uint32')
+    block = ds[:].astype('uint32')
+    if block_id is not None:
+        block = (block == block_id).astype('uint32')
 
     view(to_source(raw, name='raw'),
          to_source(block, name='block-volume'))
@@ -62,5 +62,6 @@ def find_my_block(block_id):
 
 if __name__ == '__main__':
     # preprocess()
-    block_id = int(sys.argv[1])
+    args = sys.argv
+    block_id = int(args[1]) if len(args) == 2 else None
     find_my_block(block_id)

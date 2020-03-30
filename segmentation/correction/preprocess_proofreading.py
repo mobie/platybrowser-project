@@ -13,6 +13,7 @@ from cluster_tools.graph import GraphWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
 from cluster_tools.write import WriteLocal, WriteSlurm
 from elf.segmentation.clustering import agglomerative_clustering
+from sklearn.cluster import AgglomerativeClustering
 
 from mmpb.attributes.util import node_labels
 from mmpb.default_config import write_default_global_config
@@ -194,14 +195,9 @@ def compute_node_and_edge_features(uv_ids, scale, tmp_folder, target, max_jobs):
     with z5py.File(path, 'r') as f:
         ds = f[node_feat_key]
         node_sizes = ds[:, 1]
-        com = ds[:, 2:5]
+        node_pos = ds[:, 2:5]
 
-    com_u = com[uv_ids[:, 0], :]
-    com_v = com[uv_ids[:, 1], :]
-
-    edge_features = np.sqrt(np.power(com_u - com_v, 2).sum(axis=1))
-    assert len(edge_features) == len(edge_sizes)
-    return edge_features, node_sizes, edge_sizes
+    return node_pos, node_sizes, edge_sizes
 
 
 def serialize_blocks(node_labels, tmp_folder, target, max_jobs):
@@ -228,32 +224,74 @@ def serialize_blocks(node_labels, tmp_folder, target, max_jobs):
     assert ret, "Write failed"
 
 
+def agglomerative_clustering_sklearn(graph, com, node_sizes, edge_sizes, n_target_projects):
+    # uv ids to connectivity matrix
+    # sparsify?
+    print("Make connectivity matrix ...")
+    uv_ids = graph.uvIds()
+    n_nodes = graph.numberOfNodes
+    conn_matrix = np.zeros((n_nodes, n_nodes), dtype=bool)
+    for u, v in uv_ids:
+
+        # isolate the background label
+        if u == 0 or v == 0:
+            continue
+
+        conn_matrix[u, v] = 1
+        conn_matrix[v, u] = 1
+
+    print("Run clustering ...")
+    agglo = AgglomerativeClustering(n_clusters=n_target_projects, connectivity=conn_matrix)
+    clustering = agglo.fit(com)
+    node_labels = clustering.labels_
+    assert len(node_labels) == len(com)
+    return node_labels.astype('uint64')
+
+
+def agglomerative_clustering_elf(graph, com,
+                                 node_sizes, edge_sizes,
+                                 n_target_projects, size_regularizer=1.):
+    uv_ids = graph.uvIds()
+    com_u = com[uv_ids[:, 0], :]
+    com_v = com[uv_ids[:, 1], :]
+
+    edge_features = np.sqrt(np.power(com_u - com_v, 2).sum(axis=1))
+    assert len(edge_features) == len(edge_sizes)
+
+    node_labels = agglomerative_clustering(graph, edge_features,
+                                           node_sizes, edge_sizes,
+                                           n_target_projects, size_regularizer=size_regularizer)
+    return node_labels
+
+
 def divide_labels_by_clustering(scale, n_target_projects,
                                 tmp_folder, target, max_jobs):
     graph = compute_graph(scale, tmp_folder, target, max_jobs)
     uv_ids = graph.uvIds()
-    edge_features, node_sizes, edge_sizes = compute_node_and_edge_features(uv_ids, scale,
-                                                                           tmp_folder,
-                                                                           target, max_jobs)
+    com, node_sizes, edge_sizes = compute_node_and_edge_features(uv_ids, scale,
+                                                                 tmp_folder, target, max_jobs)
 
-    node_labels = agglomerative_clustering(graph, edge_features,
-                                           node_sizes, edge_sizes,
-                                           n_target_projects, size_regularizer=2.5)
-    vigra.analysis.relabelConsecutive(node_labels, start_label=1, keep_zeros=True, out=node_labels)
-    # make sure node label 0 is mapped to 0 and the rest is not
-    assert node_labels[0] == 0
-    assert (node_labels[1:] != 0).all()
+    # node_labels = agglomerative_clustering_elf(graph, com, node_sizes, edge_sizes,
+    #                                            n_target_projects, size_regularizer=1.)
+    node_labels = agglomerative_clustering_sklearn(graph, com, node_sizes, edge_sizes, n_target_projects)
+    vigra.analysis.relabelConsecutive(node_labels, start_label=1, keep_zeros=False, out=node_labels)
     n_projects = int(node_labels.max()) + 1
+    node_labels[0] = 0
 
-    # print(np.unique(node_labels))
-    # assert np.array_equal(np.unique(node_labels), np.arange(n_target_projects))
     labels_to_blocks = {ii: np.where(node_labels == ii)[0].tolist()
                         for ii in range(1, n_projects)}
 
+    print("Number of segments per block:")
+    for block_id, labels in labels_to_blocks.items():
+        print("Block", block_id, ":", len(labels))
+        if 0 in labels:
+            print("Has bg label")
+
+    with open(LABEL_MAPPING_PATH, 'w') as f:
+        json.dump(labels_to_blocks, f)
+
     # serialize resulting segmentation for debugging
     serialize_blocks(node_labels, tmp_folder, target, max_jobs)
-    # TODO make work until here and then debug
-    quit()
     return labels_to_blocks
 
 
@@ -331,8 +369,11 @@ def compute_spatial_id_mapping(labels_to_blocks, tmp_folder, target, max_jobs):
     task = MorphologyWorkflow
     config_dir = os.path.join(tmp_folder, 'configs')
 
+    scale = 0
     path = TMP_PATH
-    in_key = 'volumes/segmentation'
+    path = SEG_PATH
+    in_key = os.path.join(SEG_KEY, 's%i' % scale)
+
     out_key = 'morphology'
 
     t = task(tmp_folder=tmp_folder, config_dir=config_dir,
@@ -380,12 +421,10 @@ def preprocess(n_target_projects, tmp_folder,
 
 def copy_boundaries():
     from elf.parallel.operations import apply_operation_single
-    # from elf.wrapper.resized_volume import ResizedVolume
 
     n_threads = 48
     in_path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
     out_path = BOUNDARY_PATH
-    # mask_key = 'volumes/masks/carved/s5'
 
     def _copy_scale(scale):
         print("Copy volumes for scale", scale)
@@ -399,10 +438,6 @@ def copy_boundaries():
         chunks = ds_in.chunks[1:]
         print("Have shape", shape)
 
-        # ds_mask = f_in[mask_key]
-        # ds_mask = ResizedVolume(ds_mask, shape=shape)
-        ds_mask = None
-
         f_out = z5py.File(out_path)
         if out_key in f_out:
             print("Have copied scale", scale, "already")
@@ -412,7 +447,7 @@ def copy_boundaries():
                                        chunks=chunks, compression='gzip')
 
         apply_operation_single(ds_in, np.mean, out=ds_out, axis=0,
-                               n_threads=n_threads, mask=ds_mask, verbose=True)
+                               n_threads=n_threads, verbose=True)
 
     for scale in range(0, 5):
         _copy_scale(scale)

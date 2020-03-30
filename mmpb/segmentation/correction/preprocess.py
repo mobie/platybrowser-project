@@ -132,7 +132,7 @@ def resave_assignements(assignments, path, out_key):
 
 def preprocess_from_paintera_project(project_path, out_folder,
                                      raw_path, raw_root_key,
-                                     affinities_path, affinities_key,
+                                     boundaries_path, boundaries_key,
                                      out_key, scale,
                                      tmp_folder, target, max_jobs,
                                      roi_begin=None, roi_end=None):
@@ -168,8 +168,7 @@ def preprocess_from_paintera_project(project_path, out_folder,
             actions = seg_data['fragmentSegmentAssignment']['actions']
             assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
 
-            # TODO load the flagged ids instead once this is implemented
-            locked_ids = source_state['lockedSegments']
+            flagged_ids = source_state['flaggedSegments']
 
             have_seg_source = True
 
@@ -184,27 +183,15 @@ def preprocess_from_paintera_project(project_path, out_folder,
 
     # compute graph and edge weights
     seg_key = os.path.join(seg_root_key, 'data', 's0')
-    compute_graph_and_weights(affinities_path, affinities_key,
+    compute_graph_and_weights(boundaries_path, boundaries_key,
                               seg_path, seg_key, seg_path,
                               tmp_folder, target=target, max_jobs=max_jobs,
-                              offsets=[[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
-                              with_costs=False)
+                              offsets=None, with_costs=False)
 
-    # TODO use flagged ids instead once implemented
-    # compute the ids to consider for splitting from the locked ids
-
-    # load unique ids for this block
+    # save fragment segment assignment in the format the splitting tool can parse
     ass_key = os.path.join(seg_root_key, 'fragment-segment-assignment')
     with open_file(seg_path, 'r') as f:
         assignments = f[ass_key][:].T
-        seg_ids = assignments[:, 1]
-    unique_ids = np.unique(seg_ids)
-    if unique_ids[0] == 0:
-        unique_ids = unique_ids[1:]
-    unique_ids = unique_ids.tolist()
-    flagged_ids = list(set(unique_ids) - set(locked_ids))
-
-    # save fragment segment assignment in the format the splitting tool can parse
     node_label_key = 'node_labels/labels_before_splitting'
     resave_assignements(assignments, seg_path, node_label_key)
 

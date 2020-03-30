@@ -1,17 +1,16 @@
 import argparse
 import json
 import os
+from common import RAW_PATH, RAW_KEY, BOUNDARY_PATH, BOUNDARY_KEY
 
 
 def preprocess_for_project(project_folder, tool_project_folder):
     from mmpb.segmentation.correction.preprocess import preprocess_from_paintera_project
-    raw_path = '/g/arendt/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.n5'
-    raw_root_key = 'setup0/timepoint0'
+    raw_path = RAW_PATH
+    raw_root_key = RAW_KEY
 
-    # TODO if I want everyone to run this script, need to move the affinities somewhere to the
-    # arendt share as well
-    affinities_path = '/g/kreshuk/data/arendt/platyneris_v1/data.n5'
-    affinities_key = 'volumes/affinities/s1'
+    boundary_path = BOUNDARY_PATH
+    boundary_key = BOUNDARY_KEY
 
     out_key = 'volumes/segmentation_before_splitting'
 
@@ -35,7 +34,7 @@ def preprocess_for_project(project_folder, tool_project_folder):
     scale = 2
     preprocess_from_paintera_project(project_folder, tool_project_folder,
                                      raw_path, raw_root_key,
-                                     affinities_path, affinities_key,
+                                     boundary_path, boundary_key,
                                      out_key, scale,
                                      tmp_folder, target, max_jobs,
                                      roi_begin=roi_begin, roi_end=roi_end)
