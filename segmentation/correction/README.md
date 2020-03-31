@@ -46,7 +46,7 @@ For details on paintera usage, see [the paintera Readme](https://github.com/saal
 
 ## Step 2: Split falsely merged objects with seeds
 
-The `splitting tool` allows to split objects by providing seeds for the different cell, cell fragments or extracellular tissue
+The `splitting tool` allows to split objects by providing seeds for the different cells, cell fragments or extracellular tissue parts
 erronously merged together. It is implemented using [napari](https://github.com/napari/napari#napari). Start it via
 ```sh
 ./run_splitter.sh paintera_projects/project<ID>
@@ -68,12 +68,30 @@ The viewer contains four different layers:
 - `seeds`: the seeds you provide to split the object
 These layers can be toggled by clicking the eye symbol next to them.
 
+Note that you will not have to split all objects that will be loaded by the correction tool, because you may have flagged some objects with `e` in [Step1](https://github.com/platybrowser/platybrowser/tree/master/segmentation/correction#step-1-proof-reading-with-paintera) for other reasons than false merges. In this case, skip the current object py pressing `s` and closing the current window (`x` symbol in the top right). The next object will be loaded automatically.
+
 In order to split the object, you need to provide seeds for the different sub-parts that will be used to
-grow corresponding objects. For this, select the `seeds` layer by clicking on it; then enable the painting mode by clicking the brush symbol and increase the seed id by clicking the `+` symbol next to label:
+grow corresponding objects. For this, select the `seeds` layer by clicking on it; then enable the `paint mode` by clicking the brush symbol and increase the seed id by clicking the `+` symbol next to label:
 
 ![Split2](https://github.com/platybrowser/platybrowser/blob/master/segmentation/correction/ims/split2.png)
 
-Now 
+Now, paint with different seed ids for the parts of the object that shall be split.
+In order to move around the volume easier you can switch back and forth between `view mode` / `paint mode` by clicking 
+the magnifying glass symbol / brush symbol.
+
+![Split3](https://github.com/platybrowser/platybrowser/blob/master/segmentation/correction/ims/split3.png)
+
+Once you have painted seeds for all parts, press `w`. This will grow the segmentation for all sub-parts:
+
+![Split4](https://github.com/platybrowser/platybrowser/blob/master/segmentation/correction/ims/split4.png)
+
+Note: sometimes the tool might not react to pressing keys; in that case, switch back to `view mode` (magnifying glass) and pan the view (hold left click somewhere in the image and drag the mouse). Now it should react to pressing keys again.
+Continue painting seeds and updating the segmentation until you are satisfied with the resulting segmentations.
+Note that it is often not possible to get perfect results at boundaries because the splitting workflow cannot correct issues 
+in the underlying fragments (which you can see by activating the `ws` layer).
+Once you are done, just close the window (`x` symbol in the top right); the tool will open the window for the next object until all objects have been corrected or skipped.
+
+If you want to take a break, close the tool by pressing `q`. Your progress will be saved.
 
 
 ## Step 3: Proof-reading with paintera
