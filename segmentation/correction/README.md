@@ -46,9 +46,16 @@ For details on paintera usage, see [the paintera Readme](https://github.com/saal
 
 ## Step 2: Split falsely merged objects with seeds
 
-TODO
+Start the splitting tool via
+```sh
+./run_splitter.sh paintera_projects/project<ID>
+```
+
+Starting will take some time and then will open up a window like this:
+
+The splitting tool is based on [napari](https://github.com/napari/napari#napari).
 
 
 ## Step 3: Proof-reading with paintera
 
-TODO
+After you have proof-read or skipped all objects with the splitting tool,
