@@ -1,5 +1,6 @@
 import os
 import json
+
 from datetime import datetime
 from glob import glob
 from math import ceil, floor
@@ -125,7 +126,6 @@ def zero_out_ids(node_label_in_path, node_label_in_key,
         ds[:] = node_labels
 
 
-# TODO refactor this properly
 def get_bounding_boxes(table_path, table_key, scale_factor):
     with open_file(table_path, 'r') as f:
         table = f[table_key][:]
@@ -139,79 +139,65 @@ def get_bounding_boxes(table_path, table_key, scale_factor):
     return bounding_boxes
 
 
-def check_exported(res_file, raw_path, raw_key, ws_path, ws_key,
-                   table_path, table_key, scale_factor):
-    from heimdall import view
-    import nifty.tools as nt
-    seg_id = int(os.path.splitext(os.path.split(res_file)[1])[0])
-    res = np.load(res_file)
-
-    bb = get_bounding_boxes(table_path, table_key, scale_factor)[seg_id]
-
-    node_ids, node_labels = res['node_ids'], res['node_labels']
-    assert len(node_ids) == len(node_labels)
-
-    with open_file(raw_path, 'r') as f:
-        ds = f[raw_key]
-        ds.n_threads = 8
-        raw = ds[bb]
-    with open_file(ws_path, 'r') as f:
-        ds = f[ws_key]
-        ds.n_threads = 8
-        ws = ds[bb]
-
-    seg_mask = np.isin(ws, node_ids)
-    ws[~seg_mask] = 0
-    label_dict = {wsid: lid for wsid, lid in zip(node_ids, node_labels)}
-    label_dict[0] = 0
-    seg = nt.takeDict(label_dict, ws)
-
-    view(raw, seg)
-
-
-def check_exported_paintera(paintera_path, assignment_key,
-                            node_label_path, node_label_key,
-                            table_path, table_key, scale_factor,
-                            raw_path, raw_key, seg_path, seg_key,
-                            check_ids):
-    from heimdall import view
+def check_exported(paintera_path, old_assignment_key, assignment_key,
+                   table_path, table_key, scale_factor,
+                   raw_path, raw_key,
+                   ws_path, ws_key,
+                   seg_path, seg_key,
+                   check_ids):
+    import napari
     import nifty.tools as nt
 
     with open_file(paintera_path, 'r') as f:
-        ds = f[assignment_key]
-        new_assignments = ds[:].T
+        ds = f[old_assignment_key]
+        old_assignments = ds[:].T
 
-    with open_file(node_label_path, 'r') as f:
-        ds = f[node_label_key]
-        node_labels = ds[:]
+        ds = f[assignment_key]
+        assignments = ds[:].T
+
+    fragment_ids, segment_ids = assignments[:, 0], assignments[:, 1]
+    old_fragment_ids, old_segment_ids = old_assignments[:, 0], old_assignments[:, 1]
+    assert np.array_equal(fragment_ids, old_fragment_ids)
 
     bounding_boxes = get_bounding_boxes(table_path, table_key, scale_factor)
-    with open_file(seg_path, 'r') as fseg, open_file(raw_path, 'r') as fraw:
-        ds_seg = fseg[seg_key]
-        ds_seg.n_thread = 8
+    with open_file(seg_path, 'r') as fseg,\
+            open_file(raw_path, 'r') as fraw,\
+            open_file(ws_path, 'r') as fws:
+
         ds_raw = fraw[raw_key]
         ds_raw.n_thread = 8
 
+        ds_ws = fws[ws_key]
+        ds_ws.n_thread = 8
+
+        ds_seg = fseg[seg_key]
+        ds_seg.n_thread = 8
+
         for seg_id in check_ids:
             bb = bounding_boxes[seg_id]
-            raw = ds_raw[bb]
-            ws = ds_seg[bb]
 
-            ws_ids = np.where(node_labels == seg_id)[0]
-            seg_mask = np.isin(ws, ws_ids)
+            raw = ds_raw[bb]
+            ws = ds_ws[bb]
+            seg = ds_seg[bb]
+            seg_mask = (seg == seg_id).astype('uint32')
             ws[~seg_mask] = 0
 
-            new_label_mask = np.isin(new_assignments[:, 0], ws_ids)
-            new_label_dict = dict(zip(new_assignments[:, 0][new_label_mask],
-                                      new_assignments[:, 1][new_label_mask]))
-            new_label_dict[0] = 0
+            id_mask = old_segment_ids == seg_id
+            ws_ids = fragment_ids[id_mask]
 
-            # I am not sure why this happens
-            un_ws = np.unique(ws)
-            un_labels = list(new_label_dict.keys())
-            missing = np.setdiff1d(un_ws, un_labels)
-            print("Number of missing: ")
-            new_label_dict.update({miss: 0 for miss in missing})
+            ids_old = old_segment_ids[id_mask]
+            dict_old = {wid: oid for wid, oid in zip(ws_ids, ids_old)}
+            dict_old[0] = 0
+            seg_old = nt.takeDict(dict_old, ws)
 
-            seg_new = nt.takeDict(new_label_dict, ws)
-            view(raw, seg_mask.astype('uint32'), seg_new)
+            ids_new = segment_ids[id_mask]
+            dict_new = {wid: oid for wid, oid in zip(ws_ids, ids_new)}
+            dict_new[0] = 0
+            seg_new = nt.takeDict(dict_new, ws)
+
+            with napari.gui_qt():
+                viewer = napari.Viewer()
+                viewer.add_image(raw, name='raw')
+                viewer.add_labels(seg_mask, name='seg-mask')
+                viewer.add_labels(seg_old, name='old-seg')
+                viewer.add_labels(seg_new, name='new-seg')
