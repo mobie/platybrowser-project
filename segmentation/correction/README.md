@@ -6,6 +6,7 @@
 - We provide Horizon VMs at EMBL for proof-reading. See [the EMBL intranet](https://intranet.embl.de/it_services/services/horizon/index.html) for details on the EMBL VM set-up. For now, you can use the following VMs for proof-reading (you need to get access granted by IT first):
   - `VM Kreshuk 10`
 - The segmentation has been divided into 50 sub-projects for proof-reading. As a proof-reader, you should always work on one project at a time. When you start working on a new project, please check [this spreadsheat](https://docs.google.com/spreadsheets/d/1w3w4ThrVEm4pCAjQ6oTeiNP91J-EHbXLbVxVHncBAo0/edit#gid=0), choose a block that has not been taken yet (`Proofreader` is blank) and put your name into the `Proofreader` column.
+- In order to estimate the total time spent on proof-reading, please keep track of the time you spent on the individual steps and mark them in the corresponding columns as HH:MM.
 
 Once you are logged into your VM, open a terminal by clicking `Applications -> System Tools -> Terminal`.
 In the terminal, enter
@@ -26,7 +27,7 @@ This will open am empty paintera window. Now, you need to open your project in p
 - In the field next to `Find`, type in the path to your project's data: `/g/arendt/EM_6dpf_segmentation/corrections_and_proofreading/paintera_projects/project<ID>/data.n5`
 - From the field `Dataset` select `volumes/raw` and press `Ok`. This will open the raw data. 
 - Now you also need to load the segmentation. Press `Ctrl + o` and select `N5` again.
-- From the field `Dataset` select `volumes/paintera` and press `Ok`. This will open the segmentation layer.
+- Switch the field `Type` from `RAW` to `LABEL`. From the field `Dataset` select `volumes/paintera` and press `Ok`. This will open the segmentation layer.
 - Now you are almost good to go; you only need to scroll through the dataset until you find the part to proofread in this project (all the rest is greyed out!).
 
 If you continue working on a project you have opened before, paintera will automatically start up in your last position.
