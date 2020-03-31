@@ -125,11 +125,11 @@ def make_proofreading_projects(root, labels_to_blocks, rois_to_blocks, target, m
     os.makedirs(tmp_root, exist_ok=True)
 
     with z5py.File(TMP_PATH, 'r') as f:
-        assignments = f['node_labels/fragment_segment_assignment'][:]
+        assignments = f['node_labels/fragment-segment-assignment2'][:]
 
     n_blocks = len(labels_to_blocks)
-    block_ids = range(1, n_blocks + 1)
-    # block_ids = [8]
+    # block_ids = range(1, n_blocks + 1)
+    block_ids = range(3, 17)
 
     for block_id in block_ids:
         print("Make project", block_id, "/", n_blocks + 1)

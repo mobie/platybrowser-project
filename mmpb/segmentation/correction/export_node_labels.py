@@ -1,71 +1,111 @@
 import os
+import json
+from datetime import datetime
+from glob import glob
 from math import ceil, floor
+from shutil import copytree, copy
 
 import numpy as np
-import vigra
 from elf.io import open_file
 
 
-def export_node_labels(path, in_key, out_key, project_folder):
+def backup(path, key):
+    file_path = os.path.join(path, key)
+    timestamp = str(datetime.timestamp(datetime.now())).replace('.', '-')
+    bkp_path = file_path + '.' + timestamp
+    copytree(file_path, bkp_path)
+
+
+def backup_attrs(path):
+    timestamp = str(datetime.timestamp(datetime.now())).replace('.', '-')
+    bkp_path = path + '.' + timestamp
+    copy(path, bkp_path)
+
+
+def read_paintera_max_id(project_folder):
+    path = os.path.join(project_folder, 'data.n5')
     with open_file(path, 'r') as f:
-        ds = f[in_key]
-        node_labels = ds[:]
+        ds = f['volumes/paintera']
+        max_id = ds.attrs['maxId']
+    return max_id
 
-    result_folder = os.path.join(project_folder, 'results')
-    res_files = os.listdir(result_folder)
 
+def write_paintera_max_id(project_folder, max_id):
+    path = os.path.join(project_folder, 'data.n5')
+    key = 'volumes/paintera'
+    attrs_file = os.path.join(path, key, 'attributes.json')
+    backup_attrs(attrs_file)
+    with open_file(path) as f:
+        ds = f[key]
+        ds.attrs['maxId'] = max_id
+
+
+def remove_flagged_ids(paintera_attrs, ids):
+    backup_attrs(paintera_attrs)
+    with open(paintera_attrs) as f:
+        attrs = json.load(f)
+
+    source_name = 'org.janelia.saalfeldlab.paintera.state.label.ConnectomicsLabelState'
+
+    sources = attrs['paintera']['sourceInfo']['sources']
+    have_seg_source = False
+    for ii, source in enumerate(sources):
+        type_ = source['type']
+        if type_ == source_name:
+            assert not have_seg_source, "Only support a single segmentation source!"
+            source_state = source['state']
+
+            flagged_ids = set(source_state['flaggedSegments'])
+            flagged_ids = list(flagged_ids - set(ids))
+
+            source_state['flaggedSegments'] = flagged_ids
+            source['state'] = source_state
+            sources[ii] = source
+
+            have_seg_source = True
+
+    assert have_seg_source, "Did not find any segmentation source"
+    attrs['paintera']['sourceInfo']['sources'] = sources
+
+    with open(paintera_attrs, 'w') as f:
+        json.dump(attrs, f)
+
+
+def export_node_labels(path, assignment_key, project_folder, id_offset):
+    with open_file(path, 'r') as f:
+        ds = f[assignment_key]
+        node_labels = ds[:].T
+    fragment_ids, node_labels = node_labels[:, 0], node_labels[:, 1]
+
+    result_folder = os.path.join(project_folder, 'splitting_tool', 'results')
+    res_files = glob(os.path.join(result_folder, '*.npz'))
     print("Applying changes for", len(res_files), "resolved objects")
 
-    id_offset = int(node_labels.max()) + 1
+    resolved_ids = []
     for resf in res_files:
-        seg_id = int(os.path.splitext(resf)[0])
-        resf = os.path.join(result_folder, resf)
+        seg_id = int(os.path.splitext(os.path.split(resf)[1])[0])
         res = np.load(resf)
 
         this_ids, this_labels = res['node_ids'], res['node_labels']
         assert len(this_ids) == len(this_labels)
-        this_ids_exp = np.where(node_labels == seg_id)[0]
-        assert np.array_equal(np.sort(this_ids), this_ids_exp)
+        id_mask = node_labels == seg_id
+        this_ids_exp = fragment_ids[id_mask]
+        assert np.array_equal(np.sort(this_ids), np.sort(this_ids_exp))
 
         this_labels += id_offset
-        node_labels[this_ids] = this_labels
+        node_labels[id_mask] = this_labels
         id_offset = int(this_labels.max()) + 1
 
+        resolved_ids.append(seg_id)
+
+    backup(path, assignment_key)
+
+    paintera_labels = np.concatenate([fragment_ids[:, None], node_labels[:, None]], axis=1).T
     with open_file(path) as f:
-        chunks = (min(int(1e6), len(node_labels)),)
-        ds = f.require_dataset(out_key, compression='gzip', dtype=node_labels.dtype,
-                               chunks=chunks, shape=node_labels.shape)
-        ds[:] = node_labels
+        ds = f[assignment_key]
+        ds[:] = paintera_labels
 
-
-def to_paintera_format(in_path, in_key, out_path, out_key):
-    with open_file(in_path, 'r') as f:
-        node_labels = f[in_key][:]
-    node_labels = vigra.analysis.relabelConsecutive(node_labels, start_label=1, keep_zeros=True)[0]
-
-    n_ws = len(node_labels)
-    ws_ids = np.arange(n_ws, dtype='uint64')
-    assert len(ws_ids) == len(node_labels)
-
-    seg_ids, seg_counts = np.unique(node_labels, return_counts=True)
-    trivial_segments = seg_ids[seg_counts == 1]
-    trivial_mask = np.in1d(node_labels, trivial_segments)
-
-    ws_ids = ws_ids[~trivial_mask]
-    node_labels = node_labels[~trivial_mask]
-
-    node_labels[node_labels != 0] += n_ws
-
-    max_id = node_labels.max()
-    print("new max id:", max_id)
-
-    paintera_labels = np.concatenate([ws_ids[:, None], node_labels[:, None]], axis=1).T
-    print(paintera_labels.shape)
-
-    with open_file(out_path) as f:
-        chunks = (1, min(paintera_labels.shape[1], int(1e6)))
-        f.create_dataset(out_key, data=paintera_labels, chunks=chunks,
-                         compression='gzip')
+    return id_offset, resolved_ids
 
 
 def zero_out_ids(node_label_in_path, node_label_in_key,

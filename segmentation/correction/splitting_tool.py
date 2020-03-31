@@ -48,13 +48,34 @@ def preprocess_for_project(project_folder, tool_project_folder):
                                      roi_begin=roi_begin, roi_end=roi_end)
 
 
+# TODO add support for projecting labels to background
+def export_to_paintera(tool_project_folder):
+    from mmpb.segmentation.correction import (export_node_labels, remove_flagged_ids,
+                                              read_paintera_max_id, write_paintera_max_id)
+
+    print("Exporting results from splitting workflow to paintera")
+    project_folder = os.path.split(tool_project_folder)[0]
+    paintera_attrs = os.path.join(project_folder, 'attributes.json')
+    assert os.path.exists(paintera_attrs), paintera_attrs
+
+    path = os.path.join(project_folder, 'data.n5')
+    pt_assignment_key = 'volumes/paintera/fragment-segment-assignment'
+
+    max_id = read_paintera_max_id(project_folder)
+    max_id, resolved_ids = export_node_labels(path, pt_assignment_key, project_folder, max_id)
+    remove_flagged_ids(paintera_attrs, resolved_ids)
+    write_paintera_max_id(project_folder, max_id)
+
+
 def run_splitting_tool(tool_project_folder):
     from mmpb.segmentation.correction import CorrectionTool
     config_file = os.path.join(tool_project_folder, 'correct_false_merges_config.json')
     assert os.path.exists(config_file), "Could not find %s, something in pre-processing went wrong!" % config_file
     print("Start splitting tool")
     splitter = CorrectionTool(tool_project_folder)
-    splitter()
+    done = splitter()
+    if done:
+        export_to_paintera(tool_project_folder)
 
 
 def main(path):

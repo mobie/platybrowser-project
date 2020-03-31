@@ -140,7 +140,6 @@ def preprocess_from_paintera_project(project_path, out_folder,
     based on segemntation in a paintera project.
     """
 
-    # paintera has two diffe
     source_name = 'org.janelia.saalfeldlab.paintera.state.label.ConnectomicsLabelState'
 
     # parse the paintera attribues.json to extract the relevant paths + locked ids

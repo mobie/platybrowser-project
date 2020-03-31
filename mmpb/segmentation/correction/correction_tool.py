@@ -442,6 +442,7 @@ class CorrectionTool:
             seg_id, qitem = self.queue.get()
             self.correct_segment(seg_id, qitem)
             left_to_process = len(self.false_merge_ids) - len(self.processed_ids)
+        return left_to_process == 0
 
     @staticmethod
     def debug(debug_folder, n_threads=8):
