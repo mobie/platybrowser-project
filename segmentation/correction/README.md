@@ -46,9 +46,36 @@ For details on paintera usage, see [the paintera Readme](https://github.com/saal
 
 ## Step 2: Split falsely merged objects with seeds
 
-TODO
+The `splitting tool` allows to split objects by providing seeds for the different cell, cell fragments or extracellular tissue
+erronously merged together. It is implemented using [napari](https://github.com/napari/napari#napari). Start it via
+```sh
+./run_splitter.sh paintera_projects/project<ID>
+```
+
+This will take some time and then open up a window showing one of the objects to be corrected:
+
+![Split1](https://github.com/platybrowser/platybrowser/blob/master/segmentation/correction/ims/split1.png)
+
+You can move with the following commands:
+- Drag the slider (below the image) to scroll through the z-axis.
+- Use the scroll wheel to zoom in/out.
+- Hold the left or right mouse button to pan.
+
+The viewer contains four different layers:
+- `raw`: the raw data
+- `ws`: the small fragments making up the object
+- `seg`: the mask for the current object
+- `seeds`: the seeds you provide to split the object
+These layers can be toggled by clicking the eye symbol next to them.
+
+In order to split the object, you need to provide seeds for the different sub-parts that will be used to
+grow corresponding objects. For this, select the `seeds` layer by clicking on it; then enable the painting mode by clicking the brush symbol and increase the seed id by clicking the `+` symbol next to label:
+
+![Split2](https://github.com/platybrowser/platybrowser/blob/master/segmentation/correction/ims/split2.png)
+
+Now 
 
 
 ## Step 3: Proof-reading with paintera
 
-TODO
+After you have proof-read or skipped all objects with the splitting tool,
