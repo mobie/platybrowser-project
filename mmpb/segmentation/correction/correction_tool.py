@@ -11,7 +11,6 @@ import nifty.distributed as ndist
 import nifty.tools as nt
 import vigra
 
-from heimdall import view, to_source
 from elf.io import open_file
 from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 
@@ -38,6 +37,7 @@ class CorrectionTool:
         self.project_folder = project_folder
         self.config_file = os.path.join(project_folder, 'correct_false_merges_config.json')
         self.processed_ids_file = os.path.join(project_folder, 'processed_ids.json')
+        self.bg_ids_file = os.path.join(project_folder, 'background_ids.json')
         self.annotation_path = os.path.join(project_folder, 'annotations.json')
 
         if os.path.exists(self.config_file):
@@ -143,6 +143,12 @@ class CorrectionTool:
         else:
             self.processed_ids = []
 
+        if os.path.exists(self.bg_ids_file):
+            with open(self.bg_ids_file) as f:
+                self.background_ids = json.load(f)
+        else:
+            self.background_ids = []
+
         already_processed = np.in1d(self.false_merge_ids, self.processed_ids)
         missing_ids = self.false_merge_ids[~already_processed]
 
@@ -184,6 +190,16 @@ class CorrectionTool:
                                                                              keep_zeros=False)
         uv_ids = self.uv_ids[inner_edges]
         uv_ids = nt.takeDict(mapping, uv_ids)
+
+        # get rid of paintera ignore label
+        pt_ignore_label = 18446744073709551615
+        edge_mask = (uv_ids == pt_ignore_label).sum(axis=1) == 0
+        print(uv_ids)
+        uv_ids = uv_ids[edge_mask]
+        if len(uv_ids) == 0:
+            return None, None, None
+        max_id = int(uv_ids.max())
+
         n_nodes = max_id + 1
         graph = nifty.graph.undirectedGraph(n_nodes)
         graph.insertEdges(uv_ids)
@@ -204,7 +220,8 @@ class CorrectionTool:
         # extract the sub-graph
         node_ids = np.where(self.node_labels == seg_id)[0].astype('uint64')
         graph, probs, mapping = self.load_subgraph(node_ids)
-        # graph, probs, mapping = None, None, None
+        if graph is None:
+            return None
 
         # load raw and watershed
         raw = self.ds_raw[bb]
@@ -221,6 +238,16 @@ class CorrectionTool:
             seg_id = self.next_queue.get()
             print("Loading seg", seg_id)
             qitem = self.load_segment(seg_id)
+
+            # skip invalid items
+            if qitem is None:
+                print("Invalid seg id:", seg_id)
+                print("skipping it")
+                self.processed_ids.append(int(seg_id))
+                with open(self.processed_ids_file, 'w') as f:
+                    json.dump(self.processed_ids, f)
+                continue
+
             self.queue.put((seg_id, qitem))
 
     def init_queue_and_workers(self):
@@ -258,37 +285,43 @@ class CorrectionTool:
 
         seeds = np.zeros_like(ws, dtype='uint32')
         skip_this_segment = False
+        is_background = False
 
         with napari.gui_qt():
-            viewer = view(to_source(raw, name='raw'), to_source(ws, name='ws'),
-                          to_source(seg, name='seg'), to_source(seeds, name='seeds'),
-                          return_viewer=True)
+            viewer = napari.Viewer()
+            viewer.add_image(raw, name='raw')
+            viewer.add_labels(ws, name='ws')
+            viewer.add_labels(seg, name='seg')
+            viewer.add_labels(seeds, name='seeds')
 
             @viewer.bind_key('h')
             def print_help(viewer):
+                print("Put seeds by selecting the 'seeds' layer and painting with different ids")
                 print("[w] - run watershed from seeds")
                 print("[s] - skip the current segment (if it's not a merge)")
                 print("[c] - clear seeds")
                 print("[d] - save current data for debugging")
-                print("[a] - annotate")
+                print("[b] - merge this segment into background")
                 print("[q] - quit")
 
-            @viewer.bind_key('a')
-            def annotatate(viewer):
-                msg = """Annotating seg id, choose one of [c] (correct) [s] (revisit at lower scale), [m] (merge to background).
-                         Otherwise, you can add a custom annotation."""
-                inp = input(msg)
-                if inp == 'c':
-                    annotation = 'correct'
-                elif inp == 's':
-                    annotation = 'revisit'
-                elif inp == 'm':
-                    annotation = 'merge'
-                else:
-                    annotation = input("Enter custom annotation.")
-                self.annotations[int(seg_id)] = annotation
-                with open(self.annotation_path, 'w') as f:
-                    json.dump(self.annotations, f)
+            # deperecated functionality
+            # @viewer.bind_key('a')
+            # def annotatate(viewer):
+            #     msg = """Annotating seg id, choose one of [c] (correct) [s] (revisit at lower scale),
+            #              [m] (merge to background).
+            #              Otherwise, you can add a custom annotation."""
+            #     inp = input(msg)
+            #     if inp == 'c':
+            #         annotation = 'correct'
+            #     elif inp == 's':
+            #         annotation = 'revisit'
+            #     elif inp == 'm':
+            #         annotation = 'merge'
+            #     else:
+            #         annotation = input("Enter custom annotation.")
+            #     self.annotations[int(seg_id)] = annotation
+            #     with open(self.annotation_path, 'w') as f:
+            #         json.dump(self.annotations, f)
 
             @viewer.bind_key('s')
             def skip(viewer):
@@ -296,6 +329,12 @@ class CorrectionTool:
                 nonlocal skip_this_segment
                 skip_this_segment = True
                 # TODO quit viewer
+
+            @viewer.bind_key('b')
+            def to_background(viewer):
+                print("Setting the current segment to backroung")
+                nonlocal is_background
+                is_background = True
 
             @viewer.bind_key('d')
             def debug(viewer):
@@ -362,10 +401,11 @@ class CorrectionTool:
                 sys.exit(0)
 
         # save the results for this segment
-        self.save_segment_result(seg_id, ws, seeds, node_labels, mapping, skip_this_segment)
+        self.save_segment_result(seg_id, ws, seeds, node_labels, mapping,
+                                 skip_this_segment, is_background)
 
-    def save_segment_result(self, seg_id, ws, seeds, node_labels, mapping, skip):
-        if not skip:
+    def save_segment_result(self, seg_id, ws, seeds, node_labels, mapping, skip, is_background):
+        if not (skip or is_background):
             save_file = os.path.join(self.project_folder, 'results', '%i.npz' % seg_id)
             node_ids = list(mapping.keys())
             save_labels = [node_labels[mapping[nid]] for nid in node_ids]
@@ -383,9 +423,18 @@ class CorrectionTool:
 
             np.savez_compressed(save_file, node_ids=node_ids, node_labels=save_labels,
                                 seeded_ids=seeded_ids, seed_labels=seed_labels)
+
         self.processed_ids.append(int(seg_id))
         with open(self.processed_ids_file, 'w') as f:
             json.dump(self.processed_ids, f)
+
+        if is_background:
+            self.background_ids.append(int(seg_id))
+            with open(self.bg_ids_file, 'w') as f:
+                json.dump(self.background_ids, f)
+
+        print("Saved results for segment", seg_id)
+        print("Processed", len(self.processed_ids), "/", len(self.false_merge_ids), "objects")
 
     def __call__(self):
         left_to_process = len(self.false_merge_ids) - len(self.processed_ids)
@@ -426,4 +475,8 @@ class CorrectionTool:
         label_dict[0] = 0
         seg = nt.takeDict(label_dict, ws)
 
-        view(raw, ws, seg)
+        with napari.gui_qt():
+            viewer = napari.Viewer()
+            viewer.add_image(raw, name='raw')
+            viewer.add_labels(ws, name='ws')
+            viewer.add_labels(seg, name='seg')

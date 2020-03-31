@@ -7,7 +7,6 @@ import threading
 import numpy as np
 import napari
 
-from heimdall import view, to_source
 from elf.io import open_file
 
 
@@ -138,15 +137,11 @@ class AnnotationTool:
         annotation = None
 
         with napari.gui_qt():
-            if ws is None:
-                viewer = view(to_source(raw, name='raw'),
-                              to_source(seg, name='seg'),
-                              return_viewer=True)
-            else:
-                viewer = view(to_source(raw, name='raw'),
-                              to_source(ws, name='ws'),
-                              to_source(seg, name='seg'),
-                              return_viewer=True)
+            viewer = napari.Viewer()
+            viewer.add_image(raw, name='raw')
+            if ws is not None:
+                viewer.add_labels(ws, name='ws')
+            viewer.add_labels(seg, name='seg')
 
             @viewer.bind_key('h')
             def print_help(viewer):

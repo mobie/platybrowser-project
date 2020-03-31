@@ -9,8 +9,12 @@ def preprocess_for_project(project_folder, tool_project_folder):
     raw_path = RAW_PATH
     raw_root_key = RAW_KEY
 
+    work_scale = 2
+    # FIXME fails for scale > 0
+    preprocess_scale = 0
+
     boundary_path = BOUNDARY_PATH
-    boundary_key = BOUNDARY_KEY
+    boundary_key = BOUNDARY_KEY + '/s%i' % preprocess_scale
 
     out_key = 'volumes/segmentation_before_splitting'
 
@@ -26,16 +30,20 @@ def preprocess_for_project(project_folder, tool_project_folder):
     tmp_folder = os.path.join(this_path, 'tmps/tmp_project%i_splitting' % project_id)
     roi_file = os.path.join(this_path, 'configs/rois.json')
 
+    # load this roi
     with open(roi_file) as f:
         rois = json.load(f)
     roi_begin, roi_end = rois[str(project_id)]
 
-    # TODO determine which scale we need
-    scale = 2
+    if preprocess_scale > 0:
+        scale_factor = 2 ** preprocess_scale
+        roi_begin = [rb // scale_factor for rb in roi_begin]
+        roi_end = [re // scale_factor for re in roi_end]
+
     preprocess_from_paintera_project(project_folder, tool_project_folder,
                                      raw_path, raw_root_key,
                                      boundary_path, boundary_key,
-                                     out_key, scale,
+                                     out_key, preprocess_scale, work_scale,
                                      tmp_folder, target, max_jobs,
                                      roi_begin=roi_begin, roi_end=roi_end)
 

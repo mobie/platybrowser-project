@@ -133,15 +133,12 @@ def resave_assignements(assignments, path, out_key):
 def preprocess_from_paintera_project(project_path, out_folder,
                                      raw_path, raw_root_key,
                                      boundaries_path, boundaries_key,
-                                     out_key, scale,
+                                     out_key, preprocess_scale, work_scale,
                                      tmp_folder, target, max_jobs,
                                      roi_begin=None, roi_end=None):
     """ Run all pre-processing necessary for the correction tool
     based on segemntation in a paintera project.
     """
-
-    raw_scale = scale
-    seg_scale = scale - 1
 
     # paintera has two diffe
     source_name = 'org.janelia.saalfeldlab.paintera.state.label.ConnectomicsLabelState'
@@ -179,7 +176,7 @@ def preprocess_from_paintera_project(project_path, out_folder,
     # NOTE serialize_from_commit calls the function that writes all the configs
     # serialize the current segmentation
     serialize_from_commit(seg_path, seg_root_key, seg_path, out_key, tmp_folder,
-                          max_jobs=max_jobs, target=target, relabel_output=False, scale=0)
+                          max_jobs=max_jobs, target=target, relabel_output=False, scale=preprocess_scale)
 
     # compute graph and edge weights
     seg_key = os.path.join(seg_root_key, 'data', 's0')
@@ -200,10 +197,14 @@ def preprocess_from_paintera_project(project_path, out_folder,
     compute_bounding_boxes(seg_path, out_key, table_key,
                            tmp_folder, target, max_jobs)
 
+    raw_scale = work_scale + 1
+    seg_scale = work_scale
+
     scale_factor = 2 ** seg_scale
     raw_key = os.path.join(raw_root_key, 's%i' % raw_scale)
     seg_key = os.path.join(seg_root_key, 'data', 's%i' % seg_scale)
-    graph_key = 's0/graph'
+
+    graph_key = 's%i/graph' % preprocess_scale
     feat_key = 'features'
     flagged_id_path = write_flagged_ids(out_folder, flagged_ids)
     write_out_file(out_folder, flagged_ids,
