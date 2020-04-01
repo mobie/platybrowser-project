@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 from glob import glob
-from common import RAW_PATH, RAW_KEY, BOUNDARY_PATH, BOUNDARY_KEY, SEG_PATH, SEG_KEY
+from common import RAW_PATH, RAW_KEY, BOUNDARY_PATH, BOUNDARY_KEY
 
 
 def preprocess_for_project(project_folder, tool_project_folder):
@@ -182,16 +182,13 @@ def debug_extraction(path):
 
     data_path = os.path.join(path, 'data.n5')
     assignment_key = 'volumes/paintera/fragment-segment-assignment'
-    # TODO use one of the back-up assignments
-    old_assignment_key = 'volumes/paintera/fragment-segment-assignment'
+    old_assignment_key = 'volumes/paintera/fragment-segment-assignment.1585686151-419452'
 
     table_key = 'morphology'
     scale_factor = 2 ** scale
 
     raw_path = RAW_PATH
     raw_key = RAW_KEY + '/s%i' % (scale + 1,)
-    seg_path = SEG_PATH
-    seg_key = SEG_KEY + '/s%i' % scale
 
     ws_path = data_path
     ws_key = 'volumes/paintera/data/s%i' % scale
@@ -202,10 +199,10 @@ def debug_extraction(path):
                for seg_id in seg_ids]
     seg_ids = [int(seg_id) for seg_id in seg_ids]
 
+    print("Start checks for %i objects" % len(seg_ids))
     check_exported(data_path, old_assignment_key, assignment_key,
                    data_path, table_key, scale_factor,
-                   raw_path, raw_key, ws_path, ws_key,
-                   seg_path, seg_key, seg_ids)
+                   raw_path, raw_key, ws_path, ws_key, seg_ids)
 
 
 if __name__ == '__main__':

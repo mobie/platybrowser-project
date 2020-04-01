@@ -8,6 +8,7 @@ from shutil import copytree, copy
 
 import numpy as np
 from elf.io import open_file
+from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 
 
 def backup(path, key):
@@ -72,6 +73,12 @@ def remove_flagged_ids(paintera_attrs, ids):
         json.dump(attrs, f)
 
 
+def get_index_permutation(x, y):
+    xsorted = np.argsort(x)
+    ypos = np.searchsorted(x[xsorted], y)
+    return xsorted[ypos]
+
+
 def export_node_labels(path, assignment_key, project_folder, id_offset):
     with open_file(path, 'r') as f:
         ds = f[assignment_key]
@@ -91,10 +98,13 @@ def export_node_labels(path, assignment_key, project_folder, id_offset):
         assert len(this_ids) == len(this_labels)
         id_mask = node_labels == seg_id
         this_ids_exp = fragment_ids[id_mask]
+        assert len(this_ids) == len(this_ids_exp), "%i, %i" % (len(this_ids), len(this_ids_exp))
         assert np.array_equal(np.sort(this_ids), np.sort(this_ids_exp))
+        ids_sorted = get_index_permutation(this_ids, this_ids_exp)
+        assert np.array_equal(this_ids[ids_sorted], this_ids_exp)
 
         this_labels += id_offset
-        node_labels[id_mask] = this_labels
+        node_labels[id_mask] = this_labels[ids_sorted]
         id_offset = int(this_labels.max()) + 1
 
         resolved_ids.append(seg_id)
@@ -128,9 +138,11 @@ def zero_out_ids(node_label_in_path, node_label_in_key,
 
 def get_bounding_boxes(table_path, table_key, scale_factor):
     with open_file(table_path, 'r') as f:
-        table = f[table_key][:]
-    bb_starts = table[:, 5:8]
-    bb_stops = table[:, 8:]
+        ds = f[table_key]
+        print(ds.shape)
+        ds.n_threads = 8
+        bb_starts = ds[:, 5:8]
+        bb_stops = ds[:, 8:]
     bb_starts /= scale_factor
     bb_stops /= scale_factor
     bounding_boxes = [tuple(slice(int(floor(sta)),
@@ -141,49 +153,48 @@ def get_bounding_boxes(table_path, table_key, scale_factor):
 
 def check_exported(paintera_path, old_assignment_key, assignment_key,
                    table_path, table_key, scale_factor,
-                   raw_path, raw_key,
-                   ws_path, ws_key,
-                   seg_path, seg_key,
-                   check_ids):
+                   raw_path, raw_key, ws_path, ws_key, check_ids):
+    print("Start to check exported node labels")
     import napari
     import nifty.tools as nt
 
     with open_file(paintera_path, 'r') as f:
         ds = f[old_assignment_key]
+        ds.n_threads = 8
         old_assignments = ds[:].T
 
         ds = f[assignment_key]
+        ds.n_threads = 8
         assignments = ds[:].T
 
     fragment_ids, segment_ids = assignments[:, 0], assignments[:, 1]
     old_fragment_ids, old_segment_ids = old_assignments[:, 0], old_assignments[:, 1]
     assert np.array_equal(fragment_ids, old_fragment_ids)
 
+    print("Loading bounding boxes ...")
     bounding_boxes = get_bounding_boxes(table_path, table_key, scale_factor)
-    with open_file(seg_path, 'r') as fseg,\
-            open_file(raw_path, 'r') as fraw,\
-            open_file(ws_path, 'r') as fws:
+    print("... done")
+    with open_file(raw_path, 'r') as fraw, open_file(ws_path, 'r') as fws:
 
         ds_raw = fraw[raw_key]
         ds_raw.n_thread = 8
 
         ds_ws = fws[ws_key]
         ds_ws.n_thread = 8
-
-        ds_seg = fseg[seg_key]
-        ds_seg.n_thread = 8
+        ds_ws = LabelMultisetWrapper(ds_ws)
 
         for seg_id in check_ids:
+            print("Check object", seg_id)
             bb = bounding_boxes[seg_id]
+            print("Within bounding box", bb)
 
             raw = ds_raw[bb]
             ws = ds_ws[bb]
-            seg = ds_seg[bb]
-            seg_mask = (seg == seg_id).astype('uint32')
-            ws[~seg_mask] = 0
 
             id_mask = old_segment_ids == seg_id
             ws_ids = fragment_ids[id_mask]
+            seg_mask = np.isin(ws, ws_ids)
+            ws[~seg_mask] = 0
 
             ids_old = old_segment_ids[id_mask]
             dict_old = {wid: oid for wid, oid in zip(ws_ids, ids_old)}
