@@ -1,5 +1,6 @@
 import argparse
 import json
+import multiprocessing
 import os
 from glob import glob
 from common import RAW_PATH, RAW_KEY, BOUNDARY_PATH, BOUNDARY_KEY
@@ -19,11 +20,11 @@ def preprocess_for_project(project_folder, tool_project_folder):
 
     out_key = 'volumes/segmentation_before_splitting'
 
-    # TODO for running on VM need to decrease max jobs to 8
     target = 'local'
-    max_jobs = 48
+    n_cores = multiprocessing.cpu_count()
+    max_jobs = max(48, n_cores)
 
-    project_id = project_folder[-2:]
+    project_id = project_folder.rstrip('/')[-2:]
     project_id = int(project_id)
 
     this_path = os.path.abspath(__file__)
