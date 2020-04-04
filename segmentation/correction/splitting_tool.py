@@ -22,7 +22,7 @@ def preprocess_for_project(project_folder, tool_project_folder):
 
     target = 'local'
     n_cores = multiprocessing.cpu_count()
-    max_jobs = max(48, n_cores)
+    max_jobs = min(48, n_cores)
 
     project_id = project_folder.rstrip('/')[-2:]
     project_id = int(project_id)

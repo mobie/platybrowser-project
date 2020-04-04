@@ -1,7 +1,7 @@
 import os
+import sys
 import json
 import queue
-import sys
 import threading
 
 import numpy as np
@@ -24,6 +24,8 @@ from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 class CorrectionTool:
     n_threads = 3
     queue_len = 3
+    # n_threads = 1
+    # queue_len = 1
 
     def __init__(self, project_folder,
                  false_merge_id_path=None,
@@ -164,6 +166,8 @@ class CorrectionTool:
 
         self.graph = ndist.Graph(self.problem_path, self.graph_key, self.n_threads)
         self.uv_ids = self.graph.uvIds()
+        assert len(self.uv_ids) > 0
+
         with open_file(self.problem_path, 'r') as f:
             ds = f[self.feat_key]
             ds.n_threads = self.n_threads
@@ -185,6 +189,7 @@ class CorrectionTool:
 
     def load_subgraph(self, node_ids):
         inner_edges, _ = self.graph.extractSubgraphFromNodes(node_ids, allowInvalidNodes=True)
+        assert len(inner_edges) > 0
         nodes_relabeled, max_id, mapping = vigra.analysis.relabelConsecutive(node_ids,
                                                                              start_label=0,
                                                                              keep_zeros=False)
@@ -194,7 +199,6 @@ class CorrectionTool:
         # get rid of paintera ignore label
         pt_ignore_label = 18446744073709551615
         edge_mask = (uv_ids == pt_ignore_label).sum(axis=1) == 0
-        print(uv_ids)
         uv_ids = uv_ids[edge_mask]
         if len(uv_ids) == 0:
             return None, None, None
@@ -286,6 +290,7 @@ class CorrectionTool:
         seeds = np.zeros_like(ws, dtype='uint32')
         skip_this_segment = False
         is_background = False
+        quit_ = False
 
         with napari.gui_qt():
             viewer = napari.Viewer()
@@ -392,17 +397,18 @@ class CorrectionTool:
                 viewer.layers['seg'].data = seg
                 print("... done")
 
-            # save progress and sys.exit
+            # save progress and quit()
             @viewer.bind_key('q')
             def quit(viewer):
+                nonlocal quit_
                 print("Quit correction tool")
-                self.save_segment_result(seg_id, ws, seeds,
-                                         node_labels, mapping, skip_this_segment)
-                sys.exit(0)
+                quit_ = True
 
         # save the results for this segment
         self.save_segment_result(seg_id, ws, seeds, node_labels, mapping,
                                  skip_this_segment, is_background)
+        if quit_:
+            sys.exit(0)
 
     def save_segment_result(self, seg_id, ws, seeds, node_labels, mapping, skip, is_background):
         if not (skip or is_background):
