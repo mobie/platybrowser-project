@@ -135,7 +135,7 @@ def preprocess_from_paintera_project(project_path, out_folder,
                                      boundaries_path, boundaries_key,
                                      out_key, preprocess_scale, work_scale,
                                      tmp_folder, target, max_jobs,
-                                     roi_begin=None, roi_end=None):
+                                     roi_begin=None, roi_end=None, force_no_actions=False):
     """ Run all pre-processing necessary for the correction tool
     based on segemntation in a paintera project.
     """
@@ -160,9 +160,10 @@ def preprocess_from_paintera_project(project_path, out_folder,
             seg_path = seg_data['container']['data']['basePath']
             seg_root_key = seg_data['dataset']
 
-            # make sure that there are no un-commited actions
-            actions = seg_data['fragmentSegmentAssignment']['actions']
-            assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
+            if force_no_actions:
+                # make sure that there are no un-commited actions
+                actions = seg_data['fragmentSegmentAssignment']['actions']
+                assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
 
             flagged_ids = source_state['flaggedSegments']
 

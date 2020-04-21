@@ -22,10 +22,8 @@ from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 # add layer for seeds, resolve the segment via lmc (or watershed)
 # once happy, store the new ids and move on to the next
 class CorrectionTool:
-    n_threads = 3
+    n_threads = 2
     queue_len = 3
-    # n_threads = 1
-    # queue_len = 1
 
     def __init__(self, project_folder,
                  false_merge_id_path=None,
@@ -188,6 +186,10 @@ class CorrectionTool:
         self.bb_stops /= self.scale_factor
 
     def load_subgraph(self, node_ids):
+        # weird, this sometimes happens ...
+        if len(node_ids) == 0:
+            return None, None, None
+
         inner_edges, _ = self.graph.extractSubgraphFromNodes(node_ids, allowInvalidNodes=True)
         assert len(inner_edges) > 0
         nodes_relabeled, max_id, mapping = vigra.analysis.relabelConsecutive(node_ids,
@@ -202,7 +204,9 @@ class CorrectionTool:
         uv_ids = uv_ids[edge_mask]
         if len(uv_ids) == 0:
             return None, None, None
-        max_id = int(uv_ids.max())
+
+        max_id = int(nodes_relabeled.max())
+        assert uv_ids.max() <= max_id
 
         n_nodes = max_id + 1
         graph = nifty.graph.undirectedGraph(n_nodes)
@@ -270,6 +274,8 @@ class CorrectionTool:
             return None
 
         seeds = np.zeros(graph.numberOfNodes, dtype='uint64')
+        # TODO this is what takes a long time for large volumes I guess
+        # should speed it up
         for seed_id in seed_ids:
             mask = seed_points == seed_id
             seed_nodes = np.unique(ws[mask])
@@ -295,7 +301,7 @@ class CorrectionTool:
         with napari.gui_qt():
             viewer = napari.Viewer()
             viewer.add_image(raw, name='raw')
-            viewer.add_labels(ws, name='ws')
+            viewer.add_labels(ws, name='ws', visible=False)
             viewer.add_labels(seg, name='seg')
             viewer.add_labels(seeds, name='seeds')
 
@@ -305,28 +311,9 @@ class CorrectionTool:
                 print("[w] - run watershed from seeds")
                 print("[s] - skip the current segment (if it's not a merge)")
                 print("[c] - clear seeds")
-                print("[d] - save current data for debugging")
+                print("[x] - save current data for debugging")
                 print("[b] - merge this segment into background")
                 print("[q] - quit")
-
-            # deperecated functionality
-            # @viewer.bind_key('a')
-            # def annotatate(viewer):
-            #     msg = """Annotating seg id, choose one of [c] (correct) [s] (revisit at lower scale),
-            #              [m] (merge to background).
-            #              Otherwise, you can add a custom annotation."""
-            #     inp = input(msg)
-            #     if inp == 'c':
-            #         annotation = 'correct'
-            #     elif inp == 's':
-            #         annotation = 'revisit'
-            #     elif inp == 'm':
-            #         annotation = 'merge'
-            #     else:
-            #         annotation = input("Enter custom annotation.")
-            #     self.annotations[int(seg_id)] = annotation
-            #     with open(self.annotation_path, 'w') as f:
-            #         json.dump(self.annotations, f)
 
             @viewer.bind_key('s')
             def skip(viewer):
@@ -341,8 +328,8 @@ class CorrectionTool:
                 nonlocal is_background
                 is_background = True
 
-            @viewer.bind_key('d')
-            def debug(viewer):
+            @viewer.bind_key('x')
+            def save_for_debug(viewer):
                 print("Saving debug data ...")
                 debug_folder = os.path.join(self.project_folder, 'debug')
                 os.makedirs(debug_folder, exist_ok=True)
