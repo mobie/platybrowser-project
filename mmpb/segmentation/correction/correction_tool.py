@@ -1,7 +1,7 @@
 import os
+import sys
 import json
 import queue
-import sys
 import threading
 
 import numpy as np
@@ -11,7 +11,6 @@ import nifty.distributed as ndist
 import nifty.tools as nt
 import vigra
 
-from heimdall import view, to_source
 from elf.io import open_file
 from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 
@@ -23,7 +22,7 @@ from elf.io.label_multiset_wrapper import LabelMultisetWrapper
 # add layer for seeds, resolve the segment via lmc (or watershed)
 # once happy, store the new ids and move on to the next
 class CorrectionTool:
-    n_threads = 3
+    n_threads = 2
     queue_len = 3
 
     def __init__(self, project_folder,
@@ -38,6 +37,7 @@ class CorrectionTool:
         self.project_folder = project_folder
         self.config_file = os.path.join(project_folder, 'correct_false_merges_config.json')
         self.processed_ids_file = os.path.join(project_folder, 'processed_ids.json')
+        self.bg_ids_file = os.path.join(project_folder, 'background_ids.json')
         self.annotation_path = os.path.join(project_folder, 'annotations.json')
 
         if os.path.exists(self.config_file):
@@ -143,6 +143,12 @@ class CorrectionTool:
         else:
             self.processed_ids = []
 
+        if os.path.exists(self.bg_ids_file):
+            with open(self.bg_ids_file) as f:
+                self.background_ids = json.load(f)
+        else:
+            self.background_ids = []
+
         already_processed = np.in1d(self.false_merge_ids, self.processed_ids)
         missing_ids = self.false_merge_ids[~already_processed]
 
@@ -158,6 +164,8 @@ class CorrectionTool:
 
         self.graph = ndist.Graph(self.problem_path, self.graph_key, self.n_threads)
         self.uv_ids = self.graph.uvIds()
+        assert len(self.uv_ids) > 0
+
         with open_file(self.problem_path, 'r') as f:
             ds = f[self.feat_key]
             ds.n_threads = self.n_threads
@@ -178,12 +186,28 @@ class CorrectionTool:
         self.bb_stops /= self.scale_factor
 
     def load_subgraph(self, node_ids):
+        # weird, this sometimes happens ...
+        if len(node_ids) == 0:
+            return None, None, None
+
         inner_edges, _ = self.graph.extractSubgraphFromNodes(node_ids, allowInvalidNodes=True)
+        assert len(inner_edges) > 0
         nodes_relabeled, max_id, mapping = vigra.analysis.relabelConsecutive(node_ids,
                                                                              start_label=0,
                                                                              keep_zeros=False)
         uv_ids = self.uv_ids[inner_edges]
         uv_ids = nt.takeDict(mapping, uv_ids)
+
+        # get rid of paintera ignore label
+        pt_ignore_label = 18446744073709551615
+        edge_mask = (uv_ids == pt_ignore_label).sum(axis=1) == 0
+        uv_ids = uv_ids[edge_mask]
+        if len(uv_ids) == 0:
+            return None, None, None
+
+        max_id = int(nodes_relabeled.max())
+        assert uv_ids.max() <= max_id
+
         n_nodes = max_id + 1
         graph = nifty.graph.undirectedGraph(n_nodes)
         graph.insertEdges(uv_ids)
@@ -204,7 +228,8 @@ class CorrectionTool:
         # extract the sub-graph
         node_ids = np.where(self.node_labels == seg_id)[0].astype('uint64')
         graph, probs, mapping = self.load_subgraph(node_ids)
-        # graph, probs, mapping = None, None, None
+        if graph is None:
+            return None
 
         # load raw and watershed
         raw = self.ds_raw[bb]
@@ -221,6 +246,16 @@ class CorrectionTool:
             seg_id = self.next_queue.get()
             print("Loading seg", seg_id)
             qitem = self.load_segment(seg_id)
+
+            # skip invalid items
+            if qitem is None:
+                print("Invalid seg id:", seg_id)
+                print("skipping it")
+                self.processed_ids.append(int(seg_id))
+                with open(self.processed_ids_file, 'w') as f:
+                    json.dump(self.processed_ids, f)
+                continue
+
             self.queue.put((seg_id, qitem))
 
     def init_queue_and_workers(self):
@@ -239,6 +274,8 @@ class CorrectionTool:
             return None
 
         seeds = np.zeros(graph.numberOfNodes, dtype='uint64')
+        # TODO this is what takes a long time for large volumes I guess
+        # should speed it up
         for seed_id in seed_ids:
             mask = seed_points == seed_id
             seed_nodes = np.unique(ws[mask])
@@ -258,37 +295,25 @@ class CorrectionTool:
 
         seeds = np.zeros_like(ws, dtype='uint32')
         skip_this_segment = False
+        is_background = False
+        quit_ = False
 
         with napari.gui_qt():
-            viewer = view(to_source(raw, name='raw'), to_source(ws, name='ws'),
-                          to_source(seg, name='seg'), to_source(seeds, name='seeds'),
-                          return_viewer=True)
+            viewer = napari.Viewer()
+            viewer.add_image(raw, name='raw')
+            viewer.add_labels(ws, name='ws', visible=False)
+            viewer.add_labels(seg, name='seg')
+            viewer.add_labels(seeds, name='seeds')
 
             @viewer.bind_key('h')
             def print_help(viewer):
+                print("Put seeds by selecting the 'seeds' layer and painting with different ids")
                 print("[w] - run watershed from seeds")
                 print("[s] - skip the current segment (if it's not a merge)")
                 print("[c] - clear seeds")
-                print("[d] - save current data for debugging")
-                print("[a] - annotate")
+                print("[x] - save current data for debugging")
+                print("[b] - merge this segment into background")
                 print("[q] - quit")
-
-            @viewer.bind_key('a')
-            def annotatate(viewer):
-                msg = """Annotating seg id, choose one of [c] (correct) [s] (revisit at lower scale), [m] (merge to background).
-                         Otherwise, you can add a custom annotation."""
-                inp = input(msg)
-                if inp == 'c':
-                    annotation = 'correct'
-                elif inp == 's':
-                    annotation = 'revisit'
-                elif inp == 'm':
-                    annotation = 'merge'
-                else:
-                    annotation = input("Enter custom annotation.")
-                self.annotations[int(seg_id)] = annotation
-                with open(self.annotation_path, 'w') as f:
-                    json.dump(self.annotations, f)
 
             @viewer.bind_key('s')
             def skip(viewer):
@@ -297,8 +322,14 @@ class CorrectionTool:
                 skip_this_segment = True
                 # TODO quit viewer
 
-            @viewer.bind_key('d')
-            def debug(viewer):
+            @viewer.bind_key('b')
+            def to_background(viewer):
+                print("Setting the current segment to backroung")
+                nonlocal is_background
+                is_background = True
+
+            @viewer.bind_key('x')
+            def save_for_debug(viewer):
                 print("Saving debug data ...")
                 debug_folder = os.path.join(self.project_folder, 'debug')
                 os.makedirs(debug_folder, exist_ok=True)
@@ -353,19 +384,21 @@ class CorrectionTool:
                 viewer.layers['seg'].data = seg
                 print("... done")
 
-            # save progress and sys.exit
+            # save progress and quit()
             @viewer.bind_key('q')
             def quit(viewer):
+                nonlocal quit_
                 print("Quit correction tool")
-                self.save_segment_result(seg_id, ws, seeds,
-                                         node_labels, mapping, skip_this_segment)
-                sys.exit(0)
+                quit_ = True
 
         # save the results for this segment
-        self.save_segment_result(seg_id, ws, seeds, node_labels, mapping, skip_this_segment)
+        self.save_segment_result(seg_id, ws, seeds, node_labels, mapping,
+                                 skip_this_segment, is_background)
+        if quit_:
+            sys.exit(0)
 
-    def save_segment_result(self, seg_id, ws, seeds, node_labels, mapping, skip):
-        if not skip:
+    def save_segment_result(self, seg_id, ws, seeds, node_labels, mapping, skip, is_background):
+        if not (skip or is_background):
             save_file = os.path.join(self.project_folder, 'results', '%i.npz' % seg_id)
             node_ids = list(mapping.keys())
             save_labels = [node_labels[mapping[nid]] for nid in node_ids]
@@ -383,9 +416,18 @@ class CorrectionTool:
 
             np.savez_compressed(save_file, node_ids=node_ids, node_labels=save_labels,
                                 seeded_ids=seeded_ids, seed_labels=seed_labels)
+
         self.processed_ids.append(int(seg_id))
         with open(self.processed_ids_file, 'w') as f:
             json.dump(self.processed_ids, f)
+
+        if is_background:
+            self.background_ids.append(int(seg_id))
+            with open(self.bg_ids_file, 'w') as f:
+                json.dump(self.background_ids, f)
+
+        print("Saved results for segment", seg_id)
+        print("Processed", len(self.processed_ids), "/", len(self.false_merge_ids), "objects")
 
     def __call__(self):
         left_to_process = len(self.false_merge_ids) - len(self.processed_ids)
@@ -393,6 +435,7 @@ class CorrectionTool:
             seg_id, qitem = self.queue.get()
             self.correct_segment(seg_id, qitem)
             left_to_process = len(self.false_merge_ids) - len(self.processed_ids)
+        return left_to_process == 0
 
     @staticmethod
     def debug(debug_folder, n_threads=8):
@@ -426,4 +469,8 @@ class CorrectionTool:
         label_dict[0] = 0
         seg = nt.takeDict(label_dict, ws)
 
-        view(raw, ws, seg)
+        with napari.gui_qt():
+            viewer = napari.Viewer()
+            viewer.add_image(raw, name='raw')
+            viewer.add_labels(ws, name='ws')
+            viewer.add_labels(seg, name='seg')

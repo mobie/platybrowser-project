@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 import napari
 
-from heimdall import view, to_source
 from elf.io import open_file
 from pybdv.metadata import get_data_path
 
@@ -155,13 +154,12 @@ class CiliaCorrectionTool:
         raw, cil_seg, cil_mask, cell_seg = qitem
 
         with napari.gui_qt():
-            if cell_seg is None:
-                viewer = view(to_source(raw, name='raw'), to_source(cil_seg, name='cilia-segmentation'),
-                              to_source(cil_mask, name='cilia-mask'), return_viewer=True)
-            else:
-                viewer = view(to_source(raw, name='raw'), to_source(cil_seg, name='cilia-segmentation'),
-                              to_source(cil_mask, name='cilia-mask'), to_source(cell_seg, name='cell-segmentation'),
-                              return_viewer=True)
+            viewer = napari.Viewer()
+            viewer.add_image(raw, name='raw')
+            viewer.add_labels(cil_seg, name='cilia-segmentation')
+            viewer.add_labels(cil_mask, name='cilia-mask')
+            if cell_seg is not None:
+                viewer.add_labels(cell_seg, name='cell-segmentation')
 
             @viewer.bind_key('c')
             def confirm(viewer):

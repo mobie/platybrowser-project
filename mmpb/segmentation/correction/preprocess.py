@@ -132,18 +132,14 @@ def resave_assignements(assignments, path, out_key):
 
 def preprocess_from_paintera_project(project_path, out_folder,
                                      raw_path, raw_root_key,
-                                     affinities_path, affinities_key,
-                                     out_key, scale,
+                                     boundaries_path, boundaries_key,
+                                     out_key, preprocess_scale, work_scale,
                                      tmp_folder, target, max_jobs,
-                                     roi_begin=None, roi_end=None):
+                                     roi_begin=None, roi_end=None, force_no_actions=False):
     """ Run all pre-processing necessary for the correction tool
     based on segemntation in a paintera project.
     """
 
-    raw_scale = scale
-    seg_scale = scale - 1
-
-    # paintera has two diffe
     source_name = 'org.janelia.saalfeldlab.paintera.state.label.ConnectomicsLabelState'
 
     # parse the paintera attribues.json to extract the relevant paths + locked ids
@@ -164,12 +160,12 @@ def preprocess_from_paintera_project(project_path, out_folder,
             seg_path = seg_data['container']['data']['basePath']
             seg_root_key = seg_data['dataset']
 
-            # make sure that there are no un-commited actions
-            actions = seg_data['fragmentSegmentAssignment']['actions']
-            assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
+            if force_no_actions:
+                # make sure that there are no un-commited actions
+                actions = seg_data['fragmentSegmentAssignment']['actions']
+                assert len(actions) == 0, "The project state was not properly commited yet, please commit first!"
 
-            # TODO load the flagged ids instead once this is implemented
-            locked_ids = source_state['lockedSegments']
+            flagged_ids = source_state['flaggedSegments']
 
             have_seg_source = True
 
@@ -180,31 +176,19 @@ def preprocess_from_paintera_project(project_path, out_folder,
     # NOTE serialize_from_commit calls the function that writes all the configs
     # serialize the current segmentation
     serialize_from_commit(seg_path, seg_root_key, seg_path, out_key, tmp_folder,
-                          max_jobs=max_jobs, target=target, relabel_output=False, scale=0)
+                          max_jobs=max_jobs, target=target, relabel_output=False, scale=preprocess_scale)
 
     # compute graph and edge weights
     seg_key = os.path.join(seg_root_key, 'data', 's0')
-    compute_graph_and_weights(affinities_path, affinities_key,
+    compute_graph_and_weights(boundaries_path, boundaries_key,
                               seg_path, seg_key, seg_path,
                               tmp_folder, target=target, max_jobs=max_jobs,
-                              offsets=[[-1, 0, 0], [0, -1, 0], [0, 0, -1]],
-                              with_costs=False)
+                              offsets=None, with_costs=False)
 
-    # TODO use flagged ids instead once implemented
-    # compute the ids to consider for splitting from the locked ids
-
-    # load unique ids for this block
+    # save fragment segment assignment in the format the splitting tool can parse
     ass_key = os.path.join(seg_root_key, 'fragment-segment-assignment')
     with open_file(seg_path, 'r') as f:
         assignments = f[ass_key][:].T
-        seg_ids = assignments[:, 1]
-    unique_ids = np.unique(seg_ids)
-    if unique_ids[0] == 0:
-        unique_ids = unique_ids[1:]
-    unique_ids = unique_ids.tolist()
-    flagged_ids = list(set(unique_ids) - set(locked_ids))
-
-    # save fragment segment assignment in the format the splitting tool can parse
     node_label_key = 'node_labels/labels_before_splitting'
     resave_assignements(assignments, seg_path, node_label_key)
 
@@ -213,10 +197,14 @@ def preprocess_from_paintera_project(project_path, out_folder,
     compute_bounding_boxes(seg_path, out_key, table_key,
                            tmp_folder, target, max_jobs)
 
+    raw_scale = work_scale + 1
+    seg_scale = work_scale
+
     scale_factor = 2 ** seg_scale
     raw_key = os.path.join(raw_root_key, 's%i' % raw_scale)
     seg_key = os.path.join(seg_root_key, 'data', 's%i' % seg_scale)
-    graph_key = 's0/graph'
+
+    graph_key = 's%i/graph' % preprocess_scale
     feat_key = 'features'
     flagged_id_path = write_flagged_ids(out_folder, flagged_ids)
     write_out_file(out_folder, flagged_ids,

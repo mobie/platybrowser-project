@@ -3,7 +3,6 @@ import h5py
 import z5py
 import pandas as pd
 import napari
-from heimdall import view, to_source
 from elf.wrapper.resized_volume import ResizedVolume
 
 
@@ -26,10 +25,10 @@ def get_bb(table, lid, res):
 def view_candidate(raw, mask, muscle):
     save_id, false_merge, save_state, done = False, False, False, False
     with napari.gui_qt():
-        viewer = view(to_source(raw, name='raw'),
-                      to_source(mask, name='prediction'),
-                      to_source(muscle, name='muscle-segmentation'),
-                      return_viewer=True)
+        viewer = napari.Viewer()
+        viewer.add_image(raw, name='raw')
+        viewer.add_labels(mask, name='prediction')
+        viewer.add_labels(muscle, name='muscle-segmentation')
 
         # add key bindings
         @viewer.bind_key('y')
