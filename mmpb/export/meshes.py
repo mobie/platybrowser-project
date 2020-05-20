@@ -1,39 +1,13 @@
 import os
+from concurrent import futures
+
 import numpy as np
 import pandas as pd
 import z5py
-
 from elf.mesh import marching_cubes
 from elf.mesh.io import write_obj
 from pybdv.metadata import get_data_path
-
-ROOT = '../../data'
-
-
-def gene_to_ids(version, gene_name):
-    # get the normal table to check which ones are actually cells
-    table = os.path.join(ROOT, version, 'tables',
-                         'sbem-6dpf-1-whole-segmented-cells', 'default.csv')
-    table = pd.read_csv(table, sep='\t')
-    cell_ids = table['label_id'].values.astype('uint32')
-    is_cell = table['cells'].values.astype('bool')
-
-    # get the cells assigned to our gene
-    gene_table = os.path.join(ROOT, version, 'tables',
-                              'sbem-6dpf-1-whole-segmented-cells', 'vc_assignments.csv')
-    gene_table = pd.read_csv(gene_table, sep='\t')
-    gene_column = gene_table[gene_name].values.astype('bool')
-
-    assert len(gene_column) == len(is_cell) == len(cell_ids)
-    expressed = np.logical_and(is_cell, gene_column)
-
-    return cell_ids[expressed]
-
-
-def get_resolution(scale):
-    r0 = [0.025, 0.02, 0.02]
-    res = [[rr * 2 ** ii for rr in r0] for ii in range(10)]
-    return res[scale]
+from tqdm import tqdm
 
 
 def load_bounding_boxes(table_path, resolution):
@@ -69,12 +43,10 @@ def export_mesh(label_id, ds, bb_starts, bb_stops, resolution, out_path):
     write_obj(out_path, verts, faces, normals)
 
 
-def gene_to_meshes(version, gene_name, out_folder, scale=2):
+def export_meshes(xml_path, table_path, cell_ids, out_folder, scale, resolution, n_jobs=16):
     os.makedirs(out_folder, exist_ok=True)
-    cell_ids = gene_to_ids(version, gene_name)
 
     # load the segmentation dataset
-    xml_path = os.path.join(ROOT, version, 'images/local/sbem-6dpf-1-whole-segmented-cells.xml')
     path = get_data_path(xml_path, return_absolute_path=True)
     key = 'setup0/timepoint0/s%i' % scale
     f = z5py.File(path, 'r')
@@ -82,18 +54,12 @@ def gene_to_meshes(version, gene_name, out_folder, scale=2):
     ds.n_threads = 8
 
     # load the default table to get the bounding boxes
-    table_path = os.path.join(ROOT, version, 'tables/sbem-6dpf-1-whole-segmented-cells/default.csv')
-    resolution = get_resolution(scale)
     bb_starts, bb_stops = load_bounding_boxes(table_path, resolution)
 
-    # TODO do for all cell ids in parallel
-    print("Computing mesh ...")
-    out_path = os.path.join(out_folder, 'mesh_%i.obj' % cell_ids[0])
-    export_mesh(cell_ids[0], ds, bb_starts, bb_stops, resolution, out_path)
+    def _mesh(cell_id):
+        out_path = os.path.join(out_folder, 'mesh_%i.obj' % cell_id)
+        export_mesh(cell_id, ds, bb_starts, bb_stops, resolution, out_path)
 
-
-if __name__ == '__main__':
-    version = '1.0.0'
-    name = 'phc2'
-    out_folder = './meshes_phc2'
-    gene_to_meshes(version, name, out_folder)
+    print("Computing meshes ...")
+    with futures.ThreadPoolExecutor(n_jobs) as tp:
+        list(tqdm(tp.map(_mesh, cell_ids), total=len(cell_ids)))
