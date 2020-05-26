@@ -1,2 +1,0 @@
-cell_id_mapping.csv
-morphology.csv

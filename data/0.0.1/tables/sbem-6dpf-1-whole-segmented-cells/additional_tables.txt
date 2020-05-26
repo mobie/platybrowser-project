@@ -1,4 +1,0 @@
-genes.csv
-morphology.csv
-objects.csv
-regions.csv

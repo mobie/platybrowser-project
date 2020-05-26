@@ -1,5 +1,0 @@
-cells_to_nuclei.csv
-genes.csv
-morphology.csv
-muscle.csv
-regions.csv
