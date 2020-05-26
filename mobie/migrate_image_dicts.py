@@ -9,7 +9,15 @@ def update_image_dict(image_dict):
     image_dict = to_lower(image_dict)
     new_image_dict = {}
     for name, entries in image_dict.items():
-        pass
+        updated_entries = {}
+        if 'minValue' in entries:
+            assert 'maxValue' in entries
+            clims = [float(entries.pop('minValue')), float(entries.pop('maxValue'))]
+            updated_entries['contrastLimits'] = clims
+        if 'colorMap' in entries:
+            updated_entries['color'] = entries.pop('colorMap')
+        updated_entries.update(entries)
+        new_image_dict[name] = updated_entries
     return new_image_dict
 
 
@@ -22,7 +30,7 @@ def migrate_image_dict(image_dict_path):
 
 
 def migrate_all_image_dicts(root):
-    folders = glob(os.path.join(root, "*.*"))
+    folders = glob(os.path.join(root, "*.*.*"))
     for folder in folders:
         image_dict = os.path.join(folder, 'images', 'images.json')
         migrate_image_dict(image_dict)
