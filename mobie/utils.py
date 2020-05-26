@@ -1,5 +1,3 @@
-
-
 def string_to_lower(s):
     return s[0].lower() + s[1:]
 
@@ -20,11 +18,3 @@ def to_lower(v):
     elif isinstance(v, str):
         v = string_to_lower(v)
     return v
-
-
-def update_dict(my_dict):
-    my_dict = to_lower(my_dict)
-
-    # TODO update the keys!
-
-    return my_dict

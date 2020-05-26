@@ -2,7 +2,14 @@ import json
 import os
 from glob import glob
 
-from utils import update_dict
+from utils import to_lower
+
+
+def update_bookmarks(bookmarks):
+    bookmarks = to_lower(bookmarks)
+    # TODO
+    new_bookmarks = {}
+    return new_bookmarks
 
 
 def migrate_bookmarks(misc_folder):
@@ -28,11 +35,11 @@ def migrate_bookmarks(misc_folder):
     with open(old_bookmark_path) as f:
         bookmarks = json.load(f)
 
-    bookmarks = update_dict(bookmarks)
+    bookmarks = update_bookmarks(bookmarks)
 
     new_bookmark_path = os.path.join(misc_folder, 'manuscript_bookmarks.json')
     with open(new_bookmark_path, 'w') as f:
-        json.dump(new_bookmark_path, f, indent=2, sort_keys=True)
+        json.dump(bookmarks, f, indent=2, sort_keys=True)
 
     # TODO
     # subprocess.run(['git', 'rm', old_bookmark_path])
