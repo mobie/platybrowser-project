@@ -50,7 +50,7 @@ def export_traces(folder, name, version):
     n_scales = 4
     scale_factors = n_scales * [[2, 2, 2]]
     print("Write trace volume ...")
-    # traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
+    traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
 
     table_folder = os.path.split(table_out_path)[0]
     os.makedirs(table_folder, exist_ok=True)
