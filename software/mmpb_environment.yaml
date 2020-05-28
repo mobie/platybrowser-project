@@ -8,6 +8,7 @@ dependencies:
     - cluster_tools >=0.3.2,<0.4.0
     - elf >=0.2.2,<0.3.0
     - mahotas
+    - nifty v1.0.7
     - napari
     - paintera_tools >=0.2.2,<0.3.0
     - pandas
