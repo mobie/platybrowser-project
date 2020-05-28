@@ -299,7 +299,7 @@ class CorrectionTool:
         quit_ = False
 
         with napari.gui_qt():
-            viewer = napari.Viewer()
+            viewer = napari.Viewer(title="Segment%i" % seg_id)
             viewer.add_image(raw, name='raw')
             viewer.add_labels(ws, name='ws', visible=False)
             viewer.add_labels(seg, name='seg')
@@ -320,7 +320,6 @@ class CorrectionTool:
                 print("Skipping the current segment")
                 nonlocal skip_this_segment
                 skip_this_segment = True
-                # TODO quit viewer
 
             @viewer.bind_key('b')
             def to_background(viewer):

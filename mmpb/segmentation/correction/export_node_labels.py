@@ -15,12 +15,14 @@ def backup(path, key):
     file_path = os.path.join(path, key)
     timestamp = str(datetime.timestamp(datetime.now())).replace('.', '-')
     bkp_path = file_path + '.' + timestamp
+    print("Make backup of", file_path, "in", bkp_path)
     copytree(file_path, bkp_path)
 
 
 def backup_attrs(path):
     timestamp = str(datetime.timestamp(datetime.now())).replace('.', '-')
     bkp_path = path + '.' + timestamp
+    print("Make backup of", path, "in", bkp_path)
     copy(path, bkp_path)
 
 
@@ -84,6 +86,7 @@ def export_node_labels(path, assignment_key, project_folder, id_offset):
         ds = f[assignment_key]
         node_labels = ds[:].T
     fragment_ids, node_labels = node_labels[:, 0], node_labels[:, 1]
+    assert len(fragment_ids) == len(node_labels)
 
     result_folder = os.path.join(project_folder, 'splitting_tool', 'results')
     res_files = glob(os.path.join(result_folder, '*.npz'))
@@ -92,6 +95,7 @@ def export_node_labels(path, assignment_key, project_folder, id_offset):
     resolved_ids = []
     for resf in res_files:
         seg_id = int(os.path.splitext(os.path.split(resf)[1])[0])
+        print("Resolving", seg_id)
         res = np.load(resf)
 
         this_ids, this_labels = res['node_ids'], res['node_labels']
