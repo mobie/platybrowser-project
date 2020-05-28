@@ -31,16 +31,15 @@ def get_traces(folder):
     return traces
 
 
-def export_traces():
-    folder = '/g/kreshuk/data/arendt/platyneris_v1/tracings/kevin'
+def export_traces(folder, name, version):
     ref_path = '../../data/rawdata/sbem-6dpf-1-whole-raw.n5'
-    seg_out_path = '../../data/rawdata/sbem-6dpf-1-whole-traces.n5'
-    table_out_path = '../../data/rawdata/tables/sbem-6dpf-1-whole-traces/default.csv'
+    seg_out_path = '../../data/rawdata/sbem-6dpf-1-whole-%s.n5' % name
+    table_out_path = f'../../data/{version}/tables/sbem-6dpf-1-whole-{name}/default.csv'
 
     ref_scale = 3
-    cell_seg_info = {'path': '../../data/1.0.0/images/local/sbem-6dpf-1-whole-segmented-cells.xml',
+    cell_seg_info = {'path': f'../../data/{version}/images/local/sbem-6dpf-1-whole-segmented-cells.xml',
                      'scale': 2}
-    nucleus_seg_info = {'path': '../../data/0.0.0/images/local/sbem-6dpf-1-whole-segmented-nuclei.xml',
+    nucleus_seg_info = {'path': f'../../data/{version}/images/local/sbem-6dpf-1-whole-segmented-nuclei.xml',
                         'scale': 0}
 
     print("Extracting traces ...")
@@ -53,11 +52,24 @@ def export_traces():
     print("Write trace volume ...")
     traces_to_volume(traces, ref_path, ref_scale, seg_out_path, resolution, scale_factors)
 
+    table_folder = os.path.split(table_out_path)[0]
+    os.makedirs(table_folder, exist_ok=True)
     print("Make table for traces ...")
     make_traces_table(traces, ref_scale, resolution, table_out_path,
                       {'cell': cell_seg_info, 'nucleus': nucleus_seg_info})
 
 
+def export_traces1():
+    folder = '/g/kreshuk/data/arendt/platyneris_v1/tracings/kevin'
+    name = 'traces-david'
+    export_traces(folder, name)
+
+
+def export_traces2():
+    folder = '/g/kreshuk/data/arendt/platyneris_v1/tracings/kevin_new'
+    name = 'traces'
+    export_traces(folder, name, version='1.0.1')
+
 
 if __name__ == '__main__':
-    export_traces()
+    export_traces2()

@@ -2345,5 +2345,15 @@
     },
     "TableFolder": "tables/sbem-6dpf-1-whole-traces",
     "Type": "Segmentation"
+  },
+  "sbem-6dpf-1-whole-traces2": {
+    "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-6dpf-1-whole-traces2.xml"
+    },
+    "TableFolder": "tables/sbem-6dpf-1-whole-traces2",
+    "Type": "Segmentation"
   }
 }

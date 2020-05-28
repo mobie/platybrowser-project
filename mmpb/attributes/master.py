@@ -83,6 +83,7 @@ def make_cell_tables(old_folder, folder, name, tmp_folder, resolution,
     extrapolated_intensities(seg_path, k1, extrapol_mask, k2,
                              extrapol_out, tmp_folder, target, max_jobs)
 
+    # TODO need to update the neuron trace table as well
     old_ganglia_table = os.path.join(old_folder, 'tables', name, 'ganglia_ids.csv')
     new_ganglia_table = os.path.join(table_folder, 'ganglia_ids.csv')
     old_gcluster_table = os.path.join(old_folder, 'tables', name, 'gene_clusters.csv')
