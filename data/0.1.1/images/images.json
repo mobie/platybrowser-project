@@ -1,1914 +1,2338 @@
 {
   "prospr-6dpf-1-whole-ache": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ache.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-allcr1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-allcr1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-allcr2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-allcr2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-anpra": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-anpra.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-anprb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-anprb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ap2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ap2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-arx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-arx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ascb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ascb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-asci": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-asci.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ascii": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ascii.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ash": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ash.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-asicalpha": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-asicalpha.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-baiap": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-baiap.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-barh1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-barh1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-bca1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-bca1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-beta3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-beta3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-bmpr1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-bmpr1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-boule-like": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-boule-like.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-brn3a": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-brn3a.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-bsx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-bsx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-cal2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-cal2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-calexcitin2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-calexcitin2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-calmodulin": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-calmodulin.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-catl": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-catl.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ccvd": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ccvd.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-cepu1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-cepu1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-chat": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-chat.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-chx10": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-chx10.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-cnga": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-cnga.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-co1a1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-co1a1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-coe": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-coe.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-dach": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-dach.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-dbhlike": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-dbhlike.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-dbx1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-dbx1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-delta": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-delta.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-dlx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-dlx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-dopard2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-dopard2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-edu3to4at6dpf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-edu3to4at6dpf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-edu4to5at6dpf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-edu4to5at6dpf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-edu5to6at6dpf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-edu5to6at6dpf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-elav": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-elav.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-eve": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-eve.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-eya": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-eya.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-fezf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-fezf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-for": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-for.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-foxd3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-foxd3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-foxn4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-foxn4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-fvri": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-fvri.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-fxl21": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-fxl21.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gad": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gad.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gata123": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gata123.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gcb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gcb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gcd": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gcd.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gdpd1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gdpd1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-globin-like": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-globin-like.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-glt1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-glt1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-glyt": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-glyt.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gnrh": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gnrh.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gnrhr": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gnrhr.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gpb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gpb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gpcr2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gpcr203": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr203.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gpcr209": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr209.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gpcr210": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr210.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gpcr32": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gpcr32.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gppcr21": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gppcr21.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-grik3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-grik3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-grm7": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-grm7.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gsx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gsx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-gucy": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-gucy.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hand": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hand.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hb9": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hb9.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hcn1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hcn1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hnf6": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hnf6.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hox1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hox1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hox4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hox4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hox7": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hox7.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-hr38": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-hr38.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-irx2546": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-irx2546.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-irx6": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-irx6.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-isl": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-isl.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-jkip3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-jkip3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-junctophilin1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-junctophilin1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-kanl3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-kanl3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-kv33b": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-kv33b.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-kv33e": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-kv33e.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lbx1b": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lbx1b.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-leucin-rich": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-leucin-rich.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lhx15": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lhx15.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lhx2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lhx2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lhx3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lhx3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lhx6": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lhx6.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lmo4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lmo4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-lmx1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-lmx1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-loc28250": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-loc28250.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-loc5285ct": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-loc5285ct.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-loc77859": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-loc77859.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-loc8913nt": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-loc8913nt.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-maf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-maf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-mecom": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-mecom.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-mhcl4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-mhcl4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-mitf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-mitf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-mrlc2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-mrlc2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-msx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-msx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-mthfsd": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-mthfsd.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-munc22": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-munc22.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-muncb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-muncb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nachr": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nachr.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nb5r3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nb5r3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ndus1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ndus1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-neog": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-neog.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-netrin": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-netrin.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-neurod": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-neurod.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ngb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ngb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ngn": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ngn.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nk21": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nk21.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nk22": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nk22.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nk6": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nk6.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nmdar": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nmdar.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-noe1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-noe1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-non-muscle-mhc": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-non-muscle-mhc.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nov2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nov2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nov29": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nov29.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-npr1a": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-npr1a.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ntrps": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ntrps.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-nucleolin": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-nucleolin.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-odo2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-odo2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-olig": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-olig.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-olm2a": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-olm2a.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-otp": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-otp.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-p56": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-p56.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-paraxis": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-paraxis.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-patched": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-patched.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pax258": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pax258.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pax6": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pax6.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pcdh15": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pcdh15.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pde9": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pde9.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pdf": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pdf.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pea3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pea3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pgam": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pgam.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-phc2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-phc2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-phox2b": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-phox2b.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pikachu": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pikachu.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-pitxb": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-pitxb.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-plcg": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-plcg.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ppib": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ppib.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-prdm8": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-prdm8.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-prox": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-prox.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-psmf1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-psmf1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ptf1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ptf1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-rab3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-rab3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-rims": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-rims.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-robo": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-robo.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-rpc2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-rpc2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-rx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-rx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-ryr2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-ryr2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-scn8aa": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-scn8aa.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-segmented-crypticsegment": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-crypticsegment.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-segmented-foregut": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-foregut.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-segmented-head": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-head.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-segmented-lateralectoderm": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-lateralectoderm.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-segmented-pygidium": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-pygidium.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-segmented-restofanimal": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-restofanimal.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-segmented-vnc": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-segmented-vnc.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "prospr-6dpf-1-whole-sema2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-sema2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-sert": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-sert.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-sim1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-sim1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-six12": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-six12.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-six4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-six4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-slit": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-slit.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-snd1": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-snd1.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-sox2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-sox2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-sox4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-sox4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-soxb12": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-soxb12.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-soxb2": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-soxb2.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-sp8": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-sp8.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-stathmin": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-stathmin.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-synaptopodin": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-synaptopodin.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-syt": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-syt.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-syt12": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-syt12.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-syt7": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-syt7.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-syta": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-syta.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-tal": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-tal.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-tbh": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-tbh.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-tbx20": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-tbx20.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-th": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-th.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-timp": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-timp.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-tlx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-tlx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-tmtc3": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-tmtc3.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-trk": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-trk.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-trph": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-trph.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-trpv": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-trpv.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-trpv4": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-trpv4.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-trpv5": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-trpv5.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-twist": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-twist.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-unc22": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-unc22.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-uncs": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-uncs.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-uncx": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-uncx.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-upp": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-upp.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-usp9x": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-usp9x.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-vacht": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-vacht.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-vat1l": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-vat1l.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-vegfr": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-vegfr.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-vglut": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-vglut.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-wnt16": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-wnt16.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "prospr-6dpf-1-whole-wnt5": {
-    "Color": "Magenta",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "magenta",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/prospr-6dpf-1-whole-wnt5.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "sbem-6dpf-1-whole-raw": {
-    "Color": "White",
-    "MaxValue": 255,
-    "MinValue": 0,
-    "Storage": {
+    "color": "white",
+    "contrastLimits": [
+      0.0,
+      255.0
+    ],
+    "storage": {
       "local": "local/sbem-6dpf-1-whole-raw.xml"
     },
-    "Type": "Image"
+    "type": "image"
   },
   "sbem-6dpf-1-whole-segmented-cells": {
-    "ColorMap": "Glasbey",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "glasbey",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-cells.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cells",
-    "Type": "Segmentation"
+    "tableFolder": "tables/sbem-6dpf-1-whole-segmented-cells",
+    "type": "segmentation"
   },
   "sbem-6dpf-1-whole-segmented-cilia": {
-    "ColorMap": "Glasbey",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "glasbey",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-cilia.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-cilia",
-    "Type": "Segmentation"
+    "tableFolder": "tables/sbem-6dpf-1-whole-segmented-cilia",
+    "type": "segmentation"
   },
   "sbem-6dpf-1-whole-segmented-muscle": {
-    "Color": "White",
-    "MaxValue": 1,
-    "MinValue": 0,
-    "Storage": {
+    "color": "white",
+    "contrastLimits": [
+      0.0,
+      1.0
+    ],
+    "storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-muscle.xml"
     },
-    "Type": "Mask"
+    "type": "mask"
   },
   "sbem-6dpf-1-whole-segmented-nuclei": {
-    "ColorMap": "Glasbey",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "glasbey",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-nuclei.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-nuclei",
-    "Type": "Segmentation"
+    "tableFolder": "tables/sbem-6dpf-1-whole-segmented-nuclei",
+    "type": "segmentation"
   },
   "sbem-6dpf-1-whole-segmented-tissue": {
-    "ColorMap": "Glasbey",
-    "MaxValue": 1000,
-    "MinValue": 0,
-    "Storage": {
+    "color": "glasbey",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
       "local": "local/sbem-6dpf-1-whole-segmented-tissue.xml"
     },
-    "TableFolder": "tables/sbem-6dpf-1-whole-segmented-tissue",
-    "Type": "Segmentation"
+    "tableFolder": "tables/sbem-6dpf-1-whole-segmented-tissue",
+    "type": "segmentation"
   }
 }
