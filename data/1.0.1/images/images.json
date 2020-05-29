@@ -2802,17 +2802,17 @@
     "tableFolder": "tables/sbem-6dpf-1-whole-segmented-tissue",
     "type": "segmentation"
   },
-  "sbem-6dpf-1-whole-segmented-traces": {
+  "sbem-6dpf-1-whole-traces": {
     "color": "glasbey",
     "contrastLimits": [
       0.0,
       1000.0
     ],
     "storage": {
-      "local": "local/sbem-6dpf-1-whole-segmented-traces.xml",
-      "remote": "remote/sbem-6dpf-1-whole-segmented-traces.xml"
+      "local": "local/sbem-6dpf-1-whole-traces.xml",
+      "remote": "remote/sbem-6dpf-1-whole-traces.xml"
     },
-    "tableFolder": "tables/sbem-6dpf-1-whole-segmented-traces",
+    "tableFolder": "tables/sbem-6dpf-1-whole-traces",
     "type": "segmentation"
   }
 }

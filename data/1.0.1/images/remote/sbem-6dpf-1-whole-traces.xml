@@ -2,7 +2,7 @@
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
     <ImageLoader format="bdv.n5.s3">
-      <Key>rawdata/sbem-6dpf-1-whole-segmented-traces.n5</Key>
+      <Key>rawdata/sbem-6dpf-1-whole-traces.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
       <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
       <BucketName>platybrowser</BucketName>
