@@ -32,18 +32,22 @@ def add_new_image_data(path, key, image_name,
     mobie.xml_utils.copy_xml_as_n5_s3(xml_in, xml_out,
                                       s3_embl, bucket_name, path_in_bucket,
                                       authentication=auth)
+    print("Upload the data to s3 via:")
+    print("mc cp -r", os.path.join(ROOT, path_in_bucket) + '/',
+          os.path.join('embl', bucket_name, path_in_bucket) + '/')
+    print("Then add all files in", os.path.join(ROOT, version), "to git")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('path', type=str)
-    parser.add_argument('--key', type=str, default='')
     parser.add_argument('image_name', type=str)
-
     parser.add_argument('version', type=str)
+    parser.add_argument('resolution', type=str)
+
+    parser.add_argument('--key', type=str, default='')
     parser.add_argument('--bucket_name', type=str, default='platybrowser')
 
-    parser.add_argument('resolution', type=str)
     parser.add_argument('--chunks', type=str, default=None)
     parser.add_argument('--scale_factors', type=str, default=None)
 
