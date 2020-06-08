@@ -5,18 +5,21 @@ import json
 import argparse
 from copy import deepcopy
 
+import mobie
+
 import mmpb.attributes
 from mmpb.bookmarks import add_bookmarks, update_bookmarks
 from mmpb.export import export_segmentation
-from mmpb.files import (copy_and_check_image_dict, copy_image_data,
-                        copy_misc_data, copy_segmentation, copy_tables)
 from mmpb.files.xml_utils import write_s3_xml
-from mmpb.release_helper import add_version, get_version, make_folder_structure
 from mmpb.util import read_resolution
+
+ROOT = './data'
 
 
 def get_tags():
-    tag = get_version('data')
+    versions = mobie.metadata.get_datasets(ROOT)
+    versions.sort()
+    tag = versions[-1]
     new_tag = tag.split('.')
     new_tag[-1] = str(int(new_tag[-1]) + 1)
     new_tag = '.'.join(new_tag)
@@ -118,7 +121,7 @@ def check_requested_updates(names_to_update, folder):
         if name not in image_dict:
             raise ValueError("Requested update for %s, which does not exist" % name)
         properties = image_dict[name]
-        if properties['Type'] != 'Segmentation':
+        if properties['Type'] != 'segmentation':
             raise ValueError("Requested update for %s, which is not a segmentation" % name)
         if name not in update_dict:
             raise ValueError("Requested update for %s, which is a static segmentation" % name)
@@ -149,20 +152,19 @@ def update_patch(update_seg_names, update_table_names,
 
     # increase the patch (last digit) release tag
     tag, new_tag = get_tags()
-    folder = os.path.join('data', tag)
-    new_folder = os.path.join('data', new_tag)
+    folder = os.path.join(ROOT, tag)
+    new_folder = os.path.join(ROOT, new_tag)
 
     table_updates = deepcopy(update_seg_names)
     table_updates.extend(update_table_names)
     check_requested_updates(table_updates, folder)
     print("Updating platy browser from", tag, "to", new_tag)
 
-    # make new folder structure
-    make_folder_structure(new_folder)
-
-    # copy static image and misc data
-    copy_image_data(folder, new_folder)
-    copy_misc_data(folder, new_folder)
+    # make new folder structure and copy images and misc data
+    mobie.initialization.make_folder_structure(ROOT, new_tag)
+    mobie.metadata.datasets.copy_image_data(folder, new_folder)
+    mobie.metadata.datasets.copy_misc_data(folder, new_folder,
+                                           copy_misc=copy_platy_misc_data)
 
     # export new segmentations
     upload_s3 = update_segmentations(folder, new_folder, update_seg_names,
@@ -185,10 +187,10 @@ def update_patch(update_seg_names, update_table_names,
                       prev_version_folder=folder,
                       updated_seg_names=update_seg_names)
 
-    add_version(new_tag, 'data')
+    mobie.metadata.add_dataset(ROOT, new_tag)
     print("Updated platybrowser to new release", new_tag)
     for upl in upload_s3:
-        print("The following file needis to be uploaded to s3:", upl)
+        print("The following file needs to be uploaded to s3:", upl)
 
 
 if __name__ == '__main__':

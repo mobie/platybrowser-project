@@ -1,7 +1,5 @@
 import os
 import json
-import warnings
-from subprocess import check_output
 
 from . import attributes
 from .export import export_segmentation
@@ -154,22 +152,6 @@ def add_version(tag, root):
     versions.append(tag)
     with open(version_file, 'w') as f:
         json.dump(versions, f)
-
-
-def get_version(root, enforce_version_consistency=False):
-    version_file = os.path.join(root, 'versions.json')
-    git_tag = check_output(['git', 'describe', '--abbrev=0']).decode('utf-8').rstrip('\n')
-    with open(version_file) as f:
-        versions = json.load(f)
-    version = versions[-1]
-
-    msg = "Git version %s and version from versions.json %s do not agree" % (git_tag, version)
-    if version != git_tag and enforce_version_consistency:
-        raise RuntimeError(msg)
-    elif version != git_tag:
-        warnings.warn(msg)
-
-    return version
 
 
 def make_folder_structure(root):
