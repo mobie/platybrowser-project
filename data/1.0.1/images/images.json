@@ -2814,5 +2814,17 @@
     },
     "tableFolder": "tables/sbem-6dpf-1-whole-traces",
     "type": "segmentation"
+  },
+  "xray-90.15-raw": {
+    "color": "white",
+    "contrastLimits": [
+      0.0,
+      255.0
+    ],
+    "storage": {
+      "local": "local/xray-90.15-raw.xml",
+      "remote": "remote/xray-90.15-raw.xml"
+    },
+    "type": "image"
   }
 }
