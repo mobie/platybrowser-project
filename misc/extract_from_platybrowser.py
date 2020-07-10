@@ -1,4 +1,4 @@
-#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser/bin/python
+#! /g/arendt/EM_6dpf_segmentation/platy-browser-data/software/conda/miniconda3/envs/platybrowser-new/bin/python
 
 import argparse
 import os
@@ -15,12 +15,9 @@ def get_bounding_box(tag, lower, upper, table_name, table_id):
 
     assert have_coordinates != have_table, "Need one of coordinates or table"
     if have_coordinates:
-        print("Converting coordinates from physical coordinates %s:%s" % (lower,
-                                                                          upper))
+        print("Extracting data from physical coordinates %s:%s" % (lower, upper))
         bb_start = parse_coordinate(lower)
         bb_stop = parse_coordinate(upper)
-        print("to pixel coordinates %s:%s" % (str(bb_start),
-                                              str(bb_stop)))
     else:
         name = os.path.splitext(os.path.split(name_to_path(table_name))[1])[0]
         table_path = os.path.join('data', tag, 'tables', name, 'base.csv')
@@ -76,7 +73,7 @@ if __name__ == '__main__':
 
     # 1.) validate the tag
     tag = args.tag
-    folder = os.path.join('data', tag)
+    folder = os.path.join('../data', tag)
     assert os.path.exists(folder), "Invalid tag %s" % tag
 
     # 2.) figure out the bounding box
@@ -91,5 +88,4 @@ if __name__ == '__main__':
     save_file = args.save_file
     scale = args.scale_level
     for name in names:
-        print("Extracting data for %s" % name)
-        make_cutout(tag, name, scale, bb_start, bb_stop, save_file)
+        make_cutout(folder, name, scale, bb_start, bb_stop, save_file)

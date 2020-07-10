@@ -1,6 +1,7 @@
 import os
 import h5py
 import imageio
+import z5py
 from pybdv.metadata import get_data_path
 
 
@@ -55,11 +56,11 @@ def save_tif(raw, save_file):
 
 
 def name_to_path(name):
-    name_dict = {'raw': 'images/sbem-6dpf-1-whole-raw.xml',
-                 'cells': 'segmentations/sbem-6dpf-1-whole-segmented-cells-labels.xml',
-                 'nuclei': 'segmentations/sbem-6dpf-1-whole-segmented-nuclei-labels.xml',
-                 'cilia': 'segmentations/sbem-6dpf-1-whole-segmented-cilia-labels.xml',
-                 'chromatin': 'segmentations/sbem-6dpf-1-whole-segmented-chromatin-labels.xml'}
+    name_dict = {'raw': 'images/local/sbem-6dpf-1-whole-raw.xml',
+                 'cells': 'images/local/sbem-6dpf-1-whole-segmented-cells.xml',
+                 'nuclei': 'images/local/sbem-6dpf-1-whole-segmented-nuclei.xml',
+                 'cilia': 'images/local/sbem-6dpf-1-whole-segmented-cilia.xml',
+                 'chromatin': 'images/local/sbem-6dpf-1-whole-segmented-chromatin.xml'}
     assert name in name_dict, "Name must be one of %s, not %s" % (str(name_dict.keys()),
                                                                   name)
     return name_dict[name]
@@ -74,10 +75,10 @@ def name_to_base_scale(name):
     return scale_dict[name]
 
 
-def cutout_data(tag, name, scale, bb_start, bb_stop):
+def cutout_data(folder, name, scale, bb_start, bb_stop):
     assert all(sta < sto for sta, sto in zip(bb_start, bb_stop))
 
-    path = os.path.join('data', tag, name_to_path(name))
+    path = os.path.join(folder, name_to_path(name))
     path = get_data_path(path, return_absolute_path=True)
     resolution = get_res_level(scale)
 
@@ -85,12 +86,16 @@ def cutout_data(tag, name, scale, bb_start, bb_stop):
     assert base_scale <= scale, "%s does not support scale %i; minimum is %i" % (name, scale, base_scale)
     data_scale = scale - base_scale
 
+    print("Resoluion of scale", scale, ":", resolution)
     bb_start_ = [int(sta / re) for sta, re in zip(bb_start, resolution)][::-1]
     bb_stop_ = [int(sto / re) for sto, re in zip(bb_stop, resolution)][::-1]
     bb = tuple(slice(sta, sto) for sta, sto in zip(bb_start_, bb_stop_))
+    print("Extracting %s from pixel coordinates %s:%s" % (name,
+                                                          str(bb_start_),
+                                                          str(bb_stop_)))
 
-    key = 't00000/s00/%i/cells' % data_scale
-    with h5py.File(path, 'r') as f:
+    key = 'setup0/timepoint0/s%i' % data_scale
+    with z5py.File(path, 'r') as f:
         ds = f[key]
         data = ds[bb]
     return data
@@ -132,9 +137,8 @@ def save_data(data, path, save_format, name):
         raise RuntimeError("Unsupported format %s" % save_format)
 
 
-def make_cutout(tag, name, scale, bb_start, bb_stop, out_path, out_format=None):
-    data = cutout_data(tag, name, scale, bb_start, bb_stop)
+def make_cutout(folder, name, scale, bb_start, bb_stop, out_path, out_format=None):
     out_format = to_format(out_path) if out_format is None else out_format
     assert out_format in ('hdf5', 'n5', 'tif-stack', 'tif-slices', 'zarr', 'view'), "Invalid format:" % out_format
-    data = cutout_data(tag, name, scale, bb_start, bb_stop)
+    data = cutout_data(folder, name, scale, bb_start, bb_stop)
     save_data(data, out_path, out_format, name)
