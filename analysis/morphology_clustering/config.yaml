@@ -1,25 +1,25 @@
 segmentation_paths:
-  cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/images/local/sbem-6dpf-1-whole-segmented-cells.xml'
-  nucleus: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/images/local/sbem-6dpf-1-whole-segmented-nuclei.xml'
+  cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/images/local/sbem-6dpf-1-whole-segmented-cells.xml'
+  nucleus: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/images/local/sbem-6dpf-1-whole-segmented-nuclei.xml'
   chromatin: 'W:/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-segmented-chromatin.xml'
 
 raw_paths:
   full: 'W:/EM_6dpf_segmentation/platy-browser-data/data/rawdata/sbem-6dpf-1-whole-raw.xml'
 
 table_paths:
-  cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/default.csv'
-  nucleus: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-nuclei/default.csv'
-  chromatin: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-chromatin/default.csv'
-  genes_overlap: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/genes.csv'
-  genes_vc: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/vc_assignments.csv'
-  cell_nuc_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/cells_to_nuclei.csv'
-  cell_region_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/regions.csv'
-  extrapolated_intensity_cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/extrapolated_intensity_correction.csv'
-  extrapolated_intensity_nuc: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-nuclei/extrapolated_intensity_correction.csv'
+  cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/default.csv'
+  nucleus: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-nuclei/default.csv'
+  chromatin: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-chromatin/default.csv'
+  genes_overlap: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/genes.csv'
+  genes_vc: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/vc_assignments.csv'
+  cell_nuc_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/cells_to_nuclei.csv'
+  cell_region_mapping: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/regions.csv'
+  extrapolated_intensity_cell: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/extrapolated_intensity_correction.csv'
+  extrapolated_intensity_nuc: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-nuclei/extrapolated_intensity_correction.csv'
 
   # path to raw stats table, only label id & stats columns, straight from the main pipeline
-  raw_morphology_nuclei_stats: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-nuclei/morphology.csv'
-  raw_morphology_cell_stats: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/morphology.csv'
+  raw_morphology_nuclei_stats: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-nuclei/morphology.csv'
+  raw_morphology_cell_stats: 'W:/EM_6dpf_segmentation/platy-browser-data/data/1.0.1/tables/sbem-6dpf-1-whole-segmented-cells/morphology.csv'
 
 transformed_nuc_coords: 'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_nuclei_points.csv'
 midline_distance_nuc: 'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_nuclei.csv'
@@ -30,8 +30,8 @@ filter_texture_fails: 'True'
 # only include listed regions, to do whole animal leave as []
 filter_region: []
 
-dataset_id: '1-0-0'
-workdir: 'Z:/Kimberly/Projects/SBEM_analysis/Data/Derived/snakemake_morphology/1-0-0/'
+dataset_id: '1-0-1'
+workdir: 'Z:/Kimberly/Projects/SBEM_analysis/Data/Derived/snakemake_morphology/1-0-1/'
 
 column_subsets:
   all:
