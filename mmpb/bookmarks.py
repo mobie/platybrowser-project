@@ -4,8 +4,6 @@ import numpy as np
 import pandas as pd
 
 from elf.io import open_file
-from elf.transformation import bdv_trafo_to_affine_matrix
-from elf.wrapper.affine_volume import AffineVolume
 from pybdv.metadata import get_resolution, get_data_path
 from pybdv.util import get_key
 
@@ -71,46 +69,49 @@ def validate_layer(folder, name, layer):
 
 
 # arguments are capitalized to be consistent with the keys in bookmarks dict
-def make_bookmark(folder, Position=None, Layers=None, View=None,
+def make_bookmark(folder, position=None, layers=None, view=None,
                   id_update_dicts=None):
 
     bookmark = {}
 
     # validate and add position
-    if Position is not None:
-        assert isinstance(Position, (list, tuple)), type(Position)
-        assert len(Position) == 3
-        assert all(isinstance(pos, float) for pos in Position)
-        bookmark.update({'Position': Position})
+    if position is not None:
+        assert isinstance(position, (list, tuple)), type(position)
+        assert len(position) == 3
+        assert all(isinstance(pos, float) for pos in position)
+        bookmark.update({'position': position})
 
-    # validate and add Layers if given
-    if Layers is not None:
-        assert isinstance(Layers, dict), type(Layers)
-        for name, layer in Layers.items():
-            validate_layer(folder, name, layer)
+    # validate and add layers if given
+    if layers is not None:
+        assert isinstance(layers, dict), type(layers)
+        for name, layer in layers.items():
+            # needs to be updated to new bookmark format
+            # validate_layer(folder, name, layer)
             if id_update_dicts is not None and name in id_update_dicts:
-                ids = layer.get('SelectedLabelIds', None)
+                ids = layer.get('selectedLabelIds', None)
                 if ids is None:
                     continue
+                print("Propagating ids from", ids)
                 ids = propagate_lut(id_update_dicts[name], ids)
-                layer['SelectedLabelIds'] = ids
-                Layers[name] = layer
+                print("to", ids)
+                layer['selectedLabelIds'] = ids
+                layers[name] = layer
 
-        bookmark.update({'Layers': Layers})
+        bookmark.update({'layers': layers})
 
-    # validate and add the View if given
-    if View is not None:
-        assert isinstance(View, (list, tuple))
-        assert len(View) == 12
-        assert all(isinstance(pos, float) for pos in View)
-        bookmark.update({'View': View})
+    # validate and add the view if given
+    if view is not None:
+        assert isinstance(view, (list, tuple))
+        assert len(view) == 12
+        assert all(isinstance(pos, float) for pos in view)
+        bookmark.update({'view': view})
     return bookmark
 
 
 def add_bookmarks(folder, bookmarks, prev_version_folder=None,
                   updated_seg_names=None):
     # load the previous bookmarks
-    bookmark_path = os.path.join(folder, 'misc', 'bookmarks.json')
+    bookmark_path = os.path.join(folder, 'misc', 'bookmarks', 'manuscript_bookmarks.json')
     with open(bookmark_path) as f:
         bookmark_dict = json.load(f)
 
@@ -134,11 +135,11 @@ def add_bookmarks(folder, bookmarks, prev_version_folder=None,
 
 def update_bookmarks(folder, prev_version_folder, updated_seg_names):
     # load the previous bookmarks
-    bookmark_path = os.path.join(folder, 'misc', 'bookmarks.json')
+    bookmark_path = os.path.join(prev_version_folder, 'misc', 'bookmarks', 'manuscript_bookmarks.json')
     with open(bookmark_path) as f:
         bookmarks = json.load(f)
 
-    id_update_dicts = {name: os.path.join(prev_version_folder,
+    id_update_dicts = {name: os.path.join(folder,
                                           'misc',
                                           'new_id_lut_%s.json' % name)
                        for name in updated_seg_names}
@@ -147,6 +148,8 @@ def update_bookmarks(folder, prev_version_folder, updated_seg_names):
     for name, bookmark in bookmarks.items():
         new_bookmark = make_bookmark(folder, id_update_dicts=id_update_dicts, **bookmark)
         bookmarks[name] = new_bookmark
+
+    bookmark_path = os.path.join(folder, 'misc', 'bookmarks', 'manuscript_bookmarks.json')
     with open(bookmark_path, 'w') as f:
         json.dump(bookmarks, f, indent=2, sort_keys=True)
 
@@ -165,7 +168,10 @@ def check_bookmark(root, version, name,
                    raw_scale, halo=[50, 512, 512],
                    layer_scale_dict={}):
     from heimdall import view, to_source
-    bookmark_path = os.path.join(root, version, 'misc', 'bookmarks.json')
+    from elf.transformation import bdv_to_native
+    from elf.wrapper.affine_volume import AffineVolume
+
+    bookmark_path = os.path.join(root, version, 'misc', 'bookmarks', 'manuscript_bookmarks.json')
     with open(bookmark_path) as f:
         bookmarks = json.load(f)
     bookmark = bookmarks[name]
@@ -175,7 +181,7 @@ def check_bookmark(root, version, name,
 
     # use new elf fancyness to transform the view :)
     if 'View' in bookmark:
-        affine_matrix = bdv_trafo_to_affine_matrix(bookmark['View'])
+        affine_matrix = bdv_to_native(bookmark['View'])
         # print("Found view corresponding to affine matrix:")
         # print(affine_matrix)
         # FIXME this does not work yet, probably because we need to
