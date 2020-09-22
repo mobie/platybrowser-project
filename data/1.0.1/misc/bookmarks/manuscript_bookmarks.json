@@ -92,13 +92,13 @@
           1000.0
         ],
         "selectedLabelIds": [
-          4193,
-          4707,
-          4690,
-          3000,
-          4036,
-          3156,
-          4356
+          4203,
+          4716,
+          4699,
+          3023,
+          4048,
+          3173,
+          4365
         ],
         "showSelectedSegmentsIn3d": true
       }
@@ -132,20 +132,20 @@
           1000.0
         ],
         "selectedLabelIds": [
-          1375,
-          5370,
-          5583,
-          5781,
-          6544,
-          7037,
-          7462,
-          8264,
-          8230,
-          8231,
-          8985,
-          9187,
-          10181,
-          11299
+          1418,
+          5377,
+          5590,
+          5787,
+          6543,
+          7036,
+          7460,
+          8256,
+          8222,
+          8223,
+          8981,
+          9180,
+          10166,
+          11278
         ],
         "showSelectedSegmentsIn3d": true
       }
@@ -179,13 +179,13 @@
           1000.0
         ],
         "selectedLabelIds": [
-          23027,
-          23028,
-          23367,
-          23556,
-          23557,
-          23790,
-          24916
+          23104,
+          23105,
+          23445,
+          23626,
+          23627,
+          23857,
+          24973
         ],
         "showSelectedSegmentsIn3d": true
       },
@@ -724,8 +724,8 @@
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
         "selectedLabelIds": [
-          32101,
-          31967
+          32130,
+          31989
         ],
         "showSelectedSegmentsIn3d": false
       }
@@ -769,8 +769,8 @@
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
         "selectedLabelIds": [
-          6759,
-          6906
+          6757,
+          6905
         ],
         "showSelectedSegmentsIn3d": false
       }
@@ -843,9 +843,9 @@
           1000.0
         ],
         "selectedLabelIds": [
-          1667,
-          1668,
-          1681
+          1707,
+          1708,
+          1721
         ],
         "showSelectedSegmentsIn3d": true
       }
