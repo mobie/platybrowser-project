@@ -43,29 +43,29 @@ def make_summary_df(distances_table):
 
 
 nuc_cell_mapping = pd.read_csv(
-    'W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.0\\tables\\sbem-6dpf-1-whole-segmented-cells\\cells_to_nuclei.csv',
+    'W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.1\\tables\\sbem-6dpf-1-whole-segmented-cells\\cells_to_nuclei.csv',
     sep='\t')
 nuc_cell_mapping = nuc_cell_mapping.loc[nuc_cell_mapping['nucleus_id'] != 0, :]
 
 # cell label ids
 sym_pairs = pd.read_csv(
-    'W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.0\\tables\\sbem-6dpf-1-whole-segmented-cells\\symmetric_cells.csv',
+    'W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.1\\tables\\sbem-6dpf-1-whole-segmented-cells\\symmetric_cells.csv',
     sep='\t')
 # remove rows for cells not in pairs
 sym_pairs = sym_pairs.loc[sym_pairs.pair_index != 0.0, :]
 print(sym_pairs.shape)
 
-# remove pairs that don't have assigned nuclei (8 of them)
+# remove pairs that don't have assigned nuclei
 sym_pairs_cut = sym_pairs.loc[np.isin(sym_pairs['label_id'], nuc_cell_mapping['label_id']), :]
 print(sym_pairs_cut.shape)
 
 # average nuclei distance discrepancy
 transformed_xyz_nuc = pd.read_csv(
-    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_nuclei_points.csv',
+    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_nuclei_points_1_0_1.csv',
     sep='\t')
 transformed_xyz_nuc = transformed_xyz_nuc.rename(columns={'label_id': 'nucleus_id'})
 midline_dist_nuc = pd.read_csv(
-    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_nuclei.csv',
+    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_nuclei_1_0_1.csv',
     sep='\t')
 midline_dist_nuc = midline_dist_nuc.rename(columns={'label_id': 'nucleus_id'})
 
@@ -81,10 +81,10 @@ stats_nuc = stats_nuc[['label_id', 'new_x', 'new_y', 'new_z', 'absolute']]
 
 # average cell distance discrepancy
 transformed_xyz_cells = pd.read_csv(
-    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_cells_points.csv',
+    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_cells_points_1_0_1.csv',
     sep='\t')
 midline_dist_cells = pd.read_csv(
-    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_cells.csv',
+    'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_cells_1_0_1.csv',
     sep='\t')
 transformed_xyz_cells = transformed_xyz_cells.loc[transformed_xyz_cells.label_id != 0, :]
 midline_dist_cells = midline_dist_cells.loc[midline_dist_cells.label_id != 0, :]
@@ -98,5 +98,5 @@ distances_cells = get_distances(stats_cell, sym_pairs_cut)
 summary_nuclei = make_summary_df(distances_nuclei)
 summary_cells = make_summary_df(distances_cells)
 
-summary_nuclei.to_csv('Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/bilateral_distance_summary_nuclei.csv', index=False, sep='\t')
-summary_cells.to_csv('Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/bilateral_distance_summary_cells.csv', index=False, sep='\t')
+summary_nuclei.to_csv('Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/bilateral_distance_summary_nuclei_1_0_1.csv', index=False, sep='\t')
+summary_cells.to_csv('Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/bilateral_distance_summary_cells_1_0_1.csv', index=False, sep='\t')

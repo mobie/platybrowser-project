@@ -12,4 +12,6 @@ manually curated pairs of bilateral cells.
 all_vs_all_neighbours.py - runs the bilateral pairs analysis for different subsets of morphology statistics
 
 all_vs_all_analysis.py - takes results from all_vs_all_neighbours and calculates cumulative sums i.e. fraction of cells that
-find a bilateral partner within so many nearest neighbours.
+find a bilateral partner within so many nearest neighbours.  
+
+all_vs_all_graphs.py - takes results from all_vs_all_analysis.py and produces the final graph shown in figure 3

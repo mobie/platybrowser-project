@@ -41,11 +41,11 @@ def calculate_y_values_random(result_df):
 
 # all stats
 with open(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_all.pkl',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_all.pkl',
         'rb') as f:
     all_result = pickle.load(f)
 all_random = pd.read_csv(
-    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_all_random.csv',
+    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_all_random.csv',
     sep='\t')
 
 x_axis = list(range(1, 10400, 1))
@@ -57,11 +57,11 @@ res_all = pd.DataFrame({'x': x_axis, 'y_all': y_vals_all, 'y_random': y_vals_all
 
 # cell stats
 with open(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_cell.pkl',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_cell.pkl',
         'rb') as f:
     cell_result = pickle.load(f)
 cell_random = pd.read_csv(
-    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_cell_random.csv',
+    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_cell_random.csv',
     sep='\t')
 
 y_vals_cell = calculate_y_values(np.array(cell_result))
@@ -73,11 +73,11 @@ res_all['y_cell_random'] = y_vals_cell_random
 
 # nucleus stats
 with open(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_nuc.pkl',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_nuc.pkl',
         'rb') as f:
     nuc_result = pickle.load(f)
 nuc_random = pd.read_csv(
-    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_nuc_random.csv',
+    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_nuc_random.csv',
     sep='\t')
 
 y_vals_nuc = calculate_y_values(np.array(nuc_result))
@@ -89,11 +89,11 @@ res_all['y_nuc_random'] = y_vals_nuc_random
 
 # chromatin stats
 with open(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_chrom.pkl',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_chrom.pkl',
         'rb') as f:
     chrom_result = pickle.load(f)
 chrom_random = pd.read_csv(
-    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_chrom_random.csv',
+    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_chrom_random.csv',
     sep='\t')
 
 y_vals_chrom = calculate_y_values(np.array(chrom_result))
@@ -112,5 +112,5 @@ plt.legend()
 plt.xlim(1, 200)
 
 res_all.to_csv(
-    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\plot_values.csv',
+    'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\plot_values_1_0_1.csv',
     index=False, sep='\t')

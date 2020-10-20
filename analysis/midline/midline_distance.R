@@ -77,7 +77,7 @@ rgl::aspect3d("iso")
 rgl.close()
 
 # read in nucleus dataframe
-nuclei = read.table('W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.0\\tables\\sbem-6dpf-1-whole-segmented-nuclei\\default.csv', sep='\t',
+nuclei = read.table('W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.1\\tables\\sbem-6dpf-1-whole-segmented-nuclei\\default.csv', sep='\t',
                     header=TRUE)
 # remove zero label if present
 nuclei <- nuclei[nuclei$label_id != 0,]
@@ -86,7 +86,7 @@ nuclei_cut <- nuclei[, c('anchor_x', 'anchor_y', 'anchor_z')]
 result <- result[, c('x', 'y', 'z')]
 
 # same for cells
-cells = read.table('W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.0\\tables\\sbem-6dpf-1-whole-segmented-cells\\default.csv', sep='\t',
+cells = read.table('W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.1\\tables\\sbem-6dpf-1-whole-segmented-cells\\default.csv', sep='\t',
                    header=TRUE)
 cells <- cells[cells$label_id != 0,]
 # get xyz coords
@@ -95,7 +95,7 @@ cells_cut <- cells[, c('anchor_x', 'anchor_y', 'anchor_z')]
 # point on midline - randomly chosen one near the centre if platy
 midline_point <- c(163.8045, 149.22421, 141.440733)
 # nucleus on one side - randomly chosen as near centre of platy
-# label id 8290
+# label id 8290 (in version 1.0.0)
 nucleus_point <- c(107.619, 163.189, 155.880)
 
 # vector from midline to nucleus - will use this to assess which side of the midline the rest of the nuclei are on
@@ -157,16 +157,11 @@ get_dists <- function(table, result) {
 nuclei_cut <- get_dists(nuclei_cut, result)
 nuclei_cut <- nuclei_cut[,c('distances', 'side', 'side2', 'absolute')]
 nuclei <- cbind(nuclei, nuclei_cut)
-raw_path <- 'W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\rawdata\\sbem-6dpf-1-whole-raw.xml'
-nuclei$Path_IntensityImage = rep(raw_path, nrow(nuclei))
-nuclei$Path_LabelImage = rep('W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.0\\images\\local\\sbem-6dpf-1-whole-segmented-nuclei.xml', nrow(nuclei))
-write.table(nuclei, "Z:\\Kimberly\\Projects\\SBEM_analysis\\src\\sbem_analysis\\paper_code\\files_for_midline_xyz\\distance_from_midline_nuclei.csv",
+write.table(nuclei, "Z:\\Kimberly\\Projects\\SBEM_analysis\\src\\sbem_analysis\\paper_code\\files_for_midline_xyz\\distance_from_midline_nuclei_1_0_1.csv",
             sep='\t', quote=FALSE, row.names = FALSE)
 
 cells_cut <- get_dists(cells_cut, result)
 cells_cut <- cells_cut[,c('distances', 'side', 'side2', 'absolute')]
 cells <- cbind(cells, cells_cut)
-cells$Path_IntensityImage = rep(raw_path, nrow(cells))
-cells$Path_LabelImage = rep('W:\\EM_6dpf_segmentation\\platy-browser-data\\data\\1.0.0\\images\\local\\sbem-6dpf-1-whole-segmented-cells.xml', nrow(cells))
-write.table(cells, "Z:\\Kimberly\\Projects\\SBEM_analysis\\src\\sbem_analysis\\paper_code\\files_for_midline_xyz\\distance_from_midline_cells.csv",
+write.table(cells, "Z:\\Kimberly\\Projects\\SBEM_analysis\\src\\sbem_analysis\\paper_code\\files_for_midline_xyz\\distance_from_midline_cells_1_0_1.csv",
             sep='\t', quote=FALSE, row.names = FALSE)

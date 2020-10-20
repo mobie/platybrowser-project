@@ -151,21 +151,21 @@ def get_nearest_index_row_batch(row_ids, nn, all_by_all_valid):
 
 def main():
     morph_stats = pd.read_csv(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\1-0-0\\tables\\after_QC.csv',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\1-0-1\\tables\\after_QC.csv',
         sep='\t')
     morph_stats_cut = morph_stats.drop(columns=['label_id_cell', 'label_id_nucleus'])
 
     transformed_xyz_nucleus = pd.read_csv(
-        'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_nuclei_points.csv',
+        'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/prospr_space_nuclei_points_1_0_1.csv',
         sep='\t')
     transformed_xyz_nucleus = transformed_xyz_nucleus.rename(columns={'label_id': 'nucleus_id'})
     midline_dist_nucleus = pd.read_csv(
-        'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_nuclei.csv',
+        'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/distance_from_midline_nuclei_1_0_1.csv',
         sep='\t')
     midline_dist_nucleus = midline_dist_nucleus.rename(columns={'label_id': 'nucleus_id'})
 
     bilateral_dist_nuc = pd.read_csv(
-        'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/bilateral_distance_summary_nuclei.csv',
+        'Z:/Kimberly/Projects/SBEM_analysis/src/sbem_analysis/paper_code/files_for_midline_xyz/bilateral_distance_summary_nuclei_1_0_1.csv',
         sep='\t')
 
     final_labels_nucleus_df = morph_stats.loc[:, morph_stats.columns == 'label_id_nucleus']
@@ -189,11 +189,11 @@ def main():
     nuc_res, random_res = calculate_all_neighbours(morph_stats_cut, all_by_all_nucleus)
     # Cells where no cells meet the xyz criteria have values of -1
     with open(
-            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_all.pkl',
+            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_all.pkl',
             'wb') as f:
         pickle.dump(nuc_res, f)
     random_res.to_csv(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_all_random.csv',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_all_random.csv',
         index=False, sep='\t')
 
     # just cell stats
@@ -202,11 +202,11 @@ def main():
     nuc_res, random_res = calculate_all_neighbours(morph_stats_cut, all_by_all_nucleus)
     # Cells where no cells meet the xyz criteria have values of -1
     with open(
-            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_cell.pkl',
+            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_cell.pkl',
             'wb') as f:
         pickle.dump(nuc_res, f)
     random_res.to_csv(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_cell_random.csv',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_cell_random.csv',
         index=False, sep='\t')
 
     # just nuclei stats
@@ -215,11 +215,11 @@ def main():
     nuc_res, random_res = calculate_all_neighbours(morph_stats_cut, all_by_all_nucleus)
     # Cells where no cells meet the xyz criteria have values of -1
     with open(
-            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_nuc.pkl',
+            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_nuc.pkl',
             'wb') as f:
         pickle.dump(nuc_res, f)
     random_res.to_csv(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_nuc_random.csv',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_nuc_random.csv',
         index=False, sep='\t')
 
     # chromatin shape independent
@@ -235,11 +235,11 @@ def main():
     nuc_res, random_res = calculate_all_neighbours(morph_stats_cut, all_by_all_nucleus)
     # Cells where no cells meet the xyz criteria have values of -1
     with open(
-            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_chrom.pkl',
+            'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_chrom.pkl',
             'wb') as f:
         pickle.dump(nuc_res, f)
     random_res.to_csv(
-        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\all_by_all_chrom_random.csv',
+        'Z:\\Kimberly\\Projects\\SBEM_analysis\\Data\\Derived\\snakemake_morphology\\bilateral_pairs\\1_0_1\\all_by_all_chrom_random.csv',
         index=False, sep='\t')
 
 
