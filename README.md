@@ -2,7 +2,7 @@
 
 This repository contains the data and the scripts for data generation for the PlatyBrowser, a resource for exploring a full EM volume of a 6 day old Platynereis larva combined with a gene expression atlas and tissue, cellular and ultra-structure segmentations.
 For details, see [Whole-body integration of gene expression and single-cell morphology](https://www.biorxiv.org/content/10.1101/2020.02.26.961037v1).
-It is implemented using the [MultiModalBrowser](https://github.com/platybrowser/mmb-fiji) (MMB), a tool for exploring multi-modal big image data.
+It is implemented using [MoBIE](https://github.com/mobie/mobie), a platform for exploring and sharing multi-modal big image data.
 
 ## Data storage
 
