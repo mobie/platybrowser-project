@@ -1,0 +1,11 @@
+name:
+    unet-3d-platy-cell-probs
+channels:
+    - pytorch
+    - conda-forge
+dependencies:
+    - inferno>=v0.4.2
+    - neurofire
+    - python=3.7
+    - pytorch>=1.0
+    - torchvision

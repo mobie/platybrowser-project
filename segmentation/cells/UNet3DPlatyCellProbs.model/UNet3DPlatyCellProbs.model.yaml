@@ -1,30 +1,21 @@
+format_version: 0.3.0
+
 name: 3D UNet Platynereis Cell Segmentation (Probabilities)
 description: A 3d U-Net trained to predict the cell boundaries in a EM volume of a 6 day old Platynereis.
+authors:
+  - Constantin Pape;@bioimage-io
+
 cite:
   - text: Vergara, Hernando M. et al. Whole-body integration of gene expression and single-cell morphology. BioRxiv 2020."
     doi: https://doi.org/10.1101/2020.02.26.961037
-authors:
-  - Constantin Pape;@bioimage-io
-documentation: ../../README.md
+
+git_repo: https://github.com/mobie/platybrowser-datasets/tree/master/segmentation/cells/UNet3DPlatyCellProbs.model
 tags: [unet3d, pytorch, platynereis, cell membrane, segmentation, EM]
 license: MIT
 
-format_version: 0.1.0
-language: python
-framework: pytorch
-
-source: mmpb.segmentation.network.models.UNetAnisotropic
-optional_kwargs:
-  in_channels: 1
-  out_channels: 12
-  initial_features: 22
-  gain: 2
-  scale_factors: [2, 2, 2, 2]
-  final_activation: Sigmoid
-
-test_input: test_input.npz
-test_output: test_output.npz
+documentation: README.md
 covers: [ilastik_raw.png, ilastik_pred.png]
+timestamp: 2021-02-03T13:16:06.581511
 
 inputs:
   - name: raw
@@ -32,6 +23,11 @@ inputs:
     data_type: float32
     data_range: [-inf, inf]
     shape: [1, 1, 80, 160, 160]
+    preprocessing:
+      - name: zero_mean_unit_variance
+        kwargs:
+          mode: per_sample
+          axes: zyx
 
 outputs:
   - name: cell_boundaries
@@ -43,20 +39,29 @@ outputs:
         reference_input: raw
         scale: [1, 1, 1, 1, 1]
         offset: [0, 0, 0, 0, 0]
+    # TODO for now we could put this into the model
+    # TODO we need a post-processing op to average the output channels
+    # postprocessing:
+    #     - name: average_channels
+    #       kwargs: {start_channel: 0, stop_channel: 3}
 
-prediction:
-  preprocess:
-    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/EnsureTorch.transformation.yaml
-    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/Cast.transformation.yaml
-      kwargs: {dtype: float32}
-    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
-      kwargs: {apply_to: [0]}
-  weights:
-    source: https://zenodo.org/record/3691092/files/cells.state
-    hash: {md5: c7027b44cbaa334105248397c43de6fe}
-  postprocess:
-    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/AverageChannels.transformation.yaml
-      kwargs: {start_channel: 0, stop_channel: 3}
-    - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/a8863571fde5caeaf79903f71f7913fd2d9a9d01/specs/transformations/EnsureNumpy.transformation.yaml
+language: python
+framework: pytorch
+source: models.UNetAnisotropic
+kwargs:
+  in_channels: 1
+  out_channels: 12
+  initial_features: 22
+  gain: 2
+  scale_factors: [2, 2, 2, 2]
+  final_activation: Sigmoid
+  average_output_channels: True
+dependencies: conda:environment.yaml
 
-  dependencies: conda:environment.yaml
+test_inputs: [test_input.npy]
+test_outputs: [test_output.npy]
+
+weights:
+ pytorch_state_dict:
+   sha256: 9e59d76b200aec7ad7967695a0c9593610e374a8d378da196be2e25dffd610aa
+   source: https://zenodo.org/record/3691092/files/cells.state
