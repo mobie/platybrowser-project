@@ -338,8 +338,7 @@
 					"morphology_clusters"
 				],
 				"showSelectedSegmentsIn3d": false,
-				"showImageIn3d": false,
-			}
+				"showImageIn3d": false
 		},
 		"normView": [
 			"n-0.0017600520306598772",
