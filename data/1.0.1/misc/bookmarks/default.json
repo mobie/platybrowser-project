@@ -339,7 +339,8 @@
 				],
 				"showSelectedSegmentsIn3d": false,
 				"showImageIn3d": false
-		},
+		    }
+        },
 		"normView": [
 			"n-0.0017600520306598772",
 			"n0.0021550005323971613",
@@ -1263,7 +1264,7 @@
 				],
 				"resolution3dView": 0.0,
 				"showSelectedSegmentsIn3d": false,
-				"showImageIn3d": false,
+				"showImageIn3d": false
 			},
 			"sbem-6dpf-1-whole-segmented-cells": {
 				"contrastLimits": [
@@ -1360,7 +1361,7 @@
 					0.0,
 					1000.0
 				],
-				"resolution3dView": 0.0
+				"resolution3dView": 0.0,
 				"selectedLabelIds": [
 					4340.0
 				],
