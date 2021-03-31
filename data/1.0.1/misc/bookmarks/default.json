@@ -715,8 +715,8 @@
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "color": "glasbey",
-        "colorByColumn": "clusters",
+        "color": "A-R-G-B Column",
+        "colorByColumn": "geneColourScheme",
         "tables": [
           "gene_clusters"
         ]
@@ -746,8 +746,8 @@
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "color": "glasbey",
-        "colorByColumn": "clusters",
+        "color": "A-R-G-B Column",
+        "colorByColumn": "geneColourScheme",
         "tables": [
           "gene_clusters"
         ]
@@ -777,8 +777,8 @@
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "color": "glasbey",
-        "colorByColumn": "merged_bilateral_ganglion_id",
+        "color": "A-R-G-B Column",
+        "colorByColumn": "gangliaColourScheme",
         "tables": [
           "ganglia_ids"
         ]
@@ -808,8 +808,8 @@
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
-        "color": "glasbey",
-        "colorByColumn": "merged_bilateral_ganglion_id",
+        "color": "A-R-G-B Column",
+        "colorByColumn": "gangliaColourScheme",
         "tables": [
           "ganglia_ids"
         ]
