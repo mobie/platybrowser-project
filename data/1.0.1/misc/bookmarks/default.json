@@ -835,7 +835,7 @@
 	  "n-1.4210769585079548"
     ]
   },
-  "Figure 6B and 6C: Gene expression assignment": {
+  "Figure 7B and 7C: Gene expression assignment": {
     "layers": {
       "prospr-6dpf-1-whole-msx": {
         "color": "green"
@@ -880,7 +880,7 @@
       "n2.459871920778832"
     ]
   },
-  "Figure 6D and 6E: Gene expression assignment": {
+  "Figure 7D and 7E: Gene expression assignment": {
     "layers": {
       "prospr-6dpf-1-whole-lhx6": {
         "color": "green"
@@ -925,7 +925,7 @@
       "n0.23912204485543515"
     ]
   },
-  "Figure 6G: Virtual cell assignment: gene expression level": {
+  "Figure 7G: Virtual cell assignment: gene expression level": {
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
@@ -961,7 +961,7 @@
       "n-0.4042245621728868"
     ]
   },
-  "Figure 7D: MMB - PlatyBrowser": {
+  "Figure 8D: MMB - PlatyBrowser": {
     "layers": {
       "prospr-6dpf-1-whole-arx": {
         "color": "yellow"
@@ -1750,7 +1750,7 @@
 			181.60000610351565
 		]
 	},
-	"Supplemental Figure 3C: Cell texture haralick 2 low": {
+	"Suppl. Fig. 3C: Cell texture haralick 2 low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
