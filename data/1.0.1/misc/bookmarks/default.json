@@ -835,6 +835,39 @@
 	  "n-1.4210769585079548"
     ]
   },
+  "Figure 6F: Bipolar cell sensory ending": {
+		"layers": {
+			"sbem-6dpf-1-whole-raw": {
+				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"contrastLimits": [
+					0.0,
+					255.0
+				],
+				"resolution3dView": 0.0,
+				"showSelectedSegmentsIn3d": false,
+				"showImageIn3d": false
+			}
+		},
+		"normView": [
+			"n0.1052478078894777",
+			"n-6.233432862578468E-4",
+			"n0.024340617822687576",
+			"n-22.301417663553963",
+			"n-2.299921483406144E-4",
+			"n0.10796189200643638",
+			"n0.0037592920058610348",
+			"n-14.107061320349107",
+			"n-0.024347511915067635",
+			"n-0.0037143796145663803",
+			"n0.10518249543535081",
+			"n4.102306240785742"
+		],
+		"position": [
+			209.4105500980182,
+			130.62270381667955,
+			14.08506163493172
+		]
+	},
   "Figure 7B and 7C: Gene expression assignment": {
     "layers": {
       "prospr-6dpf-1-whole-msx": {
@@ -1931,7 +1964,7 @@
 			110.59999847412108
 		]
   },
-	"Supplementary_figure_5B": {
+	"Suppl. Fig. 5B": {
 		"layers": {
 			"prospr-6dpf-1-whole-gdpd1": {
 				"color": "(r\u003d0,g\u003d204,b\u003d51,a\u003d255)",
@@ -2036,7 +2069,7 @@
 			114.8383975904058
 		]
 	},
-	"Supplementary_figure_5C": {
+	"Suppl. Fig. 5C": {
 		"layers": {
 			"prospr-6dpf-1-whole-arx": {
 				"color": "(r\u003d255,g\u003d0,b\u003d51,a\u003d255)",
