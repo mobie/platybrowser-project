@@ -1,0 +1,6114 @@
+{
+  "is2d": false,
+  "sources": {
+    "ache": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ache.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ache",
+                "opacity": 1.0,
+                "sources": [
+                  "ache"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "allcr1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-allcr1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "allcr1",
+                "opacity": 1.0,
+                "sources": [
+                  "allcr1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "allcr2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-allcr2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "allcr2",
+                "opacity": 1.0,
+                "sources": [
+                  "allcr2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "allglands": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-allglands.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "allglands",
+                "opacity": 1.0,
+                "sources": [
+                  "allglands"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "anpra": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-anpra.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "anpra",
+                "opacity": 1.0,
+                "sources": [
+                  "anpra"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "anprb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-anprb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "anprb",
+                "opacity": 1.0,
+                "sources": [
+                  "anprb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ap2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ap2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ap2",
+                "opacity": 1.0,
+                "sources": [
+                  "ap2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "arx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-arx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "arx",
+                "opacity": 1.0,
+                "sources": [
+                  "arx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ascb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ascb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ascb",
+                "opacity": 1.0,
+                "sources": [
+                  "ascb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "asci": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-asci.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "asci",
+                "opacity": 1.0,
+                "sources": [
+                  "asci"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ascii": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ascii.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ascii",
+                "opacity": 1.0,
+                "sources": [
+                  "ascii"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ash": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ash.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ash",
+                "opacity": 1.0,
+                "sources": [
+                  "ash"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "asicalpha": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-asicalpha.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "asicalpha",
+                "opacity": 1.0,
+                "sources": [
+                  "asicalpha"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ato2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ato2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ato2",
+                "opacity": 1.0,
+                "sources": [
+                  "ato2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "baiap": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-baiap.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "baiap",
+                "opacity": 1.0,
+                "sources": [
+                  "baiap"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "barh1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-barh1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "barh1",
+                "opacity": 1.0,
+                "sources": [
+                  "barh1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "bca1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-bca1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "bca1",
+                "opacity": 1.0,
+                "sources": [
+                  "bca1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "beta3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-beta3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "beta3",
+                "opacity": 1.0,
+                "sources": [
+                  "beta3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "bmpr1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-bmpr1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "bmpr1",
+                "opacity": 1.0,
+                "sources": [
+                  "bmpr1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "brn124": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-brn124.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "brn124",
+                "opacity": 1.0,
+                "sources": [
+                  "brn124"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "brn3a": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-brn3a.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "brn3a",
+                "opacity": 1.0,
+                "sources": [
+                  "brn3a"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "bsx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-bsx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "bsx",
+                "opacity": 1.0,
+                "sources": [
+                  "bsx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "cal2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-cal2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "cal2",
+                "opacity": 1.0,
+                "sources": [
+                  "cal2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "calexcitin2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-calexcitin2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "calexcitin2",
+                "opacity": 1.0,
+                "sources": [
+                  "calexcitin2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "calmodulin": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-calmodulin.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "calmodulin",
+                "opacity": 1.0,
+                "sources": [
+                  "calmodulin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "catl": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-catl.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "catl",
+                "opacity": 1.0,
+                "sources": [
+                  "catl"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ccvd": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ccvd.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ccvd",
+                "opacity": 1.0,
+                "sources": [
+                  "ccvd"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "cells": {
+      "segmentation": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-cells.xml"
+        },
+        "tableDataLocation": "tables/sbem-6dpf-1-whole-segmented-cells",
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "segmentationDisplay": {
+                "lut": "glasbey",
+                "name": "cells",
+                "opacity": 0.5,
+                "sources": [
+                  "cells"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem-segmentation"
+        }
+      }
+    },
+    "cepu1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-cepu1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "cepu1",
+                "opacity": 1.0,
+                "sources": [
+                  "cepu1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "chat": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-chat.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "chat",
+                "opacity": 1.0,
+                "sources": [
+                  "chat"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "chromatin": {
+      "segmentation": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-chromatin.xml"
+        },
+        "tableDataLocation": "tables/sbem-6dpf-1-whole-segmented-chromatin",
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "segmentationDisplay": {
+                "lut": "glasbey",
+                "name": "chromatin",
+                "opacity": 0.5,
+                "sources": [
+                  "chromatin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem-segmentation"
+        }
+      }
+    },
+    "chx10": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-chx10.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "chx10",
+                "opacity": 1.0,
+                "sources": [
+                  "chx10"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "cilia": {
+      "segmentation": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-cilia.xml"
+        },
+        "tableDataLocation": "tables/sbem-6dpf-1-whole-segmented-cilia",
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "segmentationDisplay": {
+                "lut": "glasbey",
+                "name": "cilia",
+                "opacity": 0.5,
+                "sources": [
+                  "cilia"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem-segmentation"
+        }
+      }
+    },
+    "cnga": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-cnga.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "cnga",
+                "opacity": 1.0,
+                "sources": [
+                  "cnga"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "co1a1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-co1a1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "co1a1",
+                "opacity": 1.0,
+                "sources": [
+                  "co1a1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "coe": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-coe.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "coe",
+                "opacity": 1.0,
+                "sources": [
+                  "coe"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "crypticsegment": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-crypticsegment.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "crypticsegment",
+                "opacity": 1.0,
+                "sources": [
+                  "crypticsegment"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "dach": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-dach.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "dach",
+                "opacity": 1.0,
+                "sources": [
+                  "dach"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "dbhlike": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-dbhlike.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "dbhlike",
+                "opacity": 1.0,
+                "sources": [
+                  "dbhlike"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "dbx1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-dbx1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "dbx1",
+                "opacity": 1.0,
+                "sources": [
+                  "dbx1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "delta": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-delta.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "delta",
+                "opacity": 1.0,
+                "sources": [
+                  "delta"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "dlx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-dlx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "dlx",
+                "opacity": 1.0,
+                "sources": [
+                  "dlx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "dopard2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-dopard2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "dopard2",
+                "opacity": 1.0,
+                "sources": [
+                  "dopard2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "edu3to4at6dpf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-edu3to4at6dpf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "edu3to4at6dpf",
+                "opacity": 1.0,
+                "sources": [
+                  "edu3to4at6dpf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "edu42to48": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-edu42to48.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "edu42to48",
+                "opacity": 1.0,
+                "sources": [
+                  "edu42to48"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "edu4to5at6dpf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-edu4to5at6dpf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "edu4to5at6dpf",
+                "opacity": 1.0,
+                "sources": [
+                  "edu4to5at6dpf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "edu5to6at6dpf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-edu5to6at6dpf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "edu5to6at6dpf",
+                "opacity": 1.0,
+                "sources": [
+                  "edu5to6at6dpf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "elav": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-elav.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "elav",
+                "opacity": 1.0,
+                "sources": [
+                  "elav"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "eve": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-eve.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "eve",
+                "opacity": 1.0,
+                "sources": [
+                  "eve"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "extrapolated": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-extrapolated.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  1.0
+                ],
+                "name": "extrapolated",
+                "opacity": 1.0,
+                "sources": [
+                  "extrapolated"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "eya": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-eya.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "eya",
+                "opacity": 1.0,
+                "sources": [
+                  "eya"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "fezf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-fezf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "fezf",
+                "opacity": 1.0,
+                "sources": [
+                  "fezf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "for": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-for.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "for",
+                "opacity": 1.0,
+                "sources": [
+                  "for"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "foregut": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-foregut.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "foregut",
+                "opacity": 1.0,
+                "sources": [
+                  "foregut"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "foxd3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-foxd3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "foxd3",
+                "opacity": 1.0,
+                "sources": [
+                  "foxd3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "foxn4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-foxn4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "foxn4",
+                "opacity": 1.0,
+                "sources": [
+                  "foxn4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "fvri": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-fvri.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "fvri",
+                "opacity": 1.0,
+                "sources": [
+                  "fvri"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "fxl21": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-fxl21.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "fxl21",
+                "opacity": 1.0,
+                "sources": [
+                  "fxl21"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gad": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gad.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gad",
+                "opacity": 1.0,
+                "sources": [
+                  "gad"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gata123": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gata123.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gata123",
+                "opacity": 1.0,
+                "sources": [
+                  "gata123"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gcb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gcb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gcb",
+                "opacity": 1.0,
+                "sources": [
+                  "gcb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gcd": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gcd.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gcd",
+                "opacity": 1.0,
+                "sources": [
+                  "gcd"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gdpd1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gdpd1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gdpd1",
+                "opacity": 1.0,
+                "sources": [
+                  "gdpd1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "glands": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-glands.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "glands",
+                "opacity": 1.0,
+                "sources": [
+                  "glands"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "glt1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-glt1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "glt1",
+                "opacity": 1.0,
+                "sources": [
+                  "glt1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "glyt": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-glyt.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "glyt",
+                "opacity": 1.0,
+                "sources": [
+                  "glyt"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gnrh": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gnrh.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gnrh",
+                "opacity": 1.0,
+                "sources": [
+                  "gnrh"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gnrhr": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gnrhr.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gnrhr",
+                "opacity": 1.0,
+                "sources": [
+                  "gnrhr"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gpb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gpb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gpb",
+                "opacity": 1.0,
+                "sources": [
+                  "gpb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gpcr2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gpcr2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gpcr2",
+                "opacity": 1.0,
+                "sources": [
+                  "gpcr2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gpcr203": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gpcr203.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gpcr203",
+                "opacity": 1.0,
+                "sources": [
+                  "gpcr203"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gpcr209": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gpcr209.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gpcr209",
+                "opacity": 1.0,
+                "sources": [
+                  "gpcr209"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gpcr210": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gpcr210.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gpcr210",
+                "opacity": 1.0,
+                "sources": [
+                  "gpcr210"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gpcr32": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gpcr32.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gpcr32",
+                "opacity": 1.0,
+                "sources": [
+                  "gpcr32"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gppcr21": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gppcr21.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gppcr21",
+                "opacity": 1.0,
+                "sources": [
+                  "gppcr21"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "grik3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-grik3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "grik3",
+                "opacity": 1.0,
+                "sources": [
+                  "grik3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "grm7": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-grm7.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "grm7",
+                "opacity": 1.0,
+                "sources": [
+                  "grm7"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gsx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gsx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gsx",
+                "opacity": 1.0,
+                "sources": [
+                  "gsx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "gucy": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-gucy.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "gucy",
+                "opacity": 1.0,
+                "sources": [
+                  "gucy"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hand": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hand.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hand",
+                "opacity": 1.0,
+                "sources": [
+                  "hand"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hb9": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hb9.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hb9",
+                "opacity": 1.0,
+                "sources": [
+                  "hb9"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hcn1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hcn1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hcn1",
+                "opacity": 1.0,
+                "sources": [
+                  "hcn1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "head": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-head.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "head",
+                "opacity": 1.0,
+                "sources": [
+                  "head"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "hnf6": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hnf6.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hnf6",
+                "opacity": 1.0,
+                "sources": [
+                  "hnf6"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hox1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hox1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hox1",
+                "opacity": 1.0,
+                "sources": [
+                  "hox1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hox4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hox4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hox4",
+                "opacity": 1.0,
+                "sources": [
+                  "hox4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hox7": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hox7.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hox7",
+                "opacity": 1.0,
+                "sources": [
+                  "hox7"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "hr38": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-hr38.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "hr38",
+                "opacity": 1.0,
+                "sources": [
+                  "hr38"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "inside": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-inside.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  1.0
+                ],
+                "name": "inside",
+                "opacity": 1.0,
+                "sources": [
+                  "inside"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "irx2546": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-irx2546.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "irx2546",
+                "opacity": 1.0,
+                "sources": [
+                  "irx2546"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "irx6": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-irx6.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "irx6",
+                "opacity": 1.0,
+                "sources": [
+                  "irx6"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "isl": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-isl.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "isl",
+                "opacity": 1.0,
+                "sources": [
+                  "isl"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "jkip3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-jkip3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "jkip3",
+                "opacity": 1.0,
+                "sources": [
+                  "jkip3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "junctophilin1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-junctophilin1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "junctophilin1",
+                "opacity": 1.0,
+                "sources": [
+                  "junctophilin1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "kanl3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-kanl3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "kanl3",
+                "opacity": 1.0,
+                "sources": [
+                  "kanl3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "kv33b": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-kv33b.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "kv33b",
+                "opacity": 1.0,
+                "sources": [
+                  "kv33b"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "kv33e": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-kv33e.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "kv33e",
+                "opacity": 1.0,
+                "sources": [
+                  "kv33e"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lateralectoderm": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-lateralectoderm.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lateralectoderm",
+                "opacity": 1.0,
+                "sources": [
+                  "lateralectoderm"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "lbx1b": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lbx1b.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lbx1b",
+                "opacity": 1.0,
+                "sources": [
+                  "lbx1b"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lhx15": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lhx15.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lhx15",
+                "opacity": 1.0,
+                "sources": [
+                  "lhx15"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lhx2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lhx2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lhx2",
+                "opacity": 1.0,
+                "sources": [
+                  "lhx2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lhx3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lhx3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lhx3",
+                "opacity": 1.0,
+                "sources": [
+                  "lhx3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lhx6": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lhx6.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lhx6",
+                "opacity": 1.0,
+                "sources": [
+                  "lhx6"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "like": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-globin-like.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "like",
+                "opacity": 1.0,
+                "sources": [
+                  "like"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lmo4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lmo4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lmo4",
+                "opacity": 1.0,
+                "sources": [
+                  "lmo4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "lmx1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-lmx1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "lmx1",
+                "opacity": 1.0,
+                "sources": [
+                  "lmx1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "loc28250": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-loc28250.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "loc28250",
+                "opacity": 1.0,
+                "sources": [
+                  "loc28250"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "loc5285ct": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-loc5285ct.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "loc5285ct",
+                "opacity": 1.0,
+                "sources": [
+                  "loc5285ct"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "loc77859": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-loc77859.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "loc77859",
+                "opacity": 1.0,
+                "sources": [
+                  "loc77859"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "loc8913nt": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-loc8913nt.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "loc8913nt",
+                "opacity": 1.0,
+                "sources": [
+                  "loc8913nt"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "maf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-maf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "maf",
+                "opacity": 1.0,
+                "sources": [
+                  "maf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "mecom": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-mecom.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "mecom",
+                "opacity": 1.0,
+                "sources": [
+                  "mecom"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "mhc": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-non-muscle-mhc.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "mhc",
+                "opacity": 1.0,
+                "sources": [
+                  "mhc"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "mhcl4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-mhcl4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "mhcl4",
+                "opacity": 1.0,
+                "sources": [
+                  "mhcl4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "mitf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-mitf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "mitf",
+                "opacity": 1.0,
+                "sources": [
+                  "mitf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "mrlc2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-mrlc2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "mrlc2",
+                "opacity": 1.0,
+                "sources": [
+                  "mrlc2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "msx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-msx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "msx",
+                "opacity": 1.0,
+                "sources": [
+                  "msx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "mthfsd": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-mthfsd.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "mthfsd",
+                "opacity": 1.0,
+                "sources": [
+                  "mthfsd"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "munc22": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-munc22.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "munc22",
+                "opacity": 1.0,
+                "sources": [
+                  "munc22"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "muncb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-muncb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "muncb",
+                "opacity": 1.0,
+                "sources": [
+                  "muncb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "muscle": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-muscle.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  1.0
+                ],
+                "name": "muscle",
+                "opacity": 1.0,
+                "sources": [
+                  "muscle"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "nachr": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nachr.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nachr",
+                "opacity": 1.0,
+                "sources": [
+                  "nachr"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nb5r3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nb5r3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nb5r3",
+                "opacity": 1.0,
+                "sources": [
+                  "nb5r3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ndus1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ndus1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ndus1",
+                "opacity": 1.0,
+                "sources": [
+                  "ndus1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "neog": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-neog.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "neog",
+                "opacity": 1.0,
+                "sources": [
+                  "neog"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "netrin": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-netrin.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "netrin",
+                "opacity": 1.0,
+                "sources": [
+                  "netrin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "neurod": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-neurod.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "neurod",
+                "opacity": 1.0,
+                "sources": [
+                  "neurod"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "neuropil": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-neuropil.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  1.0
+                ],
+                "name": "neuropil",
+                "opacity": 1.0,
+                "sources": [
+                  "neuropil"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "ngb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ngb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ngb",
+                "opacity": 1.0,
+                "sources": [
+                  "ngb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ngn": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ngn.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ngn",
+                "opacity": 1.0,
+                "sources": [
+                  "ngn"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nk21": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nk21.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nk21",
+                "opacity": 1.0,
+                "sources": [
+                  "nk21"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nk22": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nk22.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nk22",
+                "opacity": 1.0,
+                "sources": [
+                  "nk22"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nk6": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nk6.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nk6",
+                "opacity": 1.0,
+                "sources": [
+                  "nk6"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nmdar": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nmdar.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nmdar",
+                "opacity": 1.0,
+                "sources": [
+                  "nmdar"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "noe1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-noe1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "noe1",
+                "opacity": 1.0,
+                "sources": [
+                  "noe1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nompc3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nompc3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nompc3",
+                "opacity": 1.0,
+                "sources": [
+                  "nompc3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nov2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nov2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nov2",
+                "opacity": 1.0,
+                "sources": [
+                  "nov2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nov29": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nov29.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nov29",
+                "opacity": 1.0,
+                "sources": [
+                  "nov29"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "npr1a": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-npr1a.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "npr1a",
+                "opacity": 1.0,
+                "sources": [
+                  "npr1a"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ntrps": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ntrps.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ntrps",
+                "opacity": 1.0,
+                "sources": [
+                  "ntrps"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "nuclei": {
+      "segmentation": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-nuclei.xml"
+        },
+        "tableDataLocation": "tables/sbem-6dpf-1-whole-segmented-nuclei",
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "segmentationDisplay": {
+                "lut": "glasbey",
+                "name": "nuclei",
+                "opacity": 0.5,
+                "sources": [
+                  "nuclei"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem-segmentation"
+        }
+      }
+    },
+    "nucleolin": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-nucleolin.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "nucleolin",
+                "opacity": 1.0,
+                "sources": [
+                  "nucleolin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "odo2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-odo2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "odo2",
+                "opacity": 1.0,
+                "sources": [
+                  "odo2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "olig": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-olig.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "olig",
+                "opacity": 1.0,
+                "sources": [
+                  "olig"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "olm2a": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-olm2a.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "olm2a",
+                "opacity": 1.0,
+                "sources": [
+                  "olm2a"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "otp": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-otp.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "otp",
+                "opacity": 1.0,
+                "sources": [
+                  "otp"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "outside": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-outside.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  1.0
+                ],
+                "name": "outside",
+                "opacity": 1.0,
+                "sources": [
+                  "outside"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "p56": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-p56.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "p56",
+                "opacity": 1.0,
+                "sources": [
+                  "p56"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "paraxis": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-paraxis.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "paraxis",
+                "opacity": 1.0,
+                "sources": [
+                  "paraxis"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "patched": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-patched.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "patched",
+                "opacity": 1.0,
+                "sources": [
+                  "patched"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pax258": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pax258.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pax258",
+                "opacity": 1.0,
+                "sources": [
+                  "pax258"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pax6": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pax6.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pax6",
+                "opacity": 1.0,
+                "sources": [
+                  "pax6"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pcdh15": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pcdh15.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pcdh15",
+                "opacity": 1.0,
+                "sources": [
+                  "pcdh15"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pde9": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pde9.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pde9",
+                "opacity": 1.0,
+                "sources": [
+                  "pde9"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pdf": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pdf.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pdf",
+                "opacity": 1.0,
+                "sources": [
+                  "pdf"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pea3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pea3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pea3",
+                "opacity": 1.0,
+                "sources": [
+                  "pea3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pgam": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pgam.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pgam",
+                "opacity": 1.0,
+                "sources": [
+                  "pgam"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "phc2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-phc2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "phc2",
+                "opacity": 1.0,
+                "sources": [
+                  "phc2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "phox2b": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-phox2b.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "phox2b",
+                "opacity": 1.0,
+                "sources": [
+                  "phox2b"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pikachu": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pikachu.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pikachu",
+                "opacity": 1.0,
+                "sources": [
+                  "pikachu"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pitxb": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pitxb.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pitxb",
+                "opacity": 1.0,
+                "sources": [
+                  "pitxb"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pkd1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pkd1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pkd1",
+                "opacity": 1.0,
+                "sources": [
+                  "pkd1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pkd2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-pkd2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pkd2",
+                "opacity": 1.0,
+                "sources": [
+                  "pkd2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "plcg": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-plcg.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "plcg",
+                "opacity": 1.0,
+                "sources": [
+                  "plcg"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ppib": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ppib.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ppib",
+                "opacity": 1.0,
+                "sources": [
+                  "ppib"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "prdm8": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-prdm8.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "prdm8",
+                "opacity": 1.0,
+                "sources": [
+                  "prdm8"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "prox": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-prox.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "prox",
+                "opacity": 1.0,
+                "sources": [
+                  "prox"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "psmf1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-psmf1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "psmf1",
+                "opacity": 1.0,
+                "sources": [
+                  "psmf1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ptf1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ptf1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ptf1",
+                "opacity": 1.0,
+                "sources": [
+                  "ptf1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "pygidium": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-pygidium.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "pygidium",
+                "opacity": 1.0,
+                "sources": [
+                  "pygidium"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "rab3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-rab3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "rab3",
+                "opacity": 1.0,
+                "sources": [
+                  "rab3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "raw": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-raw.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  255.0
+                ],
+                "name": "raw",
+                "opacity": 1.0,
+                "sources": [
+                  "raw"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "ref": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-prospr6-ref.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ref",
+                "opacity": 1.0,
+                "sources": [
+                  "ref"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "resin": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-resin.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "white",
+                "contrastLimits": [
+                  0.0,
+                  1.0
+                ],
+                "name": "resin",
+                "opacity": 1.0,
+                "sources": [
+                  "resin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem"
+        }
+      }
+    },
+    "restofanimal": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-restofanimal.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "restofanimal",
+                "opacity": 1.0,
+                "sources": [
+                  "restofanimal"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "rich": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-leucin-rich.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "rich",
+                "opacity": 1.0,
+                "sources": [
+                  "rich"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "rims": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-rims.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "rims",
+                "opacity": 1.0,
+                "sources": [
+                  "rims"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "robo": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-robo.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "robo",
+                "opacity": 1.0,
+                "sources": [
+                  "robo"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "rpc2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-rpc2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "rpc2",
+                "opacity": 1.0,
+                "sources": [
+                  "rpc2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "rx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-rx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "rx",
+                "opacity": 1.0,
+                "sources": [
+                  "rx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "ryr2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-ryr2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "ryr2",
+                "opacity": 1.0,
+                "sources": [
+                  "ryr2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "scn8aa": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-scn8aa.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "scn8aa",
+                "opacity": 1.0,
+                "sources": [
+                  "scn8aa"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "sema2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-sema2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "sema2",
+                "opacity": 1.0,
+                "sources": [
+                  "sema2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "sert": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-sert.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "sert",
+                "opacity": 1.0,
+                "sources": [
+                  "sert"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "sim1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-sim1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "sim1",
+                "opacity": 1.0,
+                "sources": [
+                  "sim1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "six12": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-six12.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "six12",
+                "opacity": 1.0,
+                "sources": [
+                  "six12"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "six4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-six4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "six4",
+                "opacity": 1.0,
+                "sources": [
+                  "six4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "slit": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-slit.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "slit",
+                "opacity": 1.0,
+                "sources": [
+                  "slit"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "snd1": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-snd1.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "snd1",
+                "opacity": 1.0,
+                "sources": [
+                  "snd1"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "sox2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-sox2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "sox2",
+                "opacity": 1.0,
+                "sources": [
+                  "sox2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "sox4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-sox4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "sox4",
+                "opacity": 1.0,
+                "sources": [
+                  "sox4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "soxb12": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-soxb12.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "soxb12",
+                "opacity": 1.0,
+                "sources": [
+                  "soxb12"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "soxb2": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-soxb2.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "soxb2",
+                "opacity": 1.0,
+                "sources": [
+                  "soxb2"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "sp8": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-sp8.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "sp8",
+                "opacity": 1.0,
+                "sources": [
+                  "sp8"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "stathmin": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-stathmin.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "stathmin",
+                "opacity": 1.0,
+                "sources": [
+                  "stathmin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "synaptopodin": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-synaptopodin.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "synaptopodin",
+                "opacity": 1.0,
+                "sources": [
+                  "synaptopodin"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "syt": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-syt.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "syt",
+                "opacity": 1.0,
+                "sources": [
+                  "syt"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "syt12": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-syt12.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "syt12",
+                "opacity": 1.0,
+                "sources": [
+                  "syt12"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "syt7": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-syt7.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "syt7",
+                "opacity": 1.0,
+                "sources": [
+                  "syt7"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "syta": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-syta.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "syta",
+                "opacity": 1.0,
+                "sources": [
+                  "syta"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "tal": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-tal.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "tal",
+                "opacity": 1.0,
+                "sources": [
+                  "tal"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "tbh": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-tbh.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "tbh",
+                "opacity": 1.0,
+                "sources": [
+                  "tbh"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "tbx20": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-tbx20.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "tbx20",
+                "opacity": 1.0,
+                "sources": [
+                  "tbx20"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "th": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-th.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "th",
+                "opacity": 1.0,
+                "sources": [
+                  "th"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "timp": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-timp.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "timp",
+                "opacity": 1.0,
+                "sources": [
+                  "timp"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "tissue": {
+      "segmentation": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/sbem-6dpf-1-whole-segmented-tissue.xml"
+        },
+        "tableDataLocation": "tables/sbem-6dpf-1-whole-segmented-tissue",
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "segmentationDisplay": {
+                "lut": "glasbey",
+                "name": "tissue",
+                "opacity": 0.5,
+                "sources": [
+                  "tissue"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "sbem-segmentation"
+        }
+      }
+    },
+    "tlx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-tlx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "tlx",
+                "opacity": 1.0,
+                "sources": [
+                  "tlx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "tmtc3": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-tmtc3.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "tmtc3",
+                "opacity": 1.0,
+                "sources": [
+                  "tmtc3"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "trk": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-trk.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "trk",
+                "opacity": 1.0,
+                "sources": [
+                  "trk"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "trph": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-trph.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "trph",
+                "opacity": 1.0,
+                "sources": [
+                  "trph"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "trpv": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-trpv.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "trpv",
+                "opacity": 1.0,
+                "sources": [
+                  "trpv"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "trpv4": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-trpv4.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "trpv4",
+                "opacity": 1.0,
+                "sources": [
+                  "trpv4"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "trpv5": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-trpv5.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "trpv5",
+                "opacity": 1.0,
+                "sources": [
+                  "trpv5"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "twist": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-twist.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "twist",
+                "opacity": 1.0,
+                "sources": [
+                  "twist"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "unc22": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-unc22.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "unc22",
+                "opacity": 1.0,
+                "sources": [
+                  "unc22"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "uncs": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-uncs.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "uncs",
+                "opacity": 1.0,
+                "sources": [
+                  "uncs"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "uncx": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-uncx.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "uncx",
+                "opacity": 1.0,
+                "sources": [
+                  "uncx"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "upp": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-upp.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "upp",
+                "opacity": 1.0,
+                "sources": [
+                  "upp"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "usp9x": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-usp9x.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "usp9x",
+                "opacity": 1.0,
+                "sources": [
+                  "usp9x"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "vacht": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-vacht.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "vacht",
+                "opacity": 1.0,
+                "sources": [
+                  "vacht"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "vat1l": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-vat1l.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "vat1l",
+                "opacity": 1.0,
+                "sources": [
+                  "vat1l"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "vegfr": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-vegfr.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "vegfr",
+                "opacity": 1.0,
+                "sources": [
+                  "vegfr"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "vglut": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-vglut.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "vglut",
+                "opacity": 1.0,
+                "sources": [
+                  "vglut"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "vnc": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-segmented-vnc.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "vnc",
+                "opacity": 1.0,
+                "sources": [
+                  "vnc"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr-mask"
+        }
+      }
+    },
+    "wnt16": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-wnt16.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "wnt16",
+                "opacity": 1.0,
+                "sources": [
+                  "wnt16"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    },
+    "wnt5": {
+      "image": {
+        "imageDataLocations": {
+          "fileSystem": "images/local/prospr-6dpf-1-whole-wnt5.xml"
+        },
+        "view": {
+          "isExclusive": false,
+          "sourceDisplays": [
+            {
+              "imageDisplay": {
+                "color": "magenta",
+                "contrastLimits": [
+                  0.0,
+                  1000.0
+                ],
+                "name": "wnt5",
+                "opacity": 1.0,
+                "sources": [
+                  "wnt5"
+                ]
+              }
+            }
+          ],
+          "uiSelectionGroup": "prospr"
+        }
+      }
+    }
+  },
+  "views": {
+    "default": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "sources": [
+              "raw"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "bookmark"
+    }
+  }
+}

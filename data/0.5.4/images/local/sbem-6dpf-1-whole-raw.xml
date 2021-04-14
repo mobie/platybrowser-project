@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>channel 1</name>
+        <name>raw</name>
         <size>27499 25916 11416</size>
         <voxelSize>
           <unit>micrometer</unit>
