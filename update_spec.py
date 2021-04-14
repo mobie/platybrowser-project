@@ -81,7 +81,7 @@ if __name__ == '__main__':
     # dry_run()
     # check_links()
 
-    update_raw_data()
+    # update_raw_data()
 
-    # migrate_project('./data', parse_menu_name=parse_menu_name,
-    #                 parse_source_name=parse_source_name)
+    migrate_project('./data', parse_menu_name=parse_menu_name,
+                    parse_source_name=parse_source_name)
