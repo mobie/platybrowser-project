@@ -1,6 +1,9 @@
 import json
 import os
 from glob import glob
+
+import pandas as pd
+
 from pybdv.metadata import write_name
 from mobie.migration.migrate_v2 import migrate_project
 from mobie.migration.migrate_v2.migrate_dataset import migrate_table
@@ -77,11 +80,33 @@ def update_raw_data():
             migrate_table(table_path)
 
 
+def fix_cilia_tables():
+    with open('./data/datasets.json') as f:
+        dss = json.load(f)['datasets']
+    for ds in dss:
+        table_path = os.path.join('data', ds, 'tables', 'sbem-6dpf-1-whole-segmented-cilia',
+                                  'cell_id_mapping.csv')
+        if (not os.path.exists(table_path)) or os.path.islink(table_path):
+            continue
+
+        table = pd.read_csv(table_path, sep='\t')
+        table = table.rename(columns={'cilia_id': 'label_id'})
+        table.to_csv(table_path, sep='\t', index=False)
+
+
+def fix_vc_table():
+    tab_path = './data/1.0.0/tables/sbem-6dpf-1-whole-segmented-cells/david_assigned_vcs.csv'
+    tab = pd.read_csv(tab_path)
+    tab.to_csv(tab_path, sep='\t', index=False)
+
+
 if __name__ == '__main__':
     # dry_run()
     # check_links()
 
     # update_raw_data()
+    # fix_cilia_tables()
+    # fix_vc_table()
 
     migrate_project('./data', parse_menu_name=parse_menu_name,
                     parse_source_name=parse_source_name)

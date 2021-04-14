@@ -317,7 +317,7 @@
   	"Figure 3B: Morphology clustering full body": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -364,7 +364,7 @@
 	"Figure 3G and Suppl. Fig. 3D: Example Bilateral Pairs": {
 		"layers": {
 			"sbem-6dpf-1-whole-segmented-midline": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1.0
@@ -374,7 +374,7 @@
 				"showImageIn3d": false
 			},
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -838,7 +838,7 @@
   "Figure 6F: Bipolar cell sensory ending": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1110,7 +1110,7 @@
   "Suppl. Fig. 3A: Digestive": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1155,7 +1155,7 @@
 	"Suppl. Fig. 3A: Muscle": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1200,7 +1200,7 @@
 	"Suppl. Fig. 3A: Epithelial": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1245,7 +1245,7 @@
 	"Suppl. Fig. 3A: Secretory": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1290,7 +1290,7 @@
 	"Suppl. Fig. 3A: Ciliated": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1335,7 +1335,7 @@
 	"Suppl. Fig. 3A: Neuron": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1380,7 +1380,7 @@
 	"Suppl. Fig. 3A: Dark": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1425,7 +1425,7 @@
 	"Suppl. Fig. 3C: Nucleus intensity standard deviation low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1470,7 +1470,7 @@
 	"Suppl. Fig. 3C: Nucleus intensity standard deviation high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1515,7 +1515,7 @@
 	"Suppl. Fig. 3C: Sphericity low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1561,7 +1561,7 @@
 	"Suppl. Fig. 3C: Sphericity high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1606,7 +1606,7 @@
 	"Suppl. Fig. 3C: H+N texture haralick 8 low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1651,7 +1651,7 @@
 	"Suppl. Fig. 3C: H+N texture haralick 8 high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1696,7 +1696,7 @@
 	"Suppl. Fig. 3C: Nucleus intensity median low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1741,7 +1741,7 @@
 	"Suppl. Fig. 3C: Nucleus intensity median high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1786,7 +1786,7 @@
 	"Suppl. Fig. 3C: Cell texture haralick 2 low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1831,7 +1831,7 @@
 	"Suppl. Fig. 3C: Cell texture haralick 2 high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1876,7 +1876,7 @@
 	"Suppl. Fig. 3C: percent H+N in outer 25 percent of nucleus low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1922,7 +1922,7 @@
 	"Suppl. Fig. 3C: percent H+N in outer 25 percent of nucleus high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -1967,7 +1967,7 @@
 	"Suppl. Fig. 5B": {
 		"layers": {
 			"prospr-6dpf-1-whole-gdpd1": {
-				"color": "(r\u003d0,g\u003d204,b\u003d51,a\u003d255)",
+				"color": "r\u003d0,g\u003d204,b\u003d51,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -1979,7 +1979,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-gad": {
-				"color": "(r\u003d255,g\u003d51,b\u003d51,a\u003d255)",
+				"color": "r\u003d255,g\u003d51,b\u003d51,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -1991,7 +1991,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-dbx1": {
-				"color": "(r\u003d0,g\u003d153,b\u003d255,a\u003d255)",
+				"color": "r\u003d0,g\u003d153,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2003,7 +2003,7 @@
 				"showImageIn3d": false
 			},
 			"sbem-6dpf-1-whole-segmented-outside": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1.0
@@ -2015,7 +2015,7 @@
 				"showImageIn3d": false
 			},
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -2025,7 +2025,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-lmx1": {
-				"color": "(r\u003d51,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d51,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2037,7 +2037,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-nk21": {
-				"color": "(r\u003d255,g\u003d255,b\u003d0,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d0,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2072,7 +2072,7 @@
 	"Suppl. Fig. 5C": {
 		"layers": {
 			"prospr-6dpf-1-whole-arx": {
-				"color": "(r\u003d255,g\u003d0,b\u003d51,a\u003d255)",
+				"color": "r\u003d255,g\u003d0,b\u003d51,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2084,7 +2084,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-edu5to6at6dpf": {
-				"color": "(r\u003d255,g\u003d255,b\u003d0,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d0,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2096,7 +2096,7 @@
 				"showImageIn3d": false
 			},
 			"sbem-6dpf-1-whole-segmented-outside": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1.0
@@ -2108,7 +2108,7 @@
 				"showImageIn3d": false
 			},
 			"sbem-6dpf-1-whole-raw": {
-				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d255,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					255.0
@@ -2118,7 +2118,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-dlx": {
-				"color": "(r\u003d0,g\u003d204,b\u003d51,a\u003d255)",
+				"color": "r\u003d0,g\u003d204,b\u003d51,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2130,7 +2130,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-lhx6": {
-				"color": "(r\u003d0,g\u003d153,b\u003d255,a\u003d255)",
+				"color": "r\u003d0,g\u003d153,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
@@ -2142,7 +2142,7 @@
 				"showImageIn3d": false
 			},
 			"prospr-6dpf-1-whole-nk21": {
-				"color": "(r\u003d255,g\u003d0,b\u003d255,a\u003d255)",
+				"color": "r\u003d255,g\u003d0,b\u003d255,a\u003d255",
 				"contrastLimits": [
 					0.0,
 					1000.0
