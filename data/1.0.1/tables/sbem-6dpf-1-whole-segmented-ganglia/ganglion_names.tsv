@@ -1,0 +1,20 @@
+label_id	merged_bilateral_ganglion_id	ganglion_name	ganglion_name_short
+1.0	1.0	palpal ganglia	PG
+2.0	1.0	palpal ganglia	PG
+3.0	2.0	cirral ganglia	CG
+4.0	2.0	cirral ganglia	CG
+5.0	3.0	ventro-medial ganglia	VMG
+6.0	3.0	ventro-medial ganglia	VMG
+7.0	4.0	dorsal ganglion	DG
+8.0	4.0	dorsal ganglion	DG
+9.0	5.0	antennal ganglia	AG
+10.0	5.0	antennal ganglia	AG
+11.0	6.0	circumpalpal ganglia	CpG
+12.0	6.0	circumpalpal ganglia	CpG
+13.0		None	None
+14.0	7.0	frontal ganglion	FG
+15.0	8.0	adult eyes	AE
+16.0	8.0	adult eyes	AE
+17.0	9.0	mushroom bodies	MB
+18.0	9.0	mushroom bodies	MB
+19.0		None	None
