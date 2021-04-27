@@ -6856,7 +6856,7 @@
               "cells"
             ],
             "tables": [
-              "morphology_clusters"
+              "morphology_clusters.tsv"
             ]
           }
         }
@@ -6939,7 +6939,7 @@
               "cells"
             ],
             "tables": [
-              "symmetric_cells"
+              "symmetric_cells.tsv"
             ]
           }
         }
@@ -7529,7 +7529,7 @@
               "cells"
             ],
             "tables": [
-              "gene_clusters"
+              "gene_clusters.tsv"
             ]
           }
         }
@@ -7579,7 +7579,7 @@
               "cells"
             ],
             "tables": [
-              "gene_clusters"
+              "gene_clusters.tsv"
             ]
           }
         }
@@ -7629,7 +7629,7 @@
               "cells"
             ],
             "tables": [
-              "gene_clusters"
+              "gene_clusters.tsv"
             ]
           }
         }
@@ -7679,7 +7679,7 @@
               "cells"
             ],
             "tables": [
-              "ganglia_ids"
+              "ganglia_ids.tsv"
             ]
           }
         }
@@ -7729,7 +7729,7 @@
               "cells"
             ],
             "tables": [
-              "ganglia_ids"
+              "ganglia_ids.tsv"
             ]
           }
         }
@@ -8006,7 +8006,7 @@
               "cells"
             ],
             "tables": [
-              "vc_assignments"
+              "vc_assignments.tsv"
             ],
             "valueLimits": [
               0.0,
@@ -9462,7 +9462,7 @@
               "cells"
             ],
             "tables": [
-              "symmetric_cells"
+              "symmetric_cells.tsv"
             ]
           }
         },

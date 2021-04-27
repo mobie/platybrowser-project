@@ -1,5 +1,6 @@
 import json
 import os
+from copy import deepcopy
 from glob import glob
 
 import pandas as pd
@@ -7,6 +8,8 @@ import pandas as pd
 from pybdv.metadata import write_name
 from mobie.migration.migrate_v2 import migrate_project
 from mobie.migration.migrate_v2.migrate_dataset import migrate_table
+from mobie.metadata import read_dataset_metadata, write_dataset_metadata
+from mobie.validation.utils import validate_with_schema
 
 PROSPR_MASKS = [
     "allglands",
@@ -100,6 +103,38 @@ def fix_vc_table():
     tab.to_csv(tab_path, sep='\t', index=False)
 
 
+def fix_bookmarks():
+    ds_folder = './data/1.0.1'
+    metadata = read_dataset_metadata(ds_folder)
+    views = metadata['views']
+
+    views_new = {}
+    for name, view in views.items():
+        if 'sourceDisplays' in view:
+            new_view = deepcopy(view)
+
+            new_displays = []
+            for display in view['sourceDisplays']:
+                new_display = deepcopy(display)
+                if list(display.keys())[0] == 'segmentationDisplay':
+                    seg_display = deepcopy(display['segmentationDisplay'])
+                    seg_display['opacity'] = 0.5
+                    if 'tables' in seg_display:
+                        tables = seg_display['tables']
+                        tables = [tab + '.tsv' for tab in tables]
+                        seg_display['tables'] = tables
+                    new_display['segmentationDisplay'] = seg_display
+                new_displays.append(new_display)
+
+            new_view['sourceDisplays'] = new_displays
+            view = new_view
+        views_new[name] = view
+
+    metadata['views'] = views_new
+    validate_with_schema(metadata, 'dataset')
+    write_dataset_metadata(ds_folder, metadata)
+
+
 if __name__ == '__main__':
     # dry_run()
     # check_links()
@@ -108,5 +143,7 @@ if __name__ == '__main__':
     # fix_cilia_tables()
     # fix_vc_table()
 
-    migrate_project('./data', parse_menu_name=parse_menu_name,
-                    parse_source_name=parse_source_name)
+    # migrate_project('./data', parse_menu_name=parse_menu_name,
+    #                 parse_source_name=parse_source_name)
+
+    fix_bookmarks()
