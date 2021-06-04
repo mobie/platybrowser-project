@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/238514327.svg)](https://zenodo.org/badge/latestdoi/238514327)
+
 # PlatyBrowser
 
 This repository contains the data and the scripts for data generation for the PlatyBrowser, a resource for exploring a full EM volume of a 6 day old Platynereis larva combined with a gene expression atlas and tissue, cellular and ultra-structure segmentations.
