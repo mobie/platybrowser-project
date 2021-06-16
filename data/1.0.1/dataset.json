@@ -1,5 +1,5 @@
 {
-  "is2d": false,
+  "is2D": false,
   "sources": {
     "ache": {
       "image": {
@@ -2936,6 +2936,9 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -2999,6 +3002,9 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -3055,6 +3061,9 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         },
@@ -3153,6 +3162,9 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cilia"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -3204,6 +3216,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "morphology_clusters.tsv"
             ]
           }
@@ -3287,6 +3300,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "symmetric_cells.tsv"
             ]
           }
@@ -3877,6 +3891,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "gene_clusters.tsv"
             ]
           }
@@ -3927,6 +3942,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "gene_clusters.tsv"
             ]
           }
@@ -3977,6 +3993,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "gene_clusters.tsv"
             ]
           }
@@ -4027,6 +4044,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "ganglia_ids.tsv"
             ]
           }
@@ -4077,6 +4095,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "ganglia_ids.tsv"
             ]
           }
@@ -4181,6 +4200,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         },
@@ -4210,6 +4232,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4262,6 +4287,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         },
@@ -4305,6 +4333,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4354,6 +4385,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "vc_assignments.tsv"
             ],
             "valueLimits": [
@@ -4439,6 +4471,9 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4536,6 +4571,9 @@
             "opacity": 0.5,
             "sources": [
               "chromatin"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4587,6 +4625,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4638,6 +4679,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4689,6 +4733,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4740,6 +4787,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4791,6 +4841,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4842,6 +4895,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4893,6 +4949,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4944,6 +5003,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4995,6 +5057,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5046,6 +5111,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5097,6 +5165,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5148,6 +5219,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5199,6 +5273,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5250,6 +5327,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5301,6 +5381,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5352,6 +5435,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5404,6 +5490,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5455,6 +5544,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5507,6 +5599,9 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5810,6 +5905,7 @@
               "cells"
             ],
             "tables": [
+              "default.tsv",
               "symmetric_cells.tsv"
             ]
           }
@@ -6397,6 +6493,9 @@
             "opacity": 0.5,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -6453,6 +6552,9 @@
             "opacity": 0.5,
             "sources": [
               "chromatin"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -6489,6 +6591,9 @@
             "opacity": 0.5,
             "sources": [
               "cilia"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -7045,6 +7150,9 @@
             "opacity": 0.5,
             "sources": [
               "ganglia"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -8737,6 +8845,9 @@
             "opacity": 0.5,
             "sources": [
               "nuclei"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -10053,6 +10164,9 @@
             "opacity": 0.5,
             "sources": [
               "tissue"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -10109,6 +10223,9 @@
             "opacity": 0.5,
             "sources": [
               "traces"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }

@@ -1,5 +1,5 @@
 {
-  "is2d": false,
+  "is2D": false,
   "sources": {
     "ache": {
       "image": {
@@ -2444,6 +2444,9 @@
             "opacity": 0.5,
             "sources": [
               "cells"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -2500,6 +2503,9 @@
             "opacity": 0.5,
             "sources": [
               "chromatin"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -2536,6 +2542,9 @@
             "opacity": 0.5,
             "sources": [
               "cilia"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -4612,6 +4621,9 @@
             "opacity": 0.5,
             "sources": [
               "nuclei"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
@@ -5828,6 +5840,9 @@
             "opacity": 0.5,
             "sources": [
               "tissue"
+            ],
+            "tables": [
+              "default.tsv"
             ]
           }
         }
