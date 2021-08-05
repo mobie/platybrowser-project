@@ -361,7 +361,7 @@
 			122.90940175650859
 		]
 	},
-	"Figure 3G and Suppl. Fig. 3D: Example Bilateral Pairs": {
+	"Figure 3G and Suppl. Fig. 2D: Example Bilateral Pairs": {
 		"layers": {
 			"sbem-6dpf-1-whole-segmented-midline": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -868,7 +868,7 @@
 			14.08506163493172
 		]
 	},
-  "Figure 7B and 7C: Gene expression assignment": {
+  "Suppl. Figure 6B and 6C: Gene expression assignment": {
     "layers": {
       "prospr-6dpf-1-whole-msx": {
         "color": "green"
@@ -913,7 +913,39 @@
       "n2.459871920778832"
     ]
   },
-  "Figure 7D and 7E: Gene expression assignment": {
+  "Suppl. Figure 6H and 6I: Symmetric cell pairs": {
+    "layers": {
+      "sbem-6dpf-1-whole-raw": {},
+      "sbem-6dpf-1-whole-segmented-cells": {
+        "color": "glasbeyZeroTransparent",
+        "colorByColumn": "pair_index",
+        "tables": [
+          "symmetric_cells"
+        ]
+      },
+      "sbem-6dpf-1-whole-segmented-outside": {}
+    },
+    "position": [
+      154.58035965475818, 
+      141.15655827789644, 
+      120.04135416840846
+    ],
+    "normView": [
+      "n-9.460726527388642E-4", 
+      "n0.0014085239207494913", 
+      "n-2.2496515159428045E-5", 
+      "n-0.04987762584137406", 
+      "n-5.892543703550783E-4", 
+      "n-3.710731057086496E-4", 
+      "n0.0015474440959257184", 
+      "n-0.04229072980588271", 
+      "n0.0012795409393744604", 
+      "n8.705540234094645E-4", 
+      "n6.959955959404514E-4", 
+      "n-0.4042245621728868"
+    ]
+  },
+  "Figure 7A and 7B: Gene expression assignment": {
     "layers": {
       "prospr-6dpf-1-whole-lhx6": {
         "color": "green"
@@ -958,7 +990,7 @@
       "n0.23912204485543515"
     ]
   },
-  "Figure 7G: Virtual cell assignment: gene expression level": {
+  "Figure 7C: Virtual cell assignment: gene expression level": {
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-cells": {
@@ -994,7 +1026,7 @@
       "n-0.4042245621728868"
     ]
   },
-  "Figure 8D: MMB - PlatyBrowser": {
+  "Figure 7G: MMB - PlatyBrowser": {
     "layers": {
       "prospr-6dpf-1-whole-arx": {
         "color": "yellow"
@@ -1082,7 +1114,7 @@
 	  "n-12.652341373848502"
     ]
   },
-  "Suppl. Fig. 2C: Chromatin segmentation": {
+  "Suppl. Fig. 1I: Chromatin segmentation": {
     "layers": {
       "sbem-6dpf-1-whole-raw": {},
       "sbem-6dpf-1-whole-segmented-chromatin": {}
@@ -1107,7 +1139,7 @@
 	  "n-2.1526171038167825"
     ]
   },
-  "Suppl. Fig. 3A: Digestive": {
+  "Suppl. Fig. 2A: Digestive": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1152,7 +1184,7 @@
 			218.74871044832503
 		]
 	},
-	"Suppl. Fig. 3A: Muscle": {
+	"Suppl. Fig. 2A: Muscle": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1197,7 +1229,7 @@
 			73.28402508891922
 		]
 	},
-	"Suppl. Fig. 3A: Epithelial": {
+	"Suppl. Fig. 2A: Epithelial": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1242,7 +1274,7 @@
 			49.97808257197248
 		]
 	},
-	"Suppl. Fig. 3A: Secretory": {
+	"Suppl. Fig. 2A: Secretory": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1287,7 +1319,7 @@
 			64.98034006740853
 		]
 	},
-	"Suppl. Fig. 3A: Ciliated": {
+	"Suppl. Fig. 2A: Ciliated": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1332,7 +1364,7 @@
 			53.73563638452933
 		]
 	},
-	"Suppl. Fig. 3A: Neuron": {
+	"Suppl. Fig. 2A: Neuron": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1377,7 +1409,7 @@
 			37.13448439665192
 		]
 	},
-	"Suppl. Fig. 3A: Dark": {
+	"Suppl. Fig. 2A: Dark": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1422,7 +1454,7 @@
 			50.10635092041762
 		]
 	},
-	"Suppl. Fig. 3C: Nucleus intensity standard deviation low": {
+	"Suppl. Fig. 2C: Nucleus intensity standard deviation low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1467,7 +1499,7 @@
 			177.80000305175784
 		]
 	},
-	"Suppl. Fig. 3C: Nucleus intensity standard deviation high": {
+	"Suppl. Fig. 2C: Nucleus intensity standard deviation high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1512,7 +1544,7 @@
 			117.5999984741211
 		]
 	},
-	"Suppl. Fig. 3C: Sphericity low": {
+	"Suppl. Fig. 2C: Sphericity low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1558,7 +1590,7 @@
 			130.19323932068116
 		]
 	},
-	"Suppl. Fig. 3C: Sphericity high": {
+	"Suppl. Fig. 2C: Sphericity high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1603,7 +1635,7 @@
 			33.70167069032523
 		]
 	},
-	"Suppl. Fig. 3C: H+N texture haralick 8 low": {
+	"Suppl. Fig. 2C: H+N texture haralick 8 low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1648,7 +1680,7 @@
 			261.00000000000006
 		]
 	},
-	"Suppl. Fig. 3C: H+N texture haralick 8 high": {
+	"Suppl. Fig. 2C: H+N texture haralick 8 high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1693,7 +1725,7 @@
 			158.6000061035156
 		]
 	},
-	"Suppl. Fig. 3C: Nucleus intensity median low": {
+	"Suppl. Fig. 2C: Nucleus intensity median low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1738,7 +1770,7 @@
 			29.39999961853027
 		]
 	},
-	"Suppl. Fig. 3C: Nucleus intensity median high": {
+	"Suppl. Fig. 2C: Nucleus intensity median high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1783,7 +1815,7 @@
 			181.60000610351565
 		]
 	},
-	"Suppl. Fig. 3C: Cell texture haralick 2 low": {
+	"Suppl. Fig. 2C: Cell texture haralick 2 low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1828,7 +1860,7 @@
 			63.8200316681653
 		]
 	},
-	"Suppl. Fig. 3C: Cell texture haralick 2 high": {
+	"Suppl. Fig. 2C: Cell texture haralick 2 high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1873,7 +1905,7 @@
 			132.81188786907364
 		]
 	},
-	"Suppl. Fig. 3C: percent H+N in outer 25 percent of nucleus low": {
+	"Suppl. Fig. 2C: percent H+N in outer 25 percent of nucleus low": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1919,7 +1951,7 @@
 			173.8000030517578
 		]
 	},
-	"Suppl. Fig. 3C: percent H+N in outer 25 percent of nucleus high": {
+	"Suppl. Fig. 2C: percent H+N in outer 25 percent of nucleus high": {
 		"layers": {
 			"sbem-6dpf-1-whole-raw": {
 				"color": "(r\u003d255,g\u003d255,b\u003d255,a\u003d255)",
@@ -1964,7 +1996,7 @@
 			110.59999847412108
 		]
   },
-	"Suppl. Fig. 5B": {
+	"Suppl. Fig. 4B": {
 		"layers": {
 			"prospr-6dpf-1-whole-gdpd1": {
 				"color": "(r\u003d0,g\u003d204,b\u003d51,a\u003d255)",
@@ -2069,7 +2101,7 @@
 			114.8383975904058
 		]
 	},
-	"Suppl. Fig. 5C": {
+	"Suppl. Fig. 4C": {
 		"layers": {
 			"prospr-6dpf-1-whole-arx": {
 				"color": "(r\u003d255,g\u003d0,b\u003d51,a\u003d255)",
@@ -2173,37 +2205,5 @@
 			159.74985581691584,
 			26.057517077865523
 		]
-	},
-  "Symmetric cell pairs": {
-    "layers": {
-      "sbem-6dpf-1-whole-raw": {},
-      "sbem-6dpf-1-whole-segmented-cells": {
-        "color": "glasbeyZeroTransparent",
-        "colorByColumn": "pair_index",
-        "tables": [
-          "symmetric_cells"
-        ]
-      },
-      "sbem-6dpf-1-whole-segmented-outside": {}
-    },
-    "position": [
-      154.58035965475818, 
-      141.15655827789644, 
-      120.04135416840846
-    ],
-    "normView": [
-      "n-9.460726527388642E-4", 
-      "n0.0014085239207494913", 
-      "n-2.2496515159428045E-5", 
-      "n-0.04987762584137406", 
-      "n-5.892543703550783E-4", 
-      "n-3.710731057086496E-4", 
-      "n0.0015474440959257184", 
-      "n-0.04229072980588271", 
-      "n0.0012795409393744604", 
-      "n8.705540234094645E-4", 
-      "n6.959955959404514E-4", 
-      "n-0.4042245621728868"
-    ]
-  }
+	}
 }
