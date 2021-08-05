@@ -3240,7 +3240,7 @@
         ]
       }
     },
-    "Figure 3G and Suppl. Fig. 3D: Example Bilateral Pairs": {
+    "Figure 3G and Suppl. Fig. 2D: Example Bilateral Pairs": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4156,7 +4156,7 @@
         ]
       }
     },
-    "Figure 7B and 7C: Gene expression assignment": {
+    "Suppl. Figure 6B and 6C: Gene expression assignment": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4257,7 +4257,72 @@
         ]
       }
     },
-    "Figure 7D and 7E: Gene expression assignment": {
+	"Suppl. Figure 6H and 6I: Symmetric cell pairs": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "sources": [
+              "raw"
+            ]
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "colorByColumn": "pair_index",
+            "lut": "glasbeyZeroTransparent",
+            "name": "cells",
+            "opacity": 0.5,
+            "sources": [
+              "cells"
+            ],
+            "tables": [
+              "default.tsv",
+              "symmetric_cells.tsv"
+            ]
+          }
+        },
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              1.0
+            ],
+            "name": "outside",
+            "opacity": 1.0,
+            "sources": [
+              "outside"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "bookmark",
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.0009460726527388642,
+          0.0014085239207494913,
+          -2.2496515159428045e-05,
+          -0.04987762584137406,
+          -0.0005892543703550783,
+          -0.0003710731057086496,
+          0.0015474440959257184,
+          -0.04229072980588271,
+          0.0012795409393744604,
+          0.0008705540234094645,
+          0.0006959955959404514,
+          -0.4042245621728868
+        ]
+      }
+    },
+    "Figure 7A and 7B: Gene expression assignment": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4358,7 +4423,7 @@
         ]
       }
     },
-    "Figure 7G: Virtual cell assignment: gene expression level": {
+    "Figure 7C: Virtual cell assignment: gene expression level": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4427,7 +4492,7 @@
         ]
       }
     },
-    "Figure 8D: MMB - PlatyBrowser": {
+    "Figure 7G: MMB - PlatyBrowser": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4547,7 +4612,7 @@
         ]
       }
     },
-    "Suppl. Fig. 2C: Chromatin segmentation": {
+    "Suppl. Fig. 1I: Chromatin segmentation": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4596,7 +4661,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Ciliated": {
+    "Suppl. Fig. 2A: Ciliated": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4650,7 +4715,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Dark": {
+    "Suppl. Fig. 2A: Dark": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4704,7 +4769,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Digestive": {
+    "Suppl. Fig. 2A: Digestive": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4758,7 +4823,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Epithelial": {
+    "Suppl. Fig. 2A: Epithelial": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4812,7 +4877,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Muscle": {
+    "Suppl. Fig. 2A: Muscle": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4866,7 +4931,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Neuron": {
+    "Suppl. Fig. 2A: Neuron": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4920,7 +4985,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3A: Secretory": {
+    "Suppl. Fig. 2A: Secretory": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -4974,7 +5039,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Cell texture haralick 2 high": {
+    "Suppl. Fig. 2C: Cell texture haralick 2 high": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5028,7 +5093,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Cell texture haralick 2 low": {
+    "Suppl. Fig. 2C: Cell texture haralick 2 low": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5082,7 +5147,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: H+N texture haralick 8 high": {
+    "Suppl. Fig. 2C: H+N texture haralick 8 high": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5136,7 +5201,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: H+N texture haralick 8 low": {
+    "Suppl. Fig. 2C: H+N texture haralick 8 low": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5190,7 +5255,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Nucleus intensity median high": {
+    "Suppl. Fig. 2C: Nucleus intensity median high": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5244,7 +5309,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Nucleus intensity median low": {
+    "Suppl. Fig. 2C: Nucleus intensity median low": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5298,7 +5363,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Nucleus intensity standard deviation high": {
+    "Suppl. Fig. 2C: Nucleus intensity standard deviation high": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5352,7 +5417,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Nucleus intensity standard deviation low": {
+    "Suppl. Fig. 2C: Nucleus intensity standard deviation low": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5406,7 +5471,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Sphericity high": {
+    "Suppl. Fig. 2C: Sphericity high": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5460,7 +5525,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: Sphericity low": {
+    "Suppl. Fig. 2C: Sphericity low": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5515,7 +5580,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: percent H+N in outer 25 percent of nucleus high": {
+    "Suppl. Fig. 2C: percent H+N in outer 25 percent of nucleus high": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5569,7 +5634,7 @@
         ]
       }
     },
-    "Suppl. Fig. 3C: percent H+N in outer 25 percent of nucleus low": {
+    "Suppl. Fig. 2C: percent H+N in outer 25 percent of nucleus low": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5624,7 +5689,7 @@
         ]
       }
     },
-    "Suppl. Fig. 5B": {
+    "Suppl. Fig. 4B": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5751,7 +5816,7 @@
         ]
       }
     },
-    "Suppl. Fig. 5C": {
+    "Suppl. Fig. 4C": {
       "isExclusive": true,
       "sourceDisplays": [
         {
@@ -5875,71 +5940,6 @@
           0.00013021206743343657,
           0.008421266158000235,
           -0.1807600192769723
-        ]
-      }
-    },
-    "Symmetric cell pairs": {
-      "isExclusive": true,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "white",
-            "contrastLimits": [
-              0.0,
-              255.0
-            ],
-            "name": "raw",
-            "opacity": 1.0,
-            "sources": [
-              "raw"
-            ]
-          }
-        },
-        {
-          "segmentationDisplay": {
-            "colorByColumn": "pair_index",
-            "lut": "glasbeyZeroTransparent",
-            "name": "cells",
-            "opacity": 0.5,
-            "sources": [
-              "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "symmetric_cells.tsv"
-            ]
-          }
-        },
-        {
-          "imageDisplay": {
-            "color": "white",
-            "contrastLimits": [
-              0.0,
-              1.0
-            ],
-            "name": "outside",
-            "opacity": 1.0,
-            "sources": [
-              "outside"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "bookmark",
-      "viewerTransform": {
-        "normalizedAffine": [
-          -0.0009460726527388642,
-          0.0014085239207494913,
-          -2.2496515159428045e-05,
-          -0.04987762584137406,
-          -0.0005892543703550783,
-          -0.0003710731057086496,
-          0.0015474440959257184,
-          -0.04229072980588271,
-          0.0012795409393744604,
-          0.0008705540234094645,
-          0.0006959955959404514,
-          -0.4042245621728868
         ]
       }
     },
