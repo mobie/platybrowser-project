@@ -28,7 +28,7 @@
     <ImageLoader format="bdv.n5.s3">
       <Key>0.6.3/images/remote/prospr-6dpf-1-whole-foxd3.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
-      <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
+      <ServiceEndpoint>https://s4.embl.de</ServiceEndpoint>
       <BucketName>platybrowser</BucketName>
       <Authentication>Anonymous</Authentication>
     </ImageLoader>
