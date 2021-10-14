@@ -26,7 +26,7 @@
       <last>0</last>
     </Timepoints>
     <ImageLoader format="bdv.n5.s3">
-      <Key>0.6.3/images/remote/prospr-6dpf-1-whole-nachr.n5</Key>
+      <Key>0.6.3/images/local/prospr-6dpf-1-whole-nachr.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
       <ServiceEndpoint>https://s4.embl.de</ServiceEndpoint>
       <BucketName>platybrowser</BucketName>

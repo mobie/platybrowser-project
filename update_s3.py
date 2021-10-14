@@ -7,9 +7,13 @@ from pybdv.metadata import indent_xml
 def update_xml(xml_file):
     tree = ET.parse(xml_file)
     root = tree.getroot()
-    img = root.find('SequenceDescription').find("ImageLoader")
+    img = root.find("SequenceDescription").find("ImageLoader")
+
     endpoint = img.find("ServiceEndpoint")
     endpoint.text = "https://s4.embl.de"
+
+    key = img.find("Key")
+    key.text = key.text.replace("remote", "local")
 
     indent_xml(root)
     tree = ET.ElementTree(root)
