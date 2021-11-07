@@ -10,7 +10,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>like</name>
+        <name>globin-like</name>
         <size>500 471 519</size>
         <voxelSize>
           <unit>micrometer</unit>

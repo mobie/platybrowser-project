@@ -229,6 +229,18 @@
         }
       }
     },
+    "boule-like": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-boule-like.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/prospr-6dpf-1-whole-boule-like.xml"
+          }
+        }
+      }
+    },
     "brn124": {
       "image": {
         "imageData": {
@@ -801,6 +813,18 @@
         }
       }
     },
+    "globin-like": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-globin-like.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/prospr-6dpf-1-whole-globin-like.xml"
+          }
+        }
+      }
+    },
     "glt1": {
       "image": {
         "imageData": {
@@ -1221,6 +1245,18 @@
         }
       }
     },
+    "leucin-rich": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-leucin-rich.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/prospr-6dpf-1-whole-leucin-rich.xml"
+          }
+        }
+      }
+    },
     "lhx15": {
       "image": {
         "imageData": {
@@ -1265,18 +1301,6 @@
           },
           "bdv.n5.s3": {
             "relativePath": "images/remote/prospr-6dpf-1-whole-lhx6.xml"
-          }
-        }
-      }
-    },
-    "like": {
-      "image": {
-        "imageData": {
-          "bdv.n5": {
-            "relativePath": "images/local/prospr-6dpf-1-whole-globin-like.xml"
-          },
-          "bdv.n5.s3": {
-            "relativePath": "images/remote/prospr-6dpf-1-whole-globin-like.xml"
           }
         }
       }
@@ -1373,18 +1397,6 @@
           },
           "bdv.n5.s3": {
             "relativePath": "images/remote/prospr-6dpf-1-whole-mecom.xml"
-          }
-        }
-      }
-    },
-    "mhc": {
-      "image": {
-        "imageData": {
-          "bdv.n5": {
-            "relativePath": "images/local/prospr-6dpf-1-whole-non-muscle-mhc.xml"
-          },
-          "bdv.n5.s3": {
-            "relativePath": "images/remote/prospr-6dpf-1-whole-non-muscle-mhc.xml"
           }
         }
       }
@@ -1697,6 +1709,18 @@
           },
           "bdv.n5.s3": {
             "relativePath": "images/remote/prospr-6dpf-1-whole-nompc3.xml"
+          }
+        }
+      }
+    },
+    "non-muscle-mhc": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-non-muscle-mhc.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/prospr-6dpf-1-whole-non-muscle-mhc.xml"
           }
         }
       }
@@ -2066,6 +2090,18 @@
         }
       }
     },
+    "prosp6-ref": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-prospr6-ref.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/prospr-6dpf-1-whole-segmented-prospr6-ref.xml"
+          }
+        }
+      }
+    },
     "prox": {
       "image": {
         "imageData": {
@@ -2138,18 +2174,6 @@
         }
       }
     },
-    "ref": {
-      "image": {
-        "imageData": {
-          "bdv.n5": {
-            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-prospr6-ref.xml"
-          },
-          "bdv.n5.s3": {
-            "relativePath": "images/remote/prospr-6dpf-1-whole-segmented-prospr6-ref.xml"
-          }
-        }
-      }
-    },
     "resin": {
       "image": {
         "imageData": {
@@ -2170,18 +2194,6 @@
           },
           "bdv.n5.s3": {
             "relativePath": "images/remote/prospr-6dpf-1-whole-segmented-restofanimal.xml"
-          }
-        }
-      }
-    },
-    "rich": {
-      "image": {
-        "imageData": {
-          "bdv.n5": {
-            "relativePath": "images/local/prospr-6dpf-1-whole-leucin-rich.xml"
-          },
-          "bdv.n5.s3": {
-            "relativePath": "images/remote/prospr-6dpf-1-whole-leucin-rich.xml"
           }
         }
       }
@@ -2780,6 +2792,23 @@
           },
           "bdv.n5.s3": {
             "relativePath": "images/remote/prospr-6dpf-1-whole-vglut.xml"
+          }
+        }
+      }
+    },
+    "virtual-cells": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-virtual-cells.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/prospr-6dpf-1-whole-virtual-cells.xml"
+          }
+        },
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/prospr-6dpf-1-whole-virtual-cells"
           }
         }
       }
@@ -4156,172 +4185,6 @@
         ]
       }
     },
-    "Suppl. Figure 6B and 6C: Gene expression assignment": {
-      "isExclusive": true,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "green",
-            "contrastLimits": [
-              0.0,
-              1000.0
-            ],
-            "name": "msx",
-            "opacity": 1.0,
-            "sources": [
-              "msx"
-            ]
-          }
-        },
-        {
-          "imageDisplay": {
-            "color": "blue",
-            "contrastLimits": [
-              0.0,
-              1000.0
-            ],
-            "name": "patched",
-            "opacity": 1.0,
-            "sources": [
-              "patched"
-            ]
-          }
-        },
-        {
-          "segmentationDisplay": {
-            "lut": "glasbey",
-            "name": "cells",
-            "opacity": 0.5,
-            "selectedSegmentIds": [
-              "cells;0;3666",
-              "cells;0;3641",
-              "cells;0;4015"
-            ],
-            "showSelectedSegmentsIn3d": false,
-            "sources": [
-              "cells"
-            ],
-            "tables": [
-              "default.tsv"
-            ]
-          }
-        },
-        {
-          "imageDisplay": {
-            "color": "white",
-            "contrastLimits": [
-              0.0,
-              255.0
-            ],
-            "name": "raw",
-            "opacity": 1.0,
-            "sources": [
-              "raw"
-            ]
-          }
-        },
-        {
-          "segmentationDisplay": {
-            "lut": "glasbey",
-            "name": "cells",
-            "opacity": 0.5,
-            "selectedSegmentIds": [
-              "cells;0;32130",
-              "cells;0;31989"
-            ],
-            "showSelectedSegmentsIn3d": false,
-            "sources": [
-              "cells"
-            ],
-            "tables": [
-              "default.tsv"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "bookmark",
-      "viewerTransform": {
-        "normalizedAffine": [
-          -0.009935454749539616,
-          0.007691711969739959,
-          0.00022900005850743334,
-          0.37437924510021736,
-          0.007287335473845103,
-          0.009284654382139925,
-          0.004314866142562871,
-          -2.9598576742597156,
-          0.0024717636909454242,
-          0.003544135312196143,
-          -0.011800746767783594,
-          2.459871920778832
-        ]
-      }
-    },
-	"Suppl. Figure 6H and 6I: Symmetric cell pairs": {
-      "isExclusive": true,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "white",
-            "contrastLimits": [
-              0.0,
-              255.0
-            ],
-            "name": "raw",
-            "opacity": 1.0,
-            "sources": [
-              "raw"
-            ]
-          }
-        },
-        {
-          "segmentationDisplay": {
-            "colorByColumn": "pair_index",
-            "lut": "glasbeyZeroTransparent",
-            "name": "cells",
-            "opacity": 0.5,
-            "sources": [
-              "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "symmetric_cells.tsv"
-            ]
-          }
-        },
-        {
-          "imageDisplay": {
-            "color": "white",
-            "contrastLimits": [
-              0.0,
-              1.0
-            ],
-            "name": "outside",
-            "opacity": 1.0,
-            "sources": [
-              "outside"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "bookmark",
-      "viewerTransform": {
-        "normalizedAffine": [
-          -0.0009460726527388642,
-          0.0014085239207494913,
-          -2.2496515159428045e-05,
-          -0.04987762584137406,
-          -0.0005892543703550783,
-          -0.0003710731057086496,
-          0.0015474440959257184,
-          -0.04229072980588271,
-          0.0012795409393744604,
-          0.0008705540234094645,
-          0.0006959955959404514,
-          -0.4042245621728868
-        ]
-      }
-    },
     "Figure 7A and 7B: Gene expression assignment": {
       "isExclusive": true,
       "sourceDisplays": [
@@ -4351,7 +4214,7 @@
             ],
             "showSelectedSegmentsIn3d": false,
             "sources": [
-              "cells"
+              "virtual-cells"
             ],
             "tables": [
               "default.tsv"
@@ -4444,10 +4307,10 @@
           "segmentationDisplay": {
             "colorByColumn": "expression_sum",
             "lut": "viridis",
-            "name": "cells",
+            "name": "virtual-cells",
             "opacity": 0.5,
             "sources": [
-              "cells"
+              "virtual-cells"
             ],
             "tables": [
               "default.tsv",
@@ -5943,6 +5806,172 @@
         ]
       }
     },
+    "Suppl. Figure 6B and 6C: Gene expression assignment": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "green",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "msx",
+            "opacity": 1.0,
+            "sources": [
+              "msx"
+            ]
+          }
+        },
+        {
+          "imageDisplay": {
+            "color": "blue",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "patched",
+            "opacity": 1.0,
+            "sources": [
+              "patched"
+            ]
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "cells",
+            "opacity": 0.5,
+            "selectedSegmentIds": [
+              "cells;0;3666",
+              "cells;0;3641",
+              "cells;0;4015"
+            ],
+            "showSelectedSegmentsIn3d": false,
+            "sources": [
+              "cells"
+            ],
+            "tables": [
+              "default.tsv"
+            ]
+          }
+        },
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "sources": [
+              "raw"
+            ]
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "cells",
+            "opacity": 0.5,
+            "selectedSegmentIds": [
+              "cells;0;32130",
+              "cells;0;31989"
+            ],
+            "showSelectedSegmentsIn3d": false,
+            "sources": [
+              "cells"
+            ],
+            "tables": [
+              "default.tsv"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "bookmark",
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.009935454749539616,
+          0.007691711969739959,
+          0.00022900005850743334,
+          0.37437924510021736,
+          0.007287335473845103,
+          0.009284654382139925,
+          0.004314866142562871,
+          -2.9598576742597156,
+          0.0024717636909454242,
+          0.003544135312196143,
+          -0.011800746767783594,
+          2.459871920778832
+        ]
+      }
+    },
+    "Suppl. Figure 6H and 6I: Symmetric cell pairs": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "sources": [
+              "raw"
+            ]
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "colorByColumn": "pair_index",
+            "lut": "glasbeyZeroTransparent",
+            "name": "cells",
+            "opacity": 0.5,
+            "sources": [
+              "cells"
+            ],
+            "tables": [
+              "default.tsv",
+              "symmetric_cells.tsv"
+            ]
+          }
+        },
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              1.0
+            ],
+            "name": "outside",
+            "opacity": 1.0,
+            "sources": [
+              "outside"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "bookmark",
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.0009460726527388642,
+          0.0014085239207494913,
+          -2.2496515159428045e-05,
+          -0.04987762584137406,
+          -0.0005892543703550783,
+          -0.0003710731057086496,
+          0.0015474440959257184,
+          -0.04229072980588271,
+          0.0012795409393744604,
+          0.0008705540234094645,
+          0.0006959955959404514,
+          -0.4042245621728868
+        ]
+      }
+    },
     "ache": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -6317,6 +6346,26 @@
             "opacity": 1.0,
             "sources": [
               "bmpr1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "boule-like": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "randomFromGlasbey",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "boule-like",
+            "opacity": 1.0,
+            "sources": [
+              "boule-like"
             ]
           }
         }
@@ -7259,6 +7308,26 @@
       ],
       "uiSelectionGroup": "prospr-mask"
     },
+    "globin-like": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "randomFromGlasbey",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "globin-like",
+            "opacity": 1.0,
+            "sources": [
+              "globin-like"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
     "glt1": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -7959,6 +8028,26 @@
       ],
       "uiSelectionGroup": "prospr"
     },
+    "leucin-rich": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "randomFromGlasbey",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "leucin-rich",
+            "opacity": 1.0,
+            "sources": [
+              "leucin-rich"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
     "lhx15": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -8033,26 +8122,6 @@
             "opacity": 1.0,
             "sources": [
               "lhx6"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "prospr"
-    },
-    "like": {
-      "isExclusive": false,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "randomFromGlasbey",
-            "contrastLimits": [
-              0.0,
-              1000.0
-            ],
-            "name": "like",
-            "opacity": 1.0,
-            "sources": [
-              "like"
             ]
           }
         }
@@ -8213,26 +8282,6 @@
             "opacity": 1.0,
             "sources": [
               "mecom"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "prospr"
-    },
-    "mhc": {
-      "isExclusive": false,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "randomFromGlasbey",
-            "contrastLimits": [
-              0.0,
-              1000.0
-            ],
-            "name": "mhc",
-            "opacity": 1.0,
-            "sources": [
-              "mhc"
             ]
           }
         }
@@ -8749,6 +8798,26 @@
             "opacity": 1.0,
             "sources": [
               "nompc3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "non-muscle-mhc": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "randomFromGlasbey",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "non-muscle-mhc",
+            "opacity": 1.0,
+            "sources": [
+              "non-muscle-mhc"
             ]
           }
         }
@@ -9354,6 +9423,26 @@
       ],
       "uiSelectionGroup": "prospr"
     },
+    "prosp6-ref": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "prosp6-ref",
+            "opacity": 1.0,
+            "sources": [
+              "prosp6-ref"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
     "prox": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -9474,26 +9563,6 @@
       ],
       "uiSelectionGroup": "sbem"
     },
-    "ref": {
-      "isExclusive": false,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "magenta",
-            "contrastLimits": [
-              0.0,
-              1000.0
-            ],
-            "name": "ref",
-            "opacity": 1.0,
-            "sources": [
-              "ref"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "prospr"
-    },
     "resin": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -9533,26 +9602,6 @@
         }
       ],
       "uiSelectionGroup": "prospr-mask"
-    },
-    "rich": {
-      "isExclusive": false,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "randomFromGlasbey",
-            "contrastLimits": [
-              0.0,
-              1000.0
-            ],
-            "name": "rich",
-            "opacity": 1.0,
-            "sources": [
-              "rich"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "prospr"
     },
     "rims": {
       "isExclusive": false,
@@ -10531,6 +10580,25 @@
         }
       ],
       "uiSelectionGroup": "prospr"
+    },
+    "virtual-cells": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "virtual-cells",
+            "opacity": 0.5,
+            "sources": [
+              "virtual-cells"
+            ],
+            "tables": [
+              "default.tsv"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-segmentation"
     },
     "vnc": {
       "isExclusive": false,
