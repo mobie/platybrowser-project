@@ -4205,7 +4205,7 @@
         {
           "segmentationDisplay": {
             "lut": "glasbey",
-            "name": "cells",
+            "name": "virtual-cells",
             "opacity": 0.5,
             "selectedSegmentIds": [
               "cells;0;737",
