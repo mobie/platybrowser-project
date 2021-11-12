@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>resin</name>
         <size>860 811 11416</size>
         <voxelSize>
           <unit>micrometer</unit>

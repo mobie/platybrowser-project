@@ -7,7 +7,7 @@
     <ViewSetups>
       <ViewSetup>
         <id>0</id>
-        <name>channel 1</name>
+        <name>muscle</name>
         <size>2750 2592 2854</size>
         <voxelSize>
           <unit>micrometer</unit>

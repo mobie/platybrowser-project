@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>extrapolated</name>
         <size>1719 1620 1427</size>
         <voxelSize>
           <unit>micrometer</unit>

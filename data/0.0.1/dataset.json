@@ -1,0 +1,6129 @@
+{
+  "is2D": false,
+  "sources": {
+    "ache": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ache.xml"
+          }
+        }
+      }
+    },
+    "allcr1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-allcr1.xml"
+          }
+        }
+      }
+    },
+    "allcr2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-allcr2.xml"
+          }
+        }
+      }
+    },
+    "anpra": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-anpra.xml"
+          }
+        }
+      }
+    },
+    "anprb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-anprb.xml"
+          }
+        }
+      }
+    },
+    "ap2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ap2.xml"
+          }
+        }
+      }
+    },
+    "arx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-arx.xml"
+          }
+        }
+      }
+    },
+    "ascb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ascb.xml"
+          }
+        }
+      }
+    },
+    "asci": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-asci.xml"
+          }
+        }
+      }
+    },
+    "ascii": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ascii.xml"
+          }
+        }
+      }
+    },
+    "ash": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ash.xml"
+          }
+        }
+      }
+    },
+    "asicalpha": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-asicalpha.xml"
+          }
+        }
+      }
+    },
+    "baiap": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-baiap.xml"
+          }
+        }
+      }
+    },
+    "barh1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-barh1.xml"
+          }
+        }
+      }
+    },
+    "bca1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-bca1.xml"
+          }
+        }
+      }
+    },
+    "beta3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-beta3.xml"
+          }
+        }
+      }
+    },
+    "bmpr1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-bmpr1.xml"
+          }
+        }
+      }
+    },
+    "brn3a": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-brn3a.xml"
+          }
+        }
+      }
+    },
+    "bsx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-bsx.xml"
+          }
+        }
+      }
+    },
+    "cal2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-cal2.xml"
+          }
+        }
+      }
+    },
+    "calexcitin2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-calexcitin2.xml"
+          }
+        }
+      }
+    },
+    "calmodulin": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-calmodulin.xml"
+          }
+        }
+      }
+    },
+    "catl": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-catl.xml"
+          }
+        }
+      }
+    },
+    "ccvd": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ccvd.xml"
+          }
+        }
+      }
+    },
+    "cells": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-6dpf-1-whole-segmented-cells.xml"
+          }
+        },
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/sbem-6dpf-1-whole-segmented-cells"
+          }
+        }
+      }
+    },
+    "cepu1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-cepu1.xml"
+          }
+        }
+      }
+    },
+    "chat": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-chat.xml"
+          }
+        }
+      }
+    },
+    "chx10": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-chx10.xml"
+          }
+        }
+      }
+    },
+    "cnga": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-cnga.xml"
+          }
+        }
+      }
+    },
+    "co1a1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-co1a1.xml"
+          }
+        }
+      }
+    },
+    "coe": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-coe.xml"
+          }
+        }
+      }
+    },
+    "crypticsegment": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-crypticsegment.xml"
+          }
+        }
+      }
+    },
+    "dach": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-dach.xml"
+          }
+        }
+      }
+    },
+    "dbhlike": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-dbhlike.xml"
+          }
+        }
+      }
+    },
+    "dbx1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-dbx1.xml"
+          }
+        }
+      }
+    },
+    "delta": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-delta.xml"
+          }
+        }
+      }
+    },
+    "dlx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-dlx.xml"
+          }
+        }
+      }
+    },
+    "dopard2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-dopard2.xml"
+          }
+        }
+      }
+    },
+    "edu3to4at6dpf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-edu3to4at6dpf.xml"
+          }
+        }
+      }
+    },
+    "edu4to5at6dpf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-edu4to5at6dpf.xml"
+          }
+        }
+      }
+    },
+    "edu5to6at6dpf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-edu5to6at6dpf.xml"
+          }
+        }
+      }
+    },
+    "elav": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-elav.xml"
+          }
+        }
+      }
+    },
+    "eve": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-eve.xml"
+          }
+        }
+      }
+    },
+    "eya": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-eya.xml"
+          }
+        }
+      }
+    },
+    "fezf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-fezf.xml"
+          }
+        }
+      }
+    },
+    "for": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-for.xml"
+          }
+        }
+      }
+    },
+    "foregut": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-foregut.xml"
+          }
+        }
+      }
+    },
+    "foxd3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-foxd3.xml"
+          }
+        }
+      }
+    },
+    "foxn4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-foxn4.xml"
+          }
+        }
+      }
+    },
+    "fvri": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-fvri.xml"
+          }
+        }
+      }
+    },
+    "fxl21": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-fxl21.xml"
+          }
+        }
+      }
+    },
+    "gad": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gad.xml"
+          }
+        }
+      }
+    },
+    "gata123": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gata123.xml"
+          }
+        }
+      }
+    },
+    "gcb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gcb.xml"
+          }
+        }
+      }
+    },
+    "gcd": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gcd.xml"
+          }
+        }
+      }
+    },
+    "gdpd1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gdpd1.xml"
+          }
+        }
+      }
+    },
+    "glt1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-glt1.xml"
+          }
+        }
+      }
+    },
+    "glyt": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-glyt.xml"
+          }
+        }
+      }
+    },
+    "gnrh": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gnrh.xml"
+          }
+        }
+      }
+    },
+    "gnrhr": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gnrhr.xml"
+          }
+        }
+      }
+    },
+    "gpb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gpb.xml"
+          }
+        }
+      }
+    },
+    "gpcr2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gpcr2.xml"
+          }
+        }
+      }
+    },
+    "gpcr203": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gpcr203.xml"
+          }
+        }
+      }
+    },
+    "gpcr209": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gpcr209.xml"
+          }
+        }
+      }
+    },
+    "gpcr210": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gpcr210.xml"
+          }
+        }
+      }
+    },
+    "gpcr32": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gpcr32.xml"
+          }
+        }
+      }
+    },
+    "gppcr21": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gppcr21.xml"
+          }
+        }
+      }
+    },
+    "grik3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-grik3.xml"
+          }
+        }
+      }
+    },
+    "grm7": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-grm7.xml"
+          }
+        }
+      }
+    },
+    "gsx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gsx.xml"
+          }
+        }
+      }
+    },
+    "gucy": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-gucy.xml"
+          }
+        }
+      }
+    },
+    "hand": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hand.xml"
+          }
+        }
+      }
+    },
+    "hb9": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hb9.xml"
+          }
+        }
+      }
+    },
+    "hcn1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hcn1.xml"
+          }
+        }
+      }
+    },
+    "head": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-head.xml"
+          }
+        }
+      }
+    },
+    "hnf6": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hnf6.xml"
+          }
+        }
+      }
+    },
+    "hox1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hox1.xml"
+          }
+        }
+      }
+    },
+    "hox4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hox4.xml"
+          }
+        }
+      }
+    },
+    "hox7": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hox7.xml"
+          }
+        }
+      }
+    },
+    "hr38": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-hr38.xml"
+          }
+        }
+      }
+    },
+    "irx2546": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-irx2546.xml"
+          }
+        }
+      }
+    },
+    "irx6": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-irx6.xml"
+          }
+        }
+      }
+    },
+    "isl": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-isl.xml"
+          }
+        }
+      }
+    },
+    "jkip3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-jkip3.xml"
+          }
+        }
+      }
+    },
+    "junctophilin1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-junctophilin1.xml"
+          }
+        }
+      }
+    },
+    "kanl3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-kanl3.xml"
+          }
+        }
+      }
+    },
+    "kv33b": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-kv33b.xml"
+          }
+        }
+      }
+    },
+    "kv33e": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-kv33e.xml"
+          }
+        }
+      }
+    },
+    "lateralectoderm": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-lateralectoderm.xml"
+          }
+        }
+      }
+    },
+    "lbx1b": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lbx1b.xml"
+          }
+        }
+      }
+    },
+    "lhx15": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lhx15.xml"
+          }
+        }
+      }
+    },
+    "lhx2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lhx2.xml"
+          }
+        }
+      }
+    },
+    "lhx3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lhx3.xml"
+          }
+        }
+      }
+    },
+    "lhx6": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lhx6.xml"
+          }
+        }
+      }
+    },
+    "like": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-globin-like.xml"
+          }
+        }
+      }
+    },
+    "lmo4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lmo4.xml"
+          }
+        }
+      }
+    },
+    "lmx1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-lmx1.xml"
+          }
+        }
+      }
+    },
+    "loc28250": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-loc28250.xml"
+          }
+        }
+      }
+    },
+    "loc5285ct": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-loc5285ct.xml"
+          }
+        }
+      }
+    },
+    "loc77859": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-loc77859.xml"
+          }
+        }
+      }
+    },
+    "loc8913nt": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-loc8913nt.xml"
+          }
+        }
+      }
+    },
+    "maf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-maf.xml"
+          }
+        }
+      }
+    },
+    "mecom": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-mecom.xml"
+          }
+        }
+      }
+    },
+    "mhc": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-non-muscle-mhc.xml"
+          }
+        }
+      }
+    },
+    "mhcl4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-mhcl4.xml"
+          }
+        }
+      }
+    },
+    "mitf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-mitf.xml"
+          }
+        }
+      }
+    },
+    "mrlc2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-mrlc2.xml"
+          }
+        }
+      }
+    },
+    "msx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-msx.xml"
+          }
+        }
+      }
+    },
+    "mthfsd": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-mthfsd.xml"
+          }
+        }
+      }
+    },
+    "munc22": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-munc22.xml"
+          }
+        }
+      }
+    },
+    "muncb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-muncb.xml"
+          }
+        }
+      }
+    },
+    "muscle": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-6dpf-1-whole-segmented-muscle.xml"
+          }
+        }
+      }
+    },
+    "nachr": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nachr.xml"
+          }
+        }
+      }
+    },
+    "nb5r3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nb5r3.xml"
+          }
+        }
+      }
+    },
+    "ndus1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ndus1.xml"
+          }
+        }
+      }
+    },
+    "neog": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-neog.xml"
+          }
+        }
+      }
+    },
+    "netrin": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-netrin.xml"
+          }
+        }
+      }
+    },
+    "neurod": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-neurod.xml"
+          }
+        }
+      }
+    },
+    "ngb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ngb.xml"
+          }
+        }
+      }
+    },
+    "ngn": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ngn.xml"
+          }
+        }
+      }
+    },
+    "nk21": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nk21.xml"
+          }
+        }
+      }
+    },
+    "nk22": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nk22.xml"
+          }
+        }
+      }
+    },
+    "nk6": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nk6.xml"
+          }
+        }
+      }
+    },
+    "nmdar": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nmdar.xml"
+          }
+        }
+      }
+    },
+    "noe1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-noe1.xml"
+          }
+        }
+      }
+    },
+    "nov2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nov2.xml"
+          }
+        }
+      }
+    },
+    "nov29": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nov29.xml"
+          }
+        }
+      }
+    },
+    "npr1a": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-npr1a.xml"
+          }
+        }
+      }
+    },
+    "ntrps": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ntrps.xml"
+          }
+        }
+      }
+    },
+    "nuclei": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-6dpf-1-whole-segmented-nuclei.xml"
+          }
+        },
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/sbem-6dpf-1-whole-segmented-nuclei"
+          }
+        }
+      }
+    },
+    "nucleolin": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-nucleolin.xml"
+          }
+        }
+      }
+    },
+    "odo2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-odo2.xml"
+          }
+        }
+      }
+    },
+    "olig": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-olig.xml"
+          }
+        }
+      }
+    },
+    "olm2a": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-olm2a.xml"
+          }
+        }
+      }
+    },
+    "otp": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-otp.xml"
+          }
+        }
+      }
+    },
+    "p56": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-p56.xml"
+          }
+        }
+      }
+    },
+    "paraxis": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-paraxis.xml"
+          }
+        }
+      }
+    },
+    "patched": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-patched.xml"
+          }
+        }
+      }
+    },
+    "pax258": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pax258.xml"
+          }
+        }
+      }
+    },
+    "pax6": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pax6.xml"
+          }
+        }
+      }
+    },
+    "pcdh15": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pcdh15.xml"
+          }
+        }
+      }
+    },
+    "pde9": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pde9.xml"
+          }
+        }
+      }
+    },
+    "pdf": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pdf.xml"
+          }
+        }
+      }
+    },
+    "pea3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pea3.xml"
+          }
+        }
+      }
+    },
+    "pgam": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pgam.xml"
+          }
+        }
+      }
+    },
+    "phc2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-phc2.xml"
+          }
+        }
+      }
+    },
+    "phox2b": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-phox2b.xml"
+          }
+        }
+      }
+    },
+    "pikachu": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pikachu.xml"
+          }
+        }
+      }
+    },
+    "pitxb": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-pitxb.xml"
+          }
+        }
+      }
+    },
+    "plcg": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-plcg.xml"
+          }
+        }
+      }
+    },
+    "ppib": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ppib.xml"
+          }
+        }
+      }
+    },
+    "prdm8": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-prdm8.xml"
+          }
+        }
+      }
+    },
+    "prox": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-prox.xml"
+          }
+        }
+      }
+    },
+    "psmf1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-psmf1.xml"
+          }
+        }
+      }
+    },
+    "ptf1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ptf1.xml"
+          }
+        }
+      }
+    },
+    "pygidium": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-pygidium.xml"
+          }
+        }
+      }
+    },
+    "rab3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-rab3.xml"
+          }
+        }
+      }
+    },
+    "raw": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-6dpf-1-whole-raw.xml"
+          }
+        }
+      }
+    },
+    "restofanimal": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-restofanimal.xml"
+          }
+        }
+      }
+    },
+    "rich": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-leucin-rich.xml"
+          }
+        }
+      }
+    },
+    "rims": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-rims.xml"
+          }
+        }
+      }
+    },
+    "robo": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-robo.xml"
+          }
+        }
+      }
+    },
+    "rpc2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-rpc2.xml"
+          }
+        }
+      }
+    },
+    "rx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-rx.xml"
+          }
+        }
+      }
+    },
+    "ryr2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-ryr2.xml"
+          }
+        }
+      }
+    },
+    "scn8aa": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-scn8aa.xml"
+          }
+        }
+      }
+    },
+    "sema2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-sema2.xml"
+          }
+        }
+      }
+    },
+    "sert": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-sert.xml"
+          }
+        }
+      }
+    },
+    "sim1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-sim1.xml"
+          }
+        }
+      }
+    },
+    "six12": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-six12.xml"
+          }
+        }
+      }
+    },
+    "six4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-six4.xml"
+          }
+        }
+      }
+    },
+    "slit": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-slit.xml"
+          }
+        }
+      }
+    },
+    "snd1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-snd1.xml"
+          }
+        }
+      }
+    },
+    "sox2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-sox2.xml"
+          }
+        }
+      }
+    },
+    "sox4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-sox4.xml"
+          }
+        }
+      }
+    },
+    "soxb12": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-soxb12.xml"
+          }
+        }
+      }
+    },
+    "soxb2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-soxb2.xml"
+          }
+        }
+      }
+    },
+    "sp8": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-sp8.xml"
+          }
+        }
+      }
+    },
+    "stathmin": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-stathmin.xml"
+          }
+        }
+      }
+    },
+    "synaptopodin": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-synaptopodin.xml"
+          }
+        }
+      }
+    },
+    "syt": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-syt.xml"
+          }
+        }
+      }
+    },
+    "syt12": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-syt12.xml"
+          }
+        }
+      }
+    },
+    "syt7": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-syt7.xml"
+          }
+        }
+      }
+    },
+    "syta": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-syta.xml"
+          }
+        }
+      }
+    },
+    "tal": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-tal.xml"
+          }
+        }
+      }
+    },
+    "tbh": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-tbh.xml"
+          }
+        }
+      }
+    },
+    "tbx20": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-tbx20.xml"
+          }
+        }
+      }
+    },
+    "th": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-th.xml"
+          }
+        }
+      }
+    },
+    "timp": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-timp.xml"
+          }
+        }
+      }
+    },
+    "tissue": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-6dpf-1-whole-segmented-tissue.xml"
+          }
+        },
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/sbem-6dpf-1-whole-segmented-tissue"
+          }
+        }
+      }
+    },
+    "tlx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-tlx.xml"
+          }
+        }
+      }
+    },
+    "tmtc3": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-tmtc3.xml"
+          }
+        }
+      }
+    },
+    "trk": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-trk.xml"
+          }
+        }
+      }
+    },
+    "trph": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-trph.xml"
+          }
+        }
+      }
+    },
+    "trpv": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-trpv.xml"
+          }
+        }
+      }
+    },
+    "trpv4": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-trpv4.xml"
+          }
+        }
+      }
+    },
+    "trpv5": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-trpv5.xml"
+          }
+        }
+      }
+    },
+    "twist": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-twist.xml"
+          }
+        }
+      }
+    },
+    "unc22": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-unc22.xml"
+          }
+        }
+      }
+    },
+    "uncs": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-uncs.xml"
+          }
+        }
+      }
+    },
+    "uncx": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-uncx.xml"
+          }
+        }
+      }
+    },
+    "upp": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-upp.xml"
+          }
+        }
+      }
+    },
+    "usp9x": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-usp9x.xml"
+          }
+        }
+      }
+    },
+    "vacht": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-vacht.xml"
+          }
+        }
+      }
+    },
+    "vat1l": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-vat1l.xml"
+          }
+        }
+      }
+    },
+    "vegfr": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-vegfr.xml"
+          }
+        }
+      }
+    },
+    "vglut": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-vglut.xml"
+          }
+        }
+      }
+    },
+    "vnc": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-segmented-vnc.xml"
+          }
+        }
+      }
+    },
+    "wnt16": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-wnt16.xml"
+          }
+        }
+      }
+    },
+    "wnt5": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/prospr-6dpf-1-whole-wnt5.xml"
+          }
+        }
+      }
+    }
+  },
+  "views": {
+    "ache": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ache",
+            "opacity": 1.0,
+            "sources": [
+              "ache"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "allcr1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "allcr1",
+            "opacity": 1.0,
+            "sources": [
+              "allcr1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "allcr2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "allcr2",
+            "opacity": 1.0,
+            "sources": [
+              "allcr2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "anpra": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "anpra",
+            "opacity": 1.0,
+            "sources": [
+              "anpra"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "anprb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "anprb",
+            "opacity": 1.0,
+            "sources": [
+              "anprb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ap2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ap2",
+            "opacity": 1.0,
+            "sources": [
+              "ap2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "arx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "arx",
+            "opacity": 1.0,
+            "sources": [
+              "arx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ascb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ascb",
+            "opacity": 1.0,
+            "sources": [
+              "ascb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "asci": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "asci",
+            "opacity": 1.0,
+            "sources": [
+              "asci"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ascii": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ascii",
+            "opacity": 1.0,
+            "sources": [
+              "ascii"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ash": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ash",
+            "opacity": 1.0,
+            "sources": [
+              "ash"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "asicalpha": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "asicalpha",
+            "opacity": 1.0,
+            "sources": [
+              "asicalpha"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "baiap": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "baiap",
+            "opacity": 1.0,
+            "sources": [
+              "baiap"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "barh1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "barh1",
+            "opacity": 1.0,
+            "sources": [
+              "barh1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "bca1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "bca1",
+            "opacity": 1.0,
+            "sources": [
+              "bca1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "beta3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "beta3",
+            "opacity": 1.0,
+            "sources": [
+              "beta3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "bmpr1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "bmpr1",
+            "opacity": 1.0,
+            "sources": [
+              "bmpr1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "brn3a": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "brn3a",
+            "opacity": 1.0,
+            "sources": [
+              "brn3a"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "bsx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "bsx",
+            "opacity": 1.0,
+            "sources": [
+              "bsx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "cal2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "cal2",
+            "opacity": 1.0,
+            "sources": [
+              "cal2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "calexcitin2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "calexcitin2",
+            "opacity": 1.0,
+            "sources": [
+              "calexcitin2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "calmodulin": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "calmodulin",
+            "opacity": 1.0,
+            "sources": [
+              "calmodulin"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "catl": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "catl",
+            "opacity": 1.0,
+            "sources": [
+              "catl"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ccvd": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ccvd",
+            "opacity": 1.0,
+            "sources": [
+              "ccvd"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "cells": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "cells",
+            "opacity": 0.5,
+            "sources": [
+              "cells"
+            ],
+            "tables": [
+              "default.tsv"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "sbem-segmentation"
+    },
+    "cepu1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "cepu1",
+            "opacity": 1.0,
+            "sources": [
+              "cepu1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "chat": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "chat",
+            "opacity": 1.0,
+            "sources": [
+              "chat"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "chx10": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "chx10",
+            "opacity": 1.0,
+            "sources": [
+              "chx10"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "cnga": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "cnga",
+            "opacity": 1.0,
+            "sources": [
+              "cnga"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "co1a1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "co1a1",
+            "opacity": 1.0,
+            "sources": [
+              "co1a1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "coe": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "coe",
+            "opacity": 1.0,
+            "sources": [
+              "coe"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "crypticsegment": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "crypticsegment",
+            "opacity": 1.0,
+            "sources": [
+              "crypticsegment"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "dach": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "dach",
+            "opacity": 1.0,
+            "sources": [
+              "dach"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "dbhlike": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "dbhlike",
+            "opacity": 1.0,
+            "sources": [
+              "dbhlike"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "dbx1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "dbx1",
+            "opacity": 1.0,
+            "sources": [
+              "dbx1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "default": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "sources": [
+              "raw"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "bookmark"
+    },
+    "delta": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "delta",
+            "opacity": 1.0,
+            "sources": [
+              "delta"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "dlx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "dlx",
+            "opacity": 1.0,
+            "sources": [
+              "dlx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "dopard2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "dopard2",
+            "opacity": 1.0,
+            "sources": [
+              "dopard2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "edu3to4at6dpf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "edu3to4at6dpf",
+            "opacity": 1.0,
+            "sources": [
+              "edu3to4at6dpf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "edu4to5at6dpf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "edu4to5at6dpf",
+            "opacity": 1.0,
+            "sources": [
+              "edu4to5at6dpf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "edu5to6at6dpf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "edu5to6at6dpf",
+            "opacity": 1.0,
+            "sources": [
+              "edu5to6at6dpf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "elav": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "elav",
+            "opacity": 1.0,
+            "sources": [
+              "elav"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "eve": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "eve",
+            "opacity": 1.0,
+            "sources": [
+              "eve"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "eya": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "eya",
+            "opacity": 1.0,
+            "sources": [
+              "eya"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "fezf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "fezf",
+            "opacity": 1.0,
+            "sources": [
+              "fezf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "for": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "for",
+            "opacity": 1.0,
+            "sources": [
+              "for"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "foregut": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "foregut",
+            "opacity": 1.0,
+            "sources": [
+              "foregut"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "foxd3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "foxd3",
+            "opacity": 1.0,
+            "sources": [
+              "foxd3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "foxn4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "foxn4",
+            "opacity": 1.0,
+            "sources": [
+              "foxn4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "fvri": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "fvri",
+            "opacity": 1.0,
+            "sources": [
+              "fvri"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "fxl21": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "fxl21",
+            "opacity": 1.0,
+            "sources": [
+              "fxl21"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gad": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gad",
+            "opacity": 1.0,
+            "sources": [
+              "gad"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gata123": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gata123",
+            "opacity": 1.0,
+            "sources": [
+              "gata123"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gcb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gcb",
+            "opacity": 1.0,
+            "sources": [
+              "gcb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gcd": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gcd",
+            "opacity": 1.0,
+            "sources": [
+              "gcd"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gdpd1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gdpd1",
+            "opacity": 1.0,
+            "sources": [
+              "gdpd1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "glt1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "glt1",
+            "opacity": 1.0,
+            "sources": [
+              "glt1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "glyt": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "glyt",
+            "opacity": 1.0,
+            "sources": [
+              "glyt"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gnrh": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gnrh",
+            "opacity": 1.0,
+            "sources": [
+              "gnrh"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gnrhr": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gnrhr",
+            "opacity": 1.0,
+            "sources": [
+              "gnrhr"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gpb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gpb",
+            "opacity": 1.0,
+            "sources": [
+              "gpb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gpcr2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gpcr2",
+            "opacity": 1.0,
+            "sources": [
+              "gpcr2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gpcr203": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gpcr203",
+            "opacity": 1.0,
+            "sources": [
+              "gpcr203"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gpcr209": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gpcr209",
+            "opacity": 1.0,
+            "sources": [
+              "gpcr209"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gpcr210": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gpcr210",
+            "opacity": 1.0,
+            "sources": [
+              "gpcr210"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gpcr32": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gpcr32",
+            "opacity": 1.0,
+            "sources": [
+              "gpcr32"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gppcr21": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gppcr21",
+            "opacity": 1.0,
+            "sources": [
+              "gppcr21"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "grik3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "grik3",
+            "opacity": 1.0,
+            "sources": [
+              "grik3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "grm7": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "grm7",
+            "opacity": 1.0,
+            "sources": [
+              "grm7"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gsx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gsx",
+            "opacity": 1.0,
+            "sources": [
+              "gsx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "gucy": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "gucy",
+            "opacity": 1.0,
+            "sources": [
+              "gucy"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hand": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hand",
+            "opacity": 1.0,
+            "sources": [
+              "hand"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hb9": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hb9",
+            "opacity": 1.0,
+            "sources": [
+              "hb9"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hcn1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hcn1",
+            "opacity": 1.0,
+            "sources": [
+              "hcn1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "head": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "head",
+            "opacity": 1.0,
+            "sources": [
+              "head"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "hnf6": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hnf6",
+            "opacity": 1.0,
+            "sources": [
+              "hnf6"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hox1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hox1",
+            "opacity": 1.0,
+            "sources": [
+              "hox1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hox4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hox4",
+            "opacity": 1.0,
+            "sources": [
+              "hox4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hox7": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hox7",
+            "opacity": 1.0,
+            "sources": [
+              "hox7"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "hr38": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "hr38",
+            "opacity": 1.0,
+            "sources": [
+              "hr38"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "irx2546": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "irx2546",
+            "opacity": 1.0,
+            "sources": [
+              "irx2546"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "irx6": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "irx6",
+            "opacity": 1.0,
+            "sources": [
+              "irx6"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "isl": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "isl",
+            "opacity": 1.0,
+            "sources": [
+              "isl"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "jkip3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "jkip3",
+            "opacity": 1.0,
+            "sources": [
+              "jkip3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "junctophilin1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "junctophilin1",
+            "opacity": 1.0,
+            "sources": [
+              "junctophilin1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "kanl3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "kanl3",
+            "opacity": 1.0,
+            "sources": [
+              "kanl3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "kv33b": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "kv33b",
+            "opacity": 1.0,
+            "sources": [
+              "kv33b"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "kv33e": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "kv33e",
+            "opacity": 1.0,
+            "sources": [
+              "kv33e"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lateralectoderm": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lateralectoderm",
+            "opacity": 1.0,
+            "sources": [
+              "lateralectoderm"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "lbx1b": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lbx1b",
+            "opacity": 1.0,
+            "sources": [
+              "lbx1b"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lhx15": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lhx15",
+            "opacity": 1.0,
+            "sources": [
+              "lhx15"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lhx2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lhx2",
+            "opacity": 1.0,
+            "sources": [
+              "lhx2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lhx3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lhx3",
+            "opacity": 1.0,
+            "sources": [
+              "lhx3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lhx6": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lhx6",
+            "opacity": 1.0,
+            "sources": [
+              "lhx6"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "like": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "like",
+            "opacity": 1.0,
+            "sources": [
+              "like"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lmo4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lmo4",
+            "opacity": 1.0,
+            "sources": [
+              "lmo4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "lmx1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "lmx1",
+            "opacity": 1.0,
+            "sources": [
+              "lmx1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "loc28250": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "loc28250",
+            "opacity": 1.0,
+            "sources": [
+              "loc28250"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "loc5285ct": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "loc5285ct",
+            "opacity": 1.0,
+            "sources": [
+              "loc5285ct"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "loc77859": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "loc77859",
+            "opacity": 1.0,
+            "sources": [
+              "loc77859"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "loc8913nt": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "loc8913nt",
+            "opacity": 1.0,
+            "sources": [
+              "loc8913nt"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "maf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "maf",
+            "opacity": 1.0,
+            "sources": [
+              "maf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "mecom": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "mecom",
+            "opacity": 1.0,
+            "sources": [
+              "mecom"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "mhc": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "mhc",
+            "opacity": 1.0,
+            "sources": [
+              "mhc"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "mhcl4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "mhcl4",
+            "opacity": 1.0,
+            "sources": [
+              "mhcl4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "mitf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "mitf",
+            "opacity": 1.0,
+            "sources": [
+              "mitf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "mrlc2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "mrlc2",
+            "opacity": 1.0,
+            "sources": [
+              "mrlc2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "msx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "msx",
+            "opacity": 1.0,
+            "sources": [
+              "msx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "mthfsd": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "mthfsd",
+            "opacity": 1.0,
+            "sources": [
+              "mthfsd"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "munc22": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "munc22",
+            "opacity": 1.0,
+            "sources": [
+              "munc22"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "muncb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "muncb",
+            "opacity": 1.0,
+            "sources": [
+              "muncb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "muscle": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              1.0
+            ],
+            "name": "muscle",
+            "opacity": 1.0,
+            "sources": [
+              "muscle"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "sbem"
+    },
+    "nachr": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nachr",
+            "opacity": 1.0,
+            "sources": [
+              "nachr"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nb5r3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nb5r3",
+            "opacity": 1.0,
+            "sources": [
+              "nb5r3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ndus1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ndus1",
+            "opacity": 1.0,
+            "sources": [
+              "ndus1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "neog": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "neog",
+            "opacity": 1.0,
+            "sources": [
+              "neog"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "netrin": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "netrin",
+            "opacity": 1.0,
+            "sources": [
+              "netrin"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "neurod": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "neurod",
+            "opacity": 1.0,
+            "sources": [
+              "neurod"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ngb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ngb",
+            "opacity": 1.0,
+            "sources": [
+              "ngb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ngn": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ngn",
+            "opacity": 1.0,
+            "sources": [
+              "ngn"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nk21": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nk21",
+            "opacity": 1.0,
+            "sources": [
+              "nk21"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nk22": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nk22",
+            "opacity": 1.0,
+            "sources": [
+              "nk22"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nk6": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nk6",
+            "opacity": 1.0,
+            "sources": [
+              "nk6"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nmdar": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nmdar",
+            "opacity": 1.0,
+            "sources": [
+              "nmdar"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "noe1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "noe1",
+            "opacity": 1.0,
+            "sources": [
+              "noe1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nov2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nov2",
+            "opacity": 1.0,
+            "sources": [
+              "nov2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nov29": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nov29",
+            "opacity": 1.0,
+            "sources": [
+              "nov29"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "npr1a": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "npr1a",
+            "opacity": 1.0,
+            "sources": [
+              "npr1a"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ntrps": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ntrps",
+            "opacity": 1.0,
+            "sources": [
+              "ntrps"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "nuclei": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "nuclei",
+            "opacity": 0.5,
+            "sources": [
+              "nuclei"
+            ],
+            "tables": [
+              "default.tsv"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "sbem-segmentation"
+    },
+    "nucleolin": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "nucleolin",
+            "opacity": 1.0,
+            "sources": [
+              "nucleolin"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "odo2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "odo2",
+            "opacity": 1.0,
+            "sources": [
+              "odo2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "olig": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "olig",
+            "opacity": 1.0,
+            "sources": [
+              "olig"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "olm2a": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "olm2a",
+            "opacity": 1.0,
+            "sources": [
+              "olm2a"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "otp": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "otp",
+            "opacity": 1.0,
+            "sources": [
+              "otp"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "p56": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "p56",
+            "opacity": 1.0,
+            "sources": [
+              "p56"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "paraxis": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "paraxis",
+            "opacity": 1.0,
+            "sources": [
+              "paraxis"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "patched": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "patched",
+            "opacity": 1.0,
+            "sources": [
+              "patched"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pax258": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pax258",
+            "opacity": 1.0,
+            "sources": [
+              "pax258"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pax6": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pax6",
+            "opacity": 1.0,
+            "sources": [
+              "pax6"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pcdh15": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pcdh15",
+            "opacity": 1.0,
+            "sources": [
+              "pcdh15"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pde9": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pde9",
+            "opacity": 1.0,
+            "sources": [
+              "pde9"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pdf": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pdf",
+            "opacity": 1.0,
+            "sources": [
+              "pdf"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pea3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pea3",
+            "opacity": 1.0,
+            "sources": [
+              "pea3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pgam": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pgam",
+            "opacity": 1.0,
+            "sources": [
+              "pgam"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "phc2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "phc2",
+            "opacity": 1.0,
+            "sources": [
+              "phc2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "phox2b": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "phox2b",
+            "opacity": 1.0,
+            "sources": [
+              "phox2b"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pikachu": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pikachu",
+            "opacity": 1.0,
+            "sources": [
+              "pikachu"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pitxb": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pitxb",
+            "opacity": 1.0,
+            "sources": [
+              "pitxb"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "plcg": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "plcg",
+            "opacity": 1.0,
+            "sources": [
+              "plcg"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ppib": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ppib",
+            "opacity": 1.0,
+            "sources": [
+              "ppib"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "prdm8": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "prdm8",
+            "opacity": 1.0,
+            "sources": [
+              "prdm8"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "prox": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "prox",
+            "opacity": 1.0,
+            "sources": [
+              "prox"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "psmf1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "psmf1",
+            "opacity": 1.0,
+            "sources": [
+              "psmf1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ptf1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ptf1",
+            "opacity": 1.0,
+            "sources": [
+              "ptf1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "pygidium": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "pygidium",
+            "opacity": 1.0,
+            "sources": [
+              "pygidium"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "rab3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "rab3",
+            "opacity": 1.0,
+            "sources": [
+              "rab3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "raw": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "sources": [
+              "raw"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "sbem"
+    },
+    "restofanimal": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "restofanimal",
+            "opacity": 1.0,
+            "sources": [
+              "restofanimal"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "rich": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "rich",
+            "opacity": 1.0,
+            "sources": [
+              "rich"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "rims": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "rims",
+            "opacity": 1.0,
+            "sources": [
+              "rims"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "robo": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "robo",
+            "opacity": 1.0,
+            "sources": [
+              "robo"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "rpc2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "rpc2",
+            "opacity": 1.0,
+            "sources": [
+              "rpc2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "rx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "rx",
+            "opacity": 1.0,
+            "sources": [
+              "rx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "ryr2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "ryr2",
+            "opacity": 1.0,
+            "sources": [
+              "ryr2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "scn8aa": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "scn8aa",
+            "opacity": 1.0,
+            "sources": [
+              "scn8aa"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "sema2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "sema2",
+            "opacity": 1.0,
+            "sources": [
+              "sema2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "sert": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "sert",
+            "opacity": 1.0,
+            "sources": [
+              "sert"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "sim1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "sim1",
+            "opacity": 1.0,
+            "sources": [
+              "sim1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "six12": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "six12",
+            "opacity": 1.0,
+            "sources": [
+              "six12"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "six4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "six4",
+            "opacity": 1.0,
+            "sources": [
+              "six4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "slit": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "slit",
+            "opacity": 1.0,
+            "sources": [
+              "slit"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "snd1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "snd1",
+            "opacity": 1.0,
+            "sources": [
+              "snd1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "sox2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "sox2",
+            "opacity": 1.0,
+            "sources": [
+              "sox2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "sox4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "sox4",
+            "opacity": 1.0,
+            "sources": [
+              "sox4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "soxb12": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "soxb12",
+            "opacity": 1.0,
+            "sources": [
+              "soxb12"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "soxb2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "soxb2",
+            "opacity": 1.0,
+            "sources": [
+              "soxb2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "sp8": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "sp8",
+            "opacity": 1.0,
+            "sources": [
+              "sp8"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "stathmin": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "stathmin",
+            "opacity": 1.0,
+            "sources": [
+              "stathmin"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "synaptopodin": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "synaptopodin",
+            "opacity": 1.0,
+            "sources": [
+              "synaptopodin"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "syt": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "syt",
+            "opacity": 1.0,
+            "sources": [
+              "syt"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "syt12": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "syt12",
+            "opacity": 1.0,
+            "sources": [
+              "syt12"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "syt7": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "syt7",
+            "opacity": 1.0,
+            "sources": [
+              "syt7"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "syta": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "syta",
+            "opacity": 1.0,
+            "sources": [
+              "syta"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "tal": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "tal",
+            "opacity": 1.0,
+            "sources": [
+              "tal"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "tbh": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "tbh",
+            "opacity": 1.0,
+            "sources": [
+              "tbh"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "tbx20": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "tbx20",
+            "opacity": 1.0,
+            "sources": [
+              "tbx20"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "th": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "th",
+            "opacity": 1.0,
+            "sources": [
+              "th"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "timp": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "timp",
+            "opacity": 1.0,
+            "sources": [
+              "timp"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "tissue": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "tissue",
+            "opacity": 0.5,
+            "sources": [
+              "tissue"
+            ],
+            "tables": [
+              "default.tsv"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "sbem-segmentation"
+    },
+    "tlx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "tlx",
+            "opacity": 1.0,
+            "sources": [
+              "tlx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "tmtc3": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "tmtc3",
+            "opacity": 1.0,
+            "sources": [
+              "tmtc3"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "trk": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "trk",
+            "opacity": 1.0,
+            "sources": [
+              "trk"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "trph": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "trph",
+            "opacity": 1.0,
+            "sources": [
+              "trph"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "trpv": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "trpv",
+            "opacity": 1.0,
+            "sources": [
+              "trpv"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "trpv4": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "trpv4",
+            "opacity": 1.0,
+            "sources": [
+              "trpv4"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "trpv5": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "trpv5",
+            "opacity": 1.0,
+            "sources": [
+              "trpv5"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "twist": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "twist",
+            "opacity": 1.0,
+            "sources": [
+              "twist"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "unc22": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "unc22",
+            "opacity": 1.0,
+            "sources": [
+              "unc22"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "uncs": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "uncs",
+            "opacity": 1.0,
+            "sources": [
+              "uncs"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "uncx": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "uncx",
+            "opacity": 1.0,
+            "sources": [
+              "uncx"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "upp": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "upp",
+            "opacity": 1.0,
+            "sources": [
+              "upp"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "usp9x": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "usp9x",
+            "opacity": 1.0,
+            "sources": [
+              "usp9x"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "vacht": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "vacht",
+            "opacity": 1.0,
+            "sources": [
+              "vacht"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "vat1l": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "vat1l",
+            "opacity": 1.0,
+            "sources": [
+              "vat1l"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "vegfr": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "vegfr",
+            "opacity": 1.0,
+            "sources": [
+              "vegfr"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "vglut": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "vglut",
+            "opacity": 1.0,
+            "sources": [
+              "vglut"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "vnc": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "vnc",
+            "opacity": 1.0,
+            "sources": [
+              "vnc"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr-mask"
+    },
+    "wnt16": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "wnt16",
+            "opacity": 1.0,
+            "sources": [
+              "wnt16"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    },
+    "wnt5": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "magenta",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "name": "wnt5",
+            "opacity": 1.0,
+            "sources": [
+              "wnt5"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "prospr"
+    }
+  }
+}

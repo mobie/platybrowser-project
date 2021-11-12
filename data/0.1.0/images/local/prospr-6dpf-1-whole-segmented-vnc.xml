@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>channel 1</name>
+        <name>vnc</name>
         <size>550 518 570</size>
         <voxelSize>
           <unit>micrometer</unit>

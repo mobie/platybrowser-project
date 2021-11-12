@@ -10,7 +10,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>channel 1</name>
+        <name>cilia</name>
         <size>27499 25916 11416</size>
         <voxelSize>
           <unit>micrometer</unit>
@@ -26,7 +26,7 @@
       <last>0</last>
     </Timepoints>
     <ImageLoader format="bdv.n5.s3">
-      <Key>0.6.2/images/remote/sbem-6dpf-1-whole-segmented-cilia.n5</Key>
+      <Key>0.6.2/images/local/sbem-6dpf-1-whole-segmented-cilia.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
       <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
       <BucketName>platybrowser</BucketName>

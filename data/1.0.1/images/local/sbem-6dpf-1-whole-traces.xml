@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>traces</name>
         <size>3438 3240 2854</size>
         <voxelSize>
           <unit>micrometer</unit>

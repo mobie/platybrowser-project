@@ -10,7 +10,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>channel 1</name>
+        <name>cells</name>
         <size>13750 12958 11416</size>
         <voxelSize>
           <unit>micrometer</unit>
@@ -26,7 +26,7 @@
       <last>0</last>
     </Timepoints>
     <ImageLoader format="bdv.n5.s3">
-      <Key>1.0.1/images/remote/sbem-6dpf-1-whole-segmented-cells.n5</Key>
+      <Key>1.0.1/images/local/sbem-6dpf-1-whole-segmented-cells.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
       <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
       <BucketName>platybrowser</BucketName>
