@@ -6711,7 +6711,7 @@
     },
     "coronal": {
       "isExclusive": false,
-      "uiSelectionGroup": "anatomical-views",
+      "uiSelectionGroup": "anatomy",
       "viewerTransform": {
         "normalVector": [
           0.7,
