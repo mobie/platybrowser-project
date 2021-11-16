@@ -6709,17 +6709,6 @@
       ],
       "uiSelectionGroup": "prospr"
     },
-    "coronal": {
-      "isExclusive": false,
-      "uiSelectionGroup": "anatomy",
-      "viewerTransform": {
-        "normalVector": [
-          0.7,
-          0.56,
-          0.43
-        ]
-      }
-    },
     "crypticsegment": {
       "isExclusive": false,
       "sourceDisplays": [
