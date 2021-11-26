@@ -1,4 +1,11 @@
 {
+  "defaultLocation": {
+    "position": [
+      120.5,
+      115.3,
+      201.5
+    ]
+  },
   "is2D": false,
   "sources": {
     "ache": {
