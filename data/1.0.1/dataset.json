@@ -4431,6 +4431,134 @@
         ]
       }
     },
+    "Figure1a": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "r=255,g=255,b=255,a=255",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "raw",
+            "opacity": 1.0,
+            "showImagesIn3d": false,
+            "sources": [
+              "raw"
+            ],
+            "visible": true
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "colorByColumn": "geneColourScheme",
+            "lut": "argbColumn",
+            "name": "cells",
+            "opacity": 0.5,
+            "resolution3dView": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "scatterPlotAxes": [
+              "gene_umap_x",
+              "gene_umap_y"
+            ],
+            "selectedSegmentIds": [
+              "cells;0;3523.0",
+              "cells;0;1580.0",
+              "cells;0;1413.0",
+              "cells;0;2723.0",
+              "cells;0;3057.0",
+              "cells;0;3059.0",
+              "cells;0;1272.0",
+              "cells;0;3010.0",
+              "cells;0;2741.0",
+              "cells;0;2397.0",
+              "cells;0;2495.0",
+              "cells;0;3223.0",
+              "cells;0;1905.0",
+              "cells;0;2372.0",
+              "cells;0;1411.0",
+              "cells;0;2494.0",
+              "cells;0;2053.0",
+              "cells;0;2170.0",
+              "cells;0;2840.0",
+              "cells;0;2544.0",
+              "cells;0;875.0",
+              "cells;0;2546.0",
+              "cells;0;3061.0",
+              "cells;0;3060.0",
+              "cells;0;2672.0",
+              "cells;0;3015.0",
+              "cells;0;2682.0",
+              "cells;0;1909.0",
+              "cells;0;2190.0",
+              "cells;0;2683.0",
+              "cells;0;1846.0",
+              "cells;0;2545.0",
+              "cells;0;2502.0",
+              "cells;0;2181.0",
+              "cells;0;881.0",
+              "cells;0;2547.0",
+              "cells;0;2673.0",
+              "cells;0;2889.0",
+              "cells;0;2890.0",
+              "cells;0;1579.0",
+              "cells;0;2493.0",
+              "cells;0;2003.0",
+              "cells;0;3012.0",
+              "cells;0;3028.0",
+              "cells;0;3204.0",
+              "cells;0;2055.0",
+              "cells;0;1847.0",
+              "cells;0;3056.0",
+              "cells;0;2337.0",
+              "cells;0;2169.0",
+              "cells;0;2841.0",
+              "cells;0;1845.0",
+              "cells;0;1118.0"
+            ],
+            "showScatterPlot": true,
+            "showSelectedSegmentsIn3d": true,
+            "showTable": true,
+            "sources": [
+              "cells"
+            ],
+            "tables": [
+              "default.tsv",
+              "gene_clusters.tsv",
+              "gene_umap.tsv"
+            ],
+            "valueLimits": [
+              null,
+              null
+            ],
+            "visible": true
+          }
+        }
+      ],
+      "sourceTransforms": [],
+      "uiSelectionGroup": "mobie-paper",
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.0009524990427331709,
+          -0.0008503203422875755,
+          0.002657973771149419,
+          -0.13299824659745754,
+          0.001864856993706143,
+          -0.0022833233019677397,
+          -6.218336393574233e-05,
+          0.043228406493575594,
+          0.0020760967332115366,
+          0.0016608773865692255,
+          0.0012753165646870984,
+          -0.6771337168864665
+        ],
+        "timepoint": 0
+      }
+    },
     "Left eye": {
       "isExclusive": false,
       "uiSelectionGroup": "bookmark",
