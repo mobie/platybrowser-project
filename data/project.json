@@ -25,9 +25,5 @@
     "1.0.1"
   ],
   "defaultDataset": "1.0.1",
-  "imageDataFormats": [
-    "bdv.n5",
-    "bdv.n5.s3"
-  ],
-  "specVersion": "0.2.0"
+  "specVersion": "0.3.0"
 }

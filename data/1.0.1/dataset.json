@@ -2097,7 +2097,7 @@
         }
       }
     },
-    "prosp6-ref": {
+    "prospr6-ref": {
       "image": {
         "imageData": {
           "bdv.n5": {
@@ -2972,9 +2972,6 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -3038,9 +3035,6 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -3097,9 +3091,6 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         },
@@ -3198,9 +3189,6 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cilia"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -3243,6 +3231,9 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "morphology_clusters.tsv"
+            ],
             "colorByColumn": "morphologyColourScheme",
             "lut": "argbColumn",
             "name": "cells",
@@ -3250,10 +3241,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "morphology_clusters.tsv"
             ]
           }
         }
@@ -3311,6 +3298,9 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "symmetric_cells.tsv"
+            ],
             "colorByColumn": "pair_index",
             "lut": "glasbey",
             "name": "cells",
@@ -3334,10 +3324,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "symmetric_cells.tsv"
             ]
           }
         }
@@ -3476,10 +3462,10 @@
               0.0,
               1000.0
             ],
-            "name": "ref",
+            "name": "prospr6-ref",
             "opacity": 1.0,
             "sources": [
-              "ref"
+              "prospr6-ref"
             ]
           }
         },
@@ -3682,10 +3668,10 @@
               0.0,
               1000.0
             ],
-            "name": "ref",
+            "name": "prospr6-ref",
             "opacity": 1.0,
             "sources": [
-              "ref"
+              "prospr6-ref"
             ]
           }
         },
@@ -3919,16 +3905,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "gene_clusters.tsv"
+            ],
             "colorByColumn": "geneColourScheme",
             "lut": "argbColumn",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "gene_clusters.tsv"
             ]
           }
         }
@@ -3970,16 +3955,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "gene_clusters.tsv"
+            ],
             "colorByColumn": "geneColourScheme",
             "lut": "argbColumn",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "gene_clusters.tsv"
             ]
           }
         }
@@ -4021,16 +4005,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "gene_clusters.tsv"
+            ],
             "colorByColumn": "geneColourScheme",
             "lut": "argbColumn",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "gene_clusters.tsv"
             ]
           }
         }
@@ -4072,16 +4055,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "ganglia_ids.tsv"
+            ],
             "colorByColumn": "gangliaColourScheme",
             "lut": "argbColumn",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "ganglia_ids.tsv"
             ]
           }
         }
@@ -4123,16 +4105,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "ganglia_ids.tsv"
+            ],
             "colorByColumn": "gangliaColourScheme",
             "lut": "argbColumn",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "ganglia_ids.tsv"
             ]
           }
         }
@@ -4222,9 +4203,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "virtual-cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         },
@@ -4268,9 +4246,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4312,16 +4287,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "vc_assignments.tsv"
+            ],
             "colorByColumn": "expression_sum",
             "lut": "viridis",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "vc_assignments.tsv"
             ],
             "valueLimits": [
               0.0,
@@ -4406,9 +4380,6 @@
             "showSelectedSegmentsIn3d": true,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4452,6 +4423,10 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "gene_clusters.tsv",
+              "gene_umap.tsv"
+            ],
             "colorByColumn": "geneColourScheme",
             "lut": "argbColumn",
             "name": "cells",
@@ -4466,74 +4441,65 @@
               "gene_umap_y"
             ],
             "selectedSegmentIds": [
-              "cells;0;3523.0",
-              "cells;0;1580.0",
-              "cells;0;1413.0",
-              "cells;0;2723.0",
-              "cells;0;3057.0",
-              "cells;0;3059.0",
-              "cells;0;1272.0",
-              "cells;0;3010.0",
-              "cells;0;2741.0",
-              "cells;0;2397.0",
-              "cells;0;2495.0",
-              "cells;0;3223.0",
-              "cells;0;1905.0",
-              "cells;0;2372.0",
-              "cells;0;1411.0",
-              "cells;0;2494.0",
-              "cells;0;2053.0",
-              "cells;0;2170.0",
-              "cells;0;2840.0",
-              "cells;0;2544.0",
-              "cells;0;875.0",
-              "cells;0;2546.0",
-              "cells;0;3061.0",
-              "cells;0;3060.0",
-              "cells;0;2672.0",
-              "cells;0;3015.0",
-              "cells;0;2682.0",
-              "cells;0;1909.0",
-              "cells;0;2190.0",
-              "cells;0;2683.0",
-              "cells;0;1846.0",
-              "cells;0;2545.0",
-              "cells;0;2502.0",
-              "cells;0;2181.0",
-              "cells;0;881.0",
-              "cells;0;2547.0",
-              "cells;0;2673.0",
-              "cells;0;2889.0",
-              "cells;0;2890.0",
-              "cells;0;1579.0",
-              "cells;0;2493.0",
-              "cells;0;2003.0",
-              "cells;0;3012.0",
-              "cells;0;3028.0",
-              "cells;0;3204.0",
-              "cells;0;2055.0",
-              "cells;0;1847.0",
-              "cells;0;3056.0",
-              "cells;0;2337.0",
-              "cells;0;2169.0",
-              "cells;0;2841.0",
-              "cells;0;1845.0",
-              "cells;0;1118.0"
+              "cells;0;3523",
+              "cells;0;1580",
+              "cells;0;1413",
+              "cells;0;2723",
+              "cells;0;3057",
+              "cells;0;3059",
+              "cells;0;1272",
+              "cells;0;3010",
+              "cells;0;2741",
+              "cells;0;2397",
+              "cells;0;2495",
+              "cells;0;3223",
+              "cells;0;1905",
+              "cells;0;2372",
+              "cells;0;1411",
+              "cells;0;2494",
+              "cells;0;2053",
+              "cells;0;2170",
+              "cells;0;2840",
+              "cells;0;2544",
+              "cells;0;875",
+              "cells;0;2546",
+              "cells;0;3061",
+              "cells;0;3060",
+              "cells;0;2672",
+              "cells;0;3015",
+              "cells;0;2682",
+              "cells;0;1909",
+              "cells;0;2190",
+              "cells;0;2683",
+              "cells;0;1846",
+              "cells;0;2545",
+              "cells;0;2502",
+              "cells;0;2181",
+              "cells;0;881",
+              "cells;0;2547",
+              "cells;0;2673",
+              "cells;0;2889",
+              "cells;0;2890",
+              "cells;0;1579",
+              "cells;0;2493",
+              "cells;0;2003",
+              "cells;0;3012",
+              "cells;0;3028",
+              "cells;0;3204",
+              "cells;0;2055",
+              "cells;0;1847",
+              "cells;0;3056",
+              "cells;0;2337",
+              "cells;0;2169",
+              "cells;0;2841",
+              "cells;0;1845",
+              "cells;0;1118"
             ],
             "showScatterPlot": true,
             "showSelectedSegmentsIn3d": true,
             "showTable": true,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "gene_clusters.tsv",
-              "gene_umap.tsv"
-            ],
-            "valueLimits": [
-              null,
-              null
             ],
             "visible": true
           }
@@ -4634,9 +4600,6 @@
             "opacity": 0.5,
             "sources": [
               "chromatin"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4688,9 +4651,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4742,9 +4702,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4796,9 +4753,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4850,9 +4804,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4904,9 +4855,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -4958,9 +4906,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5012,9 +4957,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5066,9 +5008,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5120,9 +5059,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5174,9 +5110,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5228,9 +5161,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5282,9 +5212,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5336,9 +5263,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5390,9 +5314,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5444,9 +5365,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5498,9 +5416,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5553,9 +5468,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5607,9 +5519,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5662,9 +5571,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -5985,9 +5891,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         },
@@ -6017,9 +5920,6 @@
             "showSelectedSegmentsIn3d": false,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -6061,16 +5961,15 @@
         },
         {
           "segmentationDisplay": {
+            "additionalTables": [
+              "symmetric_cells.tsv"
+            ],
             "colorByColumn": "pair_index",
             "lut": "glasbeyZeroTransparent",
             "name": "cells",
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv",
-              "symmetric_cells.tsv"
             ]
           }
         },
@@ -6677,9 +6576,6 @@
             "opacity": 0.5,
             "sources": [
               "cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -6736,9 +6632,6 @@
             "opacity": 0.5,
             "sources": [
               "chromatin"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -6775,9 +6668,6 @@
             "opacity": 0.5,
             "sources": [
               "cilia"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -7345,9 +7235,6 @@
             "opacity": 0.5,
             "sources": [
               "ganglia"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -9060,9 +8947,6 @@
             "opacity": 0.5,
             "sources": [
               "nuclei"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -9569,7 +9453,7 @@
       ],
       "uiSelectionGroup": "prospr"
     },
-    "prosp6-ref": {
+    "prospr6-ref": {
       "isExclusive": false,
       "sourceDisplays": [
         {
@@ -9579,10 +9463,10 @@
               0.0,
               1000.0
             ],
-            "name": "prosp6-ref",
+            "name": "prospr6-ref",
             "opacity": 1.0,
             "sources": [
-              "prosp6-ref"
+              "prospr6-ref"
             ]
           }
         }
@@ -10359,9 +10243,6 @@
             "opacity": 0.5,
             "sources": [
               "tissue"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -10418,9 +10299,6 @@
             "opacity": 0.5,
             "sources": [
               "traces"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
@@ -10737,9 +10615,6 @@
             "opacity": 0.5,
             "sources": [
               "virtual-cells"
-            ],
-            "tables": [
-              "default.tsv"
             ]
           }
         }
