@@ -2860,7 +2860,7 @@
   "views": {
     "Figure 1B: Epithelial cell": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.017997452653548462,
@@ -2880,7 +2880,7 @@
     },
     "Figure 1C: Adult eye": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.007328041275318451,
@@ -2900,7 +2900,7 @@
     },
     "Figure 1D: Muscles": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.1004146194571071,
@@ -2920,7 +2920,7 @@
     },
     "Figure 1E: Nephridia": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.0745884810987144,
@@ -2976,7 +2976,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.02053512860323281,
@@ -3039,7 +3039,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.09128601768827924,
@@ -3193,7 +3193,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.030685428425032128,
@@ -3245,7 +3245,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0017600520306598772,
@@ -3328,7 +3328,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.004548979445375371,
@@ -3420,7 +3420,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.003865885966225583,
@@ -3484,7 +3484,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.005852720107574013,
@@ -3548,7 +3548,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0036517574093479933,
@@ -3626,7 +3626,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.004797782584262642,
@@ -3690,7 +3690,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.004608293179347994,
@@ -3740,7 +3740,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0024750642242604777,
@@ -3804,7 +3804,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.004333217361872357,
@@ -3868,7 +3868,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.005243193007865553,
@@ -3918,7 +3918,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0016799541513895216,
@@ -3968,7 +3968,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.004146887751484037,
@@ -4018,7 +4018,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0035670861884102255,
@@ -4068,7 +4068,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.004146887751484037,
@@ -4118,7 +4118,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0035670861884102255,
@@ -4155,7 +4155,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.1052478078894777,
@@ -4250,7 +4250,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0032831743678336245,
@@ -4318,7 +4318,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0009460726527388642,
@@ -4384,7 +4384,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.02609084765269527,
@@ -5245,7 +5245,7 @@
     },
     "Left eye": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "position": [
           177.0,
@@ -5256,7 +5256,7 @@
     },
     "Suppl. Fig. 1A: Ciliated support cells": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.041494134767812454,
@@ -5276,7 +5276,7 @@
     },
     "Suppl. Fig. 1B: Nephridia: Clathrin pit": {
       "isExclusive": false,
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.059985386969530125,
@@ -5322,7 +5322,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.018355912346545666,
@@ -5373,7 +5373,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.019792413608263653,
@@ -5424,7 +5424,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.03318223098599022,
@@ -5475,7 +5475,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.012793186484949318,
@@ -5526,7 +5526,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.018730504332614282,
@@ -5577,7 +5577,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.036500454084589413,
@@ -5628,7 +5628,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.03506346804426909,
@@ -5679,7 +5679,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.0170277312114674,
@@ -5730,7 +5730,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.05454907268882776,
@@ -5781,7 +5781,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.06000397995771049,
@@ -5832,7 +5832,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.040983525686572285,
@@ -5883,7 +5883,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.06000397995771049,
@@ -5934,7 +5934,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.05454907268882772,
@@ -5985,7 +5985,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.06600437795348156,
@@ -6036,7 +6036,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.03725775062415662,
@@ -6087,7 +6087,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.06600437795348155,
@@ -6138,7 +6138,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.04098352568657229,
@@ -6190,7 +6190,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.05454907268882773,
@@ -6241,7 +6241,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.07260481574882977,
@@ -6293,7 +6293,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           0.04959006608075247,
@@ -6420,7 +6420,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0020922545477940757,
@@ -6547,7 +6547,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.005366607385602804,
@@ -6642,7 +6642,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.009935454749539616,
@@ -6706,7 +6706,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark",
+      "uiSelectionGroup": "cell-paper",
       "viewerTransform": {
         "normalizedAffine": [
           -0.0009460726527388642,
@@ -7561,7 +7561,7 @@
           }
         }
       ],
-      "uiSelectionGroup": "bookmark"
+      "uiSelectionGroup": "cell-paper"
     },
     "delta": {
       "isExclusive": false,
