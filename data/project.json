@@ -25,5 +25,9 @@
     "1.0.1"
   ],
   "defaultDataset": "1.0.1",
+  "description": "Vergara et al. (2021) PlatyBrowser, Cell",
+  "references": [
+    "https://www.sciencedirect.com/science/article/pii/S009286742100876X"
+  ],
   "specVersion": "0.3.0"
 }
