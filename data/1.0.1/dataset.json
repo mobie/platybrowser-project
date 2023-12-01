@@ -611,6 +611,15 @@
         }
       }
     },
+    "em-raw-low-res-test": {
+      "image": {
+        "imageData": {
+          "ome.zarr": {
+            "relativePath": "images/ome-zarr/em-raw-low-res-test.ome.zarr"
+          }
+        }
+      }
+    },
     "eve": {
       "image": {
         "imageData": {
@@ -1795,6 +1804,26 @@
             "relativePath": "tables/sbem-6dpf-1-whole-segmented-nuclei"
           }
         }
+      }
+    },
+    "nuclei_centers": {
+      "spots": {
+        "boundingBoxMax": [
+          242.2911,
+          233.9254,
+          278.4161
+        ],
+        "boundingBoxMin": [
+          45.1076,
+          31.1844,
+          3.4268
+        ],
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/nuclei_centers"
+          }
+        },
+        "unit": "micrometer"
       }
     },
     "nucleolin": {
@@ -4403,29 +4432,45 @@
       }
     },
     "Figure1a": {
-      "uiSelectionGroup": "mobie-paper",
+      "isExclusive": true,
       "sourceDisplays": [
         {
           "imageDisplay": {
-            "sources": [
-              "raw"
-            ],
+            "blendingMode": "sum",
             "color": "r=255,g=255,b=255,a=255",
             "contrastLimits": [
               0.0,
               255.0
             ],
-            "showImagesIn3d": false,
             "name": "raw",
             "opacity": 0.732,
-            "visible": true,
-            "blendingMode": "sum"
+            "showImagesIn3d": false,
+            "sources": [
+              "raw"
+            ],
+            "visible": true
           }
         },
         {
           "segmentationDisplay": {
-            "sources": [
-              "cells"
+            "additionalTables": [
+              "gene_clusters.tsv",
+              "gene_umap.tsv"
+            ],
+            "boundaryThickness": 0.25,
+            "colorByColumn": "geneColourScheme",
+            "lut": "argbColumn",
+            "name": "cells",
+            "opacity": 0.5,
+            "randomColorSeed": 42,
+            "resolution3dView": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "scatterPlotAxes": [
+              "gene_umap_x",
+              "gene_umap_y"
             ],
             "selectedSegmentIds": [
               "cells;0;2319",
@@ -5196,43 +5241,28 @@
               "cells;0;3729",
               "cells;0;277"
             ],
-            "showSelectedSegmentsIn3d": true,
-            "resolution3dView": [
-              0.5,
-              0.5,
-              0.5
-            ],
-            "lut": "argbColumn",
-            "colorByColumn": "geneColourScheme",
-            "showScatterPlot": true,
-            "scatterPlotAxes": [
-              "gene_umap_x",
-              "gene_umap_y"
-            ],
-            "additionalTables": [
-              "gene_clusters.tsv",
-              "gene_umap.tsv"
-            ],
-            "showTable": true,
             "showAsBoundaries": false,
-            "boundaryThickness": 0.25,
-            "randomColorSeed": 42,
-            "name": "cells",
-            "opacity": 0.5,
+            "showScatterPlot": true,
+            "showSelectedSegmentsIn3d": true,
+            "showTable": true,
+            "sources": [
+              "cells"
+            ],
             "visible": true
           }
         }
       ],
       "sourceTransforms": [],
+      "uiSelectionGroup": "mobie-paper",
       "viewerTransform": {
         "normalizedAffine": [
-          -9.524990427331714E-4,
-          -8.503203422875751E-4,
+          -0.0009524990427331714,
+          -0.0008503203422875751,
           0.00265797377114942,
           -0.13299824659745743,
           0.0018648569937061434,
           -0.0022833233019677384,
-          -6.218336393574223E-5,
+          -6.218336393574223e-05,
           0.043228406493575795,
           0.002076096733211536,
           0.0016608773865692257,
@@ -5240,8 +5270,7 @@
           -0.6771337168864665
         ],
         "timepoint": 0
-      },
-      "isExclusive": true
+      }
     },
     "Left eye": {
       "isExclusive": false,
@@ -7723,6 +7752,26 @@
       ],
       "uiSelectionGroup": "prospr"
     },
+    "em-raw-low-res-test": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "em-raw-low-res-test",
+            "opacity": 1.0,
+            "sources": [
+              "em-raw-low-res-test"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "sbem"
+    },
     "eve": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -9670,6 +9719,22 @@
         }
       ],
       "uiSelectionGroup": "sbem-segmentation"
+    },
+    "nuclei_centers": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "spotDisplay": {
+            "lut": "glasbey",
+            "name": "nuclei_centers",
+            "opacity": 0.5,
+            "sources": [
+              "nuclei_centers"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "spots"
     },
     "nucleolin": {
       "isExclusive": false,
