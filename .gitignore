@@ -1,7 +1,7 @@
 *.h5
 __pycache__/
 tmp*
-.idea/*
+*/.idea
 *.iml
 *.DS_Store
 data/dev-*
