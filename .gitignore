@@ -2,6 +2,7 @@
 __pycache__/
 tmp*
 .idea/*
+*.iml
 *.DS_Store
 data/dev-*
 *.tif
