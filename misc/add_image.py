@@ -5,6 +5,9 @@
 # - cd mobie-utils-python
 # - conda env create -f environment.yaml
 # - conda activate mobie
+# - cd mobie-utils-python
+# - pip install -e .
+#
 #
 # # platybrowser-project
 # - git clone https://github.com/mobie/platybrowser-project.git
@@ -22,14 +25,17 @@ image_name = 'em-raw-low-res-test'  # name in MoBIE; MUST be unique within the w
 unit = 'micrometer'
 resolution = (1.6, 1.28, 1.28)  # zyx
 chunks = (96, 96, 96)
-scale_factors = 4 * [[2, 2, 2]]  # resolution pyramid
+scale_factors = 1 * [[2, 2, 2]]  # resolution pyramid
 print("scale factors:", scale_factors)
 
 view = mobie.metadata.get_default_view("image", image_name, menu_name="sbem")
 
+print("adding image...")
+
 mobie.add_image(
     input_path=input_image_file,
     input_key='',  # the input is a single tif image, so we leave input_key blank
+    file_format="ome.zarr",
     root=mobie_project_folder,
     dataset_name=dataset_name,
     image_name=image_name,
@@ -39,4 +45,6 @@ mobie.add_image(
     unit=unit,
     view=view
 )
+
+print("done!")
 
