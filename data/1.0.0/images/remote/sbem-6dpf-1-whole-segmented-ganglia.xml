@@ -2,10 +2,10 @@
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
     <ImageLoader format="bdv.n5.s3">
-      <Key>rawdata/sbem-6dpf-1-whole-segmented-ganglia.n5</Key>
+      <Key>platybrowser/rawdata/sbem-6dpf-1-whole-segmented-ganglia.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
-      <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
-      <BucketName>platybrowser</BucketName>
+      <ServiceEndpoint>https://buckets.embl.de</ServiceEndpoint>
+      <BucketName>platybrowser-n5-generic</BucketName>
     </ImageLoader>
     <ViewSetups>
       <Attributes name="channel">

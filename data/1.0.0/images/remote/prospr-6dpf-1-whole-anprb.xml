@@ -26,10 +26,10 @@
       <last>0</last>
     </Timepoints>
     <ImageLoader format="bdv.n5.s3">
-      <Key>0.6.3/images/remote/prospr-6dpf-1-whole-anprb.n5</Key>
+      <Key>platybrowser/0.6.3/images/remote/prospr-6dpf-1-whole-anprb.n5</Key>
       <SigningRegion>us-west-2</SigningRegion>
-      <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
-      <BucketName>platybrowser</BucketName>
+      <ServiceEndpoint>https://buckets.embl.de</ServiceEndpoint>
+      <BucketName>platybrowser-n5-generic</BucketName>
     </ImageLoader>
   </SequenceDescription>
   <ViewRegistrations>
