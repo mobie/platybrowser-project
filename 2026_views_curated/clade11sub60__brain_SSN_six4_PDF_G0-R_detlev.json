@@ -1,0 +1,56 @@
+{
+ "views": {
+  "clade11sub60__brain_SSN_six4_PDF_G0-R_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;9060",
+       "cells;0;9195",
+       "cells;0;8440",
+       "cells;0;8088",
+       "cells;0;8890",
+       "cells;0;8640",
+       "cells;0;8694",
+       "cells;0;8441",
+       "cells;0;8881",
+       "cells;0;8336",
+       "cells;0;8611",
+       "cells;0;8335",
+       "cells;0;8888",
+       "cells;0;8612",
+       "cells;0;7679",
+       "cells;0;8714",
+       "cells;0;9209",
+       "cells;0;8889",
+       "cells;0;8438",
+       "cells;0;8836",
+       "cells;0;8817",
+       "cells;0;8838"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

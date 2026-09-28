@@ -1,0 +1,23 @@
+name: dataset-json
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Validate dataset.json structure
+        run: python 2025_scripts/validate_dataset_json.py
+
+      - name: Check dataset.json is compressed (no default-valued keys)
+        run: python 2025_scripts/compress_dataset_json.py --check

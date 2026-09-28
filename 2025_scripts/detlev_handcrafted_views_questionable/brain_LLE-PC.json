@@ -1,0 +1,147 @@
+{
+  "views": {
+    "brain_PC": {
+      "uiSelectionGroups": [
+        "curated-cell-types"
+      ],
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "sources": [
+              "raw"
+            ],
+            "color": "r=255,g=255,b=255,a=255",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "raw",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "fezf"
+            ],
+            "color": "r=51,g=153,b=0,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "fezf",
+            "opacity": 1.0,
+            "visible": false,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "nk21"
+            ],
+            "color": "r=153,g=153,b=255,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "nk21",
+            "opacity": 1.0,
+            "visible": false,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "ap2"
+            ],
+            "color": "r=153,g=153,b=0,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "ap2",
+            "opacity": 1.0,
+            "visible": false,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "sources": [
+              "cells"
+            ],
+            "selectedSegmentIds": [
+              "cells;0;958",
+              "cells;0;483"
+            ],
+            "showSelectedSegmentsIn3d": false,
+            "lut": "glasbey",
+            "showScatterPlot": false,
+            "scatterPlotAxes": [
+              "anchor_x",
+              "anchor_y"
+            ],
+            "showTable": true,
+            "showAsBoundaries": false,
+            "boundaryThickness": 1.0,
+            "randomColorSeed": 42,
+            "opacityNotSelected": 0.15,
+            "name": "cells",
+            "opacity": 0.5,
+            "visible": true
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "dlx"
+            ],
+            "color": "r=87,g=141,b=113,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "dlx",
+            "opacity": 1.0,
+            "visible": false,
+            "blendingMode": "sum"
+          }
+        }
+      ],
+      "sourceTransforms": [],
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.004974761273864334,
+          -0.0026104551885198987,
+          7.080957846374861E-4,
+          1.4008572969488244,
+          -0.0014467336688559452,
+          0.0013155615310509107,
+          -0.005314168346303085,
+          0.2315473929233182,
+          0.0022853528442869516,
+          -0.004849633721239229,
+          -0.0018227289459382117,
+          0.22153438533831504
+        ],
+        "timepoint": 0
+      },
+      "isExclusive": true,
+      "description": ""
+    }
+  }
+}

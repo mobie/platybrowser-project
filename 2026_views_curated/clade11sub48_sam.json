@@ -1,0 +1,154 @@
+{
+ "views": {
+  "clade11sub48_sam": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "name": "cells",
+      "selectedSegmentIds": [
+       "cells;0;2587",
+       "cells;0;2922",
+       "cells;0;3902",
+       "cells;0;5077",
+       "cells;0;5080",
+       "cells;0;5180",
+       "cells;0;5188",
+       "cells;0;5281",
+       "cells;0;5435",
+       "cells;0;5436",
+       "cells;0;5504",
+       "cells;0;5507",
+       "cells;0;5530",
+       "cells;0;5647",
+       "cells;0;5659",
+       "cells;0;5662",
+       "cells;0;5736",
+       "cells;0;5737",
+       "cells;0;5738",
+       "cells;0;5759",
+       "cells;0;5859",
+       "cells;0;5863",
+       "cells;0;5876",
+       "cells;0;5877",
+       "cells;0;5959",
+       "cells;0;6117",
+       "cells;0;6118",
+       "cells;0;6120",
+       "cells;0;6133",
+       "cells;0;6192",
+       "cells;0;6225",
+       "cells;0;6373",
+       "cells;0;6439",
+       "cells;0;6476",
+       "cells;0;6654",
+       "cells;0;6737",
+       "cells;0;6875",
+       "cells;0;7108",
+       "cells;0;7772",
+       "cells;0;8328",
+       "cells;0;8865",
+       "cells;0;10241",
+       "cells;0;18943",
+       "cells;0;19625",
+       "cells;0;20110",
+       "cells;0;26965",
+       "cells;0;28047"
+      ],
+      "opacityNotSelected": 0.05
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "nuclei"
+      ],
+      "name": "nuclei",
+      "selectedSegmentIds": [
+       "nuclei;0;77",
+       "nuclei;0;84",
+       "nuclei;0;97",
+       "nuclei;0;1822",
+       "nuclei;0;1909",
+       "nuclei;0;2429",
+       "nuclei;0;3226",
+       "nuclei;0;3228",
+       "nuclei;0;3232",
+       "nuclei;0;3233",
+       "nuclei;0;3390",
+       "nuclei;0;3409",
+       "nuclei;0;3410",
+       "nuclei;0;3411",
+       "nuclei;0;3412",
+       "nuclei;0;3517",
+       "nuclei;0;3520",
+       "nuclei;0;3521",
+       "nuclei;0;3522",
+       "nuclei;0;3523",
+       "nuclei;0;3524",
+       "nuclei;0;3526",
+       "nuclei;0;3740",
+       "nuclei;0;3741",
+       "nuclei;0;3745",
+       "nuclei;0;3746",
+       "nuclei;0;3747",
+       "nuclei;0;3748",
+       "nuclei;0;3749",
+       "nuclei;0;3750",
+       "nuclei;0;3753",
+       "nuclei;0;3885",
+       "nuclei;0;3892",
+       "nuclei;0;4099",
+       "nuclei;0;4123",
+       "nuclei;0;4127",
+       "nuclei;0;4130",
+       "nuclei;0;4131",
+       "nuclei;0;4489",
+       "nuclei;0;5003",
+       "nuclei;0;5333",
+       "nuclei;0;6024",
+       "nuclei;0;8359",
+       "nuclei;0;8395",
+       "nuclei;0;8570",
+       "nuclei;0;10128",
+       "nuclei;0;10463"
+      ]
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "sbem-6dpf-1-whole-combined-traces"
+      ],
+      "name": "traces",
+      "selectedSegmentIds": [
+       "sbem-6dpf-1-whole-combined-traces;0;3226",
+       "sbem-6dpf-1-whole-combined-traces;0;3233",
+       "sbem-6dpf-1-whole-combined-traces;0;3409",
+       "sbem-6dpf-1-whole-combined-traces;0;3410",
+       "sbem-6dpf-1-whole-combined-traces;0;3411",
+       "sbem-6dpf-1-whole-combined-traces;0;3520",
+       "sbem-6dpf-1-whole-combined-traces;0;3522",
+       "sbem-6dpf-1-whole-combined-traces;0;3524",
+       "sbem-6dpf-1-whole-combined-traces;0;3526",
+       "sbem-6dpf-1-whole-combined-traces;0;3746",
+       "sbem-6dpf-1-whole-combined-traces;0;3748",
+       "sbem-6dpf-1-whole-combined-traces;0;3749",
+       "sbem-6dpf-1-whole-combined-traces;0;3750",
+       "sbem-6dpf-1-whole-combined-traces;0;3753",
+       "sbem-6dpf-1-whole-combined-traces;0;3891",
+       "sbem-6dpf-1-whole-combined-traces;0;3892",
+       "sbem-6dpf-1-whole-combined-traces;0;4127",
+       "sbem-6dpf-1-whole-combined-traces;0;4130",
+       "sbem-6dpf-1-whole-combined-traces;0;4131"
+      ]
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

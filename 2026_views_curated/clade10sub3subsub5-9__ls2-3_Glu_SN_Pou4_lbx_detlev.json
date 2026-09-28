@@ -1,0 +1,136 @@
+{
+ "views": {
+  "clade10sub3subsub5-9__ls2-3_Glu_SN_Pou4_lbx_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;26608",
+       "cells;0;27917",
+       "cells;0;27938",
+       "cells;0;26605",
+       "cells;0;18270",
+       "cells;0;26603",
+       "cells;0;26207",
+       "cells;0;27701",
+       "cells;0;18271",
+       "cells;0;26799",
+       "cells;0;18010",
+       "cells;0;18394",
+       "cells;0;26598",
+       "cells;0;27720",
+       "cells;0;18652",
+       "cells;0;18654",
+       "cells;0;18874",
+       "cells;0;17488",
+       "cells;0;18676",
+       "cells;0;19767",
+       "cells;0;18678",
+       "cells;0;18657",
+       "cells;0;16557",
+       "cells;0;18217",
+       "cells;0;16776",
+       "cells;0;17667",
+       "cells;0;17848",
+       "cells;0;17849",
+       "cells;0;27705",
+       "cells;0;27704",
+       "cells;0;19175",
+       "cells;0;26624",
+       "cells;0;19011",
+       "cells;0;18680",
+       "cells;0;18042",
+       "cells;0;27277",
+       "cells;0;18467",
+       "cells;0;27274",
+       "cells;0;28384",
+       "cells;0;18842",
+       "cells;0;28140",
+       "cells;0;17834"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "nuclei"
+      ],
+      "selectedSegmentIds": [
+       "nuclei;0;349",
+       "nuclei;0;7807",
+       "nuclei;0;7810",
+       "nuclei;0;7811",
+       "nuclei;0;7813",
+       "nuclei;0;7814",
+       "nuclei;0;7988",
+       "nuclei;0;8087",
+       "nuclei;0;8110",
+       "nuclei;0;8112",
+       "nuclei;0;8113",
+       "nuclei;0;8115",
+       "nuclei;0;8116",
+       "nuclei;0;8117",
+       "nuclei;0;8275",
+       "nuclei;0;8276",
+       "nuclei;0;8535",
+       "nuclei;0;8538",
+       "nuclei;0;8568",
+       "nuclei;0;8756",
+       "nuclei;0;9947",
+       "nuclei;0;9969",
+       "nuclei;0;9974",
+       "nuclei;0;9978",
+       "nuclei;0;9982",
+       "nuclei;0;10142",
+       "nuclei;0;10206",
+       "nuclei;0;10248",
+       "nuclei;0;10395",
+       "nuclei;0;10400",
+       "nuclei;0;10401",
+       "nuclei;0;10402",
+       "nuclei;0;10404",
+       "nuclei;0;10544",
+       "nuclei;0;10545",
+       "nuclei;0;10546"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "nuclei",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

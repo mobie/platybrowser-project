@@ -1,0 +1,145 @@
+{
+ "views": {
+  "clade11sub48__brain_ACh_SSN_bsx_Dlx_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "bsx"
+      ],
+      "color": "r=107,g=109,b=230,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "bsx",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "dlx"
+      ],
+      "color": "r=87,g=141,b=113,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "dlx",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "six4"
+      ],
+      "color": "r=153,g=0,b=102,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "six4",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;4817",
+       "cells;0;5507",
+       "cells;0;5505",
+       "cells;0;5863",
+       "cells;0;5862",
+       "cells;0;5663",
+       "cells;0;5421",
+       "cells;0;5662",
+       "cells;0;5189",
+       "cells;0;6120",
+       "cells;0;5188",
+       "cells;0;5660",
+       "cells;0;5187",
+       "cells;0;5186",
+       "cells;0;5185",
+       "cells;0;6642",
+       "cells;0;6643",
+       "cells;0;5738",
+       "cells;0;5419",
+       "cells;0;5737",
+       "cells;0;5418",
+       "cells;0;5659",
+       "cells;0;5736",
+       "cells;0;5416",
+       "cells;0;3155",
+       "cells;0;5254",
+       "cells;0;6737",
+       "cells;0;5645",
+       "cells;0;5205",
+       "cells;0;5204",
+       "cells;0;5042",
+       "cells;0;5041",
+       "cells;0;6224",
+       "cells;0;5040",
+       "cells;0;6225",
+       "cells;0;5281",
+       "cells;0;5080",
+       "cells;0;5959",
+       "cells;0;5877",
+       "cells;0;6191",
+       "cells;0;5876",
+       "cells;0;5436",
+       "cells;0;5435",
+       "cells;0;6192",
+       "cells;0;5039",
+       "cells;0;5279",
+       "cells;0;6392",
+       "cells;0;5078",
+       "cells;0;5077",
+       "cells;0;5394",
+       "cells;0;6114",
+       "cells;0;6875",
+       "cells;0;6479",
+       "cells;0;5191",
+       "cells;0;6117",
+       "cells;0;6118",
+       "cells;0;5190"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.05,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "views": {
+  "clade11sub28subsub3__fg_GABA_SN_Dbx_Ptf1a_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;12588",
+       "cells;0;12566",
+       "cells;0;12564",
+       "cells;0;13399",
+       "cells;0;12364",
+       "cells;0;12341",
+       "cells;0;14000",
+       "cells;0;13171",
+       "cells;0;13170",
+       "cells;0;12516",
+       "cells;0;12955",
+       "cells;0;13668",
+       "cells;0;12732",
+       "cells;0;12754",
+       "cells;0;12710",
+       "cells;0;12314",
+       "cells;0;12115",
+       "cells;0;12730",
+       "cells;0;12994",
+       "cells;0;12992",
+       "cells;0;12770",
+       "cells;0;12098",
+       "cells;0;12790",
+       "cells;0;13186",
+       "cells;0;13185",
+       "cells;0;14046",
+       "cells;0;13418",
+       "cells;0;12988",
+       "cells;0;13416",
+       "cells;0;13217",
+       "cells;0;13216",
+       "cells;0;12567",
+       "cells;0;8785",
+       "cells;0;8620",
+       "cells;0;8448",
+       "cells;0;8822",
+       "cells;0;8414",
+       "cells;0;8568",
+       "cells;0;8209",
+       "cells;0;8618",
+       "cells;0;8572",
+       "cells;0;8385",
+       "cells;0;8263",
+       "cells;0;8210"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

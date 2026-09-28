@@ -1,0 +1,141 @@
+{
+ "views": {
+  "clade10sub7subsub4__brain_DA_IN_Emx_Six12_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "nompc3"
+      ],
+      "color": "r=241,g=8,b=92,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "nompc3",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "asicalpha"
+      ],
+      "color": "r=238,g=112,b=254,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "asicalpha",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "th"
+      ],
+      "color": "r=255,g=255,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "th",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;2756",
+       "cells;0;3105",
+       "cells;0;3268",
+       "cells;0;3266",
+       "cells;0;4059",
+       "cells;0;8440",
+       "cells;0;3088",
+       "cells;0;3363",
+       "cells;0;3361",
+       "cells;0;8640",
+       "cells;0;8441",
+       "cells;0;7679",
+       "cells;0;3619",
+       "cells;0;1736",
+       "cells;0;3437",
+       "cells;0;3899",
+       "cells;0;3732",
+       "cells;0;3731",
+       "cells;0;7480",
+       "cells;0;3035",
+       "cells;0;8251",
+       "cells;0;8596",
+       "cells;0;7763",
+       "cells;0;7521",
+       "cells;0;8611",
+       "cells;0;8612",
+       "cells;0;8438",
+       "cells;0;8836",
+       "cells;0;8817",
+       "cells;0;7928"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "traces"
+      ],
+      "selectedSegmentIds": [],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "traces",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

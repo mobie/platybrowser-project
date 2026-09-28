@@ -1,0 +1,532 @@
+label_id	most_probable_broad_type	most_probable_subtype	broadTypeColourScheme	subtypeColourScheme
+6	Motile cilia	clade10sub8	255-67-99-216	255-218-41-118
+10	Motile cilia	clade10sub20	255-67-99-216	255-192-162-34
+23	Developing neurons	clade11sub4subsub2-5-8	255-145-30-180	255-76-53-5
+39	Central nervous system	clade11sub4subsub6	255-66-212-244	255-237-50-18
+58	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+80	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+95	Motile cilia	clade10sub14	255-67-99-216	255-208-175-247
+100	Somatic musculature	clade7sub8	255-220-190-255	255-219-206-56
+118	Anterior nervous system	clade11sub3subsub7	255-240-50-230	255-232-10-188
+124	Anterior nervous system	clade11sub3subsub7	255-240-50-230	255-232-10-188
+148	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+251	Developing neurons	clade9sub7	255-145-30-180	255-32-59-139
+269	Developing neurons	clade11sub22subsub4	255-145-30-180	255-91-176-44
+291	Motile cilia	clade11sub6subsub10	255-67-99-216	255-153-160-45
+436	Epidermis	nocladesub2	255-128-128-0	255-167-39-14
+505	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+510	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+537	Motile cilia	nocladesub3	255-67-99-216	255-76-16-141
+636	Central nervous system	clade9sub13	255-66-212-244	255-168-20-248
+637	Central nervous system	clade9sub13	255-66-212-244	255-168-20-248
+641	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+642	Central nervous system	clade9sub13	255-66-212-244	255-168-20-248
+645	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+649	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+653	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+656	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+674	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+675	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+678	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+680	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+693	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+716	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+734	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+771	Developing neurons	clade9sub7	255-145-30-180	255-32-59-139
+774	Developing neurons	clade9sub7	255-145-30-180	255-32-59-139
+778	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+780	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+788	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+812	Developing neurons	clade9sub7	255-145-30-180	255-32-59-139
+813	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+815	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+817	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+818	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+819	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+827	Motile cilia	clade11sub4subsub2-5-8	255-67-99-216	255-76-53-5
+832	Motile cilia	clade11sub4subsub2-5-8	255-67-99-216	255-76-53-5
+833	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+834	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+835	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+837	Motile cilia	clade11sub4subsub2-5-8	255-67-99-216	255-76-53-5
+838	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+839	Motile cilia	clade11sub4subsub2-5-8	255-67-99-216	255-76-53-5
+841	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+843	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+847	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+868	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+869	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+870	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+872	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+873	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+874	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+875	Motile cilia	clade11sub8subsub0	255-67-99-216	255-171-171-112
+876	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+894	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+896	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+923	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+924	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+952	Motile cilia	clade11sub4subsub2-5-8	255-67-99-216	255-76-53-5
+957	Motile cilia	clade11sub18subsub2	255-67-99-216	255-33-23-27
+959	Developing neurons	clade11sub4subsub2-5-8	255-145-30-180	255-76-53-5
+1010	Developing neurons	clade9sub7	255-145-30-180	255-32-59-139
+1012	Motile cilia	clade9sub7	255-67-99-216	255-32-59-139
+1015	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1018	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1019	Developing neurons	clade10sub9	255-145-30-180	255-188-185-109
+1024	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1025	Developing neurons	clade9sub16	255-145-30-180	255-113-132-112
+1046	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+1047	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+1053	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+1056	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+1057	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+1070	Developing neurons	clade10sub22	255-145-30-180	255-2-248-235
+1073	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1075	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1076	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1079	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1081	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1118	Motile cilia	clade10sub8	255-67-99-216	255-218-41-118
+1143	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+1172	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1175	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+1211	Developing neurons	clade11sub4subsub2-5-8	255-145-30-180	255-76-53-5
+1212	Central nervous system	clade11sub18subsub2	255-66-212-244	255-33-23-27
+1214	Developing neurons	clade11sub4subsub2-5-8	255-145-30-180	255-76-53-5
+1218	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+1223	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+1251	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1299	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1301	Developing neurons	clade11sub4subsub2-5-8	255-145-30-180	255-76-53-5
+1303	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1306	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1337	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+1348	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+1365	Developing neurons	clade11sub4subsub6	255-145-30-180	255-237-50-18
+1387	Motile cilia	clade10sub21	255-67-99-216	255-29-22-205
+1388	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+1389	Motile cilia	clade10sub21	255-67-99-216	255-29-22-205
+1390	Motile cilia	clade10sub13	255-67-99-216	255-241-16-117
+1393	Motile cilia	clade11sub18subsub2	255-67-99-216	255-33-23-27
+1399	Motile cilia	clade10sub22	255-67-99-216	255-2-248-235
+1474	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1476	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1477	Motile cilia	clade10sub22	255-67-99-216	255-2-248-235
+1482	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1532	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+1581	Developing neurons	clade9sub7	255-145-30-180	255-32-59-139
+1583	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+1640	Developing neurons	clade11sub4subsub2-5-8	255-145-30-180	255-76-53-5
+1678	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+1691	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+1697	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+1708	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+1716	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+1718	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1719	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+1745	Motile cilia	clade10sub22	255-67-99-216	255-2-248-235
+1747	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+1748	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+1818	Motile cilia	clade11sub9subsub3	255-67-99-216	255-165-50-180
+1827	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+1861	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+1880	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+1885	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+1935	Central nervous system	clade11sub9subsub3	255-66-212-244	255-165-50-180
+1937	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+1938	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+2040	Developing neurons	clade9sub22	255-145-30-180	255-220-142-102
+2043	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2044	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2052	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2053	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2055	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+2062	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2064	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2070	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+2072	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2089	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+2094	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2096	Motile cilia	clade11sub8subsub0	255-67-99-216	255-171-171-112
+2098	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2101	Midgut	clade9sub22	255-191-239-69	255-220-142-102
+2103	Developing neurons	clade11sub18subsub2	255-145-30-180	255-33-23-27
+2123	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2126	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2157	Developing neurons	clade11sub9subsub4	255-145-30-180	255-29-150-117
+2173	Developing neurons	clade11sub18subsub2	255-145-30-180	255-33-23-27
+2177	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+2191	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2192	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2195	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2202	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2212	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2266	Developing neurons	clade9sub17	255-145-30-180	255-209-78-49
+2268	Anterior nervous system	nocladesub19	255-240-50-230	255-216-91-192
+2275	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+2276	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+2284	Motile cilia	clade10sub13	255-67-99-216	255-241-16-117
+2298	Developing neurons	clade9sub16	255-145-30-180	255-113-132-112
+2307	Stem cells	clade3.1sub23	255-250-190-212	255-159-189-141
+2314	Midgut	clade7sub10	255-191-239-69	255-84-30-47
+2315	Motile cilia	clade11sub28subsub4	255-67-99-216	255-89-238-110
+2316	Heme/chitin	clade11sub23	255-245-130-49	255-81-106-213
+2317	Central nervous system	nocladesub22	255-66-212-244	255-190-57-90
+2323	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2326	Central nervous system	clade11sub37	255-66-212-244	255-177-47-126
+2369	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+2370	Heme/chitin	clade13sub3	255-245-130-49	255-19-163-136
+2384	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2386	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2387	Central nervous system	clade11sub27subsub6	255-66-212-244	255-28-120-154
+2388	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2392	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2393	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2395	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2397	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2401	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2402	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2406	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2408	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2410	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2431	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+2434	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2435	Central nervous system	clade11sub29subsub6	255-66-212-244	255-83-238-234
+2436	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2438	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+2439	Motile cilia	clade11sub8subsub1-4	255-67-99-216	255-227-220-128
+2440	Developing neurons	clade9sub13	255-145-30-180	255-168-20-248
+2443	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2445	Motile cilia	clade11sub23	255-67-99-216	255-81-106-213
+2522	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2524	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2525	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2527	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2528	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+2529	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+2530	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2592	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+2611	Motile cilia	clade4sub5	255-67-99-216	255-166-19-30
+2628	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+2632	Motile cilia	clade10sub21	255-67-99-216	255-29-22-205
+2633	Motile cilia	clade10sub19	255-67-99-216	255-85-83-14
+2645	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2646	Motile cilia	clade11sub23	255-67-99-216	255-81-106-213
+2648	Central nervous system	clade9sub22	255-66-212-244	255-220-142-102
+2649	Motile cilia	clade11sub23	255-67-99-216	255-81-106-213
+2650	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2651	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2652	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2692	Motile cilia	clade10sub13	255-67-99-216	255-241-16-117
+2693	Motile cilia	clade4sub3	255-67-99-216	255-114-51-3
+2694	zero	clade4sub5	255-128-128-128	255-166-19-30
+2695	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+2703	Epidermis	nocladesub20	255-128-128-0	255-198-46-67
+2710	Central nervous system	clade11sub23	255-66-212-244	255-81-106-213
+2712	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2713	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2714	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2716	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+2717	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+2720	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+2726	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2747	Motile cilia	clade10sub14	255-67-99-216	255-208-175-247
+2748	Developing neurons	clade11sub6subsub7	255-145-30-180	255-229-171-128
+2754	Midgut	clade11sub23	255-191-239-69	255-81-106-213
+2755	Cardiovascular system	clade11sub29subsub6	255-255-225-25	255-83-238-234
+2763	Glia	clade2sub2	255-230-25-75	255-117-241-91
+2811	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2825	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+2829	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2830	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2831	Central nervous system	clade11sub9subsub4	255-66-212-244	255-29-150-117
+2832	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2836	Developing neurons	clade11sub9subsub3	255-145-30-180	255-165-50-180
+2913	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+2922	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3075	Central nervous system	clade11sub13subsub4	255-66-212-244	255-134-102-184
+3080	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3087	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+3113	Anterior nervous system	clade11sub52	255-240-50-230	255-205-64-37
+3127	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3129	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3154	zero	clade5sub16	255-128-128-128	255-36-198-231
+3155	Epidermis	clade6sub15	255-128-128-0	255-122-191-26
+3157	zero	clade1sub12	255-128-128-128	255-32-26-207
+3180	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+3220	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+3221	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+3222	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+3223	Developing neurons	nocladesub19	255-145-30-180	255-216-91-192
+3224	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3225	Developing neurons	clade9sub16	255-145-30-180	255-113-132-112
+3226	Anterior nervous system	clade11sub48	255-240-50-230	255-17-19-116
+3227	Developing neurons	clade9sub16	255-145-30-180	255-113-132-112
+3233	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3259	Cardiovascular system	clade5sub7	255-255-225-25	255-118-135-60
+3286	Central nervous system	clade11sub21	255-66-212-244	255-221-50-132
+3287	Central nervous system	clade11sub6subsub8	255-66-212-244	255-143-198-85
+3288	Central nervous system	clade11sub6subsub8	255-66-212-244	255-143-198-85
+3291	Motile cilia	clade9sub12	255-67-99-216	255-86-170-151
+3365	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3395	Developing neurons	clade11sub25subsub5	255-145-30-180	255-159-176-78
+3401	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+3405	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+3409	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3410	Anterior nervous system	clade11sub48	255-240-50-230	255-17-19-116
+3411	Anterior nervous system	clade11sub48	255-240-50-230	255-17-19-116
+3414	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+3416	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3418	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+3419	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3421	Central nervous system	clade11sub45subsub0	255-66-212-244	255-178-42-3
+3423	Heme/chitin	nocladesub3	255-245-130-49	255-76-16-141
+3424	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+3435	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+3436	Developing neurons	clade11sub32subsub1	255-145-30-180	255-175-143-128
+3444	zero	clade4sub3	255-128-128-128	255-114-51-3
+3491	Heme/chitin	clade3.2sub17	255-245-130-49	255-226-47-41
+3520	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3522	Anterior nervous system	clade11sub48	255-240-50-230	255-17-19-116
+3524	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3525	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3526	Anterior nervous system	clade11sub48	255-240-50-230	255-17-19-116
+3529	Central nervous system	clade11sub6subsub8	255-66-212-244	255-143-198-85
+3540	Heme/chitin	clade1sub19	255-245-130-49	255-150-142-138
+3545	zero	clade5sub16	255-128-128-128	255-36-198-231
+3587	Central nervous system	clade10sub3subsub5-9	255-66-212-244	255-221-88-152
+3611	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3633	Cardiovascular system	clade7sub10	255-255-225-25	255-84-30-47
+3677	Somatic musculature	clade3.1sub48	255-220-190-255	255-144-141-220
+3692	Central nervous system	clade11sub8subsub8	255-66-212-244	255-31-134-135
+3699	Motile cilia	clade11sub17subsub6	255-67-99-216	255-150-27-48
+3701	Developing neurons	clade11sub4subsub6	255-145-30-180	255-237-50-18
+3703	Motile cilia	clade9sub11	255-67-99-216	255-180-38-220
+3719	Anterior nervous system	clade11sub30	255-240-50-230	255-73-63-228
+3721	Anterior nervous system	clade11sub56	255-240-50-230	255-32-21-126
+3727	Anterior nervous system	clade11sub45subsub1	255-240-50-230	255-216-210-143
+3746	Developing neurons	clade11sub48	255-145-30-180	255-17-19-116
+3748	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3749	Anterior nervous system	clade11sub48	255-240-50-230	255-17-19-116
+3750	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3751	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+3752	Central nervous system	clade11sub8subsub8	255-66-212-244	255-31-134-135
+3753	Developing neurons	clade11sub48	255-145-30-180	255-17-19-116
+3754	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+3771	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+3806	Central nervous system	nocladesub19	255-66-212-244	255-216-91-192
+3808	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+3844	Motile cilia	clade10sub24	255-67-99-216	255-8-157-70
+3845	Motile cilia	clade10sub14	255-67-99-216	255-208-175-247
+3846	Macrophage	nocladesub35	255-70-153-144	255-206-73-113
+3848	Motile cilia	clade10sub24	255-67-99-216	255-8-157-70
+3851	Gland cells	clade13sub9	255-154-99-36	255-202-236-176
+3852	Somatic musculature	clade3.2sub16	255-220-190-255	255-46-161-11
+3855	Somatic musculature	clade3.1sub11	255-220-190-255	255-134-112-131
+3888	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3890	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3891	Developing neurons	clade11sub48	255-145-30-180	255-17-19-116
+3892	Central nervous system	clade11sub48	255-66-212-244	255-17-19-116
+3918	Motile cilia	clade10sub24	255-67-99-216	255-8-157-70
+3920	zero	zero	255-128-128-128	255-208-44-76
+3922	Midgut	clade1sub12	255-191-239-69	255-32-26-207
+3923	Gland cells	clade5sub16	255-154-99-36	255-36-198-231
+3933	Developing neurons	clade11sub1subsub10	255-145-30-180	255-77-44-29
+3944	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112
+3945	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+3948	Adult eye	nocladesub7	255-60-180-75	255-3-224-242
+3950	Developing neurons	clade11sub4subsub7	255-145-30-180	255-8-241-128
+3956	Adult eye	nocladesub3	255-60-180-75	255-76-16-141
+4004	Stem cells	clade3.2sub17	255-250-190-212	255-226-47-41
+4013	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+4023	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+4024	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+4025	Developing neurons	clade11sub15subsub4	255-145-30-180	255-175-202-19
+4029	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+4030	Central nervous system	clade11sub15subsub4	255-66-212-244	255-175-202-19
+4032	Developing neurons	clade13sub7	255-145-30-180	255-185-97-34
+4035	Anterior nervous system	clade11sub27subsub7	255-240-50-230	255-116-1-196
+4057	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+4059	Motile cilia	clade9sub16	255-67-99-216	255-113-132-112
+4061	Motile cilia	clade9sub11	255-67-99-216	255-180-38-220
+4072	Central nervous system	clade11sub7subsub6	255-66-212-244	255-88-67-2
+4078	Central nervous system	clade11sub9subsub3	255-66-212-244	255-165-50-180
+4085	Motile cilia	clade11sub22subsub7	255-67-99-216	255-142-155-8
+4097	Anterior nervous system	clade11sub30	255-240-50-230	255-73-63-228
+4125	Central nervous system	clade9sub16	255-66-212-244	255-113-132-112
+4127	Developing neurons	clade11sub48	255-145-30-180	255-17-19-116
+4130	Developing neurons	clade11sub48	255-145-30-180	255-17-19-116
+4131	Developing neurons	clade11sub48	255-145-30-180	255-17-19-116
+4132	Developing neurons	clade11sub7subsub6	255-145-30-180	255-88-67-2
+4204	Heme/chitin	clade3.1sub34	255-245-130-49	255-133-223-55
+4205	Somatic musculature	clade3.1sub11	255-220-190-255	255-134-112-131
+4206	Somatic musculature	clade3.1sub44	255-220-190-255	255-173-86-13
+4258	Cardiovascular system	nocladesub9	255-255-225-25	255-244-217-251
+4263	Gland cells	clade10sub10	255-154-99-36	255-158-207-139
+4309	Developing neurons	clade11sub8subsub0	255-145-30-180	255-171-171-112
+4315	Adult eye	nocladesub7	255-60-180-75	255-3-224-242
+4317	Adult eye	nocladesub7	255-60-180-75	255-3-224-242
+4318	Adult eye	nocladesub7	255-60-180-75	255-3-224-242
+4380	Central nervous system	clade11sub7subsub1-4	255-66-212-244	255-6-155-38
+4396	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+4399	Motile cilia	clade10sub3subsub5-9	255-67-99-216	255-221-88-152
+4400	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+4402	Somatic musculature	clade3.1sub11	255-220-190-255	255-134-112-131
+4403	Somatic musculature	clade3.1sub46	255-220-190-255	255-46-157-95
+4432	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+4433	Central nervous system	clade11sub7subsub7	255-66-212-244	255-40-149-110
+4546	Somatic musculature	clade3.1sub14	255-220-190-255	255-12-43-217
+4644	Adult eye	clade11sub7subsub6	255-60-180-75	255-88-67-2
+4646	Adult eye	nocladesub7	255-60-180-75	255-3-224-242
+4647	Adult eye	nocladesub7	255-60-180-75	255-3-224-242
+4648	Anterior nervous system	clade11sub3subsub7	255-240-50-230	255-232-10-188
+4703	Anterior nervous system	clade11sub58	255-240-50-230	255-136-222-157
+4704	Anterior nervous system	clade9sub17	255-240-50-230	255-209-78-49
+4706	Central nervous system	clade11sub18subsub2	255-66-212-244	255-33-23-27
+4778	Central nervous system	nocladesub19	255-66-212-244	255-216-91-192
+4784	Anterior nervous system	nocladesub19	255-240-50-230	255-216-91-192
+5001	Anterior nervous system	clade11sub58	255-240-50-230	255-136-222-157
+5048	Anterior nervous system	clade11sub3subsub7	255-240-50-230	255-232-10-188
+5049	Anterior nervous system	clade11sub58	255-240-50-230	255-136-222-157
+5054	Anterior nervous system	clade11sub3subsub7	255-240-50-230	255-232-10-188
+5060	Central nervous system	clade11sub4subsub6	255-66-212-244	255-237-50-18
+5066	Motile cilia	clade10sub21	255-67-99-216	255-29-22-205
+5067	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+5068	Developing neurons	nocladesub19	255-145-30-180	255-216-91-192
+5069	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+5071	Motile cilia	nocladesub19	255-67-99-216	255-216-91-192
+5225	Developing neurons	clade11sub30	255-145-30-180	255-73-63-228
+5279	Anterior nervous system	clade11sub58	255-240-50-230	255-136-222-157
+5320	Central nervous system	clade10sub21	255-66-212-244	255-29-22-205
+5321	Developing neurons	clade9sub16	255-145-30-180	255-113-132-112
+5325	Motile cilia	clade10sub21	255-67-99-216	255-29-22-205
+5326	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+5564	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+5565	Developing neurons	clade10sub3subsub5-9	255-145-30-180	255-221-88-152
+5567	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+6078	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+6720	Stem cells	clade11sub23	255-250-190-212	255-81-106-213
+6768	Developing neurons	clade11sub23	255-145-30-180	255-81-106-213
+6821	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+6912	Central nervous system	clade11sub6subsub8	255-66-212-244	255-143-198-85
+7041	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7053	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7068	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+7106	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+7110	Central nervous system	clade11sub42	255-66-212-244	255-161-23-10
+7111	zero	clade11sub11subsub2-3	255-128-128-128	255-37-132-12
+7142	Central nervous system	clade11sub6subsub8	255-66-212-244	255-143-198-85
+7242	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7245	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7256	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7261	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7272	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+7276	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7278	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+7282	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+7284	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7295	Central nervous system	clade11sub27subsub8	255-66-212-244	255-250-59-115
+7299	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+7313	Somatic musculature	clade3.1sub23	255-220-190-255	255-159-189-141
+7380	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+7381	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7392	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7404	Gland cells	clade9sub4	255-154-99-36	255-236-15-211
+7408	Stem cells	clade11sub42	255-250-190-212	255-161-23-10
+7420	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+7421	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+7424	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+7426	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7427	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7430	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7431	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7436	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7437	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7439	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7443	Central nervous system	clade11sub6subsub7	255-66-212-244	255-229-171-128
+7446	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7447	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7448	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7450	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+7452	Somatic musculature	clade3.1sub7-16	255-220-190-255	255-242-175-25
+7462	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7464	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7502	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7590	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+7595	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7606	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+7650	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7651	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7652	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7657	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7665	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7667	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7682	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7684	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+7696	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7698	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+7700	Cardiovascular system	clade5sub7	255-255-225-25	255-118-135-60
+7701	Midgut	clade1sub3	255-191-239-69	255-92-143-151
+7703	Cardiovascular system	clade3.2sub13	255-255-225-25	255-28-244-202
+7734	Motile cilia	clade11sub17subsub6	255-67-99-216	255-150-27-48
+7741	Motile cilia	clade11sub22subsub4	255-67-99-216	255-91-176-44
+7858	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+7860	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+7898	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7901	Central nervous system	clade10sub11	255-66-212-244	255-78-146-137
+7910	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7912	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+7914	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7915	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+7916	Central nervous system	clade11sub20subsub3	255-66-212-244	255-224-92-154
+7917	Developing neurons	clade9sub8	255-145-30-180	255-41-223-73
+7921	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+7922	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+7957	Central nervous system	clade11sub22subsub4	255-66-212-244	255-91-176-44
+7959	Cardiovascular system	clade11sub22subsub5	255-255-225-25	255-161-38-193
+8009	Midgut	nocladesub22	255-191-239-69	255-190-57-90
+8137	Central nervous system	clade11sub34	255-66-212-244	255-196-100-216
+8141	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+8158	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8160	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8187	Central nervous system	clade11sub21	255-66-212-244	255-221-50-132
+8194	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+8202	Central nervous system	clade11sub20subsub0-1-2-4-6	255-66-212-244	255-152-212-189
+8295	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+8423	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+8431	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+8433	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+8434	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+8435	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+8440	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8443	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8486	Motile cilia	clade11sub18subsub6	255-67-99-216	255-223-202-191
+8509	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+8553	Central nervous system	clade11sub4subsub9	255-66-212-244	255-103-206-44
+8559	Developing neurons	clade9sub11	255-145-30-180	255-180-38-220
+8639	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+8649	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8660	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+8661	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8663	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8696	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+8719	Central nervous system	clade11sub11subsub2-3	255-66-212-244	255-37-132-12
+8725	Central nervous system	clade11sub6subsub10	255-66-212-244	255-153-160-45
+8729	Central nervous system	clade11sub4subsub6	255-66-212-244	255-237-50-18
+8830	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+8832	Motile cilia	clade10sub9	255-67-99-216	255-188-185-109
+8838	Central nervous system	clade11sub17subsub6	255-66-212-244	255-150-27-48
+8839	zero	zero	255-128-128-128	255-208-44-76
+8841	Somatic musculature	clade3.1sub6	255-220-190-255	255-65-88-56
+8842	Enteric nervous system	clade11sub6subsub10	255-128-0-0	255-153-160-45
+8856	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+8979	Somatic musculature	clade3.1sub50	255-220-190-255	255-158-191-95
+8999	Central nervous system	clade11sub11subsub0-4	255-66-212-244	255-203-192-199
+9000	Central nervous system	clade11sub8subsub1-4	255-66-212-244	255-227-220-128
+9006	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+9010	Macrophage	clade13sub12	255-70-153-144	255-219-4-252
+9035	Gland cells	clade1sub12	255-154-99-36	255-32-26-207
+9264	Central nervous system	clade11sub11subsub1	255-66-212-244	255-202-156-30
+10174	Central nervous system	clade11sub9subsub3	255-66-212-244	255-165-50-180
+10340	Central nervous system	clade11sub8subsub0	255-66-212-244	255-171-171-112

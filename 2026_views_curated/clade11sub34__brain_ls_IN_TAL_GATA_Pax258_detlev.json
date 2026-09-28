@@ -1,0 +1,94 @@
+{
+ "views": {
+  "clade11sub34__brain_ls_IN_TAL_GATA_Pax258_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;811",
+       "cells;0;1028",
+       "cells;0;939",
+       "cells;0;1387",
+       "cells;0;26966",
+       "cells;0;18392",
+       "cells;0;26458",
+       "cells;0;18672",
+       "cells;0;27027",
+       "cells;0;27026",
+       "cells;0;19447",
+       "cells;0;19767",
+       "cells;0;17866",
+       "cells;0;18998",
+       "cells;0;465",
+       "cells;0;420",
+       "cells;0;19449",
+       "cells;0;644",
+       "cells;0;27428",
+       "cells;0;19175",
+       "cells;0;19010",
+       "cells;0;26388",
+       "cells;0;27597",
+       "cells;0;18247",
+       "cells;0;28123",
+       "cells;0;20081",
+       "cells;0;20082",
+       "cells;0;18842",
+       "cells;0;892",
+       "cells;0;757",
+       "cells;0;1089",
+       "cells;0;1088",
+       "cells;0;28607",
+       "cells;0;20324",
+       "cells;0;20325",
+       "cells;0;20600",
+       "cells;0;17084",
+       "cells;0;26798",
+       "cells;0;25783",
+       "cells;0;27686",
+       "cells;0;16197",
+       "cells;0;26399",
+       "cells;0;18652",
+       "cells;0;26398",
+       "cells;0;20052",
+       "cells;0;19782",
+       "cells;0;26199",
+       "cells;0;26397",
+       "cells;0;19743",
+       "cells;0;18415",
+       "cells;0;18814",
+       "cells;0;17847",
+       "cells;0;944",
+       "cells;0;26839",
+       "cells;0;26838",
+       "cells;0;20583",
+       "cells;0;26961",
+       "cells;0;396",
+       "cells;0;27450",
+       "cells;0;276"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

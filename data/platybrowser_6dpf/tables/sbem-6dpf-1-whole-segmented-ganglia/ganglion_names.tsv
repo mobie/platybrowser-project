@@ -1,0 +1,20 @@
+label_id	merged_bilateral_ganglion_id	ganglion_name	ganglion_name_short
+1	1	palpal ganglia	PG
+2	1	palpal ganglia	PG
+3	2	cirral ganglia	CG
+4	2	cirral ganglia	CG
+5	3	ventro-medial ganglia	VMG
+6	3	ventro-medial ganglia	VMG
+7	4	dorsal ganglion	DG
+8	4	dorsal ganglion	DG
+9	5	antennal ganglia	AG
+10	5	antennal ganglia	AG
+11	6	circumpalpal ganglia	CpG
+12	6	circumpalpal ganglia	CpG
+13		None	None
+14	7	frontal ganglion	FG
+15	8	adult eyes	AE
+16	8	adult eyes	AE
+17	9	mushroom bodies	MB
+18	9	mushroom bodies	MB
+19		None	None

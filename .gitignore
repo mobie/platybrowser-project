@@ -1,4 +1,6 @@
 *.h5
+.env
+.env.bak
 __pycache__/
 tmp*
 .idea/*
@@ -15,3 +17,17 @@ checkpoints/
 mmpb.egg-info/
 build/
 dist/
+test_random_kimberly/
+
+# opencode
+.opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+
+# analysis plots
+tmp_plots/
+
+.superpowers/
+
+# git worktrees
+.worktrees/

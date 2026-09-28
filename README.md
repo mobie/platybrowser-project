@@ -6,17 +6,27 @@ This repository contains the data and the scripts for data generation for the Pl
 For details, see [Whole-body integration of gene expression and single-cell morphology](https://www.biorxiv.org/content/10.1101/2020.02.26.961037v1).
 It is implemented using [MoBIE](https://github.com/mobie/mobie), a platform for exploring and sharing multi-modal big image data.
 
-## Data storage
+**If you are new to MoBIE:**
 
-Image meta-data and derived data is stored in the folder `data`. In order to deal with changes to this data, we follow a versioning scheme inspired by [semantic versioning](https://semver.org/). Version numbers are given as `MAJOR.MINOR.PATCH` where
+- Please install the [Fiji plugin](https://github.com/mobie/mobie-viewer-fiji?tab=readme-ov-file#install)
+- Please enter this Github repo URL (https://github.com/cyrilcros/platybrowser-project-2025) as your MoBIE project
 
-- `PATCH` is increased if the derived data is updated, e.g. due to corrections in a segmentation or new attributes in a table.
-- `MINOR` is increased if new derived data is added, e.g. a new segmentation or a new table is added.
-- `MAJOR` is increased if a new modality is added, e.g. data from a different imaging source or a different specimen.
+The default Platybrowser MoBIE dataset is https://github.com/mobie/platybrowser-project. What you have here is currently a fork of this repository.
+**Just clicking *Open Platybrowser* in Mobie won't work until we merge, when we publish.**
 
-For a given version `X.Y.Z`, the data is stored in the directory `data/X.Y.Z` which contains the following subfolders:
+## Data storage - edited August 6th 2025
 
-- `images`: Contains meta-data for all images in bigdata-viewer xml format. The actual image data (stored either as hdf5 or n5) is not under version control and can either be read from the local file system (subfolder `local`) or a remote object store (subfolder `remote`). In addition, the `images` folder contains a dictionary mapping image names to viewer and storage settings in `images.json`.
+Image meta-data and derived data is stored in the folder `data`. In order to deal with changes to this data, we previously followed a versioning scheme (see below). A new version would be a new MoBIE dataset. As of August 2025, we are not versioning the data explicitly but instead relying on Git.
+In this fork:
+
+* the `1.0.1` segmentation is now associated to the main 6dpf EM dataset, named `platybrowser_6dpf`
+* we progressively remove the other datasets as part of clean up efforts
+* we adopt the [MoBIE project specification](https://mobie.github.io/specs/mobie_spec.html)
+* we keep for now the `local` data specification but it won't work unless you use specific repo with the data. I would need to migrate it.
+* I rename the `images/remote` part to `images/bdv-n5-s3`, update those `sources` and leave the current S3 bucket fully untouched.
+
+As in MoBIE, we have the following:
+- `images`: Contains meta-data for all images in bigdata-viewer xml format. The actual image data (stored either as hdf5 or n5) is not under version control and can either be read from the local file system (subfolder `local`, would have to change per #1) or a remote object store (subfolder `bdv-n5-s3`, formerly `remote`). In addition, the `images` folder contains a dictionary mapping image names to viewer and storage settings in `images.json`.
 - `misc`: Contains miscellanous data.
 - `tables`: Contains csv tables with additional data derived from the image data.
 
@@ -34,31 +44,18 @@ Derived attributes are stored in csv tables, which must be associated with speci
 The tables associated with a given image name must be stored in the sub-directory `tables/image-name`.
 If this directory exists, it must at least contain the file `default.csv` with spatial attributes of the objects in the image. If tables do not change between versions, they can be stored as relative soft-links to the old version.
 
-### Version updates
+### Version updates - edited August 6th 2025
 
-We provide three scripts to update the respective release types:
-- `update_patch.py`: Create new version folder and update derived data.
-- `update_minor.py`: Create new version folder and add new image data or derived data.
-- `update_major.py`: Create new version folder and add new modality. 
-All three scripts take the path to a json file as argument, which encodes the data to update or to add.
+Previously, the previous incarnation of Platybrowser was versioned using version numbers for datasets. You would add a new version folder to git and make a release via `git tag -a X.Y.Z -m "DESCRIPTION"`. 
 
-For `update_patch.py` the json must contain a dictonary with the two keys `segmentations` and `tables`
-where each key maps to a list containing existing segmentation names. For names listed in `segmentations`,
-the segmentation AND corresponding tables (if present) will be updated. For `tables`, only the tables will be updated.
-The following example would trigger an update of the segmentation and tables for the cell segmentation and a table update for the nucleus segmentation:
-```
-{"segmentations": ["sbem-6dpf-1-whole-segmented-cells"],
- "tables": ["sbem-6dpf-1-whole-segmented-nuclei"]}
-```
+The logic was, quoting Constantin Pape:
+- `Z` is increased if the derived data is updated, e.g. due to corrections in a segmentation or new attributes in a table.
+- `Y` is increased if new derived data is added, e.g. a new segmentation or a new table is added.
+- `X` is increased if a new modality is added, e.g. data from a different imaging source or a different specimen.
 
-For `update_minor.py` and `update_major.py`, the json must contain a dictionary mapping the names of new image data to their source files and viewer settings.
-See `example_updates/` for some example json update files.
-
-In addition, `update_registration.py` can be used to update data undergoing registration with a new registration transformation. It creates a new patch version folder and updates all relevant data.
-
-We do not add any files to version control automatically. So after calling one of the update
-scripts, add the new version folder to git and make a release via `git tag -a X.Y.Z -m "DESCRIPTION"`.
-
+The problem we have is that it is a bit of a special use case that was developped in parallel with [MoBIE](https://github.com/mobie/mobie), and a lot
+of the scripts that were being used this way are outdated. Because there is already a concept of version control in MoBIE, there is a duplication of efforts
+when trying to also version control datasets.
 
 ## Scripts
 

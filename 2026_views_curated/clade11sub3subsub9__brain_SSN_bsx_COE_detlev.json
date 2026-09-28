@@ -1,0 +1,103 @@
+{
+ "views": {
+  "clade11sub3subsub9__brain_SSN_bsx_COE_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "traces"
+      ],
+      "selectedSegmentIds": [],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "traces",
+      "opacity": 0.5,
+      "visible": true
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;9032",
+       "cells;0;8660",
+       "cells;0;9033",
+       "cells;0;8661",
+       "cells;0;9435",
+       "cells;0;8866",
+       "cells;0;8865",
+       "cells;0;8505",
+       "cells;0;8504",
+       "cells;0;7582",
+       "cells;0;8873",
+       "cells;0;8517",
+       "cells;0;8718",
+       "cells;0;8717",
+       "cells;0;8882",
+       "cells;0;8883",
+       "cells;0;8328",
+       "cells;0;8491",
+       "cells;0;9222",
+       "cells;0;8338",
+       "cells;0;8659",
+       "cells;0;6117",
+       "cells;0;8339"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "traces"
+      ],
+      "selectedSegmentIds": [],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "traces",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

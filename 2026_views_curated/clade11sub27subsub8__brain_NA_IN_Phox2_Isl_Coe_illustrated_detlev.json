@@ -1,0 +1,123 @@
+{
+ "views": {
+  "clade11sub27subsub8__brain_NA_IN_Phox2_Isl_Coe_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "isl"
+      ],
+      "color": "r=102,g=134,b=184,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "isl",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "phox2b"
+      ],
+      "color": "r=173,g=76,b=138,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "phox2b",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "coe"
+      ],
+      "color": "r=0,g=93,b=67,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "coe",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "th"
+      ],
+      "color": "r=255,g=255,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "th",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;5626",
+       "cells;0;5987",
+       "cells;0;5304",
+       "cells;0;5401",
+       "cells;0;26803",
+       "cells;0;5277",
+       "cells;0;25996",
+       "cells;0;5393",
+       "cells;0;6983",
+       "cells;0;26445",
+       "cells;0;26411",
+       "cells;0;26840",
+       "cells;0;6115",
+       "cells;0;27027",
+       "cells;0;25591",
+       "cells;0;6838",
+       "cells;0;6509"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

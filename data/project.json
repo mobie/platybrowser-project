@@ -22,9 +22,10 @@
     "0.6.4",
     "0.6.5",
     "1.0.0",
-    "1.0.1"
+    "1.0.1",
+    "platybrowser_6dpf"
   ],
-  "defaultDataset": "1.0.1",
+  "defaultDataset": "platybrowser_6dpf",
   "description": "Vergara et al. (2021) PlatyBrowser, Cell",
   "references": [
     "https://www.sciencedirect.com/science/article/pii/S009286742100876X"

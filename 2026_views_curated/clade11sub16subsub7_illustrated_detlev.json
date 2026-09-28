@@ -1,0 +1,290 @@
+{
+ "views": {
+  "clade11sub16subsub7_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "lmx1"
+      ],
+      "color": "r=255,g=134,b=161,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "lmx1",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "for"
+      ],
+      "color": "r=0,g=255,b=190,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "for",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "nk21"
+      ],
+      "color": "r=147,g=0,b=185,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "nk21",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "dbx1"
+      ],
+      "color": "r=255,g=255,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "dbx1",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "gad"
+      ],
+      "color": "r=136,g=108,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "gad",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "ptf1"
+      ],
+      "color": "r=209,g=164,b=255,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "ptf1",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;613",
+       "cells;0;976",
+       "cells;0;3769",
+       "cells;0;852",
+       "cells;0;214",
+       "cells;0;616",
+       "cells;0;615",
+       "cells;0;4216",
+       "cells;0;614",
+       "cells;0;2036",
+       "cells;0;3246",
+       "cells;0;3522",
+       "cells;0;3885",
+       "cells;0;1583",
+       "cells;0;3520",
+       "cells;0;2035",
+       "cells;0;4057",
+       "cells;0;2550",
+       "cells;0;1582",
+       "cells;0;2708",
+       "cells;0;101",
+       "cells;0;2707",
+       "cells;0;980",
+       "cells;0;2704",
+       "cells;0;1613",
+       "cells;0;848",
+       "cells;0;726",
+       "cells;0;847",
+       "cells;0;2547",
+       "cells;0;725",
+       "cells;0;2545",
+       "cells;0;3357",
+       "cells;0;1173",
+       "cells;0;77",
+       "cells;0;4043",
+       "cells;0;3074",
+       "cells;0;293",
+       "cells;0;290",
+       "cells;0;296",
+       "cells;0;3909",
+       "cells;0;294",
+       "cells;0;851",
+       "cells;0;210",
+       "cells;0;2859",
+       "cells;0;3547",
+       "cells;0;3701",
+       "cells;0;3028",
+       "cells;0;1887",
+       "cells;0;1886",
+       "cells;0;3700",
+       "cells;0;2059",
+       "cells;0;3380",
+       "cells;0;884",
+       "cells;0;761",
+       "cells;0;882",
+       "cells;0;1912",
+       "cells;0;1913",
+       "cells;0;985",
+       "cells;0;2724",
+       "cells;0;984",
+       "cells;0;2725",
+       "cells;0;749",
+       "cells;0;3932",
+       "cells;0;1753",
+       "cells;0;748",
+       "cells;0;3930",
+       "cells;0;3897",
+       "cells;0;2566",
+       "cells;0;2567",
+       "cells;0;988",
+       "cells;0;3931",
+       "cells;0;2684",
+       "cells;0;1591",
+       "cells;0;1590",
+       "cells;0;2682",
+       "cells;0;356",
+       "cells;0;355",
+       "cells;0;750",
+       "cells;0;899",
+       "cells;0;3728",
+       "cells;0;1308",
+       "cells;0;1423",
+       "cells;0;1422",
+       "cells;0;3204",
+       "cells;0;2236",
+       "cells;0;3046",
+       "cells;0;1421",
+       "cells;0;4411",
+       "cells;0;2350",
+       "cells;0;2192",
+       "cells;0;381",
+       "cells;0;2190",
+       "cells;0;261",
+       "cells;0;140",
+       "cells;0;386",
+       "cells;0;403",
+       "cells;0;2348",
+       "cells;0;2349",
+       "cells;0;2500",
+       "cells;0;527",
+       "cells;0;1017",
+       "cells;0;1138",
+       "cells;0;405",
+       "cells;0;1133",
+       "cells;0;1012",
+       "cells;0;1014",
+       "cells;0;31",
+       "cells;0;4088",
+       "cells;0;2062",
+       "cells;0;491",
+       "cells;0;532",
+       "cells;0;410",
+       "cells;0;531",
+       "cells;0;651",
+       "cells;0;530",
+       "cells;0;2379",
+       "cells;0;3227",
+       "cells;0;2377",
+       "cells;0;1287",
+       "cells;0;1044",
+       "cells;0;1440",
+       "cells;0;1289",
+       "cells;0;1442",
+       "cells;0;3223",
+       "cells;0;2376",
+       "cells;0;2373",
+       "cells;0;1040",
+       "cells;0;1560",
+       "cells;0;4396",
+       "cells;0;3060",
+       "cells;0;3061",
+       "cells;0;426",
+       "cells;0;2526",
+       "cells;0;1715",
+       "cells;0;1037",
+       "cells;0;1710",
+       "cells;0;3059",
+       "cells;0;1154",
+       "cells;0;1311",
+       "cells;0;2002",
+       "cells;0;4267",
+       "cells;0;1310",
+       "cells;0;4265",
+       "cells;0;1153",
+       "cells;0;2084",
+       "cells;0;2082",
+       "cells;0;150",
+       "cells;0;153"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

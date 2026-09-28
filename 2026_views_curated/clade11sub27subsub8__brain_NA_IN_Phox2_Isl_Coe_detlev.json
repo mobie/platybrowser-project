@@ -1,0 +1,51 @@
+{
+ "views": {
+  "clade11sub27subsub8__brain_NA_IN_Phox2_Isl_Coe_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;5626",
+       "cells;0;5987",
+       "cells;0;5304",
+       "cells;0;5401",
+       "cells;0;26803",
+       "cells;0;5277",
+       "cells;0;25996",
+       "cells;0;5393",
+       "cells;0;6983",
+       "cells;0;26445",
+       "cells;0;26411",
+       "cells;0;26840",
+       "cells;0;6115",
+       "cells;0;27027",
+       "cells;0;25591",
+       "cells;0;6838",
+       "cells;0;6509"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

@@ -1,0 +1,75 @@
+{
+  "views": {
+    "brain_deepbrainPRC_rx_foxq2": {
+      "uiSelectionGroups": [
+        "curated-cell-types"
+      ],
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "sources": [
+              "raw"
+            ],
+            "color": "r=255,g=255,b=255,a=255",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "raw",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "sources": [
+              "cells"
+            ],
+            "selectedSegmentIds": [
+              "cells;0;3113",
+              "cells;0;4098"
+            ],
+            "showSelectedSegmentsIn3d": false,
+            "lut": "glasbey",
+            "showScatterPlot": false,
+            "scatterPlotAxes": [
+              "anchor_x",
+              "anchor_y"
+            ],
+            "showTable": true,
+            "showAsBoundaries": false,
+            "boundaryThickness": 1.0,
+            "randomColorSeed": 42,
+            "opacityNotSelected": 0.15,
+            "name": "cells",
+            "opacity": 0.5,
+            "visible": true
+          }
+        }
+      ],
+      "sourceTransforms": [],
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.0047214722620297685,
+          0.005647625761375169,
+          4.721037238405681E-4,
+          -0.14783111264956061,
+          -0.002135887701095482,
+          -0.002342395485966549,
+          0.006660482422719972,
+          0.5993390092064612,
+          0.005249432578376609,
+          0.004126544030360539,
+          0.003134637292942083,
+          -2.0491887626962946
+        ],
+        "timepoint": 0
+      },
+      "isExclusive": true,
+      "description": ""
+    }
+  }
+}

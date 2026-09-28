@@ -1,0 +1,236 @@
+{
+ "views": {
+  "clade11sub13subsub5__ls_pyg_Glu_cIN_Evx_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "eve"
+      ],
+      "color": "r=255,g=0,b=255,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "eve",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "vglut"
+      ],
+      "color": "r=92,g=255,b=159,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "vglut",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "brn3a"
+      ],
+      "color": "r=172,g=164,b=100,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "brn3a",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "lhx15"
+      ],
+      "color": "r=39,g=136,b=38,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "lhx15",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "lbx1b"
+      ],
+      "color": "r=254,g=143,b=66,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "lbx1b",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "asicalpha"
+      ],
+      "color": "r=255,g=255,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "asicalpha",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "allcr1"
+      ],
+      "color": "r=57,g=167,b=106,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "allcr1",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;28070",
+       "cells;0;31321",
+       "cells;0;31120",
+       "cells;0;21118",
+       "cells;0;21356",
+       "cells;0;20586",
+       "cells;0;20862",
+       "cells;0;21115",
+       "cells;0;20863",
+       "cells;0;27219",
+       "cells;0;21117",
+       "cells;0;26976",
+       "cells;0;20310",
+       "cells;0;26411",
+       "cells;0;26410",
+       "cells;0;30949",
+       "cells;0;26012",
+       "cells;0;26011",
+       "cells;0;31636",
+       "cells;0;30944",
+       "cells;0;27191",
+       "cells;0;32142",
+       "cells;0;32141",
+       "cells;0;31650",
+       "cells;0;31970",
+       "cells;0;31494",
+       "cells;0;31176",
+       "cells;0;26616",
+       "cells;0;26978",
+       "cells;0;26977",
+       "cells;0;20798",
+       "cells;0;20241",
+       "cells;0;26426",
+       "cells;0;27832",
+       "cells;0;27831",
+       "cells;0;26026",
+       "cells;0;20281",
+       "cells;0;20240",
+       "cells;0;27394",
+       "cells;0;31965",
+       "cells;0;20809",
+       "cells;0;20524",
+       "cells;0;20525",
+       "cells;0;21343",
+       "cells;0;26995",
+       "cells;0;21069",
+       "cells;0;27642",
+       "cells;0;26430",
+       "cells;0;31335",
+       "cells;0;19668",
+       "cells;0;19987",
+       "cells;0;19985",
+       "cells;0;31972",
+       "cells;0;31658",
+       "cells;0;30966",
+       "cells;0;31338",
+       "cells;0;30580",
+       "cells;0;20810",
+       "cells;0;21301",
+       "cells;0;27849",
+       "cells;0;19670",
+       "cells;0;27218",
+       "cells;0;26644",
+       "cells;0;20585",
+       "cells;0;21355",
+       "cells;0;27412",
+       "cells;0;27850",
+       "cells;0;31982",
+       "cells;0;31983",
+       "cells;0;32235",
+       "cells;0;19957",
+       "cells;0;31986",
+       "cells;0;30413",
+       "cells;0;32119",
+       "cells;0;30579",
+       "cells;0;30414"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

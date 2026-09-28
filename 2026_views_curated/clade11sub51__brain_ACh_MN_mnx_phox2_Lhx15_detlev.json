@@ -1,0 +1,52 @@
+{
+ "views": {
+  "clade11sub51__brain_ACh_MN_mnx_phox2_Lhx15_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;2726",
+       "cells;0;2913",
+       "cells;0;2526",
+       "cells;0;2416",
+       "cells;0;2527",
+       "cells;0;2568",
+       "cells;0;2525",
+       "cells;0;2569",
+       "cells;0;2877",
+       "cells;0;2379",
+       "cells;0;2710",
+       "cells;0;2567",
+       "cells;0;2399",
+       "cells;0;2400",
+       "cells;0;3047",
+       "cells;0;2351",
+       "cells;0;2570",
+       "cells;0;2708"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

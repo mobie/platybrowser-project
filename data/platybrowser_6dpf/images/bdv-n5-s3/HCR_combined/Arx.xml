@@ -1,0 +1,41 @@
+<SpimData version="0.2">
+  <BasePath type="relative">.</BasePath>
+  <SequenceDescription>
+    <ImageLoader format="bdv.n5.s3">
+      <Key>platybrowser-2025/HCR_combined/Arx.n5</Key>
+      <SigningRegion>us-west-2</SigningRegion>
+      <ServiceEndpoint>https://buckets.embl.de</ServiceEndpoint>
+      <BucketName>platybrowser-n5-generic</BucketName>
+    </ImageLoader>
+    <ViewSetups>
+      <Attributes name="channel">
+        <Channel>
+          <id>0</id>
+        </Channel>
+      </Attributes>
+      <ViewSetup>
+        <id>0</id>
+        <name>Arx</name>
+        <size>860 810 892</size>
+        <voxelSize>
+          <unit>micrometer</unit>
+          <size>0.32 0.32 0.32</size>
+        </voxelSize>
+        <attributes>
+          <channel>0</channel>
+        </attributes>
+      </ViewSetup>
+    </ViewSetups>
+    <Timepoints type="range">
+      <first>0</first>
+      <last>0</last>
+    </Timepoints>
+  </SequenceDescription>
+  <ViewRegistrations>
+    <ViewRegistration timepoint="0" setup="0">
+      <ViewTransform type="affine">
+        <affine>0.32 0.0 0.0 0.0 0.0 0.32 0.0 0.0 0.0 0.0 0.32 0.0</affine>
+      </ViewTransform>
+    </ViewRegistration>
+  </ViewRegistrations>
+</SpimData>

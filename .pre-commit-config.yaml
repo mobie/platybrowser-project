@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: compress-dataset-json
+        name: Compress dataset.json (remove default-valued options)
+        entry: python3 2025_scripts/compress_dataset_json.py --stage
+        language: system
+        files: ^data/platybrowser_6dpf/dataset\.json$
+        pass_filenames: false
+      - id: validate-dataset-json
+        name: Validate dataset.json structure
+        entry: python3 2025_scripts/validate_dataset_json.py
+        language: system
+        files: ^data/platybrowser_6dpf/dataset\.json$
+        pass_filenames: false

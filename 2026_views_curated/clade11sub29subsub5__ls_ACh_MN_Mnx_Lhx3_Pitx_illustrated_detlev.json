@@ -1,0 +1,138 @@
+{
+ "views": {
+  "clade11sub29subsub5__ls_ACh_MN_Mnx_Lhx3_Pitx_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "hb9"
+      ],
+      "color": "r=88,g=223,b=96,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "hb9",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "lhx3"
+      ],
+      "color": "r=0,g=51,b=255,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "lhx3",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "pitxb"
+      ],
+      "color": "r=241,g=8,b=92,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "pitxb",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;14548",
+       "cells;0;14748",
+       "cells;0;9472",
+       "cells;0;9273",
+       "cells;0;22489",
+       "cells;0;9113",
+       "cells;0;8541",
+       "cells;0;9112",
+       "cells;0;15160",
+       "cells;0;8149",
+       "cells;0;8544",
+       "cells;0;15161",
+       "cells;0;8944",
+       "cells;0;14550",
+       "cells;0;15521",
+       "cells;0;14950",
+       "cells;0;21928",
+       "cells;0;9483",
+       "cells;0;8152",
+       "cells;0;8151",
+       "cells;0;22664",
+       "cells;0;8555",
+       "cells;0;8914",
+       "cells;0;8913",
+       "cells;0;8915",
+       "cells;0;22506",
+       "cells;0;9099",
+       "cells;0;22668",
+       "cells;0;8006",
+       "cells;0;8522",
+       "cells;0;7995",
+       "cells;0;8007",
+       "cells;0;7832",
+       "cells;0;15143",
+       "cells;0;8724",
+       "cells;0;7834",
+       "cells;0;8924",
+       "cells;0;14333",
+       "cells;0;14334",
+       "cells;0;14736",
+       "cells;0;14539",
+       "cells;0;21746",
+       "cells;0;8173",
+       "cells;0;8373",
+       "cells;0;8732",
+       "cells;0;8734",
+       "cells;0;8735",
+       "cells;0;14540",
+       "cells;0;14541",
+       "cells;0;13736"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

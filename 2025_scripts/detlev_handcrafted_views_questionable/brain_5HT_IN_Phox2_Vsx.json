@@ -1,0 +1,268 @@
+{
+  "views": {
+    "brain_5HT_IN_Phox2_Vsx": {
+      "uiSelectionGroups": [
+        "curated-cell-types"
+      ],
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "sources": [
+              "raw"
+            ],
+            "color": "r=255,g=255,b=255,a=255",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "raw",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "sert"
+            ],
+            "color": "r=141,g=42,b=135,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "sert",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "trph"
+            ],
+            "color": "r=0,g=82,b=232,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "trph",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "chx10"
+            ],
+            "color": "r=0,g=102,b=0,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "chx10",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "hnf6"
+            ],
+            "color": "r=216,g=255,b=182,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "hnf6",
+            "opacity": 1.0,
+            "visible": false,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "pitxb"
+            ],
+            "color": "r=241,g=8,b=92,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "pitxb",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        },
+        {
+          "segmentationDisplay": {
+            "sources": [
+              "cells"
+            ],
+            "selectedSegmentIds": [
+              "cells;0;5628",
+              "cells;0;5627",
+              "cells;0;5626",
+              "cells;0;5989",
+              "cells;0;5625",
+              "cells;0;5988",
+              "cells;0;5624",
+              "cells;0;5987",
+              "cells;0;5986",
+              "cells;0;5623",
+              "cells;0;5501",
+              "cells;0;5622",
+              "cells;0;5224",
+              "cells;0;7210",
+              "cells;0;6641",
+              "cells;0;6840",
+              "cells;0;6841",
+              "cells;0;6842",
+              "cells;0;6600",
+              "cells;0;6843",
+              "cells;0;6844",
+              "cells;0;5734",
+              "cells;0;5733",
+              "cells;0;5853",
+              "cells;0;5852",
+              "cells;0;6250",
+              "cells;0;6251",
+              "cells;0;6252",
+              "cells;0;6011",
+              "cells;0;6253",
+              "cells;0;7541",
+              "cells;0;7740",
+              "cells;0;7741",
+              "cells;0;6734",
+              "cells;0;6338",
+              "cells;0;6735",
+              "cells;0;6736",
+              "cells;0;5646",
+              "cells;0;7231",
+              "cells;0;7432",
+              "cells;0;6222",
+              "cells;0;6223",
+              "cells;0;7433",
+              "cells;0;6983",
+              "cells;0;6984",
+              "cells;0;6985",
+              "cells;0;6624",
+              "cells;0;6625",
+              "cells;0;6626",
+              "cells;0;6509",
+              "cells;0;5958",
+              "cells;0;5957",
+              "cells;0;5955",
+              "cells;0;5757",
+              "cells;0;6072",
+              "cells;0;6073",
+              "cells;0;6075",
+              "cells;0;5398",
+              "cells;0;7087",
+              "cells;0;5276",
+              "cells;0;6472",
+              "cells;0;5397",
+              "cells;0;5275",
+              "cells;0;6352",
+              "cells;0;7089",
+              "cells;0;6473",
+              "cells;0;6353",
+              "cells;0;6474",
+              "cells;0;7641",
+              "cells;0;6475",
+              "cells;0;6750",
+              "cells;0;5272",
+              "cells;0;6476",
+              "cells;0;5393",
+              "cells;0;7642",
+              "cells;0;7840",
+              "cells;0;6751",
+              "cells;0;5392",
+              "cells;0;7005",
+              "cells;0;6511",
+              "cells;0;5391",
+              "cells;0;6116",
+              "cells;0;6834",
+              "cells;0;7208",
+              "cells;0;6837",
+              "cells;0;6838",
+              "cells;0;6839"
+            ],
+            "showSelectedSegmentsIn3d": false,
+            "lut": "glasbey",
+            "showScatterPlot": false,
+            "scatterPlotAxes": [
+              "anchor_x",
+              "anchor_y"
+            ],
+            "showTable": true,
+            "showAsBoundaries": false,
+            "boundaryThickness": 1.0,
+            "randomColorSeed": 42,
+            "opacityNotSelected": 0.15,
+            "name": "cells",
+            "opacity": 0.5,
+            "visible": true
+          }
+        },
+        {
+          "imageDisplay": {
+            "sources": [
+              "phox2b"
+            ],
+            "color": "r=173,g=76,b=138,a=255",
+            "contrastLimits": [
+              0.0,
+              1000.0
+            ],
+            "showImagesIn3d": false,
+            "invert": false,
+            "name": "phox2b",
+            "opacity": 1.0,
+            "visible": true,
+            "blendingMode": "sum"
+          }
+        }
+      ],
+      "sourceTransforms": [],
+      "viewerTransform": {
+        "normalizedAffine": [
+          -0.003886822219473944,
+          0.004679393987790885,
+          3.9904103525914477E-4,
+          -0.11328036362621606,
+          -0.001734889999721868,
+          -0.0019119798588800815,
+          0.005522484813441543,
+          0.26615788168165444,
+          0.004364185895405838,
+          0.0034074849570987042,
+          0.002550740391352549,
+          -1.6074397330014487
+        ],
+        "timepoint": 0
+      },
+      "isExclusive": true,
+      "description": ""
+    }
+  }
+}

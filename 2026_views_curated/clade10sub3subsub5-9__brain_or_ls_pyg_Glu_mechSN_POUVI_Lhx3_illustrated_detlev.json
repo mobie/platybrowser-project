@@ -1,0 +1,319 @@
+{
+ "views": {
+  "clade10sub3subsub5-9__brain_or_ls_pyg_Glu_mechSN_POUVI_Lhx3_illustrated_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "imageDisplay": {
+      "sources": [
+       "brn3a"
+      ],
+      "color": "r=172,g=164,b=100,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "brn3a",
+      "opacity": 1.0,
+      "visible": true,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "lhx3"
+      ],
+      "color": "r=253,g=68,b=64,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "lhx3",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "pkd1 | XLOC_027897 : HCR-spotiflow (AP_011)"
+      ],
+      "color": "r=102,g=255,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       0.11616556
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "pkd1 | XLOC_027897 : HCR-spotiflow (AP_011)",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "baiap"
+      ],
+      "color": "r=51,g=255,b=255,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "baiap",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "coe"
+      ],
+      "color": "r=255,g=255,b=0,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "coe",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "isl"
+      ],
+      "color": "r=102,g=134,b=184,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "isl",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "barh1"
+      ],
+      "color": "r=243,g=165,b=105,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "barh1",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "imageDisplay": {
+      "sources": [
+       "trpv4"
+      ],
+      "color": "r=255,g=102,b=255,a=255",
+      "contrastLimits": [
+       0.0,
+       1000.0
+      ],
+      "showImagesIn3d": false,
+      "invert": false,
+      "name": "trpv4",
+      "opacity": 1.0,
+      "visible": false,
+      "blendingMode": "sum"
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;732",
+       "cells;0;32333",
+       "cells;0;858",
+       "cells;0;12044",
+       "cells;0;32331",
+       "cells;0;11193",
+       "cells;0;11194",
+       "cells;0;1069",
+       "cells;0;63",
+       "cells;0;5389",
+       "cells;0;65",
+       "cells;0;6086",
+       "cells;0;21046",
+       "cells;0;30422",
+       "cells;0;31597",
+       "cells;0;620",
+       "cells;0;861",
+       "cells;0;30424",
+       "cells;0;32569",
+       "cells;0;1059",
+       "cells;0;32463",
+       "cells;0;31770",
+       "cells;0;4964",
+       "cells;0;21724",
+       "cells;0;21725",
+       "cells;0;6893",
+       "cells;0;1291",
+       "cells;0;21293",
+       "cells;0;171",
+       "cells;0;30839",
+       "cells;0;31769",
+       "cells;0;31767",
+       "cells;0;32350",
+       "cells;0;754",
+       "cells;0;753",
+       "cells;0;5605",
+       "cells;0;518",
+       "cells;0;32476",
+       "cells;0;517",
+       "cells;0;5604",
+       "cells;0;5845",
+       "cells;0;32078",
+       "cells;0;32232",
+       "cells;0;5689",
+       "cells;0;1364",
+       "cells;0;916",
+       "cells;0;6063",
+       "cells;0;6065",
+       "cells;0;5166",
+       "cells;0;5165",
+       "cells;0;29869",
+       "cells;0;20494",
+       "cells;0;22279",
+       "cells;0;31936",
+       "cells;0;22278",
+       "cells;0;6347",
+       "cells;0;6348",
+       "cells;0;6349",
+       "cells;0;30048",
+       "cells;0;30049",
+       "cells;0;32501",
+       "cells;0;21060",
+       "cells;0;32627",
+       "cells;0;32109",
+       "cells;0;32504",
+       "cells;0;621",
+       "cells;0;32003",
+       "cells;0;30067",
+       "cells;0;11163",
+       "cells;0;30065",
+       "cells;0;22315",
+       "cells;0;7166",
+       "cells;0;5390",
+       "cells;0;12808",
+       "cells;0;30214",
+       "cells;0;32514",
+       "cells;0;30216",
+       "cells;0;778",
+       "cells;0;12400",
+       "cells;0;5903",
+       "cells;0;32531",
+       "cells;0;539",
+       "cells;0;538",
+       "cells;0;30230",
+       "cells;0;779",
+       "cells;0;21877",
+       "cells;0;1022",
+       "cells;0;21510",
+       "cells;0;22446",
+       "cells;0;21511",
+       "cells;0;21876",
+       "cells;0;32403",
+       "cells;0;781",
+       "cells;0;780",
+       "cells;0;30589",
+       "cells;0;32263",
+       "cells;0;21925",
+       "cells;0;11780",
+       "cells;0;32266",
+       "cells;0;32265",
+       "cells;0;32540",
+       "cells;0;929",
+       "cells;0;5456",
+       "cells;0;6172",
+       "cells;0;12190",
+       "cells;0;6692",
+       "cells;0;22464",
+       "cells;0;21497",
+       "cells;0;21498",
+       "cells;0;32017",
+       "cells;0;6616",
+       "cells;0;11413",
+       "cells;0;31581",
+       "cells;0;556",
+       "cells;0;676",
+       "cells;0;555",
+       "cells;0;12220",
+       "cells;0;22622",
+       "cells;0;22075",
+       "cells;0;6149",
+       "cells;0;22076",
+       "cells;0;31976",
+       "cells;0;441",
+       "cells;0;6709",
+       "cells;0;666",
+       "cells;0;269",
+       "cells;0;1318",
+       "cells;0;1159",
+       "cells;0;6151",
+       "cells;0;5234",
+       "cells;0;57",
+       "cells;0;20186",
+       "cells;0;22123",
+       "cells;0;20187",
+       "cells;0;392",
+       "cells;0;7127",
+       "cells;0;6710",
+       "cells;0;391",
+       "cells;0;390",
+       "cells;0;30410",
+       "cells;0;554"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

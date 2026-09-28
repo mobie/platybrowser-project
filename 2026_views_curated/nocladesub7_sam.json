@@ -1,0 +1,81 @@
+{
+ "views": {
+  "nocladesub7_sam": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "name": "cells",
+      "selectedSegmentIds": [
+       "cells;0;5342",
+       "cells;0;5665",
+       "cells;0;5666",
+       "cells;0;5762",
+       "cells;0;5783",
+       "cells;0;5878",
+       "cells;0;5879",
+       "cells;0;6016",
+       "cells;0;6257",
+       "cells;0;6258",
+       "cells;0;6377",
+       "cells;0;6378",
+       "cells;0;6380",
+       "cells;0;6381",
+       "cells;0;6535",
+       "cells;0;6536",
+       "cells;0;6537",
+       "cells;0;6785",
+       "cells;0;6787",
+       "cells;0;6879",
+       "cells;0;7261",
+       "cells;0;7263",
+       "cells;0;7481",
+       "cells;0;7578",
+       "cells;0;8067"
+      ],
+      "opacityNotSelected": 0.05
+     }
+    },
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "nuclei"
+      ],
+      "name": "nuclei",
+      "selectedSegmentIds": [
+       "nuclei;0;3426",
+       "nuclei;0;3427",
+       "nuclei;0;3577",
+       "nuclei;0;3578",
+       "nuclei;0;3579",
+       "nuclei;0;3580",
+       "nuclei;0;3581",
+       "nuclei;0;3582",
+       "nuclei;0;3584",
+       "nuclei;0;3759",
+       "nuclei;0;3760",
+       "nuclei;0;3762",
+       "nuclei;0;3763",
+       "nuclei;0;3948",
+       "nuclei;0;3952",
+       "nuclei;0;3953",
+       "nuclei;0;4137",
+       "nuclei;0;4138",
+       "nuclei;0;4139",
+       "nuclei;0;4315",
+       "nuclei;0;4317",
+       "nuclei;0;4318",
+       "nuclei;0;4480",
+       "nuclei;0;4646",
+       "nuclei;0;4647"
+      ]
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

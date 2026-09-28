@@ -1,0 +1,75 @@
+{
+ "views": {
+  "clade11sub20subsub0-1-2-4-6__ls1_5HT_MN_Pitx_GATA123_lhx15_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;9494",
+       "cells;0;9098",
+       "cells;0;9472",
+       "cells;0;9273",
+       "cells;0;9099",
+       "cells;0;9495",
+       "cells;0;9112",
+       "cells;0;7399",
+       "cells;0;8542",
+       "cells;0;8006",
+       "cells;0;8149",
+       "cells;0;8523",
+       "cells;0;9458",
+       "cells;0;8522",
+       "cells;0;7412",
+       "cells;0;8544",
+       "cells;0;8404",
+       "cells;0;8745",
+       "cells;0;9459",
+       "cells;0;8007",
+       "cells;0;7832",
+       "cells;0;8724",
+       "cells;0;7834",
+       "cells;0;8944",
+       "cells;0;8924",
+       "cells;0;8926",
+       "cells;0;9483",
+       "cells;0;9142",
+       "cells;0;8152",
+       "cells;0;8372",
+       "cells;0;8173",
+       "cells;0;8373",
+       "cells;0;9300",
+       "cells;0;9269",
+       "cells;0;7984",
+       "cells;0;8555",
+       "cells;0;8735",
+       "cells;0;7603",
+       "cells;0;8914",
+       "cells;0;8913",
+       "cells;0;8915"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

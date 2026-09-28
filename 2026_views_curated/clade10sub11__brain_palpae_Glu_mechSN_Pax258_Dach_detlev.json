@@ -1,0 +1,44 @@
+{
+ "views": {
+  "clade10sub11__brain_palpae_Glu_mechSN_Pax258_Dach_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;1228",
+       "cells;0;1082",
+       "cells;0;804",
+       "cells;0;1279",
+       "cells;0;2049",
+       "cells;0;846",
+       "cells;0;1127",
+       "cells;0;818",
+       "cells;0;1299",
+       "cells;0;1142"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}

@@ -1,0 +1,97 @@
+{
+ "views": {
+  "clade10sub9__brain_Glu_mechSN_FEZF_PouIV_Vsx_Nkx2-1_detlev": {
+   "uiSelectionGroup": "curated-cell-types",
+   "sourceDisplays": [
+    {
+     "segmentationDisplay": {
+      "sources": [
+       "cells"
+      ],
+      "selectedSegmentIds": [
+       "cells;0;1869",
+       "cells;0;1109",
+       "cells;0;1225",
+       "cells;0;1543",
+       "cells;0;933",
+       "cells;0;1221",
+       "cells;0;3368",
+       "cells;0;1066",
+       "cells;0;1223",
+       "cells;0;1260",
+       "cells;0;800",
+       "cells;0;921",
+       "cells;0;1855",
+       "cells;0;2507",
+       "cells;0;2625",
+       "cells;0;489",
+       "cells;0;1698",
+       "cells;0;2865",
+       "cells;0;1656",
+       "cells;0;923",
+       "cells;0;2027",
+       "cells;0;2864",
+       "cells;0;1495",
+       "cells;0;3038",
+       "cells;0;2026",
+       "cells;0;2186",
+       "cells;0;1372",
+       "cells;0;1808",
+       "cells;0;970",
+       "cells;0;314",
+       "cells;0;1209",
+       "cells;0;1406",
+       "cells;0;958",
+       "cells;0;1643",
+       "cells;0;1401",
+       "cells;0;2698",
+       "cells;0;3347",
+       "cells;0;2694",
+       "cells;0;959",
+       "cells;0;2134",
+       "cells;0;2332",
+       "cells;0;2695",
+       "cells;0;960",
+       "cells;0;485",
+       "cells;0;1510",
+       "cells;0;1114",
+       "cells;0;709",
+       "cells;0;1870",
+       "cells;0;1276",
+       "cells;0;2443",
+       "cells;0;3214",
+       "cells;0;1110",
+       "cells;0;1113",
+       "cells;0;2287",
+       "cells;0;1871",
+       "cells;0;1552",
+       "cells;0;1112",
+       "cells;0;2288",
+       "cells;0;3212",
+       "cells;0;2286",
+       "cells;0;591",
+       "cells;0;1707",
+       "cells;0;672"
+      ],
+      "showSelectedSegmentsIn3d": false,
+      "lut": "glasbey",
+      "showScatterPlot": false,
+      "scatterPlotAxes": [
+       "anchor_x",
+       "anchor_y"
+      ],
+      "showTable": true,
+      "showAsBoundaries": false,
+      "boundaryThickness": 1.0,
+      "randomColorSeed": 42,
+      "opacityNotSelected": 0.15,
+      "name": "cells",
+      "opacity": 0.5,
+      "visible": true
+     }
+    }
+   ],
+   "isExclusive": false
+  }
+ }
+}
